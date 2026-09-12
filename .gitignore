@@ -1,34 +1,43 @@
-# Bun deploy file
-node_modules.bun
+# Learn more https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files
 
-# Database
-*.sqlite
-
-# Dependency directories
+# dependencies
 node_modules/
 
-# dotenv environment variables file
-*.local
-.env.test
+# Expo
+.expo/
+dist/
+web-build/
+expo-env.d.ts
 
-# Logs
-logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+# Native
+.kotlin/
+*.orig.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
 
-# package-json
-package-json.lock
+# Metro
+.metro-health-check*
 
-# Optional npm cache directory
-.npm
+# debug
+npm-debug.*
+yarn-debug.*
+yarn-error.*
 
-# Runtime data
-pids
-*.pid
-*.seed
-*.pid.lock
+# macOS
+.DS_Store
+*.pem
 
-# TypeScript cache
+# local env files
+.env*.local
+
+# typescript
 *.tsbuildinfo
+
+example
+
+# generated native folders
+/ios
+/android
