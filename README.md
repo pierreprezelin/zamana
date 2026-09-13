@@ -24,10 +24,41 @@ I designed Zamana to cover my needs, but also to be useful to everyone. You'll f
 - 🌡️ Notifications about abnormally hot or cold temperatures, to bring your plants indoors
 - ⚠️ Alerts to remind you to take care of your plants at specific intervals
 - 🖼️ A timeline with the photos you've taken of your plant to watch its evolution
+- 📚 Help articles about how to take care of your plants
 - 📍 Everything stored locally on your phone...
-- 💾 ...with maybe an optional account in the future, if you wish to sync it with the cloud?
+- 💾 ...with maybe an optional account in the future, if you wish to sync it online?
 - 🌍 Translated in English and French (for now)
 - 💎 No subscription, no paid tier, no ads
 - 🍎 Available on Android and iOS
+
+## Roadmap
+
+You can see here what's left to do before the initial release!
+
+### Core features
+
+🚧 Add your plants  
+🚧 Search for species  
+🚧 Upcoming care tasks  
+🚧 Daily weather report  
+🚧 Timeline  
+🚧 Notifications  
+🚧 Dark theme
+
+### Planned features
+
+🚧 Account with online sync  
+🚧 Help articles
+
+## Stack
+
+- [React Native](https://reactnative.dev) with [Expo](https://expo.dev) for cross-platform development
+- [Node.js](https://nodejs.org) with [Express](https://expressjs.com) for the API
+- [Zustand](https://zustand-demo.pmnd.rs/) for local stores
+- [Tanstack Query](https://tanstack.com/query/latest) for caching, invalidation, refetch...
+- [TypeScript](https://www.typescriptlang.org/) with [tRPC](https://trpc.io/) for end-to end type-safety
+- [SQLite](https://sqlite.org/) for the local database
+- [Bun](https://bun.com/) as package manager
+- [Vercel](https://vercel.com/) for hosting and deployments
 
 **Feel free to give suggestions for a better experience!**
