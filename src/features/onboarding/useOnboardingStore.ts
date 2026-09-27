@@ -1,12 +1,22 @@
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
+import { syncStorage } from "@/utils/syncStorage";
 
 type OnboardingState = {
 	completed: boolean;
 	complete: () => void;
 };
 
-// ponytail: in-memory only, onboarding shows on every launch until persisted with expo-sqlite
-export const useOnboardingStore = create<OnboardingState>((set) => ({
-	completed: false,
-	complete: () => set({ completed: true }),
-}));
+export const useOnboardingStore = create<OnboardingState>()(
+	persist(
+		(set) => ({
+			completed: false,
+			complete: () => set({ completed: true }),
+		}),
+		{
+			name: "onboarding",
+			storage: syncStorage,
+			partialize: ({ completed }) => ({ completed }),
+		},
+	),
+);
