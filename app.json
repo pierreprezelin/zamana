@@ -32,6 +32,16 @@
 					}
 				}
 			],
+			[
+				"expo-font",
+				{
+					"fonts": [
+						"./assets/fonts/Outfit-Regular.otf",
+						"./assets/fonts/Outfit-SemiBold.otf",
+						"./assets/fonts/Recoleta-SemiBold.otf"
+					]
+				}
+			],
 			"expo-router",
 			[
 				"expo-splash-screen",
