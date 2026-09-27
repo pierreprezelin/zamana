@@ -7,10 +7,8 @@
 		"icon": "./assets/images/icon.png",
 		"scheme": "zamana",
 		"userInterfaceStyle": "automatic",
-		"ios": {
-			"icon": "./assets/expo.icon"
-		},
 		"android": {
+			"package": "com.pierreprezelin.zamana",
 			"adaptiveIcon": {
 				"backgroundColor": "#E6F4FE",
 				"foregroundImage": "./assets/images/android-icon-foreground.png",
@@ -19,11 +17,21 @@
 			},
 			"predictiveBackGestureEnabled": false
 		},
-		"web": {
-			"output": "static",
-			"favicon": "./assets/images/favicon.png"
+		"ios": {
+			"bundleIdentifier": "com.pierreprezelin.zamana",
+			"icon": "./assets/expo.icon"
 		},
 		"plugins": [
+			[
+				"expo-build-properties",
+				{
+					"android": {
+						"buildArchs": ["arm64-v8a", "armeabi-v7a"],
+						"enableMinifyInReleaseBuilds": true,
+						"enableShrinkResourcesInReleaseBuilds": true
+					}
+				}
+			],
 			"expo-router",
 			[
 				"expo-splash-screen",
