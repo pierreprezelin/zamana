@@ -6,6 +6,7 @@ import {
 	ThemeProvider,
 } from "expo-router/react-navigation";
 import * as SplashScreen from "expo-splash-screen";
+import { StatusBar } from "expo-status-bar";
 import { Platform, useColorScheme } from "react-native";
 import { HeaderBackButton } from "@/components/HeaderBackButton";
 import palette from "@/constants/palette";
@@ -39,6 +40,7 @@ export default function RootLayout() {
 
 	return (
 		<ThemeProvider value={navigationTheme(scheme)}>
+			<StatusBar style="auto" />
 			<Stack
 				screenOptions={{
 					headerTitleStyle: { fontFamily: "Recoleta-SemiBold", fontSize: 20 },
