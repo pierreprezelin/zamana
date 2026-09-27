@@ -1,5 +1,5 @@
 import { useLocalSearchParams } from "expo-router";
-import { ScreenPlaceholder } from "@/components/screen-placeholder";
+import { ScreenPlaceholder } from "@/components/ScreenPlaceholder";
 
 export default function EncyclopediaResultScreen() {
 	const { id } = useLocalSearchParams<{ id: string }>();

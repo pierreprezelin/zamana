@@ -1,4 +1,4 @@
-import { ScreenPlaceholder } from "@/components/screen-placeholder";
+import { ScreenPlaceholder } from "@/components/ScreenPlaceholder";
 
 export default function EncyclopediaScreen() {
 	return (
