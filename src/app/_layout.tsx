@@ -6,7 +6,8 @@ import {
 	ThemeProvider,
 } from "expo-router/react-navigation";
 import * as SplashScreen from "expo-splash-screen";
-import { useColorScheme } from "react-native";
+import { Platform, useColorScheme } from "react-native";
+import { HeaderBackButton } from "@/components/HeaderBackButton";
 import palette from "@/constants/palette";
 import { useOnboardingStore } from "@/features/onboarding/useOnboardingStore";
 // Loaded eagerly so the saved theme is applied before the first render
@@ -41,6 +42,12 @@ export default function RootLayout() {
 			<Stack
 				screenOptions={{
 					headerTitleStyle: { fontFamily: "Recoleta-SemiBold", fontSize: 20 },
+					headerTitleAlign: "left",
+					headerStyle: { backgroundColor: palette.background[scheme] },
+					headerShadowVisible: false,
+					headerTintColor: palette.moss[scheme],
+					headerBackButtonDisplayMode: "minimal",
+					headerLeft: Platform.OS === "android" ? HeaderBackButton : undefined,
 				}}
 			>
 				<Stack.Protected guard={!onboardingCompleted}>

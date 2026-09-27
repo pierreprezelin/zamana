@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 import { View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@/components/ionicons";
-import PressFeedback from "@/components/Pressable";
+import Pressable from "@/components/Pressable";
 import Text from "@/components/Text";
 
 type ScreenPlaceholderProps = {
@@ -33,10 +33,11 @@ export function ScreenPlaceholder({
 					</View>
 					{showSettings && (
 						<Link href="/settings" asChild>
-							<PressFeedback
+							<Pressable
 								accessibilityRole="button"
 								accessibilityLabel="Paramètres"
 								pressedOpacity={0.5}
+								hitSlop={8}
 								className="size-10 items-center justify-center rounded-full"
 							>
 								<Ionicons
@@ -44,7 +45,7 @@ export function ScreenPlaceholder({
 									size={24}
 									className="text-moss"
 								/>
-							</PressFeedback>
+							</Pressable>
 						</Link>
 					)}
 				</View>

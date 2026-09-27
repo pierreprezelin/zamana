@@ -79,6 +79,7 @@ export default function WelcomeScreen() {
 					variant="ghost"
 					className="-mr-2 h-8 rounded-[8px] px-2"
 					pressedOpacity={0.5}
+					hitSlop={8}
 					onPress={() => finish(false)}
 				/>
 			</View>
