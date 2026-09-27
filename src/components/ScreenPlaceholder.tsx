@@ -1,7 +1,7 @@
 import { type Href, Link } from "expo-router";
 import type { ReactNode } from "react";
 import { View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Ionicons } from "@/components/ionicons";
 import Pressable from "@/components/Pressable";
 import Text from "@/components/Text";
@@ -21,8 +21,10 @@ export function ScreenPlaceholder({
 	showSettings = false,
 	children,
 }: ScreenPlaceholderProps) {
+	const { top } = useSafeAreaInsets();
+
 	return (
-		<SafeAreaView edges={["top"]} style={{ flex: 1 }}>
+		<View style={{ flex: 1, paddingTop: top }}>
 			<View className="flex-1 gap-5 p-5">
 				<View className="flex-row items-start justify-between gap-5">
 					<View>
@@ -56,6 +58,6 @@ export function ScreenPlaceholder({
 				))}
 				{children}
 			</View>
-		</SafeAreaView>
+		</View>
 	);
 }

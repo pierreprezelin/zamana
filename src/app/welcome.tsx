@@ -5,7 +5,7 @@ import Animated, {
 	useAnimatedScrollHandler,
 	useSharedValue,
 } from "react-native-reanimated";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Button from "@/components/Button";
 import { Ionicons, type IoniconsIconName } from "@/components/ionicons";
 import Text from "@/components/Text";
@@ -65,13 +65,18 @@ export default function WelcomeScreen() {
 		scrollRef.current?.scrollTo({ x: step * width, animated: true });
 	};
 
+	const insets = useSafeAreaInsets();
+
 	const finish = (addFirstPlant: boolean) => {
 		complete();
 		if (addFirstPlant) router.push("/plant/new");
 	};
 
 	return (
-		<SafeAreaView className="flex-1 bg-background">
+		<View
+			className="flex-1 bg-background"
+			style={{ paddingTop: insets.top, paddingBottom: insets.bottom }}
+		>
 			<View className="h-14 flex-row items-center justify-between px-5">
 				<StepsIndicator count={steps.length} progress={progress} />
 				<Button
@@ -114,6 +119,6 @@ export default function WelcomeScreen() {
 					</View>
 				))}
 			</Animated.ScrollView>
-		</SafeAreaView>
+		</View>
 	);
 }
