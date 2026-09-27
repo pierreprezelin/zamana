@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Zamana",
-    "slug": "Zamana",
+    "slug": "zamana",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -37,6 +37,13 @@
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "3a7eec0a-4105-41ab-91ec-a4ef2bfb8b76"
+      }
+    },
+    "owner": "pierreprezelinpro"
   }
 }

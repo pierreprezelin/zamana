@@ -37,18 +37,14 @@ You can see here what's left to do before the initial release!
 
 ### Core features
 
-🚧 Add your plants  
-🚧 Search for species  
-🚧 Upcoming care tasks  
-🚧 Daily weather report  
-🚧 Timeline  
-🚧 Notifications  
-🚧 Dark theme
-
-### Planned features
-
-🚧 Account with online sync  
+🚧 Adding your plants
+🚧 Searching for species
+🚧 Upcoming care tasks
+🚧 Daily weather reports
+🚧 Growth timeline
 🚧 Help articles
+🚧 Notifications
+🚧 Dark theme
 
 ## Stack
 
