@@ -19,6 +19,7 @@ import Animated, {
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Ionicons, type IoniconsIconName } from "@/components/ionicons";
+import PressFeedback from "@/components/Pressable";
 import type { tabs } from "@/constants/tabs";
 
 const MIN_BOTTOM_OFFSET = 20;
@@ -188,17 +189,19 @@ export function TabBarAddButton() {
 	const bottom = useTabBarBottom();
 
 	return (
-		<Link href="/plant/new" asChild>
-			<Pressable
-				accessibilityRole="button"
-				accessibilityLabel="Ajouter une plante"
-				className="absolute right-[21px] size-14 rounded-full bg-surface p-1"
-				style={{ bottom, boxShadow: TAB_BAR_SHADOW }}
-			>
-				<View className="flex-1 items-center justify-center rounded-full bg-forest">
+		<View
+			className="absolute right-[21px] size-14 rounded-full bg-surface p-1"
+			style={{ bottom, boxShadow: TAB_BAR_SHADOW }}
+		>
+			<Link href="/plant/new" asChild>
+				<PressFeedback
+					accessibilityRole="button"
+					accessibilityLabel="Ajouter une plante"
+					className="flex-1 items-center justify-center rounded-full bg-forest"
+				>
 					<Ionicons name="add" size={28} className="text-white" />
-				</View>
-			</Pressable>
-		</Link>
+				</PressFeedback>
+			</Link>
+		</View>
 	);
 }

@@ -1,4 +1,4 @@
-import { forwardRef } from "react";
+import { forwardRef, type ReactNode } from "react";
 import {
 	Pressable as RNPressable,
 	type PressableProps as RNPressableProps,
@@ -7,26 +7,41 @@ import {
 import Animated, {
 	useAnimatedStyle,
 	useSharedValue,
+	withSequence,
 	withTiming,
 } from "react-native-reanimated";
 import { twMerge } from "tailwind-merge";
-import Text from "@/components/Text";
 
 const AnimatedPressable = Animated.createAnimatedComponent(RNPressable);
 
-interface PressableProps extends RNPressableProps {
+export interface PressableProps extends Omit<RNPressableProps, "children"> {
+	children?: ReactNode;
 	className?: string;
-	textClassName?: string;
-	title: string;
-	disabled?: boolean;
+	pressedClassName?: string;
+	pressedOpacity?: number;
 }
 
 const Pressable = forwardRef<View, PressableProps>(
-	({ title, className, textClassName, disabled, ...props }, ref) => {
-		const scale = useSharedValue(1);
+	(
+		{
+			className,
+			pressedClassName = "bg-white/10",
+			pressedOpacity = 1,
+			disabled,
+			children,
+			...props
+		},
+		ref,
+	) => {
+		const pressed = useSharedValue(0);
 
-		const animatedStyle = useAnimatedStyle(() => ({
-			transform: [{ scale: scale.value }],
+		const pressableStyle = useAnimatedStyle(() => ({
+			transform: [{ scale: 1 - 0.01 * pressed.value }],
+			opacity: disabled ? 0.75 : 1 - (1 - pressedOpacity) * pressed.value,
+		}));
+
+		const overlayStyle = useAnimatedStyle(() => ({
+			opacity: pressed.value,
 		}));
 
 		return (
@@ -34,27 +49,23 @@ const Pressable = forwardRef<View, PressableProps>(
 				ref={ref}
 				disabled={disabled}
 				onPressIn={() => {
-					scale.value = withTiming(0.99, { duration: 80 });
+					pressed.value = withTiming(1, { duration: 80 });
 				}}
 				onPressOut={() => {
-					scale.value = withTiming(1, { duration: 120 });
+					pressed.value = withSequence(
+						withTiming(1, { duration: 80 }),
+						withTiming(0, { duration: 120 }),
+					);
 				}}
-				style={animatedStyle}
-				className={twMerge(
-					"group items-center justify-center rounded-[12px] bg-forest px-8 h-[48px]",
-					disabled && "opacity-75",
-					className,
-				)}
+				style={pressableStyle}
+				className={twMerge("overflow-hidden", className)}
 				{...props}
 			>
-				<Text
-					className={twMerge(
-						"font-outfit-semibold text-center text-white",
-						textClassName,
-					)}
-				>
-					{title}
-				</Text>
+				<Animated.View
+					className={twMerge("absolute inset-0", pressedClassName)}
+					style={overlayStyle}
+				/>
+				{children}
 			</AnimatedPressable>
 		);
 	},

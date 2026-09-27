@@ -6,8 +6,8 @@ import Animated, {
 	useSharedValue,
 } from "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
+import Button from "@/components/Button";
 import { Ionicons, type IoniconsIconName } from "@/components/ionicons";
-import Pressable from "@/components/Pressable";
 import Text from "@/components/Text";
 import { StepsIndicator } from "@/features/onboarding/components/StepsIndicator";
 import { useOnboardingStore } from "@/features/onboarding/useOnboardingStore";
@@ -74,10 +74,12 @@ export default function WelcomeScreen() {
 		<SafeAreaView className="flex-1 bg-background">
 			<View className="h-14 flex-row items-center justify-between px-5">
 				<StepsIndicator count={steps.length} progress={progress} />
-				<Pressable
+				<Button
 					title="Passer"
-					className="h-auto bg-transparent px-0"
-					textClassName="text-moss"
+					variant="ghost"
+					className="-mr-2 h-8 rounded-[8px] px-2"
+					pressedClassName="bg-forest/10"
+					pressedOpacity={1}
 					onPress={() => finish(false)}
 				/>
 			</View>
@@ -99,13 +101,11 @@ export default function WelcomeScreen() {
 							<Text className="mt-5 text-center font-recoleta text-[28px] leading-[1.25] text-moss">
 								{step.title}
 							</Text>
-							<Text
-								className="mt-5 px-5 text-center text-[16px] text-secondary"
-							>
+							<Text className="mt-5 px-5 text-center text-[16px] text-secondary">
 								{step.description}
 							</Text>
 						</View>
-						<Pressable
+						<Button
 							title={step.action}
 							onPress={() =>
 								index === lastStep ? finish(true) : goToStep(index + 1)
