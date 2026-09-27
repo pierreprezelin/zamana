@@ -9,6 +9,8 @@ import * as SplashScreen from "expo-splash-screen";
 import { useColorScheme } from "react-native";
 import palette from "@/constants/palette";
 import { useOnboardingStore } from "@/features/onboarding/useOnboardingStore";
+// Loaded eagerly so the saved theme is applied before the first render
+import "@/features/theme/useThemeStore";
 
 SplashScreen.setOptions({
 	duration: 1000,

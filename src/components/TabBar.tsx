@@ -25,7 +25,7 @@ const MIN_BOTTOM_OFFSET = 20;
 
 export const TAB_BAR_SHADOW = "0px 8px 24px rgba(8, 41, 30, 0.15)";
 
-const INDICATOR_TIMING = {
+export const INDICATOR_TIMING = {
 	duration: 250,
 	easing: Easing.bezier(0.77, 0, 0.175, 1),
 	reduceMotion: ReduceMotion.System,

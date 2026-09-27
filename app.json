@@ -42,6 +42,7 @@
 					]
 				}
 			],
+			"expo-sqlite",
 			"expo-router",
 			[
 				"expo-splash-screen",

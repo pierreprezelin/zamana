@@ -27,6 +27,7 @@ You'll find the Figma design here: <https://www.figma.com/design/lfaQXGxdS90Qtk1
 - We use a feature-based MVVM architecture. You'll find the dedicated hooks, providers, tests, etc, of a specific feature in the /features folder. Common logic is found in the folders of the same names at the root of the project.
 - We use a Test-Driven-Development (TDD) logic when implementing or updating a feature, so don't forget to write unit tests for the critical logic (hooks, providers, endpoints, etc) and check for any regression. Respect the feature-based architecture for the ``__tests__`` folder.
 - As we use Typescript by default, run bun ts to check if everything if still ok after a code update.
+- For spacing, margins, paddings, we are in base-8, so if you see minor inconsistencies on the Figma design (like 9px instead of 8px), round it to the nearast logical number.
 
 ## Expo
 
