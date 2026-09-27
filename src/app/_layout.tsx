@@ -8,6 +8,7 @@ import {
 import * as SplashScreen from "expo-splash-screen";
 import { useColorScheme } from "react-native";
 import palette from "@/constants/palette";
+import { useOnboardingStore } from "@/features/onboarding/useOnboardingStore";
 
 SplashScreen.setOptions({
 	duration: 1000,
@@ -31,12 +32,17 @@ const navigationTheme = (scheme: "light" | "dark") => {
 
 export default function RootLayout() {
 	const scheme = useColorScheme() === "dark" ? "dark" : "light";
+	const onboardingCompleted = useOnboardingStore((state) => state.completed);
 
 	return (
 		<ThemeProvider value={navigationTheme(scheme)}>
 			<Stack>
-				<Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-				<Stack.Screen name="welcome" options={{ headerShown: false }} />
+				<Stack.Protected guard={!onboardingCompleted}>
+					<Stack.Screen name="welcome" options={{ headerShown: false }} />
+				</Stack.Protected>
+				<Stack.Protected guard={onboardingCompleted}>
+					<Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+				</Stack.Protected>
 				<Stack.Screen name="settings/index" options={{ title: "Paramètres" }} />
 				<Stack.Screen
 					name="settings/notifications"
