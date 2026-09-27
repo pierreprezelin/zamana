@@ -78,8 +78,7 @@ export default function WelcomeScreen() {
 					title="Passer"
 					variant="ghost"
 					className="-mr-2 h-8 rounded-[8px] px-2"
-					pressedClassName="bg-forest/10"
-					pressedOpacity={1}
+					pressedOpacity={0.5}
 					onPress={() => finish(false)}
 				/>
 			</View>
