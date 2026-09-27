@@ -38,7 +38,11 @@ export default function RootLayout() {
 
 	return (
 		<ThemeProvider value={navigationTheme(scheme)}>
-			<Stack>
+			<Stack
+				screenOptions={{
+					headerTitleStyle: { fontFamily: "Recoleta-SemiBold", fontSize: 20 },
+				}}
+			>
 				<Stack.Protected guard={!onboardingCompleted}>
 					<Stack.Screen name="welcome" options={{ headerShown: false }} />
 				</Stack.Protected>
