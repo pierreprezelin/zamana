@@ -28,6 +28,7 @@ const Pressable = forwardRef<View, PressableProps>(
 			pressedClassName = "bg-white/10",
 			pressedOpacity = 1,
 			disabled,
+			style,
 			children,
 			...props
 		},
@@ -57,7 +58,7 @@ const Pressable = forwardRef<View, PressableProps>(
 						withTiming(0, { duration: 120 }),
 					);
 				}}
-				style={pressableStyle}
+				style={[pressableStyle, style]}
 				className={twMerge("overflow-hidden", className)}
 				{...props}
 			>

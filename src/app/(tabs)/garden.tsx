@@ -4,8 +4,8 @@ export default function GardenScreen() {
 	return (
 		<ScreenPlaceholder
 			title="Jardin"
+			showSettings
 			links={[
-				{ label: "Paramètres", href: "/settings" },
 				{ label: "Plante #1", href: "/plant/1" },
 				{ label: "Ajouter une plante", href: "/plant/new" },
 			]}
