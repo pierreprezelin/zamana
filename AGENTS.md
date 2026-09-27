@@ -13,7 +13,8 @@ You'll find the Figma design here: <https://www.figma.com/design/lfaQXGxdS90Qtk1
 - TypeScript with tRPC for end-to-end type-safety
 - SQLite (with the expo-sqlite package) as database, local and offline
 - Unit testing with jest and the jest-expo package
-- Styles with Tailwind and Nativewind, both v4
+- Styles with Tailwind v3 and Nativewind v4
+- Icons with Ionicons and the react-native-vector-icons/iconicons package
 - Bun as package manager and runtime, instead of npm, pnpm or yarn
 - Biome as linter and formatter
 - Android and iOS
@@ -24,8 +25,8 @@ You'll find the Figma design here: <https://www.figma.com/design/lfaQXGxdS90Qtk1
 - Use Bun as package manager and runtime instead of npm, pnpm or Yarn.
 - Use Tailwind/Nativewind with className for styles, with inline StyleSheet only if the rules doesn't exist.
 - We use a feature-based MVVM architecture. You'll find the dedicated hooks, providers, tests, etc, of a specific feature in the /features folder. Common logic is found in the folders of the same names at the root of the project.
+- We use a Test-Driven-Development (TDD) logic when implementing or updating a feature, so don't forget to write unit tests for the critical logic (hooks, providers, endpoints, etc) and check for any regression. Respect the feature-based architecture for the ``__tests__`` folder.
 - As we use Typescript by default, run bun ts to check if everything if still ok after a code update.
-- After implementing or updating a feature, don't forget to write unit tests for the critical logic (hooks, providers, endpoints, etc) and check for any regression. Respect the feature-based architecture for the ``__tests__`` folder.
 
 ## Expo
 

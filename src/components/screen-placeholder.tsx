@@ -11,11 +11,11 @@ export function ScreenPlaceholder({
 	links = [],
 }: ScreenPlaceholderProps) {
 	return (
-		<View style={{ flex: 1, padding: 16, gap: 16 }}>
-			<Text>{title}</Text>
+		<View className="flex-1 gap-4 p-4">
+			<Text className="font-recoleta text-2xl text-moss">{title}</Text>
 			{links.map(({ label, href }) => (
-				<Link key={label} href={href}>
-					→ {label}
+				<Link key={label} href={href} asChild>
+					<Text className="font-outfit text-forest">→ {label}</Text>
 				</Link>
 			))}
 		</View>

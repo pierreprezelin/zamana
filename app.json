@@ -50,7 +50,8 @@
 					"image": "./assets/images/splash-icon.png",
 					"imageWidth": 125
 				}
-			]
+			],
+			"@react-native-vector-icons/ionicons"
 		],
 		"experiments": {
 			"typedRoutes": true,
