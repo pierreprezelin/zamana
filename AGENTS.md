@@ -9,6 +9,7 @@ You'll find the Figma design here: <https://www.figma.com/design/lfaQXGxdS90Qtk1
 - React Native with Expo, no web version
 - API with Node.js (Express) on a remote server
 - Zustand for local stores
+- Zod for form schema validations
 - Tanstack Query for caching, invalidation, refetch...
 - TypeScript with tRPC for end-to-end type-safety
 - SQLite (with the expo-sqlite package) as database, local and offline
