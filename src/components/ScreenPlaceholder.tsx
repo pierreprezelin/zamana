@@ -1,6 +1,7 @@
 import { type Href, Link } from "expo-router";
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import Text from "@/components/Text";
 
 type ScreenPlaceholderProps = {
 	title: string;
@@ -17,7 +18,7 @@ export function ScreenPlaceholder({
 				<Text className="font-recoleta text-2xl text-moss">{title}</Text>
 				{links.map(({ label, href }) => (
 					<Link key={label} href={href} asChild>
-						<Text className="font-outfit text-forest">→ {label}</Text>
+						<Text className="text-forest">→ {label}</Text>
 					</Link>
 				))}
 			</View>

@@ -1,6 +1,6 @@
 import { useLocalSearchParams } from "expo-router";
 import { TabList, TabSlot, Tabs, TabTrigger } from "expo-router/ui";
-import { Text } from "react-native";
+import Text from "@/components/Text";
 
 export default function PlantSectionsLayout() {
 	const { id } = useLocalSearchParams<{ id: string }>();

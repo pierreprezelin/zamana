@@ -46,4 +46,4 @@ expo-env.d.ts
 *.tsbuildinfo
 
 # VS Code
-.vscode/
+.vscode
