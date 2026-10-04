@@ -2,6 +2,10 @@
 
 This document serves as a reference for the initial structure and configuration of an API or web application using **Express.js** and **Node.js**.
 
+## App
+
+To make sure implementation is right, you can check the app project at ```../zamana```.
+
 ## Guidelines
 
 - TypeScript is the default.
