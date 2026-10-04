@@ -15,6 +15,7 @@ import Toast from "react-native-toast-message";
 import { HeaderBackButton } from "@/components/HeaderBackButton";
 import { toastConfig } from "@/components/toastConfig";
 import palette from "@/constants/palette";
+import { ForceUpdateSheet } from "@/features/appVersion/components/ForceUpdateSheet";
 import { useOnboardingStore } from "@/features/onboarding/useOnboardingStore";
 // Loaded eagerly so the saved theme is applied before the first render
 import "@/features/theme/useThemeStore";
@@ -100,6 +101,7 @@ export default function RootLayout() {
 						/>
 						<Stack.Screen name="tips/[id]" options={{ title: "Article" }} />
 					</Stack>
+					<ForceUpdateSheet />
 				</BottomSheetModalProvider>
 			</ThemeProvider>
 			<Toast config={toastConfig} topOffset={top + 8} />

@@ -3,7 +3,9 @@
 	"compilerOptions": {
 		"strict": true,
 		"types": ["jest"],
+		"allowImportingTsExtensions": true,
 		"paths": {
+			"@api/*": ["../zamana-api/*"],
 			"@/*": ["./src/*"],
 			"@/assets/*": ["./assets/*"]
 		}

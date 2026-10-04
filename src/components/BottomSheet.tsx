@@ -5,7 +5,7 @@ import {
 	BottomSheetView,
 	useBottomSheetModal,
 } from "@gorhom/bottom-sheet";
-import type { ReactNode, Ref } from "react";
+import type { ComponentProps, ReactNode, Ref } from "react";
 import { useColorScheme, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Ionicons } from "@/components/ionicons";
@@ -17,9 +17,10 @@ type BottomSheetProps = {
 	ref: Ref<BottomSheetModal>;
 	title: string;
 	children: ReactNode;
+	closable?: boolean;
 };
 
-const Backdrop = (props: BottomSheetBackdropProps) => (
+const Backdrop = (props: ComponentProps<typeof BottomSheetBackdrop>) => (
 	<BottomSheetBackdrop
 		{...props}
 		appearsOnIndex={0}
@@ -29,10 +30,15 @@ const Backdrop = (props: BottomSheetBackdropProps) => (
 	/>
 );
 
+const LockedBackdrop = (props: BottomSheetBackdropProps) => (
+	<Backdrop {...props} pressBehavior="none" />
+);
+
 export default function BottomSheet({
 	ref,
 	title,
 	children,
+	closable = true,
 }: BottomSheetProps) {
 	const scheme = useColorScheme() === "dark" ? "dark" : "light";
 	const { bottom } = useSafeAreaInsets();
@@ -41,7 +47,8 @@ export default function BottomSheet({
 	return (
 		<BottomSheetModal
 			ref={ref}
-			backdropComponent={Backdrop}
+			backdropComponent={closable ? Backdrop : LockedBackdrop}
+			enablePanDownToClose={closable}
 			handleComponent={null}
 			backgroundStyle={{
 				backgroundColor: palette.surface[scheme],
@@ -56,16 +63,18 @@ export default function BottomSheet({
 						<Text className="flex-1 font-recoleta text-[24px] leading-[1.25] text-moss">
 							{title}
 						</Text>
-						<Pressable
-							accessibilityRole="button"
-							accessibilityLabel="Fermer"
-							pressedOpacity={0.5}
-							pressedClassName=""
-							hitSlop={8}
-							onPress={() => dismiss()}
-						>
-							<Ionicons name="close" size={24} className="text-moss" />
-						</Pressable>
+						{closable && (
+							<Pressable
+								accessibilityRole="button"
+								accessibilityLabel="Fermer"
+								pressedOpacity={0.5}
+								pressedClassName=""
+								hitSlop={8}
+								onPress={() => dismiss()}
+							>
+								<Ionicons name="close" size={24} className="text-moss" />
+							</Pressable>
+						)}
 					</View>
 					{children}
 				</View>
