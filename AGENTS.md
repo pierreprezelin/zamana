@@ -1,5 +1,9 @@
 # Guidelines
 
+## API
+
+To make sure implementation of endpoints is right, you can check the API project at ```../zamana-api```.
+
 ## Design
 
 You'll find the Figma design here: <https://www.figma.com/design/lfaQXGxdS90Qtk1RlPL4My/Zamana-%C2%B7-Design?node-id=0-1&t=EtoLF74eTtjj1efv-1>.
