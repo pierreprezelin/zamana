@@ -1,8 +1,9 @@
+import { createExpressMiddleware } from "@trpc/server/adapters/express";
 import cors from "cors";
 import express, { type Express } from "express";
 import helmet from "helmet";
 import morgan from "morgan";
-import versionRouter from "./routes/version.ts";
+import { appRouter } from "./routes/index.ts";
 
 const app: Express = express();
 
@@ -15,7 +16,7 @@ app.get("/", (_req, res) => {
 	res.status(200).json({ message: "Welcome to the Express API!" });
 });
 
-app.use("/api/version", versionRouter);
+app.use("/v1", createExpressMiddleware({ router: appRouter }));
 
 app.use((_req, res) => {
 	res.status(404).json({ error: "Route not found" });
