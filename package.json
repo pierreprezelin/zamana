@@ -13,6 +13,9 @@
 		"typecheck": "tsc",
 		"check": "biome check",
 		"check:fix": "biome check --write",
+		"test": "vitest run",
+		"test:watch": "vitest",
+		"test:coverage": "vitest run --coverage",
 		"prepare": "simple-git-hooks"
 	},
 	"simple-git-hooks": {
@@ -28,8 +31,10 @@
 		"@biomejs/biome": "2.5.15",
 		"@types/express": "^5.0.6",
 		"@types/node": "^26.6.4",
+		"@vitest/coverage-v8": "^5.0.3",
 		"lint-staged": "^17.6.0",
 		"simple-git-hooks": "^2.14.0",
-		"typescript": "^7.0.2"
+		"typescript": "^7.0.2",
+		"vitest": "^5.0.3"
 	}
 }
