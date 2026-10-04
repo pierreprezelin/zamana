@@ -2,6 +2,12 @@
 
 This document serves as a reference for the initial structure and configuration of an API or web application using **Express.js** and **Node.js**.
 
+## Guidelines
+
+- TypeScript is the default.
+- Update the .gitignore file if needed.
+- Don't forget the unit tests after implementing a new endpoint.
+
 ---
 
 ## 📁 Project Structure
