@@ -1,0 +1,57 @@
+# Replaces every .gitignore during EAS uploads: keep in sync with them
+
+# .gitignore + apps/mobile/.gitignore
+# Android
+/apps/mobile/android
+*.apk
+*.aab
+
+# Debug
+npm-debug.*
+yarn-debug.*
+yarn-error.*
+
+# Dependencies
+node_modules/
+
+# Expo
+.expo/
+dist/
+web-build/
+expo-env.d.ts
+
+# Local env files
+.env*.local
+
+# iOS
+/apps/mobile/ios
+*.ipa
+
+# macOS
+.DS_Store
+*.pem
+
+# Metro
+.metro-health-check*
+
+# Native
+.kotlin/
+*.orig.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+
+# TypeScript
+*.tsbuildinfo
+
+# VS Code
+.vscode
+
+# jest
+coverage/
+
+# API: only its package.json is needed for the workspace install
+/apps/api/*
+!/apps/api/package.json

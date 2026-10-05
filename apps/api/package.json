@@ -1,0 +1,44 @@
+{
+	"name": "@zamana/api",
+	"version": "1.0.0",
+	"private": true,
+	"type": "module",
+	"main": "server.ts",
+	"engines": {
+		"node": ">=22.18.0"
+	},
+	"scripts": {
+		"start": "node server.ts",
+		"dev": "nodemon server.ts",
+		"test": "vitest run",
+		"test:watch": "vitest",
+		"test:coverage": "vitest run --coverage",
+		"ts": "tsc"
+	},
+	"dependencies": {
+		"@trpc/server": "^11.19.0",
+		"cors": "^2.8.6",
+		"dotenv": "^18.0.5",
+		"express": "^5.2.1",
+		"helmet": "^8.3.0",
+		"morgan": "^1.12.1"
+	},
+	"devDependencies": {
+		"@types/cors": "^2.8.19",
+		"@types/express": "^5.0.6",
+		"@types/morgan": "^1.9.10",
+		"@types/node": "^26.6.4",
+		"@vitest/coverage-v8": "^5.0.3",
+		"nodemon": "^3.1.14",
+		"typescript": "^7.0.2",
+		"vitest": "^5.0.3"
+	},
+	"nodemonConfig": {
+		"execMap": {
+			"ts": "node"
+		}
+	},
+	"exports": {
+		".": "./routes/index.ts"
+	}
+}

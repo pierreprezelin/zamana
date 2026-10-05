@@ -2,7 +2,7 @@
 
 ## API
 
-To make sure implementation of endpoints is right, you can check the API project at ```../zamana-api```.
+To make sure implementation of endpoints is right, you can check the API project at ```../api```.
 
 ## Design
 

@@ -7,7 +7,7 @@
 	},
 	"files": {
 		"ignoreUnknown": false,
-		"includes": ["**", "!assets", "!src/global.css"]
+		"includes": ["**", "!apps/mobile/assets", "!apps/mobile/src/global.css"]
 	},
 	"formatter": {
 		"enabled": true,
