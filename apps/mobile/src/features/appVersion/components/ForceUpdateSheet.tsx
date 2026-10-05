@@ -26,17 +26,16 @@ export function ForceUpdateSheet() {
 	return (
 		<BottomSheet
 			ref={sheetRef}
-			title="Zamana a besoin d’une mise à jour"
+			title="L'application a besoin d’une mise à jour"
 			closable={false}
 		>
 			<Text className="text-secondary">
-				Une nouvelle version corrige un problème important. Mettez l'application
-				à jour pour continuer à prendre soin de vos plantes 🌱
+				Une nouvelle version corrige un problème important. Mettez Zamana à jour
+				pour continuer à prendre soin de vos plantes ! 🌱
 			</Text>
 			<Button
 				title="Mettre à jour maintenant"
 				onPress={() => Linking.openURL(STORE_URL)}
-				className="mt-5"
 			/>
 		</BottomSheet>
 	);

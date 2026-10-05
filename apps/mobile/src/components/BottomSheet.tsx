@@ -60,7 +60,7 @@ export default function BottomSheet({
 			<BottomSheetView style={{ paddingBottom: Math.max(bottom, 20) }}>
 				<View className="gap-5 px-5 pt-5">
 					<View className="flex-row items-center justify-between gap-5">
-						<Text className="flex-1 font-recoleta text-[24px] leading-[1.25] text-moss">
+						<Text className="flex-1 font-recoleta text-[24px] leading-[1.25] text-moss mt-1.5">
 							{title}
 						</Text>
 						{closable && (

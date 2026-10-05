@@ -65,12 +65,7 @@ export function UserNameForm() {
 				returnKeyType="done"
 				onSubmitEditing={submit}
 			/>
-			<Button
-				title="Enregistrer"
-				loading={saving}
-				onPress={submit}
-				className="mt-5"
-			/>
+			<Button title="Enregistrer" loading={saving} onPress={submit} />
 		</>
 	);
 }
