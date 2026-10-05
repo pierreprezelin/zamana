@@ -9,7 +9,7 @@
 	},
 	"scripts": {
 		"start": "node server.ts",
-		"dev": "nodemon server.ts",
+		"dev": "nodemon --watch . --watch .env server.ts",
 		"test": "vitest run",
 		"test:watch": "vitest",
 		"test:coverage": "vitest run --coverage",
