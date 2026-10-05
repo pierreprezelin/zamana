@@ -1,0 +1,25 @@
+{
+	"name": "zamana",
+	"private": true,
+	"workspaces": [
+		"apps/*"
+	],
+	"scripts": {
+		"check": "biome check",
+		"check:fix": "biome check --write",
+		"ts": "bun --filter '*' ts",
+		"test": "bun --filter '*' test",
+		"prepare": "simple-git-hooks"
+	},
+	"simple-git-hooks": {
+		"pre-commit": "bunx lint-staged"
+	},
+	"lint-staged": {
+		"*": "biome check --write --no-errors-on-unmatched --files-ignore-unknown=true"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "2.5.15",
+		"lint-staged": "^17.6.0",
+		"simple-git-hooks": "^2.14.0"
+	}
+}

@@ -4,7 +4,7 @@ This document serves as a reference for the initial structure and configuration 
 
 ## App
 
-To make sure implementation is right, you can check the app project at ```../zamana```.
+To make sure implementation is right, you can check the app project at ```../mobile```.
 
 ## Guidelines
 
