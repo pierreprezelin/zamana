@@ -1,10 +1,5 @@
-# Logs
-*.log
-
-# Tests
-coverage/
-
 # Env
 .env
-.env.*
-!.env.example
+
+# Logs
+*.log

@@ -1,5 +1,3 @@
-# Learn more https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files
-
 # Android
 /android
 *.apk
@@ -10,24 +8,17 @@ npm-debug.*
 yarn-debug.*
 yarn-error.*
 
-# Dependencies
-node_modules/
-
 # Expo
 .expo/
 dist/
 web-build/
 expo-env.d.ts
 
-# Local env files
-.env*.local
-
 # iOS
 /ios
 *.ipa
 
 # macOS
-.DS_Store
 *.pem
 
 # Metro
@@ -44,9 +35,3 @@ expo-env.d.ts
 
 # TypeScript
 *.tsbuildinfo
-
-# VS Code
-.vscode
-
-# jest
-coverage/

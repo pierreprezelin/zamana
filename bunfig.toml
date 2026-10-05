@@ -1,2 +1,4 @@
 [install]
+blockExoticSubdeps = true
 linker = "hoisted"
+minimumReleaseAge = 86400
