@@ -1,5 +1,6 @@
 import "../global.css";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
+import { ObserveRoot, useObserve } from "expo-observe";
 import { Stack } from "expo-router";
 import {
 	DarkTheme,
@@ -8,6 +9,7 @@ import {
 } from "expo-router/react-navigation";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
+import { useEffect } from "react";
 import { Platform, useColorScheme } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -40,10 +42,15 @@ const useNavigationTheme = () => {
 	};
 };
 
-export default function RootLayout() {
+function RootLayout() {
 	const navigationTheme = useNavigationTheme();
 	const onboardingCompleted = useOnboardingStore((state) => state.completed);
+	const { markInteractive } = useObserve();
 	const { top } = useSafeAreaInsets();
+
+	useEffect(() => {
+		markInteractive();
+	}, [markInteractive]);
 
 	return (
 		<GestureHandlerRootView style={{ flex: 1 }}>
@@ -110,3 +117,5 @@ export default function RootLayout() {
 		</GestureHandlerRootView>
 	);
 }
+
+export default ObserveRoot.wrap(RootLayout);
