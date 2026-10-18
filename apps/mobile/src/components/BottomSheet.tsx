@@ -16,7 +16,8 @@ import Text from "@/components/Text";
 type BottomSheetProps = {
 	ref: Ref<BottomSheetModal>;
 	title: string;
-	children: ReactNode;
+	children?: ReactNode;
+	actions?: ReactNode;
 	closable?: boolean;
 };
 
@@ -42,6 +43,7 @@ export default function BottomSheet({
 	ref,
 	title,
 	children,
+	actions,
 	closable = true,
 }: BottomSheetProps) {
 	const surfaceColor = useCSSVariable("--color-surface") as string;
@@ -61,10 +63,10 @@ export default function BottomSheet({
 			keyboardBehavior="interactive"
 			keyboardBlurBehavior="restore"
 		>
-			<BottomSheetView style={{ paddingBottom: Math.max(bottom, 20) }}>
-				<View className="gap-5 px-5 pt-5">
+			<BottomSheetView style={{ paddingBottom: bottom }}>
+				<View className="gap-5 p-5">
 					<View className="flex-row items-center justify-between gap-5">
-						<Text className="flex-1 font-recoleta text-[24px] leading-[1.25] text-moss mt-1.5">
+						<Text className="flex-1 font-recoleta text-[24px] leading-[1.25] text-foreground mt-1.5">
 							{title}
 						</Text>
 						{closable && (
@@ -76,12 +78,13 @@ export default function BottomSheet({
 								hitSlop={8}
 								onPress={() => dismiss()}
 							>
-								<Ionicons name="close" size={24} className="text-moss" />
+								<Ionicons name="close" size={24} className="text-foreground" />
 							</Pressable>
 						)}
 					</View>
 					{children}
 				</View>
+				{actions && <View className="gap-2 px-5">{actions}</View>}
 			</BottomSheetView>
 		</BottomSheetModal>
 	);

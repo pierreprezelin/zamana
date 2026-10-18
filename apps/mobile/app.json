@@ -41,6 +41,14 @@
 				}
 			],
 			"expo-image",
+			[
+				"expo-image-picker",
+				{
+					"photosPermission": "Zamana a besoin d’accéder à vos photos pour illustrer vos plantes.",
+					"cameraPermission": "Zamana a besoin de l’appareil photo pour photographier vos plantes.",
+					"microphonePermission": false
+				}
+			],
 			"expo-router",
 			"expo-sqlite",
 			[

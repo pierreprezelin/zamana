@@ -1,8 +1,13 @@
 import { useLocalSearchParams } from "expo-router";
-import { ScreenPlaceholder } from "@/components/ScreenPlaceholder";
+import { PlantForm } from "@/features/plants/components/PlantForm";
+import { usePlant } from "@/features/plants/usePlantStore";
 
 export default function EditPlantScreen() {
 	const { id } = useLocalSearchParams<{ id: string }>();
+	const plant = usePlant(id);
 
-	return <ScreenPlaceholder title={`Jardin - Modifier (pré-rempli) #${id}`} />;
+	// The plant was just deleted, the screen is being dismissed
+	if (!plant) return null;
+
+	return <PlantForm plant={plant} />;
 }

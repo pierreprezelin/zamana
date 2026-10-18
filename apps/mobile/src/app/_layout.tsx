@@ -94,11 +94,11 @@ function RootLayout() {
 						/>
 						<Stack.Screen
 							name="plant/[id]/(sections)"
-							options={{ title: "Plante" }}
+							options={{ title: "" }}
 						/>
 						<Stack.Screen
 							name="plant/[id]/edit"
-							options={{ title: "Modifier" }}
+							options={{ title: "Modifier les informations" }}
 						/>
 						<Stack.Screen
 							name="plant/[id]/history-entry"

@@ -1,44 +1,133 @@
-import { Link } from "expo-router";
+import { Link, router, useLocalSearchParams } from "expo-router";
 import { useState } from "react";
-import { View } from "react-native";
+import { FlatList, View } from "react-native";
 import Button from "@/components/Button";
-import { Ionicons } from "@/components/ionicons";
+import Chip from "@/components/Chip";
 import { ScreenPlaceholder } from "@/components/ScreenPlaceholder";
+import SearchField from "@/components/SearchField";
+import { useTabBarOffset } from "@/components/TabBar";
 import Text from "@/components/Text";
+import { EmptyGarden } from "@/features/plants/components/EmptyGarden";
+import { PlantCard } from "@/features/plants/components/PlantCard";
+import { PlantListRow } from "@/features/plants/components/PlantListRow";
+import {
+	type ViewMode,
+	ViewModeToggle,
+} from "@/features/plants/components/ViewModeToggle";
+import { searchPlants } from "@/features/plants/searchPlants";
+import {
+	GRID_COLUMNS,
+	useGridTileWidth,
+} from "@/features/plants/useGridTileWidth";
+import {
+	useCurrentPlants,
+	usePastPlants,
+} from "@/features/plants/usePlantStore";
+
+type Tab = "current" | "past";
+
+const emptyMessages: Record<Tab, string> = {
+	current: "Aucune plante actuelle",
+	past: "Aucune plante passée",
+};
 
 export default function GardenScreen() {
-	// ponytail: hardcoded until the plants come from the database
-	const [plantCount] = useState(0);
+	const currentPlants = useCurrentPlants();
+	const pastPlants = usePastPlants();
+	// In the URL so archiving a plant can open the garden on its new tab
+	const { tab = "current" } = useLocalSearchParams<{ tab?: Tab }>();
+	const [viewMode, setViewMode] = useState<ViewMode>("list");
+	const [query, setQuery] = useState("");
+	const tabBarOffset = useTabBarOffset();
+
+	const plantCount = currentPlants.length;
+	const hasPlants = plantCount + pastPlants.length > 0;
+	const plants = searchPlants(
+		tab === "current" ? currentPlants : pastPlants,
+		query,
+	);
+	const tileWidth = useGridTileWidth();
 
 	return (
 		<ScreenPlaceholder
 			title="Jardin"
-			subtitle={`${plantCount} plante${plantCount > 1 ? "s" : ""}`}
-			showSettings
-			links={
-				plantCount > 0
-					? [
-							{ label: "Plante #1", href: "/plant/1" },
-							{ label: "Ajouter une plante", href: "/plant/new" },
-						]
-					: []
+			subtitle={
+				plantCount
+					? `${plantCount} plante${plantCount > 1 ? "s" : ""}`
+					: "Aucune plante"
 			}
+			showSettings
 		>
-			{plantCount === 0 && (
-				<View className="flex-1 items-center justify-center gap-6">
-					<View className="size-16 items-center justify-center rounded-full bg-line">
-						<Ionicons
-							name="file-tray-outline"
-							size={26}
-							className="text-forest"
+			{hasPlants ? (
+				<>
+					<View className="gap-4">
+						<SearchField
+							value={query}
+							onChangeText={setQuery}
+							placeholder="Rechercher dans mon jardin..."
 						/>
+						<View className="flex-row items-center justify-between">
+							<View accessibilityRole="tablist" className="flex-row gap-2">
+								<Chip
+									label="Actuelles"
+									selected={tab === "current"}
+									onPress={() => router.setParams({ tab: "current" })}
+								/>
+								<Chip
+									label="Passées"
+									selected={tab === "past"}
+									onPress={() => router.setParams({ tab: "past" })}
+								/>
+							</View>
+							<ViewModeToggle value={viewMode} onChange={setViewMode} />
+						</View>
 					</View>
-					<Text className="w-[280px] text-center font-recoleta text-[20px] text-moss">
-						Il n'y a pas encore de plante dans votre jardin
-					</Text>
-					<Link href="/plant/new" asChild>
-						<Button title="Ajouter ma première plante" icon="add-outline" />
-					</Link>
+					<FlatList
+						// Scrolls under the tab bar down to the screen edge
+						className="-mb-5"
+						// numColumns can't change on the fly
+						key={viewMode}
+						data={plants}
+						numColumns={viewMode === "grid" ? GRID_COLUMNS : 1}
+						keyExtractor={(plant) => plant.id}
+						renderItem={({ item }) =>
+							viewMode === "grid" ? (
+								<PlantCard plant={item} style={{ width: tileWidth }} />
+							) : (
+								<PlantListRow plant={item} />
+							)
+						}
+						keyboardDismissMode="on-drag"
+						keyboardShouldPersistTaps="handled"
+						contentContainerClassName="gap-2"
+						contentContainerStyle={{ paddingBottom: tabBarOffset + 20 }}
+						columnWrapperClassName={viewMode === "grid" ? "gap-2" : undefined}
+						ListEmptyComponent={
+							<Text className="py-8 text-center text-muted">
+								{query
+									? "Aucune plante ne correspond à votre recherche"
+									: emptyMessages[tab]}
+							</Text>
+						}
+						ListFooterComponent={
+							tab === "current" ? (
+								<Link href="/plant/new" asChild>
+									<Button
+										variant="ghost"
+										title="Ajouter une plante"
+										icon="add-outline"
+									/>
+								</Link>
+							) : undefined
+						}
+					/>
+				</>
+			) : (
+				<View
+					className="flex-1 justify-center"
+					style={{ paddingBottom: tabBarOffset }}
+				>
+					<EmptyGarden />
 				</View>
 			)}
 		</ScreenPlaceholder>

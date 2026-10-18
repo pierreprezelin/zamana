@@ -1,5 +1,6 @@
 import { useIsFocused } from "expo-router";
 import { ScreenPlaceholder } from "@/components/ScreenPlaceholder";
+import { GardenPreview } from "@/features/plants/components/GardenPreview";
 import { greeting } from "@/features/user/greeting";
 import { useUserStore } from "@/features/user/useUserStore";
 
@@ -11,12 +12,10 @@ export default function TodayScreen() {
 	return (
 		<ScreenPlaceholder
 			title={greeting(new Date().getHours(), name)}
+			subtitle="Qu'allons-nous faire aujourd'hui ?"
 			showSettings
-			links={[
-				{ label: "Plante #1", href: "/plant/1" },
-				{ label: "Ajouter une plante", href: "/plant/new" },
-				{ label: "Voir tout le jardin", href: "/garden" },
-			]}
-		/>
+		>
+			<GardenPreview />
+		</ScreenPlaceholder>
 	);
 }

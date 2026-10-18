@@ -1,5 +1,5 @@
-import { ScreenPlaceholder } from "@/components/ScreenPlaceholder";
+import { PlantForm } from "@/features/plants/components/PlantForm";
 
 export default function NewPlantScreen() {
-	return <ScreenPlaceholder title="Jardin - Ajouter" />;
+	return <PlantForm />;
 }
