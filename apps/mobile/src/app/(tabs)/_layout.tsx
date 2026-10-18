@@ -5,7 +5,7 @@ import { useCSSVariable } from "uniwind";
 import { tabs } from "@/constants/tabs";
 
 export default function TabsLayout() {
-	const tintColor = useCSSVariable("--color-forest") as string;
+	const tintColor = useCSSVariable("--color-primary") as string;
 
 	return (
 		<NativeTabs

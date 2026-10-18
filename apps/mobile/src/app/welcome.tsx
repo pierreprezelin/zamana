@@ -100,13 +100,13 @@ export default function WelcomeScreen() {
 				{steps.map((step, index) => (
 					<View key={step.title} style={{ width }} className="px-5 pb-5">
 						<View className="flex-1 items-center justify-center">
-							<View className="size-16 items-center justify-center rounded-full bg-forest/5">
-								<Ionicons name={step.icon} size={26} className="text-forest" />
+							<View className="size-16 items-center justify-center rounded-full bg-primary/5">
+								<Ionicons name={step.icon} size={26} className="text-primary" />
 							</View>
-							<Text className="mt-5 text-center font-recoleta text-[28px] leading-[1.25] text-moss">
+							<Text className="mt-5 text-center font-recoleta text-[28px] leading-[1.25] text-foreground">
 								{step.title}
 							</Text>
-							<Text className="mt-5 px-5 text-center text-[16px] text-secondary">
+							<Text className="mt-5 px-5 text-center text-[16px] text-muted">
 								{step.description}
 							</Text>
 						</View>

@@ -40,7 +40,9 @@ const renderToast =
 			style={{ boxShadow: TAB_BAR_SHADOW }}
 		>
 			<Ionicons name={icon} size={20} className={iconClassName} />
-			<Text className="flex-1 font-outfit-semibold text-moss">{text1}</Text>
+			<Text className="flex-1 font-outfit-semibold text-foreground">
+				{text1}
+			</Text>
 		</View>
 	);
 

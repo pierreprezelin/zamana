@@ -22,7 +22,7 @@ export default function SettingsScreen() {
 				</Link>
 				<UserNameSetting />
 			</View>
-			<Text className="mt-auto text-center text-xs text-moss opacity-50">
+			<Text className="mt-auto text-center text-xs text-foreground opacity-50">
 				v{nativeApplicationVersion}
 			</Text>
 		</View>

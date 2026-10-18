@@ -6,6 +6,7 @@ import Animated, {
 	useSharedValue,
 	withTiming,
 } from "react-native-reanimated";
+import { twMerge } from "tailwind-merge";
 import { INDICATOR_TIMING } from "@/components/TabBar";
 import Text from "@/components/Text";
 
@@ -15,6 +16,7 @@ type SegmentedControlProps<T extends string> = {
 	options: { value: T; label: string }[];
 	value: T;
 	onChange: (value: T) => void;
+	className?: string;
 };
 
 type SegmentProps = {
@@ -42,12 +44,12 @@ function Segment({
 			onPress={onPress}
 			accessibilityRole="radio"
 			accessibilityState={{ checked: selected }}
-			className="h-8 flex-1 items-center justify-center px-2"
+			className="flex-1 items-center justify-center px-2"
 		>
 			<View>
-				<Text className="text-moss">{label}</Text>
+				<Text className="text-foreground">{label}</Text>
 				<Animated.View style={[StyleSheet.absoluteFill, onIndicatorStyle]}>
-					<Text className="text-white">{label}</Text>
+					<Text className="text-on-primary">{label}</Text>
 				</Animated.View>
 			</View>
 		</Pressable>
@@ -58,6 +60,7 @@ export default function SegmentedControl<T extends string>({
 	options,
 	value,
 	onChange,
+	className,
 }: SegmentedControlProps<T>) {
 	const selectedIndex = options.findIndex((option) => option.value === value);
 	const [segmentWidth, setSegmentWidth] = useState(0);
@@ -81,11 +84,14 @@ export default function SegmentedControl<T extends string>({
 						options.length,
 				)
 			}
-			className="h-9 flex-row rounded-[12px] bg-forest-tint p-[2px]"
+			className={twMerge(
+				"h-9 flex-row rounded-[12px] bg-primary-tint p-0.5",
+				className,
+			)}
 		>
 			<Animated.View
 				style={indicatorStyle}
-				className="absolute left-[2px] top-[2px] h-8 rounded-[10px] bg-forest"
+				className="absolute bottom-0.5 left-0.5 top-0.5 rounded-[10px] bg-primary"
 			/>
 			{options.map((option, index) => (
 				<Segment

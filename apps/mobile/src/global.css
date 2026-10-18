@@ -5,12 +5,14 @@
 @layer theme {
 	:root {
 		@variant light {
-			--color-forest: #125B44;
-			--color-moss: #0C3D2D;
-			--color-forest-tint: #E7EFEC;
+			--color-primary: #125B44;
+			--color-primary-tint: #E7EFEC;
+			--color-primary-tint-strong: #D0DEDA;
+			--color-on-primary: #FFFFFF;
+			--color-foreground: #0C3D2D;
 			--color-background: #FFFFFF;
 			--color-surface: #FFFFFF;
-			--color-secondary: #4D6F61;
+			--color-muted: #4D6F61;
 			--color-placeholder: #536D62;
 			--color-border: #889892;
 			--color-line: #E2EBE8;
@@ -22,6 +24,11 @@
 			--color-danger-tint: #F9EBEA;
 			--color-info: #4E67BC;
 			--color-info-tint: #EDF0F8;
+			/* Text and icons on a filled status background */
+			--color-on-success: #FFFFFF;
+			--color-on-warning: #FFFFFF;
+			--color-on-danger: #FFFFFF;
+			--color-on-info: #FFFFFF;
 			--color-care-water: #0074A4;
 			--color-care-water-tint: #E6F1F6;
 			--color-care-feed: #A94D79;
@@ -36,12 +43,14 @@
 			--color-care-treat-tint: #F1F1E6;
 		}
 		@variant dark {
-			--color-forest: #348468;
-			--color-moss: #E0EFE9;
-			--color-forest-tint: #24372F;
+			--color-primary: #348468;
+			--color-primary-tint: #24372F;
+			--color-primary-tint-strong: #324A40;
+			--color-on-primary: #FFFFFF;
+			--color-foreground: #E0EFE9;
 			--color-background: #09110E;
 			--color-surface: #121C18;
-			--color-secondary: #A0BCAF;
+			--color-muted: #A0BCAF;
 			--color-placeholder: #81988E;
 			--color-border: #5E7169;
 			--color-line: #24312C;
@@ -53,6 +62,11 @@
 			--color-danger-tint: #352F2A;
 			--color-info: #94AEF8;
 			--color-info-tint: #27333C;
+			/* The dark status colors are light, white would only reach about 2.2:1 */
+			--color-on-success: #09110E;
+			--color-on-warning: #09110E;
+			--color-on-danger: #09110E;
+			--color-on-info: #09110E;
 			--color-care-water: #65BCEE;
 			--color-care-water-tint: #1F363A;
 			--color-care-feed: #E793B8;

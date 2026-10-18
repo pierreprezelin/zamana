@@ -44,7 +44,7 @@ export function UserNameForm() {
 
 	return (
 		<>
-			<Text className="text-secondary">
+			<Text className="text-muted">
 				Si aucun nom n’est renseigné, les messages seront neutres (ex : “Bonjour
 				👋”).
 			</Text>

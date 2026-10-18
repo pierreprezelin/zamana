@@ -21,7 +21,9 @@ function Step({
 		stepIndicatorStyle(progress.value, index),
 	);
 
-	return <Animated.View className="h-1 rounded-full bg-forest" style={style} />;
+	return (
+		<Animated.View className="h-1 rounded-full bg-primary" style={style} />
+	);
 }
 
 export function StepsIndicator({ count, progress }: StepsIndicatorProps) {

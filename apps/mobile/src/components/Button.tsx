@@ -6,16 +6,32 @@ import Text from "@/components/Text";
 
 const variants = {
 	primary: {
-		className: "bg-forest",
+		className: "bg-primary",
 		pressedClassName: "bg-white/10",
 		pressedOpacity: 1,
-		textClassName: "text-white",
+		textClassName: "text-on-primary",
+		indicatorClassName: "accent-on-primary",
 	},
 	ghost: {
 		className: "",
 		pressedClassName: "",
 		pressedOpacity: 0.9,
-		textClassName: "text-moss",
+		textClassName: "text-foreground",
+		indicatorClassName: "accent-foreground",
+	},
+	danger: {
+		className: "bg-danger",
+		pressedClassName: "bg-white/10",
+		pressedOpacity: 1,
+		textClassName: "text-on-danger",
+		indicatorClassName: "accent-on-danger",
+	},
+	ghostDanger: {
+		className: "",
+		pressedClassName: "",
+		pressedOpacity: 0.9,
+		textClassName: "text-danger",
+		indicatorClassName: "accent-danger",
 	},
 };
 
@@ -45,7 +61,7 @@ export default function Button({
 			pressedClassName={styles.pressedClassName}
 			pressedOpacity={styles.pressedOpacity}
 			className={twMerge(
-				"h-[48px] flex-row items-center justify-center gap-2 rounded-[12px] px-8",
+				"h-12 flex-row items-center justify-center gap-2 rounded-[12px] px-8",
 				styles.className,
 				className,
 			)}
@@ -55,7 +71,7 @@ export default function Button({
 			{...props}
 		>
 			{loading ? (
-				<ActivityIndicator className={contentClassName} />
+				<ActivityIndicator colorClassName={styles.indicatorClassName} />
 			) : (
 				<>
 					{icon && (

@@ -21,7 +21,7 @@ export default function TabsLayout() {
 			{/* asChild so Uniwind styles a View rendered here: className is ignored on expo-router's own View */}
 			<TabList asChild>
 				<View
-					className="absolute left-[21px] right-[81px] flex-row rounded-full bg-surface p-[3px]"
+					className="absolute left-5 right-20 flex-row rounded-full bg-surface p-1"
 					style={{ bottom, boxShadow: TAB_BAR_SHADOW }}
 				>
 					<TabBarIndicator style={indicatorStyle} />

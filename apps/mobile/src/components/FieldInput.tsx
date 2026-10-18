@@ -25,7 +25,7 @@ export default function FieldInput({
 			<Input
 				placeholderTextColorClassName="accent-placeholder"
 				className={twMerge(
-					"h-[46px] rounded-[12px] border bg-surface px-4 font-outfit text-[14px] text-moss",
+					"h-12 rounded-[12px] border bg-surface px-4 font-outfit text-[14px] text-foreground",
 					error ? "border-danger" : "border-border",
 					className,
 				)}

@@ -23,6 +23,7 @@ import PressFeedback from "@/components/Pressable";
 import type { tabs } from "@/constants/tabs";
 
 const MIN_BOTTOM_OFFSET = 20;
+const TAB_BAR_HEIGHT = 56;
 
 export const TAB_BAR_SHADOW = "0px 8px 24px rgba(8, 41, 30, 0.15)";
 
@@ -101,21 +102,21 @@ export function TabBarItem({
 			}}
 			accessibilityRole="tab"
 			accessibilityState={{ selected: isFocused }}
-			className="h-[50px] grow items-center justify-center px-2"
+			className="h-12 grow items-center justify-center px-2"
 		>
 			<View>
 				<Animated.View style={defaultStyle}>
 					<TabBarItemContent
 						label={label}
 						iconName={icon.default}
-						colorClassName="text-secondary"
+						colorClassName="text-muted"
 					/>
 				</Animated.View>
 				<Animated.View style={[StyleSheet.absoluteFill, selectedStyle]}>
 					<TabBarItemContent
 						label={label}
 						iconName={icon.selected}
-						colorClassName="text-forest dark:text-white"
+						colorClassName="text-primary dark:text-white"
 					/>
 				</Animated.View>
 			</View>
@@ -176,7 +177,7 @@ export function TabBarIndicator({
 }) {
 	return (
 		<Animated.View style={[{ position: "absolute" }, style]}>
-			<View className="flex-1 rounded-full bg-forest-tint" />
+			<View className="flex-1 rounded-full bg-primary-tint" />
 		</Animated.View>
 	);
 }
@@ -186,21 +187,26 @@ export function useTabBarBottom() {
 	return Math.max(bottom, MIN_BOTTOM_OFFSET);
 }
 
+// Space covered by the floating tab bar at the bottom of a tab screen
+export function useTabBarOffset() {
+	return useTabBarBottom() + TAB_BAR_HEIGHT;
+}
+
 export function TabBarAddButton() {
 	const bottom = useTabBarBottom();
 
 	return (
 		<View
-			className="absolute right-[21px] size-14 rounded-full bg-surface p-1"
+			className="absolute right-5 size-14 rounded-full bg-surface p-1"
 			style={{ bottom, boxShadow: TAB_BAR_SHADOW }}
 		>
 			<Link href="/plant/new" asChild>
 				<PressFeedback
 					accessibilityRole="button"
 					accessibilityLabel="Ajouter une plante"
-					className="flex-1 items-center justify-center rounded-full bg-forest"
+					className="flex-1 items-center justify-center rounded-full bg-primary"
 				>
-					<Ionicons name="add" size={28} className="text-white" />
+					<Ionicons name="add" size={28} className="text-on-primary" />
 				</PressFeedback>
 			</Link>
 		</View>

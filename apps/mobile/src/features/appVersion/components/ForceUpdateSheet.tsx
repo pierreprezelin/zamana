@@ -28,15 +28,17 @@ export function ForceUpdateSheet() {
 			ref={sheetRef}
 			title="L'application a besoin d’une mise à jour"
 			closable={false}
+			actions={
+				<Button
+					title="Mettre à jour maintenant"
+					onPress={() => Linking.openURL(STORE_URL)}
+				/>
+			}
 		>
-			<Text className="text-secondary">
+			<Text className="text-muted">
 				Une nouvelle version corrige un problème important. Mettez Zamana à jour
 				pour continuer à prendre soin de vos plantes ! 🌱
 			</Text>
-			<Button
-				title="Mettre à jour maintenant"
-				onPress={() => Linking.openURL(STORE_URL)}
-			/>
 		</BottomSheet>
 	);
 }

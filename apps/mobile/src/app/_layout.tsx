@@ -30,10 +30,10 @@ SplashScreen.setOptions({
 const useNavigationTheme = () => {
 	const base = useColorScheme() === "dark" ? DarkTheme : DefaultTheme;
 	const [primary, background, card, text, border] = useCSSVariable([
-		"--color-forest",
+		"--color-primary",
 		"--color-background",
 		"--color-surface",
-		"--color-moss",
+		"--color-foreground",
 		"--color-line",
 	]) as string[];
 	return {

@@ -23,12 +23,12 @@ export default function SettingsRow({
 			className="flex-row items-center gap-4"
 			{...props}
 		>
-			<Ionicons name={icon} size={24} className="text-moss" />
+			<Ionicons name={icon} size={24} className="text-foreground" />
 			<View className="flex-1">
-				<Text className="font-outfit-semibold text-moss">{title}</Text>
-				{value && <Text className="text-secondary">{value}</Text>}
+				<Text className="font-outfit-semibold text-foreground">{title}</Text>
+				{value && <Text className="text-muted">{value}</Text>}
 			</View>
-			<Ionicons name="chevron-forward" size={20} className="text-moss" />
+			<Ionicons name="chevron-forward" size={20} className="text-foreground" />
 		</Pressable>
 	);
 }

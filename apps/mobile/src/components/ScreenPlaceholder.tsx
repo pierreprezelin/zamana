@@ -28,9 +28,11 @@ export function ScreenPlaceholder({
 			<View className="flex-1 gap-5 p-5">
 				<View className="flex-row items-start justify-between gap-5">
 					<View>
-						<Text className="font-recoleta text-[28px] text-moss">{title}</Text>
+						<Text className="font-recoleta text-[28px] text-foreground">
+							{title}
+						</Text>
 						{subtitle && (
-							<Text className="text-[16px] text-secondary">{subtitle}</Text>
+							<Text className="text-[16px] text-muted">{subtitle}</Text>
 						)}
 					</View>
 					{showSettings && (
@@ -45,7 +47,7 @@ export function ScreenPlaceholder({
 								<Ionicons
 									name="settings-outline"
 									size={24}
-									className="text-moss"
+									className="text-foreground"
 								/>
 							</Pressable>
 						</Link>
@@ -53,7 +55,7 @@ export function ScreenPlaceholder({
 				</View>
 				{links.map(({ label, href }) => (
 					<Link key={label} href={href} asChild>
-						<Text className="text-forest">→ {label}</Text>
+						<Text className="text-primary">→ {label}</Text>
 					</Link>
 				))}
 				{children}
