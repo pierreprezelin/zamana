@@ -18,7 +18,7 @@ export default function TabsLayout() {
 	return (
 		<Tabs style={{ flex: 1 }}>
 			<TabSlot />
-			{/* asChild so NativeWind styles a View rendered here: className is ignored on expo-router's own View */}
+			{/* asChild so Uniwind styles a View rendered here: className is ignored on expo-router's own View */}
 			<TabList asChild>
 				<View
 					className="absolute left-[21px] right-[81px] flex-row rounded-full bg-surface p-[3px]"

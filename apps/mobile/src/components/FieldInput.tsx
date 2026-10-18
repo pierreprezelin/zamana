@@ -1,16 +1,10 @@
 import { BottomSheetTextInput } from "@gorhom/bottom-sheet";
-import { cssInterop } from "nativewind";
-import {
-	TextInput,
-	type TextInputProps,
-	useColorScheme,
-	View,
-} from "react-native";
+import { TextInput, type TextInputProps, View } from "react-native";
 import { twMerge } from "tailwind-merge";
+import { withUniwind } from "uniwind";
 import Text from "@/components/Text";
-import palette from "@/constants/palette";
 
-cssInterop(BottomSheetTextInput, { className: "style" });
+const StyledBottomSheetTextInput = withUniwind(BottomSheetTextInput);
 
 interface FieldInputProps extends TextInputProps {
 	error?: string;
@@ -24,13 +18,12 @@ export default function FieldInput({
 	className,
 	...props
 }: FieldInputProps) {
-	const scheme = useColorScheme() === "dark" ? "dark" : "light";
-	const Input = inBottomSheet ? BottomSheetTextInput : TextInput;
+	const Input = inBottomSheet ? StyledBottomSheetTextInput : TextInput;
 
 	return (
 		<View className="gap-1">
 			<Input
-				placeholderTextColor={palette.placeholder[scheme]}
+				placeholderTextColorClassName="accent-placeholder"
 				className={twMerge(
 					"h-[46px] rounded-[12px] border bg-surface px-4 font-outfit text-[14px] text-moss",
 					error ? "border-danger" : "border-border",

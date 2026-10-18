@@ -1,7 +1,7 @@
 import { Ionicons } from "@react-native-vector-icons/ionicons/static";
-import { cssInterop } from "nativewind";
+import { withUniwind } from "uniwind";
 
-cssInterop(Ionicons, { className: "style" });
+const StyledIonicons = withUniwind(Ionicons);
 
 export type { IoniconsIconName } from "@react-native-vector-icons/ionicons/static";
-export { Ionicons };
+export { StyledIonicons as Ionicons };

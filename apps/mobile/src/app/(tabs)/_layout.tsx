@@ -1,14 +1,15 @@
+import { Ionicons } from "@react-native-vector-icons/ionicons/static";
 import { router } from "expo-router";
 import { NativeTabs } from "expo-router/native-tabs";
-import { DynamicColorIOS } from "react-native";
-import { Ionicons } from "@/components/ionicons";
-import palette from "@/constants/palette";
+import { useCSSVariable } from "uniwind";
 import { tabs } from "@/constants/tabs";
 
 export default function TabsLayout() {
+	const tintColor = useCSSVariable("--color-forest") as string;
+
 	return (
 		<NativeTabs
-			tintColor={DynamicColorIOS(palette.forest)}
+			tintColor={tintColor}
 			labelStyle={{ fontFamily: "Outfit-Regular" }}
 		>
 			{tabs.map(({ name, label, icon }) => (

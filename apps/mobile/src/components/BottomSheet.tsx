@@ -6,12 +6,12 @@ import {
 	useBottomSheetModal,
 } from "@gorhom/bottom-sheet";
 import type { ComponentProps, ReactNode, Ref } from "react";
-import { useColorScheme, View } from "react-native";
+import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useCSSVariable } from "uniwind";
 import { Ionicons } from "@/components/ionicons";
 import Pressable from "@/components/Pressable";
 import Text from "@/components/Text";
-import palette from "@/constants/palette";
 
 type BottomSheetProps = {
 	ref: Ref<BottomSheetModal>;
@@ -20,15 +20,19 @@ type BottomSheetProps = {
 	closable?: boolean;
 };
 
-const Backdrop = (props: ComponentProps<typeof BottomSheetBackdrop>) => (
-	<BottomSheetBackdrop
-		{...props}
-		appearsOnIndex={0}
-		disappearsOnIndex={-1}
-		opacity={0.75}
-		style={[props.style, { backgroundColor: palette.moss.light }]}
-	/>
-);
+const Backdrop = (props: ComponentProps<typeof BottomSheetBackdrop>) => {
+	const backgroundColor = useCSSVariable("--color-backdrop") as string;
+
+	return (
+		<BottomSheetBackdrop
+			{...props}
+			appearsOnIndex={0}
+			disappearsOnIndex={-1}
+			opacity={0.75}
+			style={[props.style, { backgroundColor }]}
+		/>
+	);
+};
 
 const LockedBackdrop = (props: BottomSheetBackdropProps) => (
 	<Backdrop {...props} pressBehavior="none" />
@@ -40,7 +44,7 @@ export default function BottomSheet({
 	children,
 	closable = true,
 }: BottomSheetProps) {
-	const scheme = useColorScheme() === "dark" ? "dark" : "light";
+	const surfaceColor = useCSSVariable("--color-surface") as string;
 	const { bottom } = useSafeAreaInsets();
 	const { dismiss } = useBottomSheetModal();
 
@@ -51,7 +55,7 @@ export default function BottomSheet({
 			enablePanDownToClose={closable}
 			handleComponent={null}
 			backgroundStyle={{
-				backgroundColor: palette.surface[scheme],
+				backgroundColor: surfaceColor,
 				borderRadius: 24,
 			}}
 			keyboardBehavior="interactive"

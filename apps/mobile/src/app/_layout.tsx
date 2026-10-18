@@ -14,40 +14,40 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Toast from "react-native-toast-message";
 import { HeaderBackButton } from "@/components/HeaderBackButton";
 import { toastConfig } from "@/components/toastConfig";
-import palette from "@/constants/palette";
 import { ForceUpdateSheet } from "@/features/appVersion/components/ForceUpdateSheet";
 import { useOnboardingStore } from "@/features/onboarding/useOnboardingStore";
 // Loaded eagerly so the saved theme is applied before the first render
 import "@/features/theme/useThemeStore";
+import { useCSSVariable } from "uniwind";
 
 SplashScreen.setOptions({
 	duration: 1000,
 	fade: true,
 });
 
-const navigationTheme = (scheme: "light" | "dark") => {
-	const base = scheme === "dark" ? DarkTheme : DefaultTheme;
+const useNavigationTheme = () => {
+	const base = useColorScheme() === "dark" ? DarkTheme : DefaultTheme;
+	const [primary, background, card, text, border] = useCSSVariable([
+		"--color-forest",
+		"--color-background",
+		"--color-surface",
+		"--color-moss",
+		"--color-line",
+	]) as string[];
 	return {
 		...base,
-		colors: {
-			...base.colors,
-			primary: palette.forest[scheme],
-			background: palette.background[scheme],
-			card: palette.surface[scheme],
-			text: palette.moss[scheme],
-			border: palette.line[scheme],
-		},
+		colors: { ...base.colors, primary, background, card, text, border },
 	};
 };
 
 export default function RootLayout() {
-	const scheme = useColorScheme() === "dark" ? "dark" : "light";
+	const navigationTheme = useNavigationTheme();
 	const onboardingCompleted = useOnboardingStore((state) => state.completed);
 	const { top } = useSafeAreaInsets();
 
 	return (
 		<GestureHandlerRootView style={{ flex: 1 }}>
-			<ThemeProvider value={navigationTheme(scheme)}>
+			<ThemeProvider value={navigationTheme}>
 				<BottomSheetModalProvider>
 					<StatusBar style="auto" />
 					<Stack
@@ -57,9 +57,11 @@ export default function RootLayout() {
 								fontSize: 20,
 							},
 							headerTitleAlign: "left",
-							headerStyle: { backgroundColor: palette.background[scheme] },
+							headerStyle: {
+								backgroundColor: navigationTheme.colors.background,
+							},
 							headerShadowVisible: false,
-							headerTintColor: palette.moss[scheme],
+							headerTintColor: navigationTheme.colors.text,
 							headerBackButtonDisplayMode: "minimal",
 							headerLeft:
 								Platform.OS === "android" ? HeaderBackButton : undefined,

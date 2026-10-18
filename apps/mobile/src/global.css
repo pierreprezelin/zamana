@@ -1,3 +1,80 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@import "uniwind";
+
+/* Figma "Palette" view */
+@layer theme {
+	:root {
+		@variant light {
+			--color-forest: #125B44;
+			--color-moss: #0C3D2D;
+			--color-forest-tint: #E7EFEC;
+			--color-background: #FFFFFF;
+			--color-surface: #FFFFFF;
+			--color-secondary: #4D6F61;
+			--color-placeholder: #536D62;
+			--color-border: #889892;
+			--color-line: #E2EBE8;
+			--color-success: #3E7828;
+			--color-success-tint: #ECF2EA;
+			--color-warning: #995F08;
+			--color-warning-tint: #F5EFE6;
+			--color-danger: #C63931;
+			--color-danger-tint: #F9EBEA;
+			--color-info: #4E67BC;
+			--color-info-tint: #EDF0F8;
+			--color-care-water: #0074A4;
+			--color-care-water-tint: #E6F1F6;
+			--color-care-feed: #A94D79;
+			--color-care-feed-tint: #F6EDF2;
+			--color-care-clean: #05797A;
+			--color-care-clean-tint: #E6F2F2;
+			--color-care-repot: #AB5420;
+			--color-care-repot-tint: #F7EEE9;
+			--color-care-prune: #8A58A7;
+			--color-care-prune-tint: #F3EEF6;
+			--color-care-treat: #737001;
+			--color-care-treat-tint: #F1F1E6;
+		}
+		@variant dark {
+			--color-forest: #348468;
+			--color-moss: #E0EFE9;
+			--color-forest-tint: #24372F;
+			--color-background: #09110E;
+			--color-surface: #121C18;
+			--color-secondary: #A0BCAF;
+			--color-placeholder: #81988E;
+			--color-border: #5E7169;
+			--color-line: #24312C;
+			--color-success: #8EC27D;
+			--color-success-tint: #263728;
+			--color-warning: #DEA45F;
+			--color-warning-tint: #323223;
+			--color-danger: #EF958B;
+			--color-danger-tint: #352F2A;
+			--color-info: #94AEF8;
+			--color-info-tint: #27333C;
+			--color-care-water: #65BCEE;
+			--color-care-water-tint: #1F363A;
+			--color-care-feed: #E793B8;
+			--color-care-feed-tint: #342F31;
+			--color-care-clean: #47C7C8;
+			--color-care-clean-tint: #1A3734;
+			--color-care-repot: #EA9B72;
+			--color-care-repot-tint: #343026;
+			--color-care-prune: #C99DE4;
+			--color-care-prune-tint: #2F3138;
+			--color-care-treat: #B8B660;
+			--color-care-treat-tint: #2D3523;
+		}
+	}
+}
+
+@theme {
+	--font-outfit: "Outfit-Regular";
+	--font-outfit-semibold: "Outfit-SemiBold";
+	--font-recoleta: "Recoleta-SemiBold";
+}
+
+@theme static {
+	--color-backdrop: #0C3D2D;
+}
