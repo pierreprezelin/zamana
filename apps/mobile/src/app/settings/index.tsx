@@ -1,9 +1,10 @@
 import { nativeApplicationVersion } from "expo-application";
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
 import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import SettingsRow from "@/components/SettingsRow";
 import Text from "@/components/Text";
+import { useOnboardingStore } from "@/features/onboarding/useOnboardingStore";
 import { ThemeSelector } from "@/features/theme/components/ThemeSelector";
 import { UserNameSetting } from "@/features/user/components/UserNameSetting";
 import { t } from "@/utils/i18n";
@@ -25,6 +26,17 @@ export default function SettingsScreen() {
 					/>
 				</Link>
 				<UserNameSetting />
+				{/* ponytail: temporary dev shortcut, remove once onboarding is done */}
+				{__DEV__ && (
+					<SettingsRow
+						icon="refresh-outline"
+						title="Recommencer l'onboarding"
+						onPress={() => {
+							useOnboardingStore.setState({ completed: false });
+							router.replace("/welcome");
+						}}
+					/>
+				)}
 			</View>
 			<Text className="mt-auto text-center text-xs text-foreground opacity-50">
 				v{nativeApplicationVersion}

@@ -1,4 +1,3 @@
-import { router } from "expo-router";
 import { useWindowDimensions, View } from "react-native";
 import Animated, {
 	useAnimatedRef,
@@ -43,11 +42,6 @@ export default function WelcomeScreen() {
 
 	const insets = useSafeAreaInsets();
 
-	const finish = (addFirstPlant: boolean) => {
-		complete();
-		if (addFirstPlant) router.push("/plant/new");
-	};
-
 	return (
 		<View
 			className="flex-1 bg-background"
@@ -61,7 +55,7 @@ export default function WelcomeScreen() {
 					className="-mr-2 h-8 rounded-lg px-2"
 					pressedOpacity={0.5}
 					hitSlop={8}
-					onPress={() => finish(false)}
+					onPress={complete}
 				/>
 			</View>
 			<Animated.ScrollView
@@ -89,7 +83,7 @@ export default function WelcomeScreen() {
 						<Button
 							title={t(`welcome.${step.key}.action`)}
 							onPress={() =>
-								index === lastStep ? finish(true) : goToStep(index + 1)
+								index === lastStep ? complete() : goToStep(index + 1)
 							}
 						/>
 					</View>

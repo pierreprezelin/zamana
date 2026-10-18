@@ -17,8 +17,6 @@ export const useOnboardingStore = create<OnboardingState>()(
 			name: "onboarding",
 			storage: syncStorage,
 			partialize: ({ completed }) => ({ completed }),
-			// ponytail: onboarding replays on every dev launch, remove once welcome is done
-			skipHydration: __DEV__,
 		},
 	),
 );

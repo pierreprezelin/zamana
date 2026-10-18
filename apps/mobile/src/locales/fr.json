@@ -48,7 +48,7 @@
 		"done": {
 			"title": "C’est tout !",
 			"description": "Votre jardin vous attend, ainsi que d’autres ressources utiles à son entretien.",
-			"action": "Ajouter ma première plante"
+			"action": "Commencer"
 		}
 	},
 	"today": {
