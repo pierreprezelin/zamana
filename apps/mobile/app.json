@@ -42,8 +42,9 @@
 					]
 				}
 			],
-			"expo-sqlite",
+			"expo-image",
 			"expo-router",
+			"expo-sqlite",
 			[
 				"expo-splash-screen",
 				{
@@ -52,6 +53,8 @@
 					"imageWidth": 125
 				}
 			],
+			"expo-status-bar",
+			"expo-web-browser",
 			"@react-native-vector-icons/ionicons"
 		],
 		"experiments": {
