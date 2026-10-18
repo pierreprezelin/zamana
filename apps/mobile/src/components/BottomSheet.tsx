@@ -47,6 +47,7 @@ export default function BottomSheet({
 	closable = true,
 }: BottomSheetProps) {
 	const surfaceColor = useCSSVariable("--color-surface") as string;
+	const handleColor = useCSSVariable("--color-border") as string;
 	const { bottom } = useSafeAreaInsets();
 	const { dismiss } = useBottomSheetModal();
 
@@ -55,7 +56,8 @@ export default function BottomSheet({
 			ref={ref}
 			backdropComponent={closable ? Backdrop : LockedBackdrop}
 			enablePanDownToClose={closable}
-			handleComponent={null}
+			handleComponent={closable ? undefined : null}
+			handleIndicatorStyle={{ backgroundColor: handleColor }}
 			backgroundStyle={{
 				backgroundColor: surfaceColor,
 				borderRadius: 24,
@@ -64,7 +66,7 @@ export default function BottomSheet({
 			keyboardBlurBehavior="restore"
 		>
 			<BottomSheetView style={{ paddingBottom: bottom }}>
-				<View className="gap-5 p-5">
+				<View className={`gap-5 p-5 ${closable ? "pt-0" : ""}`}>
 					<View className="flex-row items-center justify-between gap-5">
 						<Text className="flex-1 font-recoleta text-2xl leading-[1.25] text-foreground mt-1.5">
 							{title}
