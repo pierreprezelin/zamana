@@ -5,6 +5,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Ionicons } from "@/components/ionicons";
 import Pressable from "@/components/Pressable";
 import Text from "@/components/Text";
+import { t } from "@/utils/i18n";
 
 type ScreenPlaceholderProps = {
 	title: string;
@@ -39,7 +40,7 @@ export function ScreenPlaceholder({
 						<Link href="/settings" asChild>
 							<Pressable
 								accessibilityRole="button"
-								accessibilityLabel="Paramètres"
+								accessibilityLabel={t("common.settings")}
 								pressedOpacity={0.5}
 								hitSlop={8}
 								className="size-10 items-center justify-center rounded-full"

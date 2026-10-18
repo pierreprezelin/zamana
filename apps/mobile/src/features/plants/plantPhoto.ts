@@ -5,6 +5,7 @@ import {
 	launchImageLibraryAsync,
 	requestCameraPermissionsAsync,
 } from "expo-image-picker";
+import { t } from "@/utils/i18n";
 
 export type PhotoSource = "camera" | "library";
 
@@ -20,7 +21,7 @@ export const photoUri = (filename: string) =>
 export const pickPhoto = async (source: PhotoSource) => {
 	if (source === "camera") {
 		const { granted } = await requestCameraPermissionsAsync();
-		if (!granted) throw new Error("L’accès à l’appareil photo a été refusé.");
+		if (!granted) throw new Error(t("plant.photo.cameraDenied"));
 	}
 
 	const launch =
@@ -35,7 +36,7 @@ export const pickPhoto = async (source: PhotoSource) => {
 
 	const [asset] = result.assets;
 	if (asset.fileSize && asset.fileSize > MAX_PHOTO_SIZE) {
-		throw new Error("La photo ne doit pas dépasser 2 Mo.");
+		throw new Error(t("plant.photo.tooLarge"));
 	}
 	return asset.uri;
 };

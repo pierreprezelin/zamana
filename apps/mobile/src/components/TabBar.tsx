@@ -21,6 +21,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Ionicons, type IoniconsIconName } from "@/components/ionicons";
 import PressFeedback from "@/components/Pressable";
 import type { tabs } from "@/constants/tabs";
+import { t } from "@/utils/i18n";
 
 const MIN_BOTTOM_OFFSET = 20;
 const TAB_BAR_HEIGHT = 56;
@@ -203,7 +204,7 @@ export function TabBarAddButton() {
 			<Link href="/plant/new" asChild>
 				<PressFeedback
 					accessibilityRole="button"
-					accessibilityLabel="Ajouter une plante"
+					accessibilityLabel={t("garden.addPlant")}
 					className="flex-1 items-center justify-center rounded-full bg-primary"
 				>
 					<Ionicons name="add" size={28} className="text-on-primary" />

@@ -3,6 +3,7 @@ import { router } from "expo-router";
 import { NativeTabs } from "expo-router/native-tabs";
 import { useCSSVariable } from "uniwind";
 import { tabs } from "@/constants/tabs";
+import { t } from "@/utils/i18n";
 
 export default function TabsLayout() {
 	const tintColor = useCSSVariable("--color-primary") as string;
@@ -45,7 +46,7 @@ export default function TabsLayout() {
 					renderingMode="template"
 					src={<NativeTabs.Trigger.VectorIcon family={Ionicons} name="add" />}
 				/>
-				<NativeTabs.Trigger.Label>Ajouter</NativeTabs.Trigger.Label>
+				<NativeTabs.Trigger.Label>{t("tabs.add")}</NativeTabs.Trigger.Label>
 			</NativeTabs.Trigger>
 		</NativeTabs>
 	);

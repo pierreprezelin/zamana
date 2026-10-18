@@ -4,6 +4,7 @@ import BottomSheet from "@/components/BottomSheet";
 import Button from "@/components/Button";
 import FieldButton from "@/components/FieldButton";
 import OptionList, { type Option } from "@/components/OptionList";
+import { t } from "@/utils/i18n";
 
 type SelectFieldProps<T extends string> = {
 	title: string;
@@ -64,7 +65,7 @@ export default function SelectField<T extends string>(
 				actions={
 					props.multiple && (
 						<Button
-							title="Valider"
+							title={t("common.validate")}
 							onPress={() => sheetRef.current?.dismiss()}
 						/>
 					)

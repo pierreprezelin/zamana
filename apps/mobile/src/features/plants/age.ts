@@ -1,5 +1,6 @@
-import type { Age, AgeUnit } from "@/features/plants/plantSchema";
+import type { Age } from "@/features/plants/plantSchema";
 import { parseISODate, toISODate } from "@/utils/dates";
+import { pluralForm, t } from "@/utils/i18n";
 
 const DAY_IN_MS = 24 * 60 * 60 * 1000;
 
@@ -28,16 +29,9 @@ export const bornAtToAge = (bornAt: string, now: Date): Age => {
 	return { amount: Math.max(days, 1), unit: "day" };
 };
 
-const unitLabels: Record<AgeUnit, [singular: string, plural: string]> = {
-	day: ["jour", "jours"],
-	month: ["mois", "mois"],
-	year: ["an", "ans"],
-};
-
 export const formatAge = (bornAt: string, now: Date) => {
 	const { amount, unit } = bornAtToAge(bornAt, now);
-	const [singular, plural] = unitLabels[unit];
-	return `${amount} ${amount > 1 ? plural : singular}`;
+	return t(`plant.age.${unit}.${pluralForm(amount)}`, { amount });
 };
 
 // Keeps the stored date when the age is untouched, as the prefilled age is rounded

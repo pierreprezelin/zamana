@@ -14,6 +14,7 @@ import Text from "@/components/Text";
 import { PlantPhoto } from "@/features/plants/components/PlantPhoto";
 import { displayName } from "@/features/plants/plantLabels";
 import { usePlant } from "@/features/plants/usePlantStore";
+import { t } from "@/utils/i18n";
 
 type Section = {
 	name: string;
@@ -33,23 +34,23 @@ const sections: Section[] = [
 	{
 		name: "index",
 		path: "",
-		label: "Informations",
+		label: t("plant.info.sections.information"),
 		headerAction: {
 			icon: "pencil-outline",
 			iconSize: 20,
-			label: "Modifier les informations",
+			label: t("plant.info.edit"),
 			path: "/edit",
 		},
 	},
-	{ name: "care", path: "/care", label: "Entretien" },
+	{ name: "care", path: "/care", label: t("plant.info.sections.care") },
 	{
 		name: "history",
 		path: "/history",
-		label: "Historique",
+		label: t("plant.info.sections.history"),
 		headerAction: {
 			icon: "add-outline",
 			iconSize: 24,
-			label: "Ajouter une entrée",
+			label: t("plant.info.addHistoryEntry"),
 			path: "/history-entry",
 		},
 	},

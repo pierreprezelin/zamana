@@ -1,0 +1,313 @@
+{
+	"common": {
+		"back": "Retour",
+		"cancel": "Annuler",
+		"clear": "Effacer {{label}}",
+		"clearSearch": "Effacer la recherche",
+		"close": "Fermer",
+		"confirm": "Confirmer",
+		"learnMore": "En savoir plus : {{label}}",
+		"save": "Enregistrer",
+		"saveFailed": "L'enregistrement a échoué, réessayez",
+		"settings": "Paramètres",
+		"validate": "Valider"
+	},
+	"screens": {
+		"article": "Article",
+		"editPlant": "Modifier les informations",
+		"encyclopedia": "Encyclopédie",
+		"historyEntry": "Entrée d'historique",
+		"newPlant": "Ajouter une plante",
+		"notifications": "Notifications",
+		"settings": "Paramètres"
+	},
+	"tabs": {
+		"add": "Ajouter",
+		"encyclopedia": "Encyclopédie",
+		"garden": "Jardin",
+		"tips": "Conseils",
+		"today": "Aujourd’hui"
+	},
+	"welcome": {
+		"skip": "Passer",
+		"intro": {
+			"title": "Bienvenue sur Zamana !",
+			"description": "Un pense-bête pour vous aider à vous occuper de vos plantes.",
+			"action": "Configurer l’application"
+		},
+		"reminders": {
+			"title": "Recevez des rappels",
+			"description": "N’oubliez plus d’arroser vos plantes, avec des notifications dédiées.",
+			"action": "Autoriser les notifications"
+		},
+		"weather": {
+			"title": "Recevez des alertes météo",
+			"description": "Rentrez vos plantes à l’intérieur si le temps est anormalement froid ou chaud.",
+			"action": "Autoriser la localisation"
+		},
+		"done": {
+			"title": "C’est tout !",
+			"description": "Votre jardin vous attend, ainsi que d’autres ressources utiles à son entretien.",
+			"action": "Ajouter ma première plante"
+		}
+	},
+	"today": {
+		"subtitle": "Qu'allons-nous faire aujourd'hui ?",
+		"greeting": {
+			"night": "Belle soirée",
+			"morning": "Belle matinée",
+			"afternoon": "Bonjour",
+			"evening": "Bonsoir"
+		}
+	},
+	"garden": {
+		"title": "Jardin",
+		"seeAll": "Voir tout",
+		"plantCount": {
+			"one": "{{amount}} plante",
+			"other": "{{amount}} plantes"
+		},
+		"noPlant": "Aucune plante",
+		"searchPlaceholder": "Rechercher dans mon jardin...",
+		"current": "Actuelles",
+		"past": "Passées",
+		"noCurrentPlant": "Aucune plante actuelle",
+		"noPastPlant": "Aucune plante passée",
+		"noSearchResult": "Aucune plante ne correspond à votre recherche",
+		"addPlant": "Ajouter une plante",
+		"empty": "Votre jardin est vide",
+		"addFirstPlant": "Ajouter ma première plante",
+		"list": "Liste",
+		"grid": "Grille"
+	},
+	"plant": {
+		"outdoor": "Extérieur",
+		"indoor": "Intérieur",
+		"info": {
+			"sections": {
+				"information": "Informations",
+				"care": "Entretien",
+				"history": "Historique"
+			},
+			"edit": "Modifier les informations",
+			"addHistoryEntry": "Ajouter une entrée",
+			"toxic": "Toxique pour les animaux en cas d’ingestion.",
+			"needs": "Besoins",
+			"identity": "Identité",
+			"lifecycle": "Cycle de vie",
+			"notes": "Notes",
+			"name": "Nom",
+			"type": "Type",
+			"acquiredAt": "Acquise le",
+			"origin": "Origine",
+			"age": "Âge",
+			"location": "Emplacement",
+			"flowering": "Floraison",
+			"floweringType": "Type de floraison",
+			"lifespan": "Durée de vie",
+			"restore": "Replacer dans mon jardin",
+			"restored": "{{name}} est de retour dans votre jardin ! 🌱",
+			"restoreFailed": "La restauration a échoué, réessayez",
+			"noLongerHave": "Je n’ai plus cette plante"
+		},
+		"form": {
+			"photo": "Photo",
+			"identity": "Identité",
+			"nickname": "Surnom",
+			"nicknamePlaceholder": "Ex : Raven",
+			"name": "Nom",
+			"nameRequired": "Nom *",
+			"namePlaceholder": "Ex : Zamioculcas",
+			"type": "Type",
+			"typePlaceholder": "Choisir un type",
+			"information": "Informations",
+			"details": "Détails",
+			"detailsSummary": "Nom scientifique, origine, date d’acquisition, emplacement, âge",
+			"scientificName": "Nom scientifique",
+			"scientificNamePlaceholder": "Ex : Zamioculcas zamiifolia",
+			"origin": "Origine",
+			"originPlaceholder": "Choisir une origine",
+			"acquiredAt": "Date d’acquisition",
+			"datePlaceholder": "Choisir une date",
+			"location": "Emplacement",
+			"locationPlaceholder": "Choisir une pièce",
+			"locationUnavailable": "Indisponible pour une plante d’extérieur (voir Besoins).",
+			"age": "Âge",
+			"agePlaceholder": "Ex : 3",
+			"needs": "Besoins",
+			"needsSummary": "Lumière, arrosage, température, humidité, extérieur, toxicité",
+			"outdoor": "Plante d’extérieur",
+			"outdoorHelper": "Active les alertes météo (gel, canicule).",
+			"toxic": "Toxicité pour les animaux",
+			"lifecycle": "Cycle de vie",
+			"lifecycleSummary": "Floraison, type de floraison, durée de vie",
+			"flowering": "Floraison",
+			"floweringPlaceholder": "Choisir les saisons",
+			"floweringType": "Type de floraison",
+			"floweringTypePlaceholder": "Choisir un type de floraison",
+			"lifespan": "Durée de vie",
+			"lifespanPlaceholder": "Choisir une durée de vie",
+			"notes": "Notes",
+			"notesSummary": "Anecdotes, conseils, particularités",
+			"notesPlaceholder": "Ex : Offerte pour mon anniversaire, à tourner vers la fenêtre de temps en temps.",
+			"notesLength": "{{length}} / {{max}} caractères",
+			"add": "Ajouter la plante",
+			"delete": "Supprimer la plante",
+			"saved": "Les informations ont bien été enregistrées ! 🎉",
+			"added": "{{name}} a rejoint votre jardin ! 🌱"
+		},
+		"photo": {
+			"change": "Changer la photo",
+			"importAnother": "Importer une autre photo",
+			"delete": "Supprimer la photo",
+			"add": "Prendre ou importer une photo",
+			"maxSize": "2Mo max.",
+			"sheetTitle": "Photo de la plante",
+			"takePhoto": "Prendre une photo",
+			"chooseFromLibrary": "Choisir dans la galerie",
+			"importFailed": "L’import de la photo a échoué",
+			"cameraDenied": "L’accès à l’appareil photo a été refusé.",
+			"tooLarge": "La photo ne doit pas dépasser 2 Mo."
+		},
+		"archive": {
+			"title": "Je n’ai plus cette plante",
+			"description": "Elle rejoindra l’onglet « Passées » de votre jardin. Vous pourrez la replacer à tout moment.",
+			"archived": "{{name}} est passée dans les plantes passées",
+			"failed": "L'archivage a échoué, réessayez"
+		},
+		"delete": {
+			"title": "Supprimer {{name}} ?",
+			"description": "La plante et son historique seront supprimés définitivement. Pour la garder dans votre jardin, choisissez plutôt « Je n’ai plus cette plante ».",
+			"confirm": "Supprimer définitivement",
+			"deleted": "{{name}} a bien été supprimée",
+			"failed": "La suppression a échoué, réessayez"
+		},
+		"errors": {
+			"nicknameTooLong": "Le surnom ne peut pas dépasser {{max}} caractères.",
+			"nameRequired": "Le nom est obligatoire.",
+			"nameTooLong": "Le nom ne peut pas dépasser {{max}} caractères.",
+			"scientificNameTooLong": "Le nom scientifique ne peut pas dépasser {{max}} caractères.",
+			"notesTooLong": "La note ne peut pas dépasser {{max}} caractères.",
+			"futureDate": "La date ne peut pas être dans le futur.",
+			"ageNotInteger": "L’âge doit être un nombre entier.",
+			"ageOutOfRange": "L’âge doit être compris entre 1 et {{max}}."
+		},
+		"type": {
+			"citrus": "Agrume",
+			"fruitTree": "Arbre fruitier",
+			"shrub": "Arbuste",
+			"herb": "Aromatique",
+			"bonsai": "Bonsaï",
+			"cactus": "Cactus",
+			"carnivorous": "Carnivore",
+			"fern": "Fougère",
+			"climber": "Grimpante",
+			"orchid": "Orchidée",
+			"palm": "Palmier",
+			"succulent": "Succulente"
+		},
+		"origin": {
+			"cutting": "Bouture",
+			"gift": "Cadeau",
+			"swap": "Échange",
+			"store": "Magasin",
+			"rescued": "Récupérée",
+			"seed": "Semis"
+		},
+		"location": {
+			"office": "Bureau",
+			"bedroom": "Chambre",
+			"kitchen": "Cuisine",
+			"entrance": "Entrée",
+			"bathroom": "Salle de bain",
+			"livingRoom": "Salon",
+			"veranda": "Véranda"
+		},
+		"season": {
+			"spring": "Printemps",
+			"summer": "Été",
+			"autumn": "Automne",
+			"winter": "Hiver"
+		},
+		"floweringType": {
+			"monocarpic": "Monocarpique",
+			"polycarpic": "Polycarpique"
+		},
+		"lifespan": {
+			"annual": "Annuelle",
+			"biennial": "Bisannuelle",
+			"perennial": "Vivace"
+		},
+		"ageUnit": {
+			"day": "Jours",
+			"month": "Mois",
+			"year": "Ans"
+		},
+		"age": {
+			"day": { "one": "{{amount}} jour", "other": "{{amount}} jours" },
+			"month": { "one": "{{amount}} mois", "other": "{{amount}} mois" },
+			"year": { "one": "{{amount}} an", "other": "{{amount}} ans" }
+		},
+		"archiveReason": {
+			"dead": "Elle est morte",
+			"given": "Je l’ai donnée",
+			"lost": "Je l’ai perdue",
+			"sold": "Je l’ai vendue",
+			"other": "Autre raison"
+		},
+		"needs": {
+			"light": {
+				"label": "Lumière",
+				"levels": ["Faible", "Indirecte", "Directe"]
+			},
+			"watering": {
+				"label": "Arrosage",
+				"levels": ["2-3 jours", "1-2 sem.", "1 mois"],
+				"details": [
+					"Tous les 2-3 jours",
+					"Toutes les 1-2 semaines",
+					"Une fois par mois"
+				]
+			},
+			"temperature": {
+				"label": "Température",
+				"levels": ["Fraîche", "Tempérée", "Chaude"],
+				"helper": "Fraîche : 10-15 °C · Tempérée : 15-24 °C · Chaude : 24 °C et +"
+			},
+			"humidity": {
+				"label": "Humidité",
+				"levels": ["Peu", "Normale", "Beaucoup"]
+			}
+		},
+		"help": {
+			"monocarpic": "Fleurit une seule fois puis meurt, parfois après de longues années (agave, broméliacée).",
+			"polycarpic": "Fleurit plusieurs fois au cours de sa vie (orchidée, rosier).",
+			"annual": "Accomplit tout son cycle en une seule saison.",
+			"biennial": "Vit deux ans : des feuilles la première année, des fleurs la seconde.",
+			"perennial": "Vit plusieurs années. Si elle est aussi monocarpique, elle peut ne fleurir qu’une fois au bout de 10, 20 ou 30 ans avant de mourir."
+		}
+	},
+	"settings": {
+		"appearance": "Apparence",
+		"theme": {
+			"light": "Clair",
+			"dark": "Sombre",
+			"system": "Système"
+		},
+		"userName": {
+			"title": "Mon nom dans l’application",
+			"empty": "Non renseigné",
+			"description": "Si aucun nom n’est renseigné, les messages seront neutres (ex : “Bonjour 👋”).",
+			"placeholder": "Ex : Camille",
+			"saved": "Votre nom a bien été enregistré ! 🎉",
+			"deleted": "Votre nom a bien été supprimé ! 🎉",
+			"tooLong": "Le nom ne peut pas dépasser {{max}} caractères.",
+			"invalid": "Le nom doit comporter uniquement des lettres, un tiret ou une apostrophe."
+		}
+	},
+	"appVersion": {
+		"title": "L'application a besoin d’une mise à jour",
+		"description": "Une nouvelle version corrige un problème important. Mettez Zamana à jour pour continuer à prendre soin de vos plantes ! 🌱",
+		"update": "Mettre à jour maintenant"
+	}
+}

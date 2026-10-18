@@ -5,7 +5,7 @@ import Pressable from "@/components/Pressable";
 import Text from "@/components/Text";
 import { PlantPhoto } from "@/features/plants/components/PlantPhoto";
 import { displayName } from "@/features/plants/plantLabels";
-import { archiveReasonLabels } from "@/features/plants/plantOptions";
+import { archiveReasonLabel } from "@/features/plants/plantOptions";
 import type { Plant } from "@/features/plants/plantSchema";
 
 type PlantCardProps = {
@@ -43,7 +43,7 @@ export function PlantCard({ plant, className, style }: PlantCardProps) {
 					)}
 					{plant.archiveReason && (
 						<Text numberOfLines={1} className="text-xs text-muted">
-							{archiveReasonLabels[plant.archiveReason]}
+							{archiveReasonLabel(plant.archiveReason)}
 						</Text>
 					)}
 				</View>

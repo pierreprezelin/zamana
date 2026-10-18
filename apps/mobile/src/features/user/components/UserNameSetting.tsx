@@ -4,8 +4,7 @@ import BottomSheet from "@/components/BottomSheet";
 import SettingsRow from "@/components/SettingsRow";
 import { UserNameForm } from "@/features/user/components/UserNameForm";
 import { useUserStore } from "@/features/user/useUserStore";
-
-const TITLE = "Mon nom dans l’application";
+import { t } from "@/utils/i18n";
 
 export function UserNameSetting() {
 	const name = useUserStore((state) => state.name);
@@ -15,11 +14,11 @@ export function UserNameSetting() {
 		<>
 			<SettingsRow
 				icon="chatbubble-ellipses-outline"
-				title={TITLE}
-				value={name ?? "Non renseigné"}
+				title={t("settings.userName.title")}
+				value={name ?? t("settings.userName.empty")}
 				onPress={() => sheetRef.current?.present()}
 			/>
-			<BottomSheet ref={sheetRef} title={TITLE}>
+			<BottomSheet ref={sheetRef} title={t("settings.userName.title")}>
 				<UserNameForm />
 			</BottomSheet>
 		</>

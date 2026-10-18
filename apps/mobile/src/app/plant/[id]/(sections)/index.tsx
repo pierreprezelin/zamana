@@ -15,17 +15,18 @@ import { NeedTile } from "@/features/plants/components/NeedTile";
 import { displayName } from "@/features/plants/plantLabels";
 import {
 	floweringTypeHelp,
-	floweringTypeLabels,
+	floweringTypeLabel,
 	lifespanHelp,
-	lifespanLabels,
-	locationLabels,
+	lifespanLabel,
+	locationLabel,
 	needs,
-	originLabels,
-	plantTypeLabels,
-	seasonLabels,
+	originLabel,
+	plantTypeLabel,
+	seasonLabel,
 } from "@/features/plants/plantOptions";
 import { usePlant, usePlantStore } from "@/features/plants/usePlantStore";
 import { formatDate } from "@/utils/dates";
+import { t } from "@/utils/i18n";
 
 export default function PlantInformationScreen() {
 	const { id } = useLocalSearchParams<{ id: string }>();
@@ -52,13 +53,13 @@ export default function PlantInformationScreen() {
 			router.dismissTo({ pathname: "/garden", params: { tab: "current" } });
 			Toast.show({
 				type: "success",
-				text1: `${displayName(plant)} est de retour dans votre jardin ! 🌱`,
+				text1: t("plant.info.restored", { name: displayName(plant) }),
 			});
 		} catch {
 			setRestoring(false);
 			Toast.show({
 				type: "error",
-				text1: "La restauration a échoué, réessayez",
+				text1: t("plant.info.restoreFailed"),
 			});
 		}
 	};
@@ -67,7 +68,7 @@ export default function PlantInformationScreen() {
 		const level = plant[need.key];
 		const value = (need.details ?? need.levels)[level - 1];
 		if (need.key !== "temperature") return value;
-		return `${value} · ${plant.outdoor ? "Extérieur" : "Intérieur"}`;
+		return `${value} · ${plant.outdoor ? t("plant.outdoor") : t("plant.indoor")}`;
 	};
 
 	return (
@@ -81,12 +82,14 @@ export default function PlantInformationScreen() {
 					<View className="flex-row items-center gap-3 rounded-2xl border border-warning bg-warning-tint px-4 py-3.5">
 						<Ionicons name="paw-outline" size={20} className="text-warning" />
 						<Text className="flex-1 font-outfit-semibold text-warning">
-							Toxique pour les animaux en cas d’ingestion.
+							{t("plant.info.toxic")}
 						</Text>
 					</View>
 				)}
 				<View className="gap-3">
-					<Text className="font-recoleta text-xl text-foreground">Besoins</Text>
+					<Text className="font-recoleta text-xl text-foreground">
+						{t("plant.info.needs")}
+					</Text>
 					<View className="gap-2">
 						{[needs.slice(0, 2), needs.slice(2)].map((row) => (
 							<View key={row[0].key} className="flex-row gap-2">
@@ -104,56 +107,58 @@ export default function PlantInformationScreen() {
 					</View>
 				</View>
 				<InfoCard
-					title="Identité"
+					title={t("plant.info.identity")}
 					rows={[
-						{ label: "Nom", value: plant.name },
-						{ label: "Type", value: plant.type && plantTypeLabels[plant.type] },
+						{ label: t("plant.info.name"), value: plant.name },
 						{
-							label: "Acquise le",
+							label: t("plant.info.type"),
+							value: plant.type && plantTypeLabel(plant.type),
+						},
+						{
+							label: t("plant.info.acquiredAt"),
 							value: plant.acquiredAt && formatDate(plant.acquiredAt),
 						},
 						{
-							label: "Origine",
-							value: plant.origin && originLabels[plant.origin],
+							label: t("plant.info.origin"),
+							value: plant.origin && originLabel(plant.origin),
 						},
 						{
-							label: "Âge",
+							label: t("plant.info.age"),
 							value: plant.bornAt && formatAge(plant.bornAt, new Date()),
 						},
 						{
-							label: "Emplacement",
+							label: t("plant.info.location"),
 							value: plant.outdoor
-								? "Extérieur"
-								: plant.location && locationLabels[plant.location],
+								? t("plant.outdoor")
+								: plant.location && locationLabel(plant.location),
 						},
 					]}
 				/>
 				<InfoCard
-					title="Cycle de vie"
+					title={t("plant.info.lifecycle")}
 					rows={[
 						{
-							label: "Floraison",
-							value:
-								plant.floweringSeasons
-									.map((season) => seasonLabels[season])
-									.join(", ") || null,
+							label: t("plant.info.flowering"),
+							value: plant.floweringSeasons.map(seasonLabel).join(", ") || null,
 						},
 						{
-							label: "Type de floraison",
+							label: t("plant.info.floweringType"),
 							value:
-								plant.floweringType && floweringTypeLabels[plant.floweringType],
+								plant.floweringType && floweringTypeLabel(plant.floweringType),
 							onInfoPress: () => showHelp(floweringTypeHelp),
 						},
 						{
-							label: "Durée de vie",
-							value: plant.lifespan && lifespanLabels[plant.lifespan],
+							label: t("plant.info.lifespan"),
+							value: plant.lifespan && lifespanLabel(plant.lifespan),
 							onInfoPress: () => showHelp(lifespanHelp),
 						},
 					]}
 				/>
 				{plant.notes && (
 					<View className="gap-3">
-						<Text className="font-recoleta text-xl text-foreground">Notes</Text>
+						<Text className="font-recoleta text-xl text-foreground">
+							{t("plant.info.notes")}
+						</Text>
 						<Text className="rounded-2xl border border-line bg-surface p-4 text-foreground">
 							{plant.notes}
 						</Text>
@@ -161,19 +166,19 @@ export default function PlantInformationScreen() {
 				)}
 				<View className="mt-auto gap-2">
 					<Link href={`/plant/${plant.id}/edit`} asChild>
-						<Button title="Modifier les informations" icon="pencil-outline" />
+						<Button title={t("plant.info.edit")} icon="pencil-outline" />
 					</Link>
 					{plant.archivedAt || restoring ? (
 						<Button
 							variant="ghostDanger"
-							title="Replacer dans mon jardin"
+							title={t("plant.info.restore")}
 							loading={restoring}
 							onPress={restore}
 						/>
 					) : (
 						<Button
 							variant="ghostDanger"
-							title="Je n’ai plus cette plante"
+							title={t("plant.info.noLongerHave")}
 							onPress={() => archiveSheetRef.current?.present()}
 						/>
 					)}

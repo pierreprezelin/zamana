@@ -6,6 +6,7 @@ import SettingsRow from "@/components/SettingsRow";
 import Text from "@/components/Text";
 import { ThemeSelector } from "@/features/theme/components/ThemeSelector";
 import { UserNameSetting } from "@/features/user/components/UserNameSetting";
+import { t } from "@/utils/i18n";
 
 export default function SettingsScreen() {
 	const insets = useSafeAreaInsets();
@@ -18,7 +19,10 @@ export default function SettingsScreen() {
 			<ThemeSelector />
 			<View className="gap-4">
 				<Link href="/settings/notifications" asChild>
-					<SettingsRow icon="notifications-outline" title="Notifications" />
+					<SettingsRow
+						icon="notifications-outline"
+						title={t("screens.notifications")}
+					/>
 				</Link>
 				<UserNameSetting />
 			</View>

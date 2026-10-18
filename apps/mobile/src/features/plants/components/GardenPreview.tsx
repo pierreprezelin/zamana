@@ -4,6 +4,7 @@ import Text from "@/components/Text";
 import { EmptyGarden } from "@/features/plants/components/EmptyGarden";
 import { PlantCard } from "@/features/plants/components/PlantCard";
 import { useCurrentPlants } from "@/features/plants/usePlantStore";
+import { t } from "@/utils/i18n";
 
 export function GardenPreview() {
 	const plants = useCurrentPlants();
@@ -11,10 +12,12 @@ export function GardenPreview() {
 	return (
 		<View className="gap-3">
 			<View className="flex-row items-center justify-between">
-				<Text className="font-recoleta text-2xl text-foreground">Jardin</Text>
+				<Text className="font-recoleta text-2xl text-foreground">
+					{t("garden.title")}
+				</Text>
 				{plants.length > 0 && (
 					<Link href="/garden">
-						<Text className="text-muted">Voir tout</Text>
+						<Text className="text-muted">{t("garden.seeAll")}</Text>
 					</Link>
 				)}
 			</View>

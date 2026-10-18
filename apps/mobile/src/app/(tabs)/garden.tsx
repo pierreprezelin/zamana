@@ -23,12 +23,13 @@ import {
 	useCurrentPlants,
 	usePastPlants,
 } from "@/features/plants/usePlantStore";
+import { pluralForm, t } from "@/utils/i18n";
 
 type Tab = "current" | "past";
 
 const emptyMessages: Record<Tab, string> = {
-	current: "Aucune plante actuelle",
-	past: "Aucune plante passée",
+	current: t("garden.noCurrentPlant"),
+	past: t("garden.noPastPlant"),
 };
 
 export default function GardenScreen() {
@@ -50,11 +51,13 @@ export default function GardenScreen() {
 
 	return (
 		<ScreenPlaceholder
-			title="Jardin"
+			title={t("garden.title")}
 			subtitle={
 				plantCount
-					? `${plantCount} plante${plantCount > 1 ? "s" : ""}`
-					: "Aucune plante"
+					? t(`garden.plantCount.${pluralForm(plantCount)}`, {
+							amount: plantCount,
+						})
+					: t("garden.noPlant")
 			}
 			showSettings
 		>
@@ -64,17 +67,17 @@ export default function GardenScreen() {
 						<SearchField
 							value={query}
 							onChangeText={setQuery}
-							placeholder="Rechercher dans mon jardin..."
+							placeholder={t("garden.searchPlaceholder")}
 						/>
 						<View className="flex-row items-center justify-between">
 							<View accessibilityRole="tablist" className="flex-row gap-2">
 								<Chip
-									label="Actuelles"
+									label={t("garden.current")}
 									selected={tab === "current"}
 									onPress={() => router.setParams({ tab: "current" })}
 								/>
 								<Chip
-									label="Passées"
+									label={t("garden.past")}
 									selected={tab === "past"}
 									onPress={() => router.setParams({ tab: "past" })}
 								/>
@@ -104,9 +107,7 @@ export default function GardenScreen() {
 						columnWrapperClassName={viewMode === "grid" ? "gap-2" : undefined}
 						ListEmptyComponent={
 							<Text className="py-8 text-center text-muted">
-								{query
-									? "Aucune plante ne correspond à votre recherche"
-									: emptyMessages[tab]}
+								{query ? t("garden.noSearchResult") : emptyMessages[tab]}
 							</Text>
 						}
 						ListFooterComponent={
@@ -114,7 +115,7 @@ export default function GardenScreen() {
 								<Link href="/plant/new" asChild>
 									<Button
 										variant="ghost"
-										title="Ajouter une plante"
+										title={t("garden.addPlant")}
 										icon="add-outline"
 									/>
 								</Link>

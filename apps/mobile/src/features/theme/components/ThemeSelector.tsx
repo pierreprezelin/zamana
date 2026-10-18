@@ -5,11 +5,12 @@ import {
 	type ThemePreference,
 	useThemeStore,
 } from "@/features/theme/useThemeStore";
+import { t } from "@/utils/i18n";
 
 const themeOptions: { value: ThemePreference; label: string }[] = [
-	{ value: "light", label: "Clair" },
-	{ value: "dark", label: "Sombre" },
-	{ value: "system", label: "Système" },
+	{ value: "light", label: t("settings.theme.light") },
+	{ value: "dark", label: t("settings.theme.dark") },
+	{ value: "system", label: t("settings.theme.system") },
 ];
 
 export function ThemeSelector() {
@@ -18,7 +19,7 @@ export function ThemeSelector() {
 
 	return (
 		<View>
-			<FieldLabel>Apparence</FieldLabel>
+			<FieldLabel>{t("settings.appearance")}</FieldLabel>
 			<SegmentedControl
 				options={themeOptions}
 				value={preference}

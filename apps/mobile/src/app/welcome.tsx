@@ -11,42 +11,18 @@ import { Ionicons, type IoniconsIconName } from "@/components/ionicons";
 import Text from "@/components/Text";
 import { StepsIndicator } from "@/features/onboarding/components/StepsIndicator";
 import { useOnboardingStore } from "@/features/onboarding/useOnboardingStore";
+import { t } from "@/utils/i18n";
 
 type Step = {
+	key: "intro" | "reminders" | "weather" | "done";
 	icon: IoniconsIconName;
-	title: string;
-	description: string;
-	action: string;
 };
 
 const steps: Step[] = [
-	{
-		icon: "leaf",
-		title: "Bienvenue sur Zamana !",
-		description: "Un pense-bête pour vous aider à vous occuper de vos plantes.",
-		action: "Configurer l’application",
-	},
-	{
-		icon: "notifications",
-		title: "Recevez des rappels",
-		description:
-			"N’oubliez plus d’arroser vos plantes, avec des notifications dédiées.",
-		action: "Autoriser les notifications",
-	},
-	{
-		icon: "thermometer",
-		title: "Recevez des alertes météo",
-		description:
-			"Rentrez vos plantes à l’intérieur si le temps est anormalement froid ou chaud.",
-		action: "Autoriser la localisation",
-	},
-	{
-		icon: "heart",
-		title: "C’est tout !",
-		description:
-			"Votre jardin vous attend, ainsi que d’autres ressources utiles à son entretien.",
-		action: "Ajouter ma première plante",
-	},
+	{ key: "intro", icon: "leaf" },
+	{ key: "reminders", icon: "notifications" },
+	{ key: "weather", icon: "thermometer" },
+	{ key: "done", icon: "heart" },
 ];
 
 const lastStep = steps.length - 1;
@@ -80,7 +56,7 @@ export default function WelcomeScreen() {
 			<View className="h-14 flex-row items-center justify-between px-5">
 				<StepsIndicator count={steps.length} progress={progress} />
 				<Button
-					title="Passer"
+					title={t("welcome.skip")}
 					variant="ghost"
 					className="-mr-2 h-8 rounded-lg px-2"
 					pressedOpacity={0.5}
@@ -98,20 +74,20 @@ export default function WelcomeScreen() {
 				onScroll={onScroll}
 			>
 				{steps.map((step, index) => (
-					<View key={step.title} style={{ width }} className="px-5 pb-5">
+					<View key={step.key} style={{ width }} className="px-5 pb-5">
 						<View className="flex-1 items-center justify-center">
 							<View className="size-16 items-center justify-center rounded-full bg-primary/5">
 								<Ionicons name={step.icon} size={26} className="text-primary" />
 							</View>
 							<Text className="mt-5 text-center font-recoleta text-[28px] leading-[1.25] text-foreground">
-								{step.title}
+								{t(`welcome.${step.key}.title`)}
 							</Text>
 							<Text className="mt-5 px-5 text-center text-base text-muted">
-								{step.description}
+								{t(`welcome.${step.key}.description`)}
 							</Text>
 						</View>
 						<Button
-							title={step.action}
+							title={t(`welcome.${step.key}.action`)}
 							onPress={() =>
 								index === lastStep ? finish(true) : goToStep(index + 1)
 							}

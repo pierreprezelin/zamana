@@ -7,6 +7,7 @@ import BottomSheet from "@/components/BottomSheet";
 import Button from "@/components/Button";
 import FieldButton from "@/components/FieldButton";
 import { formatDate, parseISODate, toISODate } from "@/utils/dates";
+import { locale, t } from "@/utils/i18n";
 
 type DateFieldProps = {
 	title: string;
@@ -66,12 +67,12 @@ export default function DateField({
 					title={title}
 					actions={
 						<Button
-							title="Valider"
+							title={t("common.validate")}
 							onPress={() => sheetRef.current?.dismiss()}
 						/>
 					}
 				>
-					<DateTimePicker {...pickerProps} display="inline" locale="fr_FR" />
+					<DateTimePicker {...pickerProps} display="inline" locale={locale()} />
 				</BottomSheet>
 			)}
 		</>

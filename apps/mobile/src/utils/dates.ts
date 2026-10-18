@@ -1,3 +1,5 @@
+import { locale } from "@/utils/i18n";
+
 const pad = (value: number) => String(value).padStart(2, "0");
 
 // Local date, toISOString would shift it to UTC
@@ -10,7 +12,7 @@ export const parseISODate = (isoDate: string) => {
 };
 
 export const formatDate = (isoDate: string) =>
-	parseISODate(isoDate).toLocaleDateString("fr-FR", {
+	parseISODate(isoDate).toLocaleDateString(locale(), {
 		day: "numeric",
 		month: "long",
 		year: "numeric",

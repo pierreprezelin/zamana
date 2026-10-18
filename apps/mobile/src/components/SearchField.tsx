@@ -2,6 +2,7 @@ import { View } from "react-native";
 import FieldInput from "@/components/FieldInput";
 import { Ionicons } from "@/components/ionicons";
 import Pressable from "@/components/Pressable";
+import { t } from "@/utils/i18n";
 
 type SearchFieldProps = {
 	value: string;
@@ -29,7 +30,7 @@ export default function SearchField({
 				{value ? (
 					<Pressable
 						accessibilityRole="button"
-						accessibilityLabel="Effacer la recherche"
+						accessibilityLabel={t("common.clearSearch")}
 						pressedClassName=""
 						pressedOpacity={0.5}
 						hitSlop={12}

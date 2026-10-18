@@ -1,9 +1,10 @@
 import {
-	locationLabels,
-	originLabels,
-	plantTypeLabels,
+	locationLabel,
+	originLabel,
+	plantTypeLabel,
 } from "@/features/plants/plantOptions";
 import type { Plant } from "@/features/plants/plantSchema";
+import { t } from "@/utils/i18n";
 
 type SearchablePlant = Pick<
 	Plant,
@@ -19,16 +20,16 @@ type SearchablePlant = Pick<
 const normalize = (text: string) =>
 	text.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
 
-// The French labels are searched, the stored values being keys like "kitchen"
+// The translated labels are searched, the stored values being keys like "kitchen"
 const searchableTexts = (plant: SearchablePlant) => [
 	plant.nickname,
 	plant.name,
 	plant.scientificName,
-	plant.type && plantTypeLabels[plant.type],
-	plant.origin && originLabels[plant.origin],
+	plant.type && plantTypeLabel(plant.type),
+	plant.origin && originLabel(plant.origin),
 	plant.outdoor
-		? "Extérieur"
-		: plant.location && locationLabels[plant.location],
+		? t("plant.outdoor")
+		: plant.location && locationLabel(plant.location),
 ];
 
 export const searchPlants = <T extends SearchablePlant>(

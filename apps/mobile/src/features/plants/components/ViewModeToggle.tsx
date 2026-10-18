@@ -1,12 +1,13 @@
 import { View } from "react-native";
 import { Ionicons, type IoniconsIconName } from "@/components/ionicons";
 import Pressable from "@/components/Pressable";
+import { t } from "@/utils/i18n";
 
 export type ViewMode = "list" | "grid";
 
 const modes: { value: ViewMode; icon: IoniconsIconName; label: string }[] = [
-	{ value: "list", icon: "list", label: "Liste" },
-	{ value: "grid", icon: "grid-outline", label: "Grille" },
+	{ value: "list", icon: "list", label: t("garden.list") },
+	{ value: "grid", icon: "grid-outline", label: t("garden.grid") },
 ];
 
 type ViewModeToggleProps = {

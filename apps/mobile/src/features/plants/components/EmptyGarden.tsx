@@ -3,6 +3,7 @@ import { View } from "react-native";
 import Button from "@/components/Button";
 import { Ionicons } from "@/components/ionicons";
 import Text from "@/components/Text";
+import { t } from "@/utils/i18n";
 
 type EmptyGardenProps = {
 	// The icon disc must stand out from the background it is shown on
@@ -20,10 +21,10 @@ export function EmptyGarden({
 				<Ionicons name="file-tray-outline" size={26} className="text-primary" />
 			</View>
 			<Text className="w-70 text-center font-recoleta text-xl text-foreground">
-				Votre jardin est vide
+				{t("garden.empty")}
 			</Text>
 			<Link href="/plant/new" asChild>
-				<Button title="Ajouter ma première plante" icon="add-outline" />
+				<Button title={t("garden.addFirstPlant")} icon="add-outline" />
 			</Link>
 		</View>
 	);

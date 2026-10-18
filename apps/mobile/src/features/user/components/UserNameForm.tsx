@@ -9,6 +9,7 @@ import {
 	userNameSchema,
 } from "@/features/user/userNameSchema";
 import { useUserStore } from "@/features/user/useUserStore";
+import { t } from "@/utils/i18n";
 
 export function UserNameForm() {
 	const savedName = useUserStore((state) => state.name);
@@ -32,11 +33,11 @@ export function UserNameForm() {
 			Toast.show({
 				type: "success",
 				text1: result.data
-					? "Votre nom a bien été enregistré ! 🎉"
-					: "Votre nom a bien été supprimé ! 🎉",
+					? t("settings.userName.saved")
+					: t("settings.userName.deleted"),
 			});
 		} catch {
-			setError("L'enregistrement a échoué, réessayez");
+			setError(t("common.saveFailed"));
 		} finally {
 			setSaving(false);
 		}
@@ -44,14 +45,11 @@ export function UserNameForm() {
 
 	return (
 		<>
-			<Text className="text-muted">
-				Si aucun nom n’est renseigné, les messages seront neutres (ex : “Bonjour
-				👋”).
-			</Text>
+			<Text className="text-muted">{t("settings.userName.description")}</Text>
 			<FieldInput
 				inBottomSheet
-				accessibilityLabel="Mon nom dans l’application"
-				placeholder="Ex : Camille"
+				accessibilityLabel={t("settings.userName.title")}
+				placeholder={t("settings.userName.placeholder")}
 				value={name}
 				onChangeText={(text) => {
 					setName(text);
@@ -65,7 +63,7 @@ export function UserNameForm() {
 				returnKeyType="done"
 				onSubmitEditing={submit}
 			/>
-			<Button title="Enregistrer" loading={saving} onPress={submit} />
+			<Button title={t("common.save")} loading={saving} onPress={submit} />
 		</>
 	);
 }

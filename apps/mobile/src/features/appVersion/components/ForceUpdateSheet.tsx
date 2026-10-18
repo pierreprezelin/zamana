@@ -6,6 +6,7 @@ import BottomSheet from "@/components/BottomSheet";
 import Button from "@/components/Button";
 import Text from "@/components/Text";
 import { isUpdateRequired } from "@/features/appVersion/updateRequired";
+import { t } from "@/utils/i18n";
 
 // TODO: replace with the App Store ID once the app is published
 const STORE_URL = Platform.select({
@@ -26,19 +27,16 @@ export function ForceUpdateSheet() {
 	return (
 		<BottomSheet
 			ref={sheetRef}
-			title="L'application a besoin d’une mise à jour"
+			title={t("appVersion.title")}
 			closable={false}
 			actions={
 				<Button
-					title="Mettre à jour maintenant"
+					title={t("appVersion.update")}
 					onPress={() => Linking.openURL(STORE_URL)}
 				/>
 			}
 		>
-			<Text className="text-muted">
-				Une nouvelle version corrige un problème important. Mettez Zamana à jour
-				pour continuer à prendre soin de vos plantes ! 🌱
-			</Text>
+			<Text className="text-muted">{t("appVersion.description")}</Text>
 		</BottomSheet>
 	);
 }

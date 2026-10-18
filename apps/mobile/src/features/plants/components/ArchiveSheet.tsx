@@ -10,6 +10,7 @@ import { displayName } from "@/features/plants/plantLabels";
 import { archiveReasonOptions } from "@/features/plants/plantOptions";
 import type { ArchiveReason, Plant } from "@/features/plants/plantSchema";
 import { usePlantStore } from "@/features/plants/usePlantStore";
+import { t } from "@/utils/i18n";
 
 type ArchiveSheetProps = {
 	ref: Ref<BottomSheetModal>;
@@ -31,10 +32,10 @@ export function ArchiveSheet({ ref, plant, onDone }: ArchiveSheetProps) {
 			router.dismissTo({ pathname: "/garden", params: { tab: "past" } });
 			Toast.show({
 				type: "success",
-				text1: `${displayName(plant)} est passée dans les plantes passées`,
+				text1: t("plant.archive.archived", { name: displayName(plant) }),
 			});
 		} catch {
-			Toast.show({ type: "error", text1: "L'archivage a échoué, réessayez" });
+			Toast.show({ type: "error", text1: t("plant.archive.failed") });
 		} finally {
 			setSaving(false);
 		}
@@ -43,21 +44,18 @@ export function ArchiveSheet({ ref, plant, onDone }: ArchiveSheetProps) {
 	return (
 		<BottomSheet
 			ref={ref}
-			title="Je n’ai plus cette plante"
+			title={t("plant.archive.title")}
 			actions={
 				<Button
 					variant="danger"
-					title="Confirmer"
+					title={t("common.confirm")}
 					disabled={!reason}
 					loading={saving}
 					onPress={archive}
 				/>
 			}
 		>
-			<Text className="text-muted">
-				Elle rejoindra l’onglet « Passées » de votre jardin. Vous pourrez la
-				replacer à tout moment.
-			</Text>
+			<Text className="text-muted">{t("plant.archive.description")}</Text>
 			<OptionList
 				options={archiveReasonOptions}
 				selected={[reason]}

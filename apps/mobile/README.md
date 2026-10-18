@@ -44,6 +44,7 @@ You can see here what's left to do before the initial release!
 🚧 Growth timeline
 🚧 Help articles
 🚧 Notifications
+🚧 Translations
 ✅ Dark theme
 
 ## Stack

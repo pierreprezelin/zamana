@@ -8,6 +8,7 @@ import Text from "@/components/Text";
 import { displayName } from "@/features/plants/plantLabels";
 import type { Plant } from "@/features/plants/plantSchema";
 import { usePlantStore } from "@/features/plants/usePlantStore";
+import { t } from "@/utils/i18n";
 
 type DeletePlantSheetProps = {
 	ref: Ref<BottomSheetModal>;
@@ -30,12 +31,15 @@ export function DeletePlantSheet({
 			await deletePlant(plant.id);
 			// Leaves the edit and information screens of a plant that no longer exists
 			router.dismissAll();
-			Toast.show({ type: "success", text1: `${name} a bien été supprimée` });
+			Toast.show({
+				type: "success",
+				text1: t("plant.delete.deleted", { name }),
+			});
 		} catch {
 			setDeleting(false);
 			Toast.show({
 				type: "error",
-				text1: "La suppression a échoué, réessayez",
+				text1: t("plant.delete.failed"),
 			});
 		}
 	};
@@ -43,24 +47,24 @@ export function DeletePlantSheet({
 	return (
 		<BottomSheet
 			ref={ref}
-			title={`Supprimer ${name} ?`}
+			title={t("plant.delete.title", { name })}
 			actions={
 				<>
 					<Button
 						variant="danger"
-						title="Supprimer définitivement"
+						title={t("plant.delete.confirm")}
 						loading={deleting}
 						onPress={remove}
 					/>
-					<Button variant="ghost" title="Annuler" onPress={onCancel} />
+					<Button
+						variant="ghost"
+						title={t("common.cancel")}
+						onPress={onCancel}
+					/>
 				</>
 			}
 		>
-			<Text className="text-muted">
-				La plante et son historique seront supprimés définitivement. Pour la
-				garder dans votre jardin, choisissez plutôt « Je n’ai plus cette plante
-				».
-			</Text>
+			<Text className="text-muted">{t("plant.delete.description")}</Text>
 		</BottomSheet>
 	);
 }

@@ -21,6 +21,7 @@ import { useOnboardingStore } from "@/features/onboarding/useOnboardingStore";
 // Loaded eagerly so the saved theme is applied before the first render
 import "@/features/theme/useThemeStore";
 import { useCSSVariable } from "uniwind";
+import { t } from "@/utils/i18n";
 
 SplashScreen.setOptions({
 	duration: 1000,
@@ -82,15 +83,15 @@ function RootLayout() {
 						</Stack.Protected>
 						<Stack.Screen
 							name="settings/index"
-							options={{ title: "Paramètres" }}
+							options={{ title: t("screens.settings") }}
 						/>
 						<Stack.Screen
 							name="settings/notifications"
-							options={{ title: "Notifications" }}
+							options={{ title: t("screens.notifications") }}
 						/>
 						<Stack.Screen
 							name="plant/new"
-							options={{ title: "Ajouter une plante" }}
+							options={{ title: t("screens.newPlant") }}
 						/>
 						<Stack.Screen
 							name="plant/[id]/(sections)"
@@ -98,17 +99,20 @@ function RootLayout() {
 						/>
 						<Stack.Screen
 							name="plant/[id]/edit"
-							options={{ title: "Modifier les informations" }}
+							options={{ title: t("screens.editPlant") }}
 						/>
 						<Stack.Screen
 							name="plant/[id]/history-entry"
-							options={{ title: "Entrée d'historique" }}
+							options={{ title: t("screens.historyEntry") }}
 						/>
 						<Stack.Screen
 							name="encyclopedia/[id]"
-							options={{ title: "Encyclopédie" }}
+							options={{ title: t("screens.encyclopedia") }}
 						/>
-						<Stack.Screen name="tips/[id]" options={{ title: "Article" }} />
+						<Stack.Screen
+							name="tips/[id]"
+							options={{ title: t("screens.article") }}
+						/>
 					</Stack>
 					<ForceUpdateSheet />
 				</BottomSheetModalProvider>

@@ -1,4 +1,5 @@
 import type { IoniconsIconName } from "@/components/ionicons";
+import { t } from "@/utils/i18n";
 
 type Tab = {
 	name: string;
@@ -11,25 +12,25 @@ export const tabs: Tab[] = [
 	{
 		name: "index",
 		href: "/",
-		label: "Aujourd’hui",
+		label: t("tabs.today"),
 		icon: { default: "calendar-outline", selected: "calendar" },
 	},
 	{
 		name: "garden",
 		href: "/garden",
-		label: "Jardin",
+		label: t("tabs.garden"),
 		icon: { default: "leaf-outline", selected: "leaf" },
 	},
 	{
 		name: "encyclopedia",
 		href: "/encyclopedia",
-		label: "Encyclopédie",
+		label: t("tabs.encyclopedia"),
 		icon: { default: "search-outline", selected: "search" },
 	},
 	{
 		name: "tips",
 		href: "/tips",
-		label: "Conseils",
+		label: t("tabs.tips"),
 		icon: { default: "bookmarks-outline", selected: "bookmarks" },
 	},
 ];

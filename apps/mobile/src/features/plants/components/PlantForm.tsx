@@ -54,6 +54,7 @@ import {
 	SCIENTIFIC_NAME_MAX_LENGTH,
 } from "@/features/plants/plantSchema";
 import { usePlantStore } from "@/features/plants/usePlantStore";
+import { t } from "@/utils/i18n";
 
 type ViewRef = ComponentRef<typeof View>;
 
@@ -84,7 +85,7 @@ function LabeledField({
 				{onInfoPress && (
 					<Pressable
 						accessibilityRole="button"
-						accessibilityLabel={`En savoir plus : ${label}`}
+						accessibilityLabel={t("common.learnMore", { label })}
 						pressedClassName=""
 						pressedOpacity={0.5}
 						hitSlop={12}
@@ -219,13 +220,13 @@ export function PlantForm({ plant }: { plant?: Plant }) {
 			Toast.show({
 				type: "success",
 				text1: plant
-					? "Les informations ont bien été enregistrées ! 🎉"
-					: `${displayName(data)} a rejoint votre jardin ! 🌱`,
+					? t("plant.form.saved")
+					: t("plant.form.added", { name: displayName(data) }),
 			});
 		} catch {
 			Toast.show({
 				type: "error",
-				text1: "L'enregistrement a échoué, réessayez",
+				text1: t("common.saveFailed"),
 			});
 		} finally {
 			setSaving(false);
@@ -246,7 +247,9 @@ export function PlantForm({ plant }: { plant?: Plant }) {
 			>
 				<View ref={contentRef} className="gap-8">
 					<View className="gap-4">
-						<Text className="font-recoleta text-xl text-foreground">Photo</Text>
+						<Text className="font-recoleta text-xl text-foreground">
+							{t("plant.form.photo")}
+						</Text>
 						<PhotoPicker
 							uri={form.photoUri}
 							onChange={(uri) => update("photoUri", uri)}
@@ -255,12 +258,15 @@ export function PlantForm({ plant }: { plant?: Plant }) {
 
 					<View className="gap-4">
 						<Text className="font-recoleta text-xl text-foreground">
-							Identité
+							{t("plant.form.identity")}
 						</Text>
-						<LabeledField label="Surnom" fieldRef={fieldRef("nickname")}>
+						<LabeledField
+							label={t("plant.form.nickname")}
+							fieldRef={fieldRef("nickname")}
+						>
 							<FieldInput
-								accessibilityLabel="Surnom"
-								placeholder="Ex : Raven"
+								accessibilityLabel={t("plant.form.nickname")}
+								placeholder={t("plant.form.nicknamePlaceholder")}
 								value={form.nickname}
 								onChangeText={(text) => update("nickname", text)}
 								error={errors.nickname}
@@ -268,10 +274,13 @@ export function PlantForm({ plant }: { plant?: Plant }) {
 								autoCapitalize="words"
 							/>
 						</LabeledField>
-						<LabeledField label="Nom *" fieldRef={fieldRef("name")}>
+						<LabeledField
+							label={t("plant.form.nameRequired")}
+							fieldRef={fieldRef("name")}
+						>
 							<FieldInput
-								accessibilityLabel="Nom"
-								placeholder="Ex : Zamioculcas"
+								accessibilityLabel={t("plant.form.name")}
+								placeholder={t("plant.form.namePlaceholder")}
 								value={form.name}
 								onChangeText={(text) => update("name", text)}
 								error={errors.name}
@@ -279,10 +288,13 @@ export function PlantForm({ plant }: { plant?: Plant }) {
 								autoCapitalize="sentences"
 							/>
 						</LabeledField>
-						<LabeledField label="Type" fieldRef={fieldRef("type")}>
+						<LabeledField
+							label={t("plant.form.type")}
+							fieldRef={fieldRef("type")}
+						>
 							<SelectField
-								title="Type"
-								placeholder="Choisir un type"
+								title={t("plant.form.type")}
+								placeholder={t("plant.form.typePlaceholder")}
 								options={plantTypeOptions}
 								value={form.type}
 								onChange={(value) => update("type", value)}
@@ -293,22 +305,22 @@ export function PlantForm({ plant }: { plant?: Plant }) {
 
 					<View className="gap-2">
 						<Text className="pb-1 font-recoleta text-xl text-foreground">
-							Informations
+							{t("plant.form.information")}
 						</Text>
 
 						<AccordionSection
-							title="Détails"
-							summary="Nom scientifique, origine, date d’acquisition, emplacement, âge"
+							title={t("plant.form.details")}
+							summary={t("plant.form.detailsSummary")}
 							expanded={expanded.details}
 							onToggle={() => toggleSection("details")}
 						>
 							<LabeledField
-								label="Nom scientifique"
+								label={t("plant.form.scientificName")}
 								fieldRef={fieldRef("scientificName")}
 							>
 								<FieldInput
-									accessibilityLabel="Nom scientifique"
-									placeholder="Ex : Zamioculcas zamiifolia"
+									accessibilityLabel={t("plant.form.scientificName")}
+									placeholder={t("plant.form.scientificNamePlaceholder")}
 									value={form.scientificName}
 									onChangeText={(text) => update("scientificName", text)}
 									error={errors.scientificName}
@@ -317,10 +329,13 @@ export function PlantForm({ plant }: { plant?: Plant }) {
 									autoCorrect={false}
 								/>
 							</LabeledField>
-							<LabeledField label="Origine" fieldRef={fieldRef("origin")}>
+							<LabeledField
+								label={t("plant.form.origin")}
+								fieldRef={fieldRef("origin")}
+							>
 								<SelectField
-									title="Origine"
-									placeholder="Choisir une origine"
+									title={t("plant.form.origin")}
+									placeholder={t("plant.form.originPlaceholder")}
 									options={originOptions}
 									value={form.origin}
 									onChange={(value) => update("origin", value)}
@@ -328,30 +343,28 @@ export function PlantForm({ plant }: { plant?: Plant }) {
 								/>
 							</LabeledField>
 							<LabeledField
-								label="Date d’acquisition"
+								label={t("plant.form.acquiredAt")}
 								fieldRef={fieldRef("acquiredAt")}
 							>
 								<DateField
-									title="Date d’acquisition"
-									placeholder="Choisir une date"
+									title={t("plant.form.acquiredAt")}
+									placeholder={t("plant.form.datePlaceholder")}
 									value={form.acquiredAt}
 									onChange={(value) => update("acquiredAt", value)}
 									error={errors.acquiredAt}
 								/>
 							</LabeledField>
 							<LabeledField
-								label="Emplacement"
+								label={t("plant.form.location")}
 								helper={
-									form.outdoor
-										? "Indisponible pour une plante d’extérieur (voir Besoins)."
-										: undefined
+									form.outdoor ? t("plant.form.locationUnavailable") : undefined
 								}
 								helperClassName="text-warning"
 								fieldRef={fieldRef("location")}
 							>
 								<SelectField
-									title="Emplacement"
-									placeholder="Choisir une pièce"
+									title={t("plant.form.location")}
+									placeholder={t("plant.form.locationPlaceholder")}
 									options={locationOptions}
 									value={form.outdoor ? null : form.location}
 									onChange={(value) => update("location", value)}
@@ -359,12 +372,15 @@ export function PlantForm({ plant }: { plant?: Plant }) {
 									disabled={form.outdoor}
 								/>
 							</LabeledField>
-							<LabeledField label="Âge" fieldRef={fieldRef("ageAmount")}>
+							<LabeledField
+								label={t("plant.form.age")}
+								fieldRef={fieldRef("ageAmount")}
+							>
 								<View className="flex-row items-start gap-2">
 									<View className="w-22">
 										<FieldInput
-											accessibilityLabel="Âge"
-											placeholder="Ex : 3"
+											accessibilityLabel={t("plant.form.age")}
+											placeholder={t("plant.form.agePlaceholder")}
 											value={form.ageAmount}
 											onChangeText={(text) => update("ageAmount", text)}
 											keyboardType="number-pad"
@@ -390,8 +406,8 @@ export function PlantForm({ plant }: { plant?: Plant }) {
 						</AccordionSection>
 
 						<AccordionSection
-							title="Besoins"
-							summary="Lumière, arrosage, température, humidité, extérieur, toxicité"
+							title={t("plant.form.needs")}
+							summary={t("plant.form.needsSummary")}
 							expanded={expanded.needs}
 							onToggle={() => toggleSection("needs")}
 						>
@@ -412,53 +428,53 @@ export function PlantForm({ plant }: { plant?: Plant }) {
 								</LabeledField>
 							))}
 							<ToggleRow
-								label="Plante d’extérieur"
-								helper="Active les alertes météo (gel, canicule)."
+								label={t("plant.form.outdoor")}
+								helper={t("plant.form.outdoorHelper")}
 								value={form.outdoor}
 								onChange={(value) => update("outdoor", value)}
 							/>
 							<ToggleRow
-								label="Toxicité pour les animaux"
+								label={t("plant.form.toxic")}
 								value={form.toxic}
 								onChange={(value) => update("toxic", value)}
 							/>
 						</AccordionSection>
 
 						<AccordionSection
-							title="Cycle de vie"
-							summary="Floraison, type de floraison, durée de vie"
+							title={t("plant.form.lifecycle")}
+							summary={t("plant.form.lifecycleSummary")}
 							expanded={expanded.lifecycle}
 							onToggle={() => toggleSection("lifecycle")}
 						>
-							<LabeledField label="Floraison">
+							<LabeledField label={t("plant.form.flowering")}>
 								<SelectField
 									multiple
-									title="Floraison"
-									placeholder="Choisir les saisons"
+									title={t("plant.form.flowering")}
+									placeholder={t("plant.form.floweringPlaceholder")}
 									options={seasonOptions}
 									value={form.floweringSeasons}
 									onChange={(value) => update("floweringSeasons", value)}
 								/>
 							</LabeledField>
 							<LabeledField
-								label="Type de floraison"
+								label={t("plant.form.floweringType")}
 								onInfoPress={() => showHelp(floweringTypeHelp)}
 							>
 								<SelectField
-									title="Type de floraison"
-									placeholder="Choisir un type de floraison"
+									title={t("plant.form.floweringType")}
+									placeholder={t("plant.form.floweringTypePlaceholder")}
 									options={floweringTypeOptions}
 									value={form.floweringType}
 									onChange={(value) => update("floweringType", value)}
 								/>
 							</LabeledField>
 							<LabeledField
-								label="Durée de vie"
+								label={t("plant.form.lifespan")}
 								onInfoPress={() => showHelp(lifespanHelp)}
 							>
 								<SelectField
-									title="Durée de vie"
-									placeholder="Choisir une durée de vie"
+									title={t("plant.form.lifespan")}
+									placeholder={t("plant.form.lifespanPlaceholder")}
 									options={lifespanOptions}
 									value={form.lifespan}
 									onChange={(value) => update("lifespan", value)}
@@ -467,15 +483,15 @@ export function PlantForm({ plant }: { plant?: Plant }) {
 						</AccordionSection>
 
 						<AccordionSection
-							title="Notes"
-							summary="Anecdotes, conseils, particularités"
+							title={t("plant.form.notes")}
+							summary={t("plant.form.notesSummary")}
 							expanded={expanded.notes}
 							onToggle={() => toggleSection("notes")}
 						>
 							<View ref={fieldRef("notes")}>
 								<FieldInput
-									accessibilityLabel="Notes"
-									placeholder="Ex : Offerte pour mon anniversaire, à tourner vers la fenêtre de temps en temps."
+									accessibilityLabel={t("plant.form.notes")}
+									placeholder={t("plant.form.notesPlaceholder")}
 									value={form.notes}
 									onChangeText={(text) => update("notes", text)}
 									error={errors.notes}
@@ -487,7 +503,10 @@ export function PlantForm({ plant }: { plant?: Plant }) {
 								<Text
 									className={`mt-1 text-right text-xs ${form.notes.length >= NOTES_MAX_LENGTH ? "text-danger" : "text-muted"}`}
 								>
-									{form.notes.length} / {NOTES_MAX_LENGTH} caractères
+									{t("plant.form.notesLength", {
+										length: form.notes.length,
+										max: NOTES_MAX_LENGTH,
+									})}
 								</Text>
 							</View>
 						</AccordionSection>
@@ -500,14 +519,14 @@ export function PlantForm({ plant }: { plant?: Plant }) {
 				style={{ paddingBottom: bottom }}
 			>
 				<Button
-					title={plant ? "Enregistrer" : "Ajouter la plante"}
+					title={plant ? t("common.save") : t("plant.form.add")}
 					loading={saving}
 					onPress={submit}
 				/>
 				{plant && (
 					<Button
 						variant="ghostDanger"
-						title="Supprimer la plante"
+						title={t("plant.form.delete")}
 						onPress={() => deleteSheetRef.current?.present()}
 					/>
 				)}

@@ -12,6 +12,7 @@ import { useCSSVariable } from "uniwind";
 import { Ionicons } from "@/components/ionicons";
 import Pressable from "@/components/Pressable";
 import Text from "@/components/Text";
+import { t } from "@/utils/i18n";
 
 type BottomSheetProps = {
 	ref: Ref<BottomSheetModal>;
@@ -74,7 +75,7 @@ export default function BottomSheet({
 						{closable && (
 							<Pressable
 								accessibilityRole="button"
-								accessibilityLabel="Fermer"
+								accessibilityLabel={t("common.close")}
 								pressedOpacity={0.5}
 								pressedClassName=""
 								hitSlop={8}

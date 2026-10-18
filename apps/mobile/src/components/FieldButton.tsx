@@ -3,6 +3,7 @@ import { twMerge } from "tailwind-merge";
 import { Ionicons, type IoniconsIconName } from "@/components/ionicons";
 import Pressable from "@/components/Pressable";
 import Text from "@/components/Text";
+import { t } from "@/utils/i18n";
 
 type FieldButtonProps = {
 	value: string | null;
@@ -54,7 +55,9 @@ export default function FieldButton({
 				{value && onClear && !disabled && (
 					<Pressable
 						accessibilityRole="button"
-						accessibilityLabel={`Effacer ${accessibilityLabel}`}
+						accessibilityLabel={t("common.clear", {
+							label: accessibilityLabel,
+						})}
 						pressedClassName=""
 						pressedOpacity={0.5}
 						hitSlop={12}

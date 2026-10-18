@@ -1,96 +1,66 @@
 import type { IoniconsIconName } from "@/components/ionicons";
 import type { Option } from "@/components/OptionList";
-import type {
-	AgeUnit,
-	ArchiveReason,
-	FloweringType,
-	Lifespan,
-	PlantLocation,
-	PlantOrigin,
-	PlantType,
-	Season,
+import {
+	AGE_UNITS,
+	ARCHIVE_REASONS,
+	type ArchiveReason,
+	FLOWERING_TYPES,
+	type FloweringType,
+	LIFESPANS,
+	type Lifespan,
+	PLANT_LOCATIONS,
+	PLANT_ORIGINS,
+	PLANT_TYPES,
+	type PlantLocation,
+	type PlantOrigin,
+	type PlantType,
+	SEASONS,
+	type Season,
 } from "@/features/plants/plantSchema";
+import { locale, t } from "@/utils/i18n";
 
-const toOptions = <T extends string>(labels: Record<T, string>): Option<T>[] =>
-	(Object.keys(labels) as T[]).map((value) => ({
-		value,
-		label: labels[value],
-	}));
+export const plantTypeLabel = (type: PlantType) => t(`plant.type.${type}`);
+export const originLabel = (origin: PlantOrigin) => t(`plant.origin.${origin}`);
+export const locationLabel = (location: PlantLocation) =>
+	t(`plant.location.${location}`);
+export const seasonLabel = (season: Season) => t(`plant.season.${season}`);
+export const floweringTypeLabel = (type: FloweringType) =>
+	t(`plant.floweringType.${type}`);
+export const lifespanLabel = (lifespan: Lifespan) =>
+	t(`plant.lifespan.${lifespan}`);
+export const archiveReasonLabel = (reason: ArchiveReason) =>
+	t(`plant.archiveReason.${reason}`);
 
-export const plantTypeLabels: Record<PlantType, string> = {
-	citrus: "Agrume",
-	fruitTree: "Arbre fruitier",
-	shrub: "Arbuste",
-	herb: "Aromatique",
-	bonsai: "Bonsaï",
-	cactus: "Cactus",
-	carnivorous: "Carnivore",
-	fern: "Fougère",
-	climber: "Grimpante",
-	orchid: "Orchidée",
-	palm: "Palmier",
-	succulent: "Succulente",
-};
+const toOptions = <T extends string>(
+	values: readonly T[],
+	label: (value: T) => string,
+): Option<T>[] => values.map((value) => ({ value, label: label(value) }));
 
-export const originLabels: Record<PlantOrigin, string> = {
-	cutting: "Bouture",
-	gift: "Cadeau",
-	swap: "Échange",
-	store: "Magasin",
-	rescued: "Récupérée",
-	seed: "Semis",
-};
+// Alphabetical in the current language, unlike the lists with a natural order
+const toSortedOptions = <T extends string>(
+	values: readonly T[],
+	label: (value: T) => string,
+) =>
+	toOptions(values, label).sort((a, b) =>
+		a.label.localeCompare(b.label, locale()),
+	);
 
-export const locationLabels: Record<PlantLocation, string> = {
-	office: "Bureau",
-	bedroom: "Chambre",
-	kitchen: "Cuisine",
-	entrance: "Entrée",
-	bathroom: "Salle de bain",
-	livingRoom: "Salon",
-	veranda: "Véranda",
-};
-
-export const seasonLabels: Record<Season, string> = {
-	spring: "Printemps",
-	summer: "Été",
-	autumn: "Automne",
-	winter: "Hiver",
-};
-
-export const floweringTypeLabels: Record<FloweringType, string> = {
-	monocarpic: "Monocarpique",
-	polycarpic: "Polycarpique",
-};
-
-export const lifespanLabels: Record<Lifespan, string> = {
-	annual: "Annuelle",
-	biennial: "Bisannuelle",
-	perennial: "Vivace",
-};
-
-export const ageUnitLabels: Record<AgeUnit, string> = {
-	day: "Jours",
-	month: "Mois",
-	year: "Ans",
-};
-
-export const archiveReasonLabels: Record<ArchiveReason, string> = {
-	dead: "Elle est morte",
-	given: "Je l’ai donnée",
-	lost: "Je l’ai perdue",
-	sold: "Je l’ai vendue",
-	other: "Autre raison",
-};
-
-export const plantTypeOptions = toOptions(plantTypeLabels);
-export const originOptions = toOptions(originLabels);
-export const locationOptions = toOptions(locationLabels);
-export const seasonOptions = toOptions(seasonLabels);
-export const floweringTypeOptions = toOptions(floweringTypeLabels);
-export const lifespanOptions = toOptions(lifespanLabels);
-export const ageUnitOptions = toOptions(ageUnitLabels);
-export const archiveReasonOptions = toOptions(archiveReasonLabels);
+export const plantTypeOptions = toSortedOptions(PLANT_TYPES, plantTypeLabel);
+export const originOptions = toSortedOptions(PLANT_ORIGINS, originLabel);
+export const locationOptions = toSortedOptions(PLANT_LOCATIONS, locationLabel);
+export const seasonOptions = toOptions(SEASONS, seasonLabel);
+export const floweringTypeOptions = toOptions(
+	FLOWERING_TYPES,
+	floweringTypeLabel,
+);
+export const lifespanOptions = toOptions(LIFESPANS, lifespanLabel);
+export const ageUnitOptions = toOptions(AGE_UNITS, (unit) =>
+	t(`plant.ageUnit.${unit}`),
+);
+export const archiveReasonOptions = toOptions(
+	ARCHIVE_REASONS,
+	archiveReasonLabel,
+);
 
 export type NeedKey = "light" | "watering" | "temperature" | "humidity";
 
@@ -99,41 +69,37 @@ type Need = {
 	label: string;
 	icon: IoniconsIconName;
 	// Short labels fit the form selector, long ones the information tiles
-	levels: [string, string, string];
-	details?: [string, string, string];
+	levels: string[];
+	details?: string[];
 	helper?: string;
 };
 
 export const needs: Need[] = [
 	{
 		key: "light",
-		label: "Lumière",
+		label: t("plant.needs.light.label"),
 		icon: "sunny-outline",
-		levels: ["Faible", "Indirecte", "Directe"],
+		levels: t("plant.needs.light.levels", { returnObjects: true }),
 	},
 	{
 		key: "watering",
-		label: "Arrosage",
+		label: t("plant.needs.watering.label"),
 		icon: "water-outline",
-		levels: ["2-3 jours", "1-2 sem.", "1 mois"],
-		details: [
-			"Tous les 2-3 jours",
-			"Toutes les 1-2 semaines",
-			"Une fois par mois",
-		],
+		levels: t("plant.needs.watering.levels", { returnObjects: true }),
+		details: t("plant.needs.watering.details", { returnObjects: true }),
 	},
 	{
 		key: "temperature",
-		label: "Température",
+		label: t("plant.needs.temperature.label"),
 		icon: "thermometer-outline",
-		levels: ["Fraîche", "Tempérée", "Chaude"],
-		helper: "Fraîche : 10-15 °C · Tempérée : 15-24 °C · Chaude : 24 °C et +",
+		levels: t("plant.needs.temperature.levels", { returnObjects: true }),
+		helper: t("plant.needs.temperature.helper"),
 	},
 	{
 		key: "humidity",
-		label: "Humidité",
+		label: t("plant.needs.humidity.label"),
 		icon: "rainy-outline",
-		levels: ["Peu", "Normale", "Beaucoup"],
+		levels: t("plant.needs.humidity.levels", { returnObjects: true }),
 	},
 ];
 
@@ -143,33 +109,17 @@ export type Help = {
 };
 
 export const floweringTypeHelp: Help = {
-	title: "Type de floraison",
-	items: [
-		{
-			label: "Monocarpique",
-			text: "Fleurit une seule fois puis meurt, parfois après de longues années (agave, broméliacée).",
-		},
-		{
-			label: "Polycarpique",
-			text: "Fleurit plusieurs fois au cours de sa vie (orchidée, rosier).",
-		},
-	],
+	title: t("plant.info.floweringType"),
+	items: FLOWERING_TYPES.map((type) => ({
+		label: floweringTypeLabel(type),
+		text: t(`plant.help.${type}`),
+	})),
 };
 
 export const lifespanHelp: Help = {
-	title: "Durée de vie",
-	items: [
-		{
-			label: "Annuelle",
-			text: "Accomplit tout son cycle en une seule saison.",
-		},
-		{
-			label: "Bisannuelle",
-			text: "Vit deux ans : des feuilles la première année, des fleurs la seconde.",
-		},
-		{
-			label: "Vivace",
-			text: "Vit plusieurs années. Si elle est aussi monocarpique, elle peut ne fleurir qu’une fois au bout de 10, 20 ou 30 ans avant de mourir.",
-		},
-	],
+	title: t("plant.info.lifespan"),
+	items: LIFESPANS.map((lifespan) => ({
+		label: lifespanLabel(lifespan),
+		text: t(`plant.help.${lifespan}`),
+	})),
 };
