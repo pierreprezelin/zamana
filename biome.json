@@ -7,7 +7,13 @@
 	},
 	"files": {
 		"ignoreUnknown": false,
-		"includes": ["**", "!apps/mobile/assets", "!apps/mobile/src/global.css"]
+		"includes": [
+			"**",
+			"!apps/mobile/assets",
+			"!apps/mobile/src/global.css",
+			"!apps/site/public",
+			"!apps/site/src/assets"
+		]
 	},
 	"formatter": {
 		"enabled": true,
@@ -32,5 +38,18 @@
 				"organizeImports": "on"
 			}
 		}
-	}
+	},
+	"overrides": [
+		{
+			"includes": ["**/*.astro"],
+			"linter": {
+				"rules": {
+					"correctness": {
+						"noUnusedImports": "off",
+						"noUnusedVariables": "off"
+					}
+				}
+			}
+		}
+	]
 }
