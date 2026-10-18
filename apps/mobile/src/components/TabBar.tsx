@@ -32,7 +32,8 @@ export const INDICATOR_TIMING = {
 	reduceMotion: ReduceMotion.System,
 };
 
-type TabBarItemProps = TabTriggerSlotProps & {
+// expo-router still types this ref with the pre-0.88 class View
+type TabBarItemProps = Omit<TabTriggerSlotProps, "ref"> & {
 	label: string;
 	icon: (typeof tabs)[number]["icon"];
 	onFocusedLayout: (layout: LayoutRectangle) => void;

@@ -1,5 +1,5 @@
 import { router } from "expo-router";
-import { NativeTabs } from "expo-router/unstable-native-tabs";
+import { NativeTabs } from "expo-router/native-tabs";
 import { DynamicColorIOS } from "react-native";
 import { Ionicons } from "@/components/ionicons";
 import palette from "@/constants/palette";

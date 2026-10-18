@@ -1,4 +1,4 @@
-import type { ReactNode, Ref } from "react";
+import type { ComponentRef, ReactNode, Ref } from "react";
 import {
 	Pressable as RNPressable,
 	type PressableProps as RNPressableProps,
@@ -15,7 +15,7 @@ import { twMerge } from "tailwind-merge";
 const AnimatedPressable = Animated.createAnimatedComponent(RNPressable);
 
 export interface PressableProps extends Omit<RNPressableProps, "children"> {
-	ref?: Ref<View>;
+	ref?: Ref<ComponentRef<typeof View>>;
 	children?: ReactNode;
 	className?: string;
 	pressedClassName?: string;
