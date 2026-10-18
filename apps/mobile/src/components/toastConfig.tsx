@@ -34,7 +34,7 @@ const renderToast =
 	({ text1 }: ToastConfigParams<unknown>) => (
 		<View
 			className={twMerge(
-				"mx-5 flex-row items-center gap-2 self-stretch rounded-[16px] border px-4 py-3",
+				"mx-5 flex-row items-center gap-2 self-stretch rounded-2xl border px-4 py-3",
 				className,
 			)}
 			style={{ boxShadow: TAB_BAR_SHADOW }}

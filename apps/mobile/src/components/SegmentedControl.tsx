@@ -85,7 +85,7 @@ export default function SegmentedControl<T extends string>({
 				)
 			}
 			className={twMerge(
-				"h-9 flex-row rounded-[12px] bg-primary-tint p-0.5",
+				"h-9 flex-row rounded-xl bg-primary-tint p-0.5",
 				className,
 			)}
 		>

@@ -34,7 +34,7 @@ export default function OptionList<T extends string>({
 						pressedClassName=""
 						pressedOpacity={0.5}
 						onPress={() => onPress(option.value)}
-						className={`h-11 flex-row items-center justify-between rounded-[12px] px-3 ${checked ? "bg-primary-tint" : ""}`}
+						className={`h-11 flex-row items-center justify-between rounded-xl px-3 ${checked ? "bg-primary-tint" : ""}`}
 					>
 						<Text
 							className={

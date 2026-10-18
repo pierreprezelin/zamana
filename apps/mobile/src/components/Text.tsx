@@ -8,7 +8,7 @@ export default function Text({
 }: TextProps & { ref?: Ref<ComponentRef<typeof RNText>> }) {
 	return (
 		<RNText
-			className={twMerge("font-outfit leading-[1.5] text-[14px]", className)}
+			className={twMerge("font-outfit leading-[1.5] text-sm", className)}
 			{...props}
 		/>
 	);

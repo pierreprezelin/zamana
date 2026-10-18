@@ -37,7 +37,7 @@ export default function FieldButton({
 				disabled={disabled}
 				onPress={onPress}
 				className={twMerge(
-					"h-12 flex-row items-center gap-3 rounded-[12px] border bg-surface px-4",
+					"h-12 flex-row items-center gap-3 rounded-xl border bg-surface px-4",
 					error ? "border-danger" : "border-border",
 					disabled && "border-line bg-line",
 				)}
@@ -69,7 +69,7 @@ export default function FieldButton({
 					className={disabled ? "text-placeholder" : "text-foreground"}
 				/>
 			</Pressable>
-			{error && <Text className="text-[12px] text-danger">{error}</Text>}
+			{error && <Text className="text-xs text-danger">{error}</Text>}
 		</View>
 	);
 }

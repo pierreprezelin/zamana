@@ -25,13 +25,13 @@ export default function FieldInput({
 			<Input
 				placeholderTextColorClassName="accent-placeholder"
 				className={twMerge(
-					"h-12 rounded-[12px] border bg-surface px-4 font-outfit text-[14px] text-foreground",
+					"h-12 rounded-xl border bg-surface px-4 font-outfit text-sm text-foreground",
 					error ? "border-danger" : "border-border",
 					className,
 				)}
 				{...props}
 			/>
-			{error && <Text className="text-[12px] text-danger">{error}</Text>}
+			{error && <Text className="text-xs text-danger">{error}</Text>}
 		</View>
 	);
 }

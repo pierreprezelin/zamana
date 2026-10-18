@@ -61,7 +61,7 @@ export default function Button({
 			pressedClassName={styles.pressedClassName}
 			pressedOpacity={styles.pressedOpacity}
 			className={twMerge(
-				"h-12 flex-row items-center justify-center gap-2 rounded-[12px] px-8",
+				"h-12 flex-row items-center justify-center gap-2 rounded-xl px-8",
 				styles.className,
 				className,
 			)}

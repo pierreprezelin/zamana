@@ -32,7 +32,7 @@ export function ScreenPlaceholder({
 							{title}
 						</Text>
 						{subtitle && (
-							<Text className="text-[16px] text-muted">{subtitle}</Text>
+							<Text className="text-base text-muted">{subtitle}</Text>
 						)}
 					</View>
 					{showSettings && (

@@ -20,7 +20,7 @@ export default function AccordionSection({
 	children,
 }: AccordionSectionProps) {
 	return (
-		<View className="overflow-hidden rounded-[16px] border border-line bg-surface">
+		<View className="overflow-hidden rounded-2xl border border-line bg-surface">
 			<Pressable
 				accessibilityRole="button"
 				accessibilityState={{ expanded }}
@@ -30,10 +30,10 @@ export default function AccordionSection({
 				className="flex-row items-center gap-3 px-4 py-3.5"
 			>
 				<View className="flex-1">
-					<Text className="font-outfit-semibold text-[16px] text-foreground">
+					<Text className="font-outfit-semibold text-base text-foreground">
 						{title}
 					</Text>
-					<Text numberOfLines={1} className="text-[12px] text-muted">
+					<Text numberOfLines={1} className="text-xs text-muted">
 						{summary}
 					</Text>
 				</View>

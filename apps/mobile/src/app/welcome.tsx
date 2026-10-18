@@ -82,7 +82,7 @@ export default function WelcomeScreen() {
 				<Button
 					title="Passer"
 					variant="ghost"
-					className="-mr-2 h-8 rounded-[8px] px-2"
+					className="-mr-2 h-8 rounded-lg px-2"
 					pressedOpacity={0.5}
 					hitSlop={8}
 					onPress={() => finish(false)}
@@ -106,7 +106,7 @@ export default function WelcomeScreen() {
 							<Text className="mt-5 text-center font-recoleta text-[28px] leading-[1.25] text-foreground">
 								{step.title}
 							</Text>
-							<Text className="mt-5 px-5 text-center text-[16px] text-muted">
+							<Text className="mt-5 px-5 text-center text-base text-muted">
 								{step.description}
 							</Text>
 						</View>

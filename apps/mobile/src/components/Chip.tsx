@@ -20,7 +20,7 @@ export default function Chip({
 			pressedClassName=""
 			pressedOpacity={0.75}
 			className={twMerge(
-				"h-9 items-center justify-center rounded-[12px] px-4",
+				"h-9 items-center justify-center rounded-xl px-4",
 				selected ? "bg-primary" : "bg-primary-tint",
 				className,
 			)}

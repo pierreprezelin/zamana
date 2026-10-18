@@ -20,7 +20,7 @@ export function EmptyGarden({
 				<Ionicons name="file-tray-outline" size={26} className="text-primary" />
 			</View>
 			<Text className="w-70 text-center font-recoleta text-xl text-foreground">
-				Il n'y a pas encore de plante dans votre jardin
+				Votre jardin est vide
 			</Text>
 			<Link href="/plant/new" asChild>
 				<Button title="Ajouter ma première plante" icon="add-outline" />
