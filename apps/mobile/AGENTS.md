@@ -18,7 +18,7 @@ The app default language is French, being translated into English later for the 
 - TypeScript with tRPC for end-to-end type-safety
 - SQLite (with the expo-sqlite package) as database, local and offline
 - Unit testing with jest and the jest-expo package
-- Styles with Tailwind v3 and Nativewind v4
+- Styles with Tailwind v4 and Uniwind
 - Icons with Ionicons and the react-native-vector-icons/iconicons package
 - Bun as package manager and runtime, instead of npm, pnpm or yarn
 - Biome as linter and formatter
@@ -28,10 +28,9 @@ The app default language is French, being translated into English later for the 
 
 - Check @package.json to see available commands.
 - Use Bun as package manager and runtime instead of npm, pnpm or Yarn.
-- Use Tailwind/Nativewind with className for styles, with inline StyleSheet only if the rules doesn't exist.
+- Use Tailwind/Uniwind with className for styles, with inline StyleSheet only if the rules doesn't exist.
 - We use a feature-based MVVM architecture. You'll find the dedicated hooks, providers, tests, etc, of a specific feature in the /features folder. Common logic is found in the folders of the same names at the root of the project.
-- We use a Test-Driven-Development (TDD) logic when implementing or updating a feature, so don't forget to write unit tests for the critical logic (hooks, providers, endpoints, etc) and check for any regression. Respect the feature-based architecture for the ``__tests__`` folder.
-- As we use Typescript by default, run bun ts to check if everything if still ok after a code update.
+- Tests live in the `__tests__` folder of their feature. The TDD workflow is in the root `CLAUDE.md`.
 - For spacing, margins, paddings, we are in base-8, so if you see minor inconsistencies on the Figma design (like 9px instead of 8px), round it to the nearast logical number.
 
 ## Expo
@@ -48,18 +47,12 @@ Expo ships breaking changes every SDK release. APIs you remember are likely rena
 
 ### Commands
 
-Use `bunx` instead of `npx` if the project uses bun (`bun.lock` present).
-
 ```bash
-npx expo install <package>  # ALWAYS use instead of npm/yarn/pnpm/bun add — resolves SDK-compatible versions
-npx expo start              # start the dev server
-npx expo lint               # lint
-npx tsc --noEmit            # typecheck
-npx expo-doctor             # diagnose dependency and config issues
-npx expo install --fix      # fix incompatible package versions
+bunx expo install <package>  # ALWAYS use instead of bun add — resolves SDK-compatible versions
+bunx expo start              # start the dev server
+bunx expo-doctor             # diagnose dependency and config issues
+bunx expo install --fix      # fix incompatible package versions
 ```
-
-Run lint and typecheck before declaring any task done.
 
 ### Navigation & Routing
 

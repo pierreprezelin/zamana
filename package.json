@@ -9,6 +9,7 @@
 		"check:fix": "biome check --write",
 		"ts": "bun --filter '*' ts",
 		"test": "bun --filter '*' test",
+		"verify": "bun run check && bun run ts && bun run test",
 		"prepare": "simple-git-hooks"
 	},
 	"simple-git-hooks": {
