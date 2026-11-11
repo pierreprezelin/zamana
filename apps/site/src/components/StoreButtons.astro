@@ -1,0 +1,77 @@
+---
+import { Icon } from "astro-icon/components";
+import { Badge } from "@/components/starwind/badge";
+import { Button, ButtonVariants } from "@/components/starwind/button";
+import { STORE_URLS } from "@/constants/stores";
+import type { Dictionary } from "@/i18n";
+
+interface Props {
+	t: Dictionary;
+	onPrimary?: boolean;
+}
+
+const { t, onPrimary = false } = Astro.props;
+
+const stores = [
+	{ id: "appStore", icon: "ion:logo-apple" },
+	{ id: "googlePlay", icon: "ion:logo-google-playstore" },
+] as const;
+const hasUnavailableStore = stores.some(({ id }) => !STORE_URLS[id]);
+
+const storeButtonClass = [
+	"gap-2 rounded-xl px-5 text-base font-semibold",
+	onPrimary && "bg-background text-foreground hover:bg-background/90",
+];
+// Starwind's disabled Button ships a client script, a native disabled button does not
+const unavailableClass = ButtonVariants.button({
+	variant: "primary",
+	size: "lg",
+	class: [
+		...storeButtonClass,
+		"border-2 border-dashed bg-transparent disabled:opacity-100",
+		onPrimary
+			? "border-primary-foreground/50 text-primary-foreground/80"
+			: "border-primary/40 text-primary/80 dark:border-foreground/40 dark:text-foreground/80",
+	],
+});
+---
+
+<div class="flex flex-col items-start gap-3">
+	<ul class="flex flex-wrap gap-3">
+		{
+			stores.map(({ id, icon }) => (
+				<li>
+					{STORE_URLS[id] ? (
+						<Button
+							href={STORE_URLS[id]}
+							variant="primary"
+							size="lg"
+							class:list={storeButtonClass}
+						>
+							<Icon name={icon} aria-hidden="true" />
+							{t.stores[id]}
+						</Button>
+					) : (
+						<button type="button" disabled class={unavailableClass}>
+							<Icon name={icon} aria-hidden="true" />
+							{t.stores[id]}
+							<span class="sr-only">, {t.stores.comingSoon}</span>
+						</button>
+					)}
+				</li>
+			))
+		}
+	</ul>
+	{
+		hasUnavailableStore && !onPrimary && (
+			<Badge
+				variant="secondary"
+				size="sm"
+				class="bg-background font-semibold"
+				aria-hidden="true"
+			>
+				{t.stores.comingSoon}
+			</Badge>
+		)
+	}
+</div>

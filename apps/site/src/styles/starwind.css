@@ -1,0 +1,176 @@
+@import "tailwindcss";
+
+@font-face {
+	font-family: "Outfit";
+	src: url("/fonts/Outfit-Regular.woff2") format("woff2");
+	font-weight: 400;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: "Outfit";
+	src: url("/fonts/Outfit-SemiBold.woff2") format("woff2");
+	font-weight: 600;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: "Recoleta";
+	src: url("/fonts/Recoleta-SemiBold.woff2") format("woff2");
+	font-weight: 600;
+	font-display: swap;
+}
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme inline {
+	--font-outfit: "Outfit", system-ui, sans-serif;
+	--font-recoleta: "Recoleta", Georgia, serif;
+	--font-sans: var(--font-outfit);
+	--font-heading: var(--font-recoleta);
+
+	--color-background: var(--background);
+	--color-foreground: var(--foreground);
+	--color-card: var(--card);
+	--color-card-foreground: var(--foreground);
+	--color-popover: var(--card);
+	--color-popover-foreground: var(--foreground);
+	--color-primary: var(--primary);
+	--color-primary-foreground: var(--primary-foreground);
+	--color-primary-accent: var(--primary);
+	--color-primary-tint: var(--primary-tint);
+	--color-primary-tint-strong: var(--primary-tint-strong);
+	--color-secondary: var(--primary-tint);
+	--color-secondary-foreground: var(--foreground);
+	--color-secondary-accent: var(--foreground);
+	--color-muted: var(--primary-tint);
+	--color-muted-foreground: var(--muted-foreground);
+	--color-accent: var(--primary-tint);
+	--color-accent-foreground: var(--foreground);
+	--color-info: var(--info);
+	--color-info-foreground: var(--on-status);
+	--color-success: var(--success);
+	--color-success-foreground: var(--on-status);
+	--color-warning: var(--warning);
+	--color-warning-foreground: var(--on-status);
+	--color-error: var(--error);
+	--color-error-foreground: var(--on-status);
+	--color-error-tint: var(--error-tint);
+	--color-border: var(--border);
+	--color-input: var(--input);
+	--color-outline: var(--primary);
+	--color-care-water: var(--care-water);
+	--color-care-water-tint: var(--care-water-tint);
+	--color-care-feed: var(--care-feed);
+	--color-care-feed-tint: var(--care-feed-tint);
+	--color-care-repot: var(--care-repot);
+	--color-care-repot-tint: var(--care-repot-tint);
+	--color-care-prune: var(--care-prune);
+	--color-care-prune-tint: var(--care-prune-tint);
+
+	--radius-xs: calc(var(--radius) - 0.375rem);
+	--radius-sm: calc(var(--radius) - 0.25rem);
+	--radius-md: calc(var(--radius) - 0.125rem);
+	--radius-lg: var(--radius);
+	--radius-xl: calc(var(--radius) + 0.25rem);
+	--radius-2xl: calc(var(--radius) + 0.5rem);
+	--radius-3xl: calc(var(--radius) + 1rem);
+}
+
+/* Palette of apps/mobile/src/global.css (Figma "Palette" view), keep both in sync */
+:root {
+	/* Same scale as Tailwind's defaults, so rounded-xl is 12px like in the app */
+	--radius: 0.5rem;
+
+	--background: #ffffff;
+	--foreground: #0c3d2d;
+	--card: #ffffff;
+	--primary: #125b44;
+	--primary-foreground: #ffffff;
+	--primary-tint: #e7efec;
+	--primary-tint-strong: #d0deda;
+	--muted-foreground: #4d6f61;
+	--border: #e2ebe8;
+	--input: #889892;
+	--info: #4e67bc;
+	--success: #3e7828;
+	--warning: #995f08;
+	--error: #c63931;
+	--error-tint: #f9ebea;
+	--on-status: #ffffff;
+	--care-water: #0074a4;
+	--care-water-tint: #e6f1f6;
+	--care-feed: #a94d79;
+	--care-feed-tint: #f6edf2;
+	--care-repot: #ab5420;
+	--care-repot-tint: #f7eee9;
+	--care-prune: #8a58a7;
+	--care-prune-tint: #f3eef6;
+}
+
+.dark {
+	--background: #09110e;
+	--foreground: #e0efe9;
+	--card: #121c18;
+	--primary: #348468;
+	--primary-foreground: #ffffff;
+	--primary-tint: #24372f;
+	--primary-tint-strong: #324a40;
+	--muted-foreground: #a0bcaf;
+	--border: #24312c;
+	--input: #5e7169;
+	--info: #94aef8;
+	--success: #8ec27d;
+	--warning: #dea45f;
+	--error: #ef958b;
+	--error-tint: #352f2a;
+	--on-status: #09110e;
+	--care-water: #65bcee;
+	--care-water-tint: #1f363a;
+	--care-feed: #e793b8;
+	--care-feed-tint: #342f31;
+	--care-repot: #ea9b72;
+	--care-repot-tint: #343026;
+	--care-prune: #c99de4;
+	--care-prune-tint: #2f3138;
+}
+
+@layer base {
+	* {
+		@apply border-border outline-outline/50;
+	}
+	html {
+		@apply scroll-smooth font-sans motion-reduce:scroll-auto;
+	}
+	body {
+		@apply bg-background text-foreground scheme-light dark:scheme-dark;
+	}
+	button {
+		@apply cursor-pointer;
+	}
+}
+
+@utility glass {
+	--glass-edge: rgb(255 255 255 / 0.7);
+	background: color-mix(in srgb, var(--background) 88%, transparent);
+	border: 1px solid var(--glass-edge);
+	box-shadow:
+		inset 0 1px 0 var(--glass-edge),
+		0 8px 32px rgb(12 61 45 / 0.12);
+
+	&:where(.dark *) {
+		--glass-edge: rgb(255 255 255 / 0.12);
+	}
+
+	@supports (backdrop-filter: blur(1px)) {
+		background: color-mix(in srgb, var(--background) 60%, transparent);
+		backdrop-filter: blur(20px) saturate(180%);
+	}
+}
+
+/* In dark mode, the green line art takes the page background color (#ink-on-dark in Layout.astro) */
+@utility illustration {
+	&:where(.dark *) {
+		filter: grayscale(1) contrast(2) url(#ink-on-dark);
+	}
+}

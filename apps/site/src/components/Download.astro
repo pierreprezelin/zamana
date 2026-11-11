@@ -1,0 +1,96 @@
+---
+import { Icon } from "astro-icon/components";
+import Illustration from "@/components/Illustration.astro";
+import Promises from "@/components/Promises.astro";
+import StoreButtons from "@/components/StoreButtons.astro";
+import type { Dictionary } from "@/i18n";
+
+interface Props {
+	t: Dictionary;
+}
+
+const { t } = Astro.props;
+
+const floatingIcons = [
+	{
+		icon: "ion:water",
+		tone: "bg-care-water-tint text-care-water",
+		position: "top-4 left-0 -rotate-12",
+	},
+	{
+		icon: "ion:sunny",
+		tone: "bg-care-repot-tint text-care-repot",
+		position: "top-0 right-2 rotate-12",
+	},
+	{
+		icon: "ion:flower",
+		tone: "bg-care-feed-tint text-care-feed",
+		position: "bottom-16 -left-4 rotate-6",
+	},
+	{
+		icon: "ion:leaf",
+		tone: "bg-primary-tint text-primary",
+		position: "right-0 bottom-24 -rotate-6",
+	},
+];
+---
+
+<section
+	id={t.anchors.download}
+	aria-labelledby="download-title"
+	class="mx-auto max-w-6xl scroll-mt-24 px-4 pt-16 pb-24"
+>
+	<div
+		class="relative grid items-center gap-8 rounded-[2.5rem] bg-primary px-8 pt-12 text-primary-foreground lg:grid-cols-[1fr_auto] md:px-16 lg:pt-0"
+	>
+		<div
+			aria-hidden="true"
+			class="pointer-events-none absolute inset-0 overflow-hidden rounded-[2.5rem]"
+		>
+			<div
+				class="absolute -top-32 -left-24 size-96 rounded-[45%_55%_60%_40%/50%_45%_55%_50%] bg-primary-foreground/8"
+			>
+			</div>
+			<div
+				class="absolute -right-20 -bottom-40 size-[30rem] rounded-[60%_40%_45%_55%/45%_55%_50%_50%] bg-primary-foreground/8"
+			>
+			</div>
+		</div>
+		<div class="relative flex flex-col items-start gap-6 lg:py-16">
+			<h2
+				id="download-title"
+				class="font-heading text-4xl leading-tight font-semibold text-balance sm:text-5xl"
+			>
+				{t.download.title}
+			</h2>
+			<p class="text-lg text-primary-foreground/90">{t.download.description}</p>
+			<Promises t={t} />
+			<StoreButtons t={t} onPrimary />
+		</div>
+		<div class="relative mx-auto w-72 self-end sm:w-96 lg:-mt-24">
+			<div
+				aria-hidden="true"
+				class="absolute inset-x-6 top-1/4 bottom-0 rounded-t-full bg-primary-tint"
+			>
+			</div>
+			<Illustration
+				name="feliz"
+				class="relative mx-auto h-72 translate-y-4 sm:h-96 sm:translate-y-6"
+			/>
+			{
+				floatingIcons.map(({ icon, tone, position }) => (
+					<span
+						aria-hidden="true"
+						class:list={[
+							"absolute flex size-12 items-center justify-center rounded-xl shadow-lg shadow-black/15",
+							tone,
+							position,
+						]}
+					>
+						<Icon name={icon} class="size-6" />
+					</span>
+				))
+			}
+		</div>
+	</div>
+</section>

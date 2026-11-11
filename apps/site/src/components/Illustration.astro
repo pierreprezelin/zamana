@@ -1,0 +1,19 @@
+---
+import { Image } from "astro:assets";
+import { type IllustrationName, illustrations } from "@/assets/illustrations";
+
+interface Props {
+	name: IllustrationName;
+	class?: string;
+	priority?: boolean;
+}
+
+const { name, class: className, priority = false } = Astro.props;
+---
+
+<Image
+	src={illustrations[name]}
+	alt=""
+	loading={priority ? "eager" : "lazy"}
+	class:list={["illustration w-auto max-w-none", className]}
+/>

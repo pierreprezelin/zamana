@@ -1,0 +1,30 @@
+---
+import { Image } from "astro:assets";
+
+interface Props {
+	src: ImageMetadata;
+	alt: string;
+	class?: string;
+	sizes: string;
+	priority?: boolean;
+}
+
+const { src, alt, class: className, sizes, priority = false } = Astro.props;
+---
+
+<div
+	class:list={[
+		"overflow-hidden rounded-[2.5rem] border-8 border-foreground bg-white shadow-2xl shadow-black/20 dark:border-primary-tint-strong",
+		className,
+	]}
+>
+	<Image
+		src={src}
+		alt={alt}
+		widths={[320, 480, 576, 804]}
+		sizes={sizes}
+		loading={priority ? "eager" : "lazy"}
+		fetchpriority={priority ? "high" : "auto"}
+		class="block h-auto w-full"
+	/>
+</div>

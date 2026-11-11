@@ -1,0 +1,111 @@
+---
+import { getRelativeLocaleUrl } from "astro:i18n";
+import { Icon } from "astro-icon/components";
+import Logo from "@/assets/logo.svg";
+import Wordmark from "@/assets/wordmark.svg";
+import { GITHUB_URL } from "@/constants/stores";
+import type { Dictionary, Locale } from "@/i18n";
+
+interface Props {
+	t: Dictionary;
+	locale: Locale;
+}
+
+const { t, locale } = Astro.props;
+// const otherLocale: Locale = locale === "fr" ? "en" : "fr";
+const focusRing =
+	"outline-none focus-visible:ring-3 focus-visible:ring-outline/50";
+const linkClass = `rounded-full px-2 py-2 text-sm font-semibold transition-colors hover:bg-primary/10 sm:px-3 md:text-base ${focusRing}`;
+const iconButtonClass = `flex size-9 items-center justify-center rounded-full transition-colors hover:bg-primary/10 ${focusRing}`;
+---
+
+<header class="fixed inset-x-0 top-4 z-40">
+	<div class="mx-auto max-w-6xl px-4">
+		<div
+			class="glass flex items-center gap-1 rounded-full py-2 pr-2 pl-3 sm:pl-4 md:grid md:grid-cols-[1fr_auto_1fr] md:gap-2 md:pl-2"
+		>
+			<nav aria-label={t.nav.label} class="ml-auto max-[359px]:hidden md:ml-0">
+				<ul class="flex items-center">
+					<li>
+						<a href={`#${t.anchors.features}`} class={linkClass}>
+							{t.nav.features}
+						</a>
+					</li>
+					<li>
+						<a href={`#${t.anchors.download}`} class={linkClass}>
+							{t.nav.download}
+						</a>
+					</li>
+					{/* Hidden until the app screenshots exist in English
+					<li>
+						<a
+							href={getRelativeLocaleUrl(otherLocale)}
+							hreflang={otherLocale}
+							lang={otherLocale}
+							aria-label={t.nav.otherLocaleLabel}
+							class:list={[linkClass, "uppercase"]}
+						>
+							{otherLocale}
+						</a>
+					</li>
+					*/}
+				</ul>
+			</nav>
+			<a
+				href={getRelativeLocaleUrl(locale)}
+				aria-label={t.nav.home}
+				class:list={[
+					"-order-1 flex items-center gap-3 rounded-full md:order-none md:justify-self-center",
+					focusRing,
+				]}
+			>
+				<Logo class="size-8" aria-hidden="true" />
+				<Wordmark
+					class="hidden h-[18px] w-auto text-foreground sm:block"
+					aria-hidden="true"
+				/>
+			</a>
+			<div class="flex items-center gap-1 max-[359px]:ml-auto md:justify-self-end">
+				<a
+					href={GITHUB_URL}
+					target="_blank"
+					rel="noopener noreferrer"
+					aria-label={t.nav.github}
+					class={iconButtonClass}
+				>
+					<Icon name="ion:logo-github" class="size-5" aria-hidden="true" />
+				</a>
+				<button
+					type="button"
+					data-theme-toggle
+					aria-label={t.nav.darkTheme}
+					aria-pressed="false"
+					class={iconButtonClass}
+				>
+					<Icon name="ion:moon" class="size-5 dark:hidden" aria-hidden="true" />
+					<Icon name="ion:sunny" class="hidden size-5 dark:block" aria-hidden="true" />
+				</button>
+			</div>
+		</div>
+	</div>
+</header>
+
+<script>
+	const root = document.documentElement;
+	const toggle = document.querySelector("[data-theme-toggle]");
+
+	const syncPressed = () =>
+		toggle?.setAttribute(
+			"aria-pressed",
+			String(root.classList.contains("dark")),
+		);
+
+	toggle?.addEventListener("click", () => {
+		const isDark = root.classList.toggle("dark");
+		try {
+			localStorage.setItem("theme", isDark ? "dark" : "light");
+		} catch {}
+		syncPressed();
+	});
+	syncPressed();
+</script>

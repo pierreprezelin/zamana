@@ -1,0 +1,94 @@
+{
+	"meta": {
+		"ogLocale": "en_US",
+		"title": "Zamana · Your plant care reminder",
+		"description": "Zamana reminds you when to water, feed or repot your plants, and warns you about frost and heatwaves. Free, no ads, and your data stays on your phone."
+	},
+	"skipToContent": "Skip to content",
+	"nav": {
+		"label": "Main navigation",
+		"home": "Zamana, home",
+		"features": "Features",
+		"download": "Download",
+		"otherLocaleLabel": "Version française",
+		"github": "Source code on GitHub",
+		"darkTheme": "Dark theme"
+	},
+	"anchors": {
+		"features": "features",
+		"download": "download"
+	},
+	"promises": {
+		"free": "Free, no ads, no subscription",
+		"local": "Your data stays on your phone"
+	},
+	"hero": {
+		"eyebrow": "Indoor and outdoor plants",
+		"title": "Your plants’ reminder",
+		"description": "Never forget to water your plants again! Zamana tells you when each one needs care, and warns you when it gets unusually cold or hot.",
+		"screenAlt": "The app’s “Today” screen: a weather alert, today’s tasks and a preview of the garden."
+	},
+	"features": {
+		"title": "Everything to look after your plants",
+		"description": "Whether you have three cacti or a real jungle.",
+		"items": {
+			"reminders": {
+				"title": "Care reminders",
+				"description": "Watering, feeding, repotting, pruning: every plant has its own pace, and Zamana remembers it for you."
+			},
+			"garden": {
+				"title": "Your garden",
+				"description": "A page for each plant, with its photo, its needs and its care history."
+			},
+			"weather": {
+				"title": "Weather alerts",
+				"description": "Bring your plants indoors when the weather gets unusually cold or hot."
+			},
+			"knowledge": {
+				"title": "Encyclopedia and tips",
+				"description": "Plant profiles and articles to learn how to look after each one."
+			}
+		}
+	},
+	"more": {
+		"title": "And that’s not all!",
+		"soon": "Soon",
+		"items": {
+			"timeline": "A photo timeline to watch them grow",
+			"species": "Search by species",
+			"platforms": "On Android and iOS",
+			"darkTheme": "Dark theme",
+			"languages": "In English and French",
+			"openSource": "Open source"
+		}
+	},
+	"showcases": {
+		"care": {
+			"title": "Every bit of care at the right time",
+			"description": "Zamana works out when each task is next due from the last time you did it. One glance tells you what to do today, and what can wait.",
+			"screenAlt": "The app’s “Care” screen: a watering due today and the upcoming tasks."
+		},
+		"garden": {
+			"title": "All your plants in one place",
+			"description": "Find each one’s nickname, location and needs in an instant. And keep a record of those that are gone.",
+			"screenAlt": "The app’s “Garden” screen: the list of plants and their scientific names."
+		},
+		"encyclopedia": {
+			"title": "Answers to your questions",
+			"description": "How do I know if my plant is thirsty? Should I repot it? Plant profiles and tips so you’re never in doubt again.",
+			"screenAlt": "The app’s “Encyclopedia” screen: plant search and popular profiles."
+		}
+	},
+	"download": {
+		"title": "Your garden is waiting!",
+		"description": "Zamana is coming soon to iOS and Android. 🌱"
+	},
+	"stores": {
+		"appStore": "App Store",
+		"googlePlay": "Google Play",
+		"comingSoon": "Coming soon"
+	},
+	"footer": {
+		"rights": "All rights reserved."
+	}
+}

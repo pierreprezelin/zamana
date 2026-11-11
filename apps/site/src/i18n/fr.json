@@ -1,0 +1,94 @@
+{
+	"meta": {
+		"ogLocale": "fr_FR",
+		"title": "Zamana · Le pense-bête de vos plantes",
+		"description": "Zamana vous rappelle quand arroser, nourrir ou rempoter vos plantes, et vous prévient en cas de gel ou de canicule. Gratuit, sans pub, et vos données restent sur votre téléphone."
+	},
+	"skipToContent": "Aller au contenu",
+	"nav": {
+		"label": "Navigation principale",
+		"home": "Zamana, accueil",
+		"features": "Fonctionnalités",
+		"download": "Télécharger",
+		"otherLocaleLabel": "English version",
+		"github": "Code source sur GitHub",
+		"darkTheme": "Thème sombre"
+	},
+	"anchors": {
+		"features": "fonctionnalites",
+		"download": "telecharger"
+	},
+	"promises": {
+		"free": "Gratuit, sans pub ni abonnement",
+		"local": "Vos données restent sur votre téléphone"
+	},
+	"hero": {
+		"eyebrow": "Plantes d’intérieur et d’extérieur",
+		"title": "Le pense-bête de vos plantes",
+		"description": "N’oubliez plus d’arroser vos plantes ! Zamana vous dit quand vous occuper de chacune, et vous prévient quand il fait anormalement froid ou chaud.",
+		"screenAlt": "Écran « Aujourd’hui » de l’application : alerte météo, tâches du jour et aperçu du jardin."
+	},
+	"features": {
+		"title": "Tout pour prendre soin de vos plantes",
+		"description": "Que vous ayez trois cactus ou une véritable jungle.",
+		"items": {
+			"reminders": {
+				"title": "Rappels d’entretien",
+				"description": "Arrosage, engrais, rempotage, taille : chaque plante a son rythme, Zamana s’en souvient pour vous."
+			},
+			"garden": {
+				"title": "Votre jardin",
+				"description": "Une fiche par plante, avec sa photo, ses besoins et l’historique de ses soins."
+			},
+			"weather": {
+				"title": "Alertes météo",
+				"description": "Rentrez vos plantes à l’intérieur si le temps est anormalement froid ou chaud."
+			},
+			"knowledge": {
+				"title": "Encyclopédie et conseils",
+				"description": "Des fiches et des articles pour savoir comment prendre soin de chacune."
+			}
+		}
+	},
+	"more": {
+		"title": "Et ce n’est pas tout !",
+		"soon": "Bientôt",
+		"items": {
+			"timeline": "Une frise de photos pour suivre leur croissance",
+			"species": "Recherche par espèce",
+			"platforms": "Disponible sur Android et iOS",
+			"darkTheme": "Thème sombre",
+			"languages": "En français et en anglais",
+			"openSource": "Code source ouvert"
+		}
+	},
+	"showcases": {
+		"care": {
+			"title": "Chaque soin au bon moment",
+			"description": "Zamana calcule la prochaine échéance à partir du dernier soin. Un coup d’œil suffit pour savoir quoi faire aujourd’hui, et ce qui peut attendre.",
+			"screenAlt": "Écran « Entretien » de l’application : un arrosage à faire aujourd’hui et les prochains soins."
+		},
+		"garden": {
+			"title": "Toutes vos plantes au même endroit",
+			"description": "Retrouvez le surnom, l’emplacement et les besoins de chacune en un instant. Et gardez une trace de celles qui ne sont plus là.",
+			"screenAlt": "Écran « Jardin » de l’application : la liste des plantes et leur nom scientifique."
+		},
+		"encyclopedia": {
+			"title": "Des réponses à vos questions",
+			"description": "Comment savoir si ma plante a soif ? Faut-il la rempoter ? Des fiches et des conseils pour ne plus jamais être dans le doute.",
+			"screenAlt": "Écran « Encyclopédie » de l’application : recherche de plantes et fiches populaires."
+		}
+	},
+	"download": {
+		"title": "Votre jardin vous attend !",
+		"description": "Zamana arrive bientôt sur Android et iOS. 🌱"
+	},
+	"stores": {
+		"appStore": "App Store",
+		"googlePlay": "Google Play",
+		"comingSoon": "Bientôt disponible"
+	},
+	"footer": {
+		"rights": "Tous droits réservés."
+	}
+}

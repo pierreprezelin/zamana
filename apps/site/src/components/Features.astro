@@ -1,0 +1,168 @@
+---
+import { Icon } from "astro-icon/components";
+import careScreen from "@/assets/screens/care.png";
+import encyclopediaScreen from "@/assets/screens/encyclopedia.png";
+import gardenScreen from "@/assets/screens/garden.png";
+import Illustration from "@/components/Illustration.astro";
+import PhoneMockup from "@/components/PhoneMockup.astro";
+import { Badge } from "@/components/starwind/badge";
+import {
+	Card,
+	CardDescription,
+	CardHeader,
+	CardTitle,
+} from "@/components/starwind/card";
+import type { Dictionary } from "@/i18n";
+
+interface Props {
+	t: Dictionary;
+}
+
+const { t } = Astro.props;
+
+const features = [
+	{ id: "garden", icon: "ion:leaf", tone: "bg-primary-tint text-primary" },
+	{
+		id: "reminders",
+		icon: "ion:notifications",
+		tone: "bg-care-water-tint text-care-water",
+	},
+	{ id: "weather", icon: "ion:thermometer", tone: "bg-error-tint text-error" },
+	{
+		id: "knowledge",
+		icon: "ion:book",
+		tone: "bg-care-prune-tint text-care-prune",
+	},
+] as const;
+
+const moreFeatures = [
+	{ id: "timeline", icon: "ion:images", isUpcoming: false },
+	{ id: "species", icon: "ion:search", isUpcoming: true },
+	{ id: "platforms", icon: "ion:phone-portrait", isUpcoming: false },
+	{ id: "darkTheme", icon: "ion:contrast", isUpcoming: false },
+	{ id: "languages", icon: "ion:language", isUpcoming: false },
+	{ id: "openSource", icon: "ion:code-slash", isUpcoming: false },
+] as const;
+
+const showcases = [
+	{ id: "care", screen: careScreen, illustration: "runner", isFlipped: true },
+	{
+		id: "garden",
+		screen: gardenScreen,
+		illustration: "chaoticGood",
+		isFlipped: false,
+	},
+	{
+		id: "encyclopedia",
+		screen: encyclopediaScreen,
+		illustration: "growth",
+		isFlipped: false,
+	},
+] as const;
+---
+
+<section
+	id={t.anchors.features}
+	aria-labelledby="features-title"
+	class="scroll-mt-24 py-24"
+>
+	<div class="mx-auto flex max-w-6xl flex-col gap-24 px-4">
+		<div class="flex flex-col gap-12">
+			<div class="mx-auto flex max-w-2xl flex-col gap-4 text-center">
+				<h2
+					id="features-title"
+					class="font-heading text-4xl leading-tight font-semibold text-balance sm:text-5xl"
+				>
+					{t.features.title}
+				</h2>
+				<p class="text-lg text-muted-foreground">{t.features.description}</p>
+			</div>
+			<ul class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+				{
+					features.map(({ id, icon, tone }) => (
+						<li>
+							<Card class="h-full rounded-2xl [--card-spacing:--spacing(6)]">
+								<CardHeader class="gap-4">
+									<span
+										class:list={[
+											"flex size-12 items-center justify-center rounded-xl",
+											tone,
+										]}
+									>
+										<Icon name={icon} class="size-6" aria-hidden="true" />
+									</span>
+									<CardTitle class="font-semibold">
+										<h3>{t.features.items[id].title}</h3>
+									</CardTitle>
+									<CardDescription>
+										{t.features.items[id].description}
+									</CardDescription>
+								</CardHeader>
+							</Card>
+						</li>
+					))
+				}
+			</ul>
+			<div class="flex flex-col items-center gap-6">
+				<h3 class="font-heading text-2xl leading-tight font-semibold">{t.more.title}</h3>
+				<ul class="flex max-w-4xl flex-wrap justify-center gap-3">
+					{
+						moreFeatures.map(({ id, icon, isUpcoming }) => (
+							<li class="flex items-center gap-2 rounded-full border bg-card py-2 pr-4 pl-3 font-semibold">
+								<Icon name={icon} class="size-5 shrink-0 text-primary" aria-hidden="true" />
+								{t.more.items[id]}
+								{isUpcoming && (
+									<Badge variant="secondary" size="sm" class="font-semibold">
+										{t.more.soon}
+									</Badge>
+								)}
+							</li>
+						))
+					}
+				</ul>
+			</div>
+		</div>
+		{
+			showcases.map(({ id, screen, illustration, isFlipped }, index) => (
+				<div class="grid items-center gap-12 lg:grid-cols-2">
+					<div
+						class:list={[
+							"flex items-end justify-center rounded-[2.5rem] bg-primary-tint px-4 pt-12",
+							index % 2 === 1 && "lg:order-last",
+						]}
+					>
+						<div class="-mx-6 flex shrink-0 items-end self-stretch overflow-hidden px-6">
+							<PhoneMockup
+								src={screen}
+								alt={t.showcases[id].screenAlt}
+								sizes="(min-width: 40rem) 240px, 160px"
+								class="-mb-24 w-44 sm:w-64"
+							/>
+						</div>
+						<Illustration
+							name={illustration}
+							class:list={[
+								"relative -ml-8 h-40 translate-y-4 sm:-ml-12 sm:h-64 sm:translate-y-6",
+								isFlipped && "-scale-x-100",
+							]}
+						/>
+					</div>
+					<div class="flex flex-col items-start gap-4">
+						<p
+							aria-hidden="true"
+							class="font-heading text-7xl leading-none font-semibold text-transparent [-webkit-text-stroke:2px_var(--color-primary)]"
+						>
+							{String(index + 1).padStart(2, "0")}
+						</p>
+						<h3 class="font-heading text-3xl leading-tight font-semibold text-balance sm:text-4xl">
+							{t.showcases[id].title}
+						</h3>
+						<p class="text-lg text-pretty text-muted-foreground">
+							{t.showcases[id].description}
+						</p>
+					</div>
+				</div>
+			))
+		}
+	</div>
+</section>

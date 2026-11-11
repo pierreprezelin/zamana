@@ -1,0 +1,27 @@
+---
+import { Icon } from "astro-icon/components";
+import type { Dictionary } from "@/i18n";
+
+interface Props {
+	t: Dictionary;
+	class?: string;
+}
+
+const { t, class: className } = Astro.props;
+
+const promises = [
+	{ id: "free", icon: "ion:heart" },
+	{ id: "local", icon: "ion:phone-portrait" },
+] as const;
+---
+
+<ul class:list={["flex flex-wrap gap-x-6 gap-y-2 font-semibold", className]}>
+	{
+		promises.map(({ id, icon }) => (
+			<li class="flex items-center gap-2">
+				<Icon name={icon} class="size-5 shrink-0" aria-hidden="true" />
+				{t.promises[id]}
+			</li>
+		))
+	}
+</ul>
