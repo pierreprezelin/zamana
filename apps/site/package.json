@@ -7,10 +7,11 @@
 		"node": ">=26.0.0"
 	},
 	"scripts": {
-		"dev": "astro dev",
-		"build": "astro build",
-		"preview": "astro preview",
 		"astro": "astro",
+		"dev": "astro dev",
+		"fonts": "test -f public/fonts/Recoleta-SemiBold.woff2 || curl -fsSL \"$RECOLETA_URL\" -o public/fonts/Recoleta-SemiBold.woff2",
+		"preview": "astro preview",
+		"build": "bun run fonts && astro build",
 		"ts": "astro check"
 	},
 	"dependencies": {

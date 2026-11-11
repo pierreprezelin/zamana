@@ -22,3 +22,6 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# commercial font, not redistributable: downloaded at build time from RECOLETA_URL
+public/fonts/Recoleta-SemiBold.woff2
