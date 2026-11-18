@@ -7,11 +7,16 @@ import {
 	careName,
 	careSubtitle,
 	careVerb,
+	doneAtLabel,
 	dueLabel,
 } from "@/features/care/careLabels";
 import type { CareStatus } from "@/features/care/careSchedule";
-import type { Care } from "@/features/care/careTypes";
+import type { Care, CareLog } from "@/features/care/careTypes";
 import { CareBadge } from "@/features/care/components/CareBadge";
+import {
+	CareIconButton,
+	CareSwipeable,
+} from "@/features/care/components/CareSwipeable";
 import { useCareActions } from "@/features/care/useCareActions";
 import type { Plant } from "@/features/plants/plantSchema";
 import { t } from "@/utils/i18n";
@@ -77,5 +82,50 @@ export function DueCareCard({
 				</View>
 			)}
 		</View>
+	);
+}
+
+type DoneCareCardProps = { care: Care; doneLog: CareLog; plant: Plant };
+
+// A care done today, kept in place until the day is over so it can be undone
+export function DoneCareCard({ care, doneLog, plant }: DoneCareCardProps) {
+	const { undo } = useCareActions();
+	const name = careName(care.type);
+
+	const card = (
+		<View className="flex-row items-center gap-3 rounded-2xl border border-line bg-surface p-4">
+			<CareBadge type={care.type} size={48} muted />
+			<View className="flex-1 gap-0.5">
+				<Text className="font-outfit-semibold text-base text-muted line-through">
+					{name}
+				</Text>
+				<Text className="text-xs text-foreground">
+					{doneAtLabel(doneLog.createdAt)}
+				</Text>
+			</View>
+			{!plant.archivedAt && (
+				<CareIconButton
+					icon="refresh-outline"
+					mirrored
+					label={t("care.undo", { care: name })}
+					className="size-9"
+					iconClassName="text-muted"
+					onPress={() => undo(doneLog)}
+				/>
+			)}
+		</View>
+	);
+
+	if (plant.archivedAt) return card;
+	return (
+		<CareSwipeable
+			type={care.type}
+			leftAction="undo"
+			rightAction="undo"
+			onAction={() => undo(doneLog)}
+			panelClassName="rounded-2xl"
+		>
+			{card}
+		</CareSwipeable>
 	);
 }

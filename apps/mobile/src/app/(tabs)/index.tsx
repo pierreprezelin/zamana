@@ -29,19 +29,19 @@ export default function TodayScreen() {
 		[plants, cares, logs, today, climate],
 	);
 	const pending = groups.reduce((sum, group) => sum + group.pendingCount, 0);
+	const dueDone = groups.reduce((sum, group) => sum + group.dueDoneCount, 0);
+	const subtitle = pending
+		? t(`care.tasks.count.${pluralForm(pending)}`, { amount: pending })
+		: t(dueDone ? "care.tasks.allDoneSubtitle" : "care.tasks.none");
 
 	return (
 		<ScreenPlaceholder
 			title={greeting(new Date().getHours(), name)}
-			subtitle={
-				pending
-					? t(`care.tasks.count.${pluralForm(pending)}`, { amount: pending })
-					: t("care.tasks.none")
-			}
+			subtitle={subtitle}
 			showSettings
-			scrollBottomInset={tabBarOffset + 20}
+			scrollBottomInset={tabBarOffset + 16}
 		>
-			<TodayTasks groups={groups} today={today} />
+			{plants.length > 0 && <TodayTasks groups={groups} today={today} />}
 			<GardenPreview />
 		</ScreenPlaceholder>
 	);

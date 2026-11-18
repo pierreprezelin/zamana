@@ -90,6 +90,14 @@ function RootLayout() {
 							options={{ title: t("screens.notifications") }}
 						/>
 						<Stack.Screen
+							name="settings/location"
+							options={{ title: t("screens.location") }}
+						/>
+						<Stack.Screen
+							name="settings/ergonomics"
+							options={{ title: t("screens.ergonomics") }}
+						/>
+						<Stack.Screen
 							name="plant/new"
 							options={{ title: t("screens.newPlant") }}
 						/>

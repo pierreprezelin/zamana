@@ -4,7 +4,6 @@ import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import SettingsRow from "@/components/SettingsRow";
 import Text from "@/components/Text";
-import { CarePreferences } from "@/features/care/components/CarePreferences";
 import { useOnboardingStore } from "@/features/onboarding/useOnboardingStore";
 import { ThemeSelector } from "@/features/theme/components/ThemeSelector";
 import { UserNameSetting } from "@/features/user/components/UserNameSetting";
@@ -15,12 +14,20 @@ export default function SettingsScreen() {
 
 	return (
 		<View
-			className="flex-1 gap-6 p-5"
-			style={{ paddingBottom: insets.bottom + 20 }}
+			className="flex-1 gap-6 p-4"
+			style={{ paddingBottom: insets.bottom + 16 }}
 		>
 			<ThemeSelector />
-			<CarePreferences />
 			<View className="gap-4">
+				<Link href="/settings/location" asChild>
+					<SettingsRow icon="earth-outline" title={t("screens.location")} />
+				</Link>
+				<Link href="/settings/ergonomics" asChild>
+					<SettingsRow
+						icon="hand-left-outline"
+						title={t("screens.ergonomics")}
+					/>
+				</Link>
 				<Link href="/settings/notifications" asChild>
 					<SettingsRow
 						icon="notifications-outline"

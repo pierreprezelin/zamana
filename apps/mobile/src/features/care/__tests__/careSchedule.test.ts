@@ -3,9 +3,10 @@ import {
 	careStatus,
 	nextDueDate,
 	snoozeUntil,
+	wasDueWhenDone,
 	wateringIntervalDays,
 } from "@/features/care/careSchedule";
-import type { Care } from "@/features/care/careTypes";
+import type { Care, CareLog } from "@/features/care/careTypes";
 
 const care = (overrides: Partial<Care> = {}): Care => ({
 	id: "care-1",
@@ -84,6 +85,42 @@ describe("nextDueDate", () => {
 		expect(nextDueDate(newPlant, context({ wateringLevel: 1 }))).toBe(
 			"2026-06-12",
 		);
+	});
+
+	it("asks right away for a never done care of a month or more", () => {
+		const fertilizing = care({
+			frequency: { amount: 1, unit: "year" },
+			period: { startMonth: 9, endMonth: 12 },
+			lastDoneAt: null,
+			startedAt: "2026-11-18",
+		});
+		expect(nextDueDate(fertilizing, context())).toBe("2026-11-18");
+		expect(
+			nextDueDate(
+				care({
+					frequency: { amount: 1, unit: "month" },
+					lastDoneAt: null,
+					startedAt: "2026-11-18",
+				}),
+				context(),
+			),
+		).toBe("2026-11-18");
+	});
+
+	it("keeps the first watering one interval away, even a long one", () => {
+		const newPlant = watering({ lastDoneAt: null, startedAt: "2026-11-18" });
+		expect(nextDueDate(newPlant, context({ wateringLevel: 3 }))).toBe(
+			"2027-01-02",
+		);
+	});
+
+	it("waits one interval for a never done care under a month", () => {
+		const weekly = care({
+			frequency: { amount: 2, unit: "week" },
+			lastDoneAt: null,
+			startedAt: "2026-11-18",
+		});
+		expect(nextDueDate(weekly, context())).toBe("2026-12-02");
 	});
 
 	it.each([
@@ -238,5 +275,31 @@ describe("careProgress", () => {
 		expect(
 			careProgress(care({ frequency: null }), "2026-06-20", context()),
 		).toBeNull();
+	});
+});
+
+describe("wasDueWhenDone", () => {
+	const log = (previousLastDoneAt: string | null): CareLog => ({
+		id: "log-1",
+		plantId: "plant-1",
+		type: "watering",
+		outcome: "done",
+		date: "2026-06-10",
+		createdAt: "2026-06-10T09:00:00.000Z",
+		previousLastDoneAt,
+		previousSnoozedUntil: null,
+	});
+	const doneToday = watering({ lastDoneAt: "2026-06-10" });
+
+	it("is true for a care that was due", () => {
+		expect(
+			wasDueWhenDone(doneToday, log("2026-06-01"), context(), "2026-06-10"),
+		).toBe(true);
+	});
+
+	it("is false for a care done ahead of time", () => {
+		expect(
+			wasDueWhenDone(doneToday, log("2026-06-08"), context(), "2026-06-10"),
+		).toBe(false);
 	});
 });

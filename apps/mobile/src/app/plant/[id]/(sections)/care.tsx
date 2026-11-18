@@ -1,10 +1,10 @@
 import type { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { useIsFocused, useLocalSearchParams } from "expo-router";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { ScrollView, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Button from "@/components/Button";
-import { Ionicons } from "@/components/ionicons";
+import StatusCard from "@/components/StatusCard";
 import Text from "@/components/Text";
 import { careName, dueLabel } from "@/features/care/careLabels";
 import {
@@ -12,13 +12,19 @@ import {
 	careStatus,
 	isDue,
 	scheduleCares,
+	wasDueWhenDone,
 } from "@/features/care/careSchedule";
-import type { Care } from "@/features/care/careTypes";
-import { DueCareCard } from "@/features/care/components/DueCareCard";
+import type { CareLog, CareType } from "@/features/care/careTypes";
+import { CareFormSheet } from "@/features/care/components/CareFormSheet";
+import {
+	DoneCareCard,
+	DueCareCard,
+} from "@/features/care/components/DueCareCard";
 import { ManageCaresSheet } from "@/features/care/components/ManageCaresSheet";
 import { UpcomingCareRow } from "@/features/care/components/UpcomingCareRow";
+import { doneTodayLog } from "@/features/care/todayTasks";
 import { useCarePreferencesStore } from "@/features/care/useCarePreferencesStore";
-import { usePlantCares } from "@/features/care/useCareStore";
+import { useCareStore, usePlantCares } from "@/features/care/useCareStore";
 import { displayName } from "@/features/plants/plantLabels";
 import { usePlant } from "@/features/plants/usePlantStore";
 import { toISODate } from "@/utils/dates";
@@ -29,8 +35,11 @@ export default function PlantCareScreen() {
 	const plant = usePlant(id);
 	const cares = usePlantCares(id);
 	const climate = useCarePreferencesStore((state) => state.climate);
+	const logs = useCareStore((state) => state.logs);
 	const { bottom } = useSafeAreaInsets();
 	const manageSheetRef = useRef<BottomSheetModal>(null);
+	const formSheetRef = useRef<BottomSheetModal>(null);
+	const [editedType, setEditedType] = useState<CareType | null>(null);
 	// Re-renders on focus, so a screen left open overnight catches up with the date
 	useIsFocused();
 
@@ -38,18 +47,68 @@ export default function PlantCareScreen() {
 
 	const today = toISODate(new Date());
 	const context = { wateringLevel: plant.watering, climate };
-	const scheduled = scheduleCares(cares, context, today);
-	const due = scheduled.filter(
-		(entry): entry is { care: Care; dueDate: string } =>
-			isDue(entry.dueDate, today),
+	const scheduled = scheduleCares(cares, context, today).map((entry) => ({
+		...entry,
+		doneLog: doneTodayLog(logs, entry.care, today),
+	}));
+	const doneToday = scheduled.filter(
+		(entry): entry is typeof entry & { doneLog: CareLog } =>
+			entry.doneLog !== undefined,
 	);
-	const upcoming = scheduled.filter(({ dueDate }) => !isDue(dueDate, today));
+	const due = scheduled.filter(
+		(entry): entry is typeof entry & { dueDate: string } =>
+			!entry.doneLog && isDue(entry.dueDate, today),
+	);
+	const upcoming = scheduled.filter(
+		(entry) => !entry.doneLog && !isDue(entry.dueDate, today),
+	);
 	const next = upcoming.find(({ dueDate }) => dueDate);
+
+	const manageSheet = (
+		<>
+			<ManageCaresSheet
+				ref={manageSheetRef}
+				plant={plant}
+				cares={cares}
+				onEdit={(type) => {
+					setEditedType(type);
+					formSheetRef.current?.present();
+				}}
+			/>
+			<CareFormSheet
+				ref={formSheetRef}
+				plant={plant}
+				type={editedType}
+				care={cares.find((care) => care.type === editedType)}
+			/>
+		</>
+	);
+
+	if (!cares.length) {
+		return (
+			<View className="px-4 pt-3">
+				<StatusCard
+					icon="clipboard-outline"
+					title={t("care.noCare.title", { name: displayName(plant) })}
+					description={t("care.noCare.description")}
+				>
+					{!plant.archivedAt && (
+						<Button
+							title={t("care.noCare.configure")}
+							className="mt-2 h-9 px-4"
+							onPress={() => manageSheetRef.current?.present()}
+						/>
+					)}
+				</StatusCard>
+				{manageSheet}
+			</View>
+		);
+	}
 
 	return (
 		<ScrollView
-			contentContainerClassName="gap-8 px-5 pt-3"
-			contentContainerStyle={{ paddingBottom: bottom + 20 }}
+			contentContainerClassName="gap-6 px-4 pt-3"
+			contentContainerStyle={{ paddingBottom: bottom + 16 }}
 		>
 			<View className="gap-4">
 				<Text className="font-recoleta text-2xl text-foreground">
@@ -67,27 +126,35 @@ export default function PlantCareScreen() {
 						/>
 					))
 				) : (
-					<View className="items-center gap-2 rounded-2xl border border-line bg-surface p-6">
-						<View className="size-12 items-center justify-center rounded-full bg-primary-tint">
-							<Ionicons
-								name="checkmark-outline"
-								size={24}
-								className="text-primary"
-							/>
-						</View>
-						<Text className="font-outfit-semibold text-base text-foreground">
-							{t("care.upToDate.title")}
-						</Text>
-						<Text className="text-center text-muted">
-							{t("care.upToDate.description", { name: displayName(plant) })}
-							{next?.dueDate &&
-								`\n${t("care.upToDate.next", {
+					<StatusCard
+						icon="checkmark-outline"
+						title={t(
+							doneToday.some(({ care, doneLog }) =>
+								wasDueWhenDone(care, doneLog, context, today),
+							)
+								? "care.tasks.allDone"
+								: "care.upToDate.title",
+						)}
+						description={[
+							t("care.upToDate.description", { name: displayName(plant) }),
+							next?.dueDate &&
+								t("care.upToDate.next", {
 									care: careName(next.care.type).toLocaleLowerCase(),
 									due: dueLabel(next.dueDate, today).toLocaleLowerCase(),
-								})}`}
-						</Text>
-					</View>
+								}),
+						]
+							.filter(Boolean)
+							.join("\n")}
+					/>
 				)}
+				{doneToday.map(({ care, doneLog }) => (
+					<DoneCareCard
+						key={care.id}
+						care={care}
+						doneLog={doneLog}
+						plant={plant}
+					/>
+				))}
 			</View>
 
 			<View className="gap-4">
@@ -100,7 +167,9 @@ export default function PlantCareScreen() {
 							variant="ghost"
 							title={t("care.manage")}
 							icon="options-outline"
-							className="h-8 bg-primary-tint px-3"
+							// Same discreet link as "Voir tout" next to the garden title
+							className="h-8 px-0"
+							textClassName="text-muted"
 							onPress={() => manageSheetRef.current?.present()}
 						/>
 					)}
@@ -118,7 +187,7 @@ export default function PlantCareScreen() {
 					))}
 				</View>
 			</View>
-			<ManageCaresSheet ref={manageSheetRef} plant={plant} cares={cares} />
+			{manageSheet}
 		</ScrollView>
 	);
 }

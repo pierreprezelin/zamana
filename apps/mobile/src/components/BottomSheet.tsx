@@ -55,6 +55,8 @@ export default function BottomSheet({
 	return (
 		<BottomSheetModal
 			ref={ref}
+			// Keeps the sheet below mounted when another one opens from it, or the new one unmounts with its parent
+			stackBehavior="push"
 			backdropComponent={closable ? Backdrop : LockedBackdrop}
 			enablePanDownToClose={closable}
 			handleComponent={closable ? undefined : null}
@@ -67,8 +69,8 @@ export default function BottomSheet({
 			keyboardBlurBehavior="restore"
 		>
 			<BottomSheetView style={{ paddingBottom: bottom }}>
-				<View className={`gap-5 p-5 ${closable ? "pt-0" : ""}`}>
-					<View className="flex-row items-center justify-between gap-5">
+				<View className={`gap-4 p-4 ${closable ? "pt-0" : ""}`}>
+					<View className="flex-row items-center justify-between gap-4">
 						<Text className="flex-1 font-recoleta text-2xl leading-[1.25] text-foreground mt-1.5">
 							{title}
 						</Text>
@@ -87,7 +89,7 @@ export default function BottomSheet({
 					</View>
 					{children}
 				</View>
-				{actions && <View className="gap-2 px-5">{actions}</View>}
+				{actions && <View className="gap-2 px-4">{actions}</View>}
 			</BottomSheetView>
 		</BottomSheetModal>
 	);

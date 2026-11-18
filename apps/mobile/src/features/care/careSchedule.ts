@@ -1,5 +1,6 @@
 import type {
 	Care,
+	CareLog,
 	Climate,
 	Frequency,
 	Period,
@@ -109,8 +110,15 @@ export const nextDueDate = (
 	context: ScheduleContext,
 	today?: string,
 ) => {
-	const due = afterOneInterval(care, reference(care), context);
-	if (!due) return null;
+	const afterInterval = afterOneInterval(care, reference(care), context);
+	if (!afterInterval) return null;
+	// Waiting a month or a year for a care never done would forget it: ask right away.
+	// Watering keeps its first reminder one interval away
+	const askNow =
+		care.type !== "watering" &&
+		!care.lastDoneAt &&
+		afterInterval >= addMonths(care.startedAt, 1);
+	const due = askNow ? care.startedAt : afterInterval;
 	const snoozed =
 		care.snoozedUntil && care.snoozedUntil > due ? care.snoozedUntil : due;
 	if (!care.period) return snoozed;
@@ -119,6 +127,26 @@ export const nextDueDate = (
 		today && inPeriod < today && !isInPeriod(monthOf(today), care.period);
 	return pausedToday ? intoPeriod(today, care.period) : inPeriod;
 };
+
+// The log keeps the care as it was, so it tells a due care from one done ahead
+export const wasDueWhenDone = (
+	care: Care,
+	log: CareLog,
+	context: ScheduleContext,
+	today: string,
+) =>
+	isDue(
+		nextDueDate(
+			{
+				...care,
+				lastDoneAt: log.previousLastDoneAt,
+				snoozedUntil: log.previousSnoozedUntil,
+			},
+			context,
+			today,
+		),
+		today,
+	);
 
 export type ScheduledCare = { care: Care; dueDate: string | null };
 

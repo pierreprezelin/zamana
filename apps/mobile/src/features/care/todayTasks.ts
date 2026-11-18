@@ -3,6 +3,7 @@ import {
 	careStatus,
 	isDue,
 	scheduleCares,
+	wasDueWhenDone,
 } from "@/features/care/careSchedule";
 import type { Care, CareLog, Climate } from "@/features/care/careTypes";
 import type { Plant } from "@/features/plants/plantSchema";
@@ -20,6 +21,8 @@ export type TodayGroup = {
 	tasks: TodayTask[];
 	pendingCount: number;
 	doneCount: number;
+	// Done today while due, as opposed to ahead of time
+	dueDoneCount: number;
 };
 
 type TodayInput = {
@@ -30,6 +33,16 @@ type TodayInput = {
 	climate: Climate;
 };
 
+// The care is done for the day: it stays listed, and can be undone
+export const doneTodayLog = (logs: CareLog[], care: Care, today: string) =>
+	logs.findLast(
+		(log) =>
+			log.outcome === "done" &&
+			log.date === today &&
+			log.plantId === care.plantId &&
+			log.type === care.type,
+	);
+
 export const todayTasks = ({
 	plants,
 	cares,
@@ -37,10 +50,6 @@ export const todayTasks = ({
 	today,
 	climate,
 }: TodayInput): TodayGroup[] => {
-	const doneToday = logs.filter(
-		(log) => log.outcome === "done" && log.date === today,
-	);
-
 	const groups = plants
 		.filter((plant) => !plant.archivedAt)
 		.map((plant) => {
@@ -54,9 +63,7 @@ export const todayTasks = ({
 				today,
 			)) {
 				if (!dueDate) continue;
-				const doneLog = doneToday.findLast(
-					(log) => log.plantId === care.plantId && log.type === care.type,
-				);
+				const doneLog = doneTodayLog(logs, care, today);
 				const task = { care, dueDate, status: careStatus(dueDate, today) };
 				if (doneLog) done.push({ ...task, doneLog });
 				else if (isDue(dueDate, today)) pending.push(task);
@@ -66,6 +73,11 @@ export const todayTasks = ({
 				tasks: [...pending, ...done],
 				pendingCount: pending.length,
 				doneCount: done.length,
+				dueDoneCount: done.filter(
+					(task) =>
+						task.doneLog &&
+						wasDueWhenDone(task.care, task.doneLog, context, today),
+				).length,
 			};
 		})
 		.filter((group) => group.tasks.length);
@@ -73,6 +85,7 @@ export const todayTasks = ({
 	// The plant waiting the longest comes first
 	const oldestDueDate = (group: TodayGroup) =>
 		group.tasks.reduce(
+			// biome-ignore lint/complexity/useMathMinMax: ISO date strings, Math.min would coerce them to NaN
 			(oldest, task) => (task.dueDate < oldest ? task.dueDate : oldest),
 			today,
 		);

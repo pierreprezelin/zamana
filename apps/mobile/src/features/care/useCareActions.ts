@@ -1,17 +1,21 @@
 import Toast from "react-native-toast-message";
+import { careName } from "@/features/care/careLabels";
 import { snoozeUntil } from "@/features/care/careSchedule";
-import type { Care } from "@/features/care/careTypes";
+import type { Care, CareLog } from "@/features/care/careTypes";
 import { useCarePreferencesStore } from "@/features/care/useCarePreferencesStore";
 import { useCareStore } from "@/features/care/useCareStore";
 import type { Plant } from "@/features/plants/plantSchema";
 import { toISODate } from "@/utils/dates";
 import { t } from "@/utils/i18n";
 
+// Resolves to whether the action went through, so a success can be confirmed
 const run = async (action: () => Promise<void>) => {
 	try {
 		await action();
+		return true;
 	} catch {
 		Toast.show({ type: "error", text1: t("care.actionFailed") });
+		return false;
 	}
 };
 
@@ -31,7 +35,13 @@ export const useCareActions = () => {
 					}),
 				),
 			),
-		undo: (logId: string) => run(() => undo(logId)),
+		undo: async (log: CareLog) => {
+			if (!(await run(() => undo(log.id)))) return;
+			Toast.show({
+				type: "success",
+				text1: t("care.undone", { care: careName(log.type) }),
+			});
+		},
 		setReminder: (care: Care, reminder: boolean) =>
 			run(() => setReminder(care.id, reminder)),
 	};

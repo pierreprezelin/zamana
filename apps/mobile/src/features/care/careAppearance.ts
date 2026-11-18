@@ -40,6 +40,12 @@ const TREAT = {
 	text: "text-care-treat",
 };
 
+const MIST = {
+	background: "bg-care-mist",
+	tint: "bg-care-mist-tint",
+	text: "text-care-mist",
+};
+
 export const careAppearance: Record<CareType, CareAppearance> = {
 	watering: { icon: "water-outline", ...WATER },
 	fertilizing: { icon: "flask-outline", ...FEED },
@@ -47,5 +53,5 @@ export const careAppearance: Record<CareType, CareAppearance> = {
 	repotting: { icon: "cube-outline", ...REPOT },
 	pruning: { icon: "cut-outline", ...PRUNE },
 	treatment: { icon: "medkit-outline", ...TREAT },
-	misting: { icon: "rainy-outline", ...WATER },
+	misting: { icon: "rainy-outline", ...MIST },
 };

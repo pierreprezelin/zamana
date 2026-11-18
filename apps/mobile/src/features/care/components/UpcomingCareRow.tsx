@@ -1,4 +1,5 @@
 import { View } from "react-native";
+import Toast from "react-native-toast-message";
 import { twMerge } from "tailwind-merge";
 import Button from "@/components/Button";
 import { Ionicons } from "@/components/ionicons";
@@ -10,9 +11,11 @@ import {
 	dueLabel,
 	lastDoneLabel,
 } from "@/features/care/careLabels";
+import { nextDueDate } from "@/features/care/careSchedule";
 import type { Care } from "@/features/care/careTypes";
 import { CareBadge } from "@/features/care/components/CareBadge";
 import { useCareActions } from "@/features/care/useCareActions";
+import { useCarePreferencesStore } from "@/features/care/useCarePreferencesStore";
 import type { Plant } from "@/features/plants/plantSchema";
 import { t } from "@/utils/i18n";
 
@@ -24,6 +27,14 @@ type UpcomingCareRowProps = {
 	today: string;
 };
 
+const upcomingLabel = (care: Care, dueDate: string | null, today: string) => {
+	if (!dueDate) return lastDoneLabel(care.lastDoneAt, new Date());
+	const due = dueLabel(dueDate, today);
+	return care.lastDoneAt === today
+		? `${t("care.lastDone.today")} · ${due.toLocaleLowerCase()}`
+		: due;
+};
+
 export function UpcomingCareRow({
 	care,
 	plant,
@@ -33,9 +44,32 @@ export function UpcomingCareRow({
 }: UpcomingCareRowProps) {
 	const appearance = careAppearance[care.type];
 	const { done } = useCareActions();
+	const name = careName(care.type);
+
+	const doEarly = async () => {
+		if (!(await done(care))) return;
+		// Done ahead of time, the row barely changes: say it was noted
+		const next = nextDueDate(
+			{ ...care, lastDoneAt: today, snoozedUntil: null },
+			{
+				wateringLevel: plant.watering,
+				climate: useCarePreferencesStore.getState().climate,
+			},
+			today,
+		);
+		Toast.show({
+			type: "success",
+			text1: next
+				? t("care.doneEarly", {
+						care: name,
+						due: dueLabel(next, today).toLocaleLowerCase(),
+					})
+				: t("care.doneNoted", { care: name }),
+		});
+	};
 
 	return (
-		<View className="flex-row items-center gap-3 rounded-2xl border border-line bg-surface p-3">
+		<View className="flex-row items-center gap-3 rounded-2xl border border-line bg-surface p-4">
 			<CareBadge type={care.type} size={36} />
 			<View className="flex-1 gap-1">
 				<View className="flex-row items-center gap-1.5">
@@ -59,9 +93,7 @@ export function UpcomingCareRow({
 					/>
 				</View>
 				<Text className="text-xs text-muted">
-					{dueDate
-						? dueLabel(dueDate, today)
-						: lastDoneLabel(care.lastDoneAt, new Date())}
+					{upcomingLabel(care, dueDate, today)}
 				</Text>
 				{progress !== null && (
 					<View
@@ -77,12 +109,13 @@ export function UpcomingCareRow({
 					</View>
 				)}
 			</View>
-			{!plant.archivedAt && (
+			{/* Done today from the form: once a day, nothing left to do */}
+			{!plant.archivedAt && care.lastDoneAt !== today && (
 				<Button
 					variant="ghost"
 					title={careVerb(care.type)}
 					className="h-9 bg-primary-tint px-4"
-					onPress={() => done(care)}
+					onPress={doEarly}
 				/>
 			)}
 		</View>

@@ -12,6 +12,10 @@ type SelectFieldProps<T extends string> = {
 	options: Option<T>[];
 	error?: string;
 	disabled?: boolean;
+	// Reads the value as a phrase, like "De mars"
+	valuePrefix?: string;
+	// A required field always keeps a value: no clear button, no unselecting
+	clearable?: boolean;
 } & (
 	| { multiple?: false; value: T | null; onChange: (value: T | null) => void }
 	| { multiple: true; value: T[]; onChange: (value: T[]) => void }
@@ -20,7 +24,15 @@ type SelectFieldProps<T extends string> = {
 export default function SelectField<T extends string>(
 	props: SelectFieldProps<T>,
 ) {
-	const { title, placeholder, options, error, disabled } = props;
+	const {
+		title,
+		placeholder,
+		options,
+		error,
+		disabled,
+		valuePrefix,
+		clearable = true,
+	} = props;
 	const sheetRef = useRef<BottomSheetModal>(null);
 	const selected = props.multiple ? props.value : [props.value];
 	const summary = options
@@ -40,23 +52,27 @@ export default function SelectField<T extends string>(
 			);
 			return;
 		}
-		// Tapping the selected option clears the field
-		props.onChange(props.value === value ? null : value);
+		// Tapping the selected option clears the field, when it may be empty
+		props.onChange(clearable && props.value === value ? null : value);
 		sheetRef.current?.dismiss();
 	};
 
 	return (
 		<>
 			<FieldButton
-				value={summary || null}
+				value={
+					summary ? [valuePrefix, summary].filter(Boolean).join(" ") : null
+				}
 				placeholder={placeholder}
 				icon="chevron-down-outline"
 				accessibilityLabel={title}
 				error={error}
 				disabled={disabled}
 				onPress={() => sheetRef.current?.present()}
-				onClear={() =>
-					props.multiple ? props.onChange([]) : props.onChange(null)
+				onClear={
+					clearable
+						? () => (props.multiple ? props.onChange([]) : props.onChange(null))
+						: undefined
 				}
 			/>
 			<BottomSheet

@@ -54,14 +54,13 @@ const monthOptions = Array.from({ length: 12 }, (_, index) => ({
 	}),
 }));
 
-type CareFormSheetProps = {
-	ref: Ref<BottomSheetModal>;
+type CareFormProps = {
 	plant: Plant;
 	type: CareType;
 	care?: Care;
 };
 
-export function CareFormSheet({ ref, plant, type, care }: CareFormSheetProps) {
+function CareForm({ plant, type, care }: CareFormProps) {
 	const climate = useCarePreferencesStore((state) => state.climate);
 	const { createCare, updateCare } = useCareStore.getState();
 	const updatePlant = usePlantStore((state) => state.updatePlant);
@@ -73,7 +72,8 @@ export function CareFormSheet({ ref, plant, type, care }: CareFormSheetProps) {
 		String(plant.watering) as (typeof LEVELS)[number],
 	);
 	const [amount, setAmount] = useState(
-		care?.frequency ? String(care.frequency.amount) : "",
+		// Most cares come back every week, month or year
+		care?.frequency ? String(care.frequency.amount) : "1",
 	);
 	const [unit, setUnit] = useState<FrequencyUnit>(
 		care?.frequency?.unit ?? "week",
@@ -135,22 +135,7 @@ export function CareFormSheet({ ref, plant, type, care }: CareFormSheetProps) {
 	);
 
 	return (
-		<BottomSheet
-			ref={ref}
-			title={t(care ? "care.form.editTitle" : "care.form.configureTitle")}
-			actions={
-				<>
-					<Button title={t("common.save")} loading={saving} onPress={save} />
-					{care && (
-						<Button
-							variant="ghostDanger"
-							title={t("care.form.stop")}
-							onPress={() => stopSheetRef.current?.present()}
-						/>
-					)}
-				</>
-			}
-		>
+		<>
 			<View>
 				<FieldLabel>{t("care.form.type")}</FieldLabel>
 				<View className="flex-row items-center gap-3">
@@ -179,18 +164,19 @@ export function CareFormSheet({ ref, plant, type, care }: CareFormSheetProps) {
 				<>
 					<View>
 						<FieldLabel>{t("care.form.frequency")}</FieldLabel>
-						<View className="flex-row items-start gap-2">
+						<View className="flex-row items-center gap-2">
 							<FieldInput
 								inBottomSheet
 								className="w-16 text-center"
 								keyboardType="number-pad"
 								maxLength={2}
 								accessibilityLabel={t("care.form.frequencyAmount")}
+								placeholder={t("care.form.frequencyPlaceholder")}
 								value={amount}
 								onChangeText={setAmount}
 							/>
 							<SegmentedControl
-								className="flex-1"
+								className="h-12 flex-1"
 								options={unitOptions}
 								value={unit}
 								onChange={setUnit}
@@ -218,6 +204,8 @@ export function CareFormSheet({ ref, plant, type, care }: CareFormSheetProps) {
 									<SelectField
 										title={t("care.form.from")}
 										placeholder={t("care.form.from")}
+										valuePrefix={t("care.form.from")}
+										clearable={false}
 										options={monthOptions}
 										value={startMonth}
 										onChange={(month) => month && setStartMonth(month)}
@@ -227,6 +215,8 @@ export function CareFormSheet({ ref, plant, type, care }: CareFormSheetProps) {
 									<SelectField
 										title={t("care.form.to")}
 										placeholder={t("care.form.to")}
+										valuePrefix={t("care.form.to")}
+										clearable={false}
 										options={monthOptions}
 										value={endMonth}
 										onChange={(month) => month && setEndMonth(month)}
@@ -263,7 +253,45 @@ export function CareFormSheet({ ref, plant, type, care }: CareFormSheetProps) {
 				onChange={setReminder}
 			/>
 
+			<View className="gap-2">
+				<Button title={t("common.save")} loading={saving} onPress={save} />
+				{care && (
+					<Button
+						variant="ghostDanger"
+						title={t("care.form.stop")}
+						onPress={() => stopSheetRef.current?.present()}
+					/>
+				)}
+			</View>
+
 			{care && <StopCareSheet ref={stopSheetRef} care={care} />}
+		</>
+	);
+}
+
+type CareFormSheetProps = {
+	ref: Ref<BottomSheetModal>;
+	plant: Plant;
+	type: CareType | null;
+	care?: Care;
+};
+
+// Stays mounted, so it opens right away: only its form changes with the care
+export function CareFormSheet({ ref, plant, type, care }: CareFormSheetProps) {
+	return (
+		<BottomSheet
+			ref={ref}
+			title={t(care ? "care.form.editTitle" : "care.form.configureTitle")}
+		>
+			{type && (
+				// Starts afresh for another care, or once this one is created
+				<CareForm
+					key={`${type}-${care?.id}`}
+					plant={plant}
+					type={type}
+					care={care}
+				/>
+			)}
 		</BottomSheet>
 	);
 }

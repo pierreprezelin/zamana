@@ -41,6 +41,8 @@
 			--color-care-prune-tint: #F3EEF6;
 			--color-care-treat: #737001;
 			--color-care-treat-tint: #F1F1E6;
+			--color-care-mist: #4B57B5;
+			--color-care-mist-tint: #EDEEF8;
 		}
 		@variant dark {
 			--color-primary: #348468;
@@ -79,6 +81,8 @@
 			--color-care-prune-tint: #2F3138;
 			--color-care-treat: #B8B660;
 			--color-care-treat-tint: #2D3523;
+			--color-care-mist: #9DA6F0;
+			--color-care-mist-tint: #2A2D3F;
 		}
 	}
 }

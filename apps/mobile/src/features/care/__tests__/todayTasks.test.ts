@@ -89,6 +89,7 @@ describe("todayTasks", () => {
 		]);
 		expect(groups[0].pendingCount).toBe(1);
 		expect(groups[0].doneCount).toBe(1);
+		expect(groups[0].dueDoneCount).toBe(1);
 	});
 
 	it("shows the latest plants first", () => {

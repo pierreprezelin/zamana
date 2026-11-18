@@ -1,5 +1,5 @@
 import type { BottomSheetModal } from "@gorhom/bottom-sheet";
-import { type Ref, useEffect, useRef, useState } from "react";
+import type { Ref } from "react";
 import { View } from "react-native";
 import BottomSheet from "@/components/BottomSheet";
 import Button from "@/components/Button";
@@ -14,7 +14,6 @@ import {
 	type CareType,
 } from "@/features/care/careTypes";
 import { CareBadge } from "@/features/care/components/CareBadge";
-import { CareFormSheet } from "@/features/care/components/CareFormSheet";
 import { useCareActions } from "@/features/care/useCareActions";
 import type { Plant } from "@/features/plants/plantSchema";
 import { t } from "@/utils/i18n";
@@ -23,23 +22,16 @@ type ManageCaresSheetProps = {
 	ref: Ref<BottomSheetModal>;
 	plant: Plant;
 	cares: Care[];
+	onEdit: (type: CareType) => void;
 };
 
-export function ManageCaresSheet({ ref, plant, cares }: ManageCaresSheetProps) {
+export function ManageCaresSheet({
+	ref,
+	plant,
+	cares,
+	onEdit,
+}: ManageCaresSheetProps) {
 	const { setReminder } = useCareActions();
-	const formRef = useRef<BottomSheetModal>(null);
-	const [editedType, setEditedType] = useState<CareType | null>(null);
-	const editedCare = cares.find((care) => care.type === editedType);
-
-	// The form mounts with the chosen care, then opens
-	useEffect(() => {
-		if (editedType) formRef.current?.present();
-	}, [editedType]);
-
-	const edit = (type: CareType) => {
-		if (type === editedType) formRef.current?.present();
-		else setEditedType(type);
-	};
 
 	return (
 		<BottomSheet ref={ref} title={t("care.manageSheet.title")}>
@@ -76,7 +68,7 @@ export function ManageCaresSheet({ ref, plant, cares }: ManageCaresSheetProps) {
 										pressedClassName=""
 										pressedOpacity={0.5}
 										hitSlop={12}
-										onPress={() => edit(type)}
+										onPress={() => onEdit(type)}
 									>
 										<Ionicons
 											name="pencil-outline"
@@ -97,23 +89,13 @@ export function ManageCaresSheet({ ref, plant, cares }: ManageCaresSheetProps) {
 									variant="ghost"
 									title={t("care.manageSheet.configure")}
 									className="h-9 bg-primary-tint px-4"
-									onPress={() => edit(type)}
+									onPress={() => onEdit(type)}
 								/>
 							)}
 						</View>
 					);
 				})}
 			</View>
-			{editedType && (
-				<CareFormSheet
-					// Starts afresh once the care is created or stopped
-					key={`${editedType}-${editedCare?.id}`}
-					ref={formRef}
-					plant={plant}
-					type={editedType}
-					care={editedCare}
-				/>
-			)}
 		</BottomSheet>
 	);
 }

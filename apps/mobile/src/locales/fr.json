@@ -18,6 +18,8 @@
 		"encyclopedia": "Encyclopédie",
 		"historyEntry": "Entrée d'historique",
 		"newPlant": "Ajouter une plante",
+		"ergonomics": "Ergonomie",
+		"location": "Localisation",
 		"notifications": "Notifications",
 		"settings": "Paramètres"
 	},
@@ -381,13 +383,21 @@
 		"todo": "À faire",
 		"upcoming": "Prochains soins",
 		"manage": "Gérer",
-		"skip": "Pas besoin",
+		"skip": "Reporter",
 		"markDone": "Marquer {{care}} comme fait",
-		"skipCare": "Pas besoin pour {{care}}",
+		"skipCare": "Reporter {{care}}",
 		"undo": "Annuler {{care}}",
 		"reminderOn": "Rappels activés",
 		"reminderOff": "Rappels coupés",
 		"actionFailed": "L'action a échoué, réessayez",
+		"doneEarly": "{{care}} noté, prochain soin {{due}}",
+		"doneNoted": "{{care}} noté",
+		"undone": "{{care}} annulé",
+		"noCare": {
+			"title": "Aucun soin suivi pour {{name}}",
+			"description": "Configurez l'arrosage, l'engrais… pour savoir quand vous en occuper.",
+			"configure": "Configurer les soins"
+		},
 		"upToDate": {
 			"title": "Rien à faire aujourd'hui 🌿",
 			"description": "{{name}} est à jour.",
@@ -395,7 +405,7 @@
 		},
 		"manageSheet": {
 			"title": "Gérer les soins",
-			"description": "Coupez ou réactivez les rappels, touchez le crayon pour modifier un soin, ou « Configurer » pour commencer à le suivre.",
+			"description": "Choisissez les soins à suivre pour cette plante, puis ajustez leur fréquence et leurs rappels.",
 			"notTracked": "Non suivi",
 			"configure": "Configurer",
 			"edit": "Modifier {{care}}",
@@ -407,6 +417,7 @@
 			"type": "Type",
 			"frequency": "Fréquence",
 			"frequencyAmount": "Nombre",
+			"frequencyPlaceholder": "1",
 			"frequencyHelper": "Facultative si les rappels sont coupés.",
 			"units": {
 				"day": "Jours",
@@ -440,14 +451,17 @@
 		"tasks": {
 			"title": "Tâches",
 			"none": "Rien de prévu aujourd'hui, profitez-en !",
+			"allDoneSubtitle": "Tout est fait pour aujourd'hui, bravo !",
+			"allDone": "Tout est fait pour aujourd'hui 🎉",
+			"nothing": "Rien de prévu aujourd'hui 🌿",
+			"upToDate": "Vos plantes sont à jour.",
 			"count": {
 				"one": "Vous avez {{amount}} tâche prévue aujourd'hui !",
 				"other": "Vous avez {{amount}} tâches prévues aujourd'hui !"
 			}
 		},
 		"swipe": {
-			"done": "Fait",
-			"skip": "Pas besoin",
+			"skip": "Reporter",
 			"undo": "Annuler"
 		},
 		"preferences": {
@@ -458,10 +472,10 @@
 				"south": "Sud",
 				"tropics": "Tropiques"
 			},
-			"swipeRight": "Glisser une tâche vers la droite pour",
+			"swipeLeft": "Glisser une tâche vers la gauche pour",
 			"swipeActions": {
 				"done": "La faire",
-				"skip": "Pas besoin"
+				"skip": "La reporter"
 			}
 		}
 	}
