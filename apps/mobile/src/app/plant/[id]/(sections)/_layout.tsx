@@ -79,7 +79,8 @@ export default function PlantSectionsLayout() {
 	)?.headerAction;
 
 	return (
-		<Tabs style={{ flex: 1 }}>
+		// Back leaves the plant, wherever it was opened, instead of walking back through its sections
+		<Tabs style={{ flex: 1 }} options={{ backBehavior: "none" }}>
 			<Stack.Screen
 				options={{
 					headerRight: headerAction
@@ -95,6 +96,16 @@ export default function PlantSectionsLayout() {
 						: undefined,
 				}}
 			/>
+			{/* Tabs only reads the triggers of a TabList it holds directly, so the chips below refer to them by name */}
+			<TabList style={{ display: "none" }}>
+				{sections.map((section) => (
+					<TabTrigger
+						key={section.name}
+						name={section.name}
+						href={`/plant/${id}${section.path}`}
+					/>
+				))}
+			</TabList>
 			<View className="gap-5 px-5 pb-2.5">
 				<View className="flex-row items-center gap-4">
 					<PlantPhoto photo={plant.photo} className="size-16 rounded-2xl" />
@@ -112,24 +123,22 @@ export default function PlantSectionsLayout() {
 						)}
 					</View>
 				</View>
-				{/* asChild so Uniwind styles a View rendered here, and the style resets the default space-between */}
-				<TabList asChild style={{ justifyContent: "flex-start" }}>
-					<View className="flex-row gap-2">
-						{sections.map((section) => {
-							const href = `/plant/${id}${section.path}` as const;
-							return (
-								<TabTrigger
-									key={section.name}
-									name={section.name}
-									href={href}
-									asChild
-								>
-									<TabChip label={section.label} selected={pathname === href} />
-								</TabTrigger>
-							);
-						})}
-					</View>
-				</TabList>
+				<View className="flex-row gap-2">
+					{sections.map((section) => (
+						<TabTrigger
+							key={section.name}
+							name={section.name}
+							// Remounts the section, so it opens scrolled to the top
+							resetOnFocus
+							asChild
+						>
+							<TabChip
+								label={section.label}
+								selected={pathname === `/plant/${id}${section.path}`}
+							/>
+						</TabTrigger>
+					))}
+				</View>
 			</View>
 			<TabSlot />
 		</Tabs>
