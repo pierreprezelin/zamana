@@ -44,12 +44,16 @@ function Segment({
 			onPress={onPress}
 			accessibilityRole="radio"
 			accessibilityState={{ checked: selected }}
-			className="flex-1 items-center justify-center px-2"
+			className="flex-1 items-center justify-center px-1"
 		>
 			<View>
-				<Text className="text-foreground">{label}</Text>
+				<Text numberOfLines={1} className="text-foreground">
+					{label}
+				</Text>
 				<Animated.View style={[StyleSheet.absoluteFill, onIndicatorStyle]}>
-					<Text className="text-on-primary">{label}</Text>
+					<Text numberOfLines={1} className="text-on-primary">
+						{label}
+					</Text>
 				</Animated.View>
 			</View>
 		</Pressable>

@@ -103,7 +103,7 @@ export default function GardenScreen() {
 						keyboardDismissMode="on-drag"
 						keyboardShouldPersistTaps="handled"
 						contentContainerClassName="gap-2"
-						contentContainerStyle={{ paddingBottom: tabBarOffset + 20 }}
+						contentContainerStyle={{ paddingBottom: tabBarOffset + 16 }}
 						columnWrapperClassName={viewMode === "grid" ? "gap-2" : undefined}
 						ListEmptyComponent={
 							<Text className="py-8 text-center text-muted">

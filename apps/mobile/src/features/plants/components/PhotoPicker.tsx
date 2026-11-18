@@ -44,7 +44,7 @@ export function PhotoPicker({ uri, onChange }: PhotoPickerProps) {
 		<View>
 			{uri ? (
 				// Same size as a tile of the garden grid
-				<View className="flex-row items-center gap-5">
+				<View className="flex-row items-center gap-4">
 					<Pressable
 						accessibilityRole="button"
 						accessibilityLabel={t("plant.photo.change")}

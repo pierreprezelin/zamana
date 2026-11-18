@@ -47,7 +47,7 @@ export default function WelcomeScreen() {
 			className="flex-1 bg-background"
 			style={{ paddingTop: insets.top, paddingBottom: insets.bottom }}
 		>
-			<View className="h-14 flex-row items-center justify-between px-5">
+			<View className="h-14 flex-row items-center justify-between px-4">
 				<StepsIndicator count={steps.length} progress={progress} />
 				<Button
 					title={t("welcome.skip")}
@@ -68,7 +68,7 @@ export default function WelcomeScreen() {
 				onScroll={onScroll}
 			>
 				{steps.map((step, index) => (
-					<View key={step.key} style={{ width }} className="px-5 pb-5">
+					<View key={step.key} style={{ width }} className="px-4 pb-5">
 						<View className="flex-1 items-center justify-center">
 							<View className="size-16 items-center justify-center rounded-full bg-primary/5">
 								<Ionicons name={step.icon} size={26} className="text-primary" />

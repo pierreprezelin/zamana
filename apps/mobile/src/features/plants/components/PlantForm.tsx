@@ -224,7 +224,7 @@ export function PlantForm({ plant }: { plant?: Plant }) {
 				ref={scrollRef}
 				keyboardShouldPersistTaps="handled"
 				// With the action bar padding, ends 32px above the button like the gap between sections
-				contentContainerClassName="px-5 pb-5.5"
+				contentContainerClassName="px-4 pb-5.5"
 			>
 				<View ref={contentRef} className="gap-8">
 					<View className="gap-4">
@@ -496,7 +496,7 @@ export function PlantForm({ plant }: { plant?: Plant }) {
 			</ScrollView>
 
 			<View
-				className="gap-2 bg-background px-5 pt-2.5"
+				className="gap-2 bg-background px-4 pt-2.5"
 				style={{ paddingBottom: bottom }}
 			>
 				<Button

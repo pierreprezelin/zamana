@@ -75,11 +75,11 @@ export default function PlantInformationScreen() {
 		<>
 			<ScrollView
 				// grow + mt-auto keep the actions at the bottom when few fields are filled
-				contentContainerClassName="grow gap-8 px-5 pt-2.5"
+				contentContainerClassName="grow gap-8 px-4 pt-2.5"
 				contentContainerStyle={{ paddingBottom: bottom }}
 			>
 				{plant.toxic && (
-					<View className="flex-row items-center gap-3 rounded-2xl border border-warning bg-warning-tint px-4 py-3.5">
+					<View className="flex-row items-center gap-3 rounded-2xl border border-warning bg-warning-tint p-4">
 						<Ionicons name="paw-outline" size={20} className="text-warning" />
 						<Text className="flex-1 font-outfit-semibold text-warning">
 							{t("plant.info.toxic")}

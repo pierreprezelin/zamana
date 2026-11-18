@@ -28,7 +28,7 @@ export function ScreenPlaceholder({
 	const { top } = useSafeAreaInsets();
 	const content = (
 		<>
-			<View className="flex-row items-start justify-between gap-5">
+			<View className="flex-row items-start justify-between gap-4">
 				<View>
 					<Text className="font-recoleta text-[28px] text-foreground">
 						{title}
@@ -65,10 +65,10 @@ export function ScreenPlaceholder({
 	return (
 		<View style={{ flex: 1, paddingTop: top }}>
 			{scrollBottomInset === undefined ? (
-				<View className="flex-1 gap-5 p-5">{content}</View>
+				<View className="flex-1 gap-6 p-4">{content}</View>
 			) : (
 				<ScrollView
-					contentContainerClassName="gap-5 p-5"
+					contentContainerClassName="gap-6 p-4"
 					contentContainerStyle={{ paddingBottom: scrollBottomInset }}
 				>
 					{content}
