@@ -21,12 +21,7 @@ jest.mock("@/utils/database", () => ({
 			}
 			if (sql.startsWith("DELETE")) mockRows.delete(params[0] as string);
 		},
-		withExclusiveTransactionAsync: async (
-			task: (transaction: unknown) => Promise<void>,
-		) => {
-			const { database } = jest.requireMock("@/utils/database");
-			await task(database);
-		},
+		withTransactionAsync: async (task: () => Promise<void>) => task(),
 	},
 }));
 

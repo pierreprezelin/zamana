@@ -151,8 +151,8 @@ export const usePlantStore = create<PlantState>()((set, get) => {
 			const id = randomUUID();
 			const now = new Date().toISOString();
 			// A new plant is never left without its watering
-			await database.withExclusiveTransactionAsync(async (transaction) => {
-				await transaction.runAsync(
+			await database.withTransactionAsync(async () => {
+				await database.runAsync(
 					`INSERT INTO plant (id, ${DATA_COLUMNS.join(", ")}, created_at, updated_at)
 					VALUES (?, ${DATA_COLUMNS.map(() => "?").join(", ")}, ?, ?)`,
 					id,
@@ -160,7 +160,7 @@ export const usePlantStore = create<PlantState>()((set, get) => {
 					now,
 					now,
 				);
-				await useCareStore.getState().trackWatering(id, transaction);
+				await useCareStore.getState().trackWatering(id);
 			});
 			const plant: Plant = {
 				...data,

@@ -9,12 +9,7 @@ jest.mock("@/utils/database", () => ({
 		runAsync: async (sql: string) => {
 			mockQueries.push(sql.trim().split(/\s+/).slice(0, 3).join(" "));
 		},
-		withExclusiveTransactionAsync: async (
-			task: (transaction: unknown) => Promise<void>,
-		) => {
-			const { database } = jest.requireMock("@/utils/database");
-			await task(database);
-		},
+		withTransactionAsync: async (task: () => Promise<void>) => task(),
 	},
 }));
 
@@ -149,5 +144,13 @@ describe("useCareStore", () => {
 		await state().stopCare(id);
 
 		expect(state().logs).toEqual([]);
+	});
+
+	it("marks a care done only once a day", async () => {
+		const id = await state().createCare("plant-1", fertilizing);
+		await state().markDone(id);
+		await state().markDone(id);
+
+		expect(state().logs).toHaveLength(1);
 	});
 });

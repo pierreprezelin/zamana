@@ -1,5 +1,4 @@
 import { randomUUID } from "expo-crypto";
-import type { SQLiteDatabase } from "expo-sqlite";
 import { create } from "zustand";
 import type { CareInput } from "@/features/care/careSchema";
 import type {
@@ -83,14 +82,11 @@ const settingsParams = ({
 
 const today = () => toISODate(new Date());
 
-// The database, or a transaction to write within
-type Executor = Pick<SQLiteDatabase, "runAsync">;
-
 type CareState = {
 	cares: Care[];
 	// Only today's, to show what was done and allow undoing it
 	logs: CareLog[];
-	trackWatering: (plantId: string, executor?: Executor) => Promise<string>;
+	trackWatering: (plantId: string) => Promise<string>;
 	createCare: (plantId: string, input: CareInput) => Promise<string>;
 	updateCare: (id: string, input: CareInput) => Promise<void>;
 	setReminder: (id: string, reminder: boolean) => Promise<void>;
@@ -124,8 +120,8 @@ export const useCareStore = create<CareState>()((set, get) => {
 	const patchCare = (id: string, patch: Partial<Care>) =>
 		set(({ cares }) => ({ cares: withPatch(cares, id, patch) }));
 
-	const insertCare = async (care: Care, executor: Executor = database) => {
-		await executor.runAsync(
+	const insertCare = async (care: Care) => {
+		await database.runAsync(
 			`INSERT INTO care (id, plant_id, type, frequency_amount, frequency_unit, period_start_month, period_end_month, last_done_at, reminder, started_at)
 			VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
 			care.id,
@@ -139,12 +135,11 @@ export const useCareStore = create<CareState>()((set, get) => {
 	};
 
 	const updateProgress = (
-		executor: Executor,
 		id: string,
 		lastDoneAt: string | null,
 		snoozedUntil: string | null,
 	) =>
-		executor.runAsync(
+		database.runAsync(
 			"UPDATE care SET last_done_at = ?, snoozed_until = ? WHERE id = ?",
 			lastDoneAt,
 			snoozedUntil,
@@ -159,6 +154,15 @@ export const useCareStore = create<CareState>()((set, get) => {
 	) => {
 		const care = findCare(id);
 		if (!care || busyCares.has(id)) return;
+		// A care is done once a day, a second one would outlive an undo
+		const doneToday = get().logs.some(
+			(log) =>
+				log.outcome === "done" &&
+				log.date === today() &&
+				log.plantId === care.plantId &&
+				log.type === care.type,
+		);
+		if (outcome === "done" && doneToday) return;
 		busyCares.add(id);
 		try {
 			const entry: CareLog = {
@@ -172,8 +176,8 @@ export const useCareStore = create<CareState>()((set, get) => {
 				previousSnoozedUntil: care.snoozedUntil,
 			};
 			const { lastDoneAt, snoozedUntil } = progress(care);
-			await database.withExclusiveTransactionAsync(async (transaction) => {
-				await transaction.runAsync(
+			await database.withTransactionAsync(async () => {
+				await database.runAsync(
 					`INSERT INTO care_log (id, plant_id, type, outcome, date, created_at, previous_last_done_at, previous_snoozed_until)
 					VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
 					entry.id,
@@ -185,7 +189,7 @@ export const useCareStore = create<CareState>()((set, get) => {
 					entry.previousLastDoneAt,
 					entry.previousSnoozedUntil,
 				);
-				await updateProgress(transaction, id, lastDoneAt, snoozedUntil);
+				await updateProgress(id, lastDoneAt, snoozedUntil);
 			});
 			set(({ cares, logs }) => ({
 				cares: withPatch(cares, id, { lastDoneAt, snoozedUntil }),
@@ -199,21 +203,18 @@ export const useCareStore = create<CareState>()((set, get) => {
 	return {
 		cares: savedCares,
 		logs: savedLogs,
-		trackWatering: (plantId, executor) =>
-			insertCare(
-				{
-					id: randomUUID(),
-					plantId,
-					type: "watering",
-					frequency: null,
-					period: null,
-					lastDoneAt: null,
-					startedAt: today(),
-					snoozedUntil: null,
-					reminder: true,
-				},
-				executor,
-			),
+		trackWatering: (plantId) =>
+			insertCare({
+				id: randomUUID(),
+				plantId,
+				type: "watering",
+				frequency: null,
+				period: null,
+				lastDoneAt: null,
+				startedAt: today(),
+				snoozedUntil: null,
+				reminder: true,
+			}),
 		createCare: (plantId, input) =>
 			insertCare({
 				id: randomUUID(),
@@ -257,11 +258,10 @@ export const useCareStore = create<CareState>()((set, get) => {
 			const care = get().cares.find(
 				(care) => care.plantId === entry.plantId && care.type === entry.type,
 			);
-			await database.withExclusiveTransactionAsync(async (transaction) => {
-				await transaction.runAsync("DELETE FROM care_log WHERE id = ?", logId);
+			await database.withTransactionAsync(async () => {
+				await database.runAsync("DELETE FROM care_log WHERE id = ?", logId);
 				if (care) {
 					await updateProgress(
-						transaction,
 						care.id,
 						entry.previousLastDoneAt,
 						entry.previousSnoozedUntil,
@@ -281,9 +281,9 @@ export const useCareStore = create<CareState>()((set, get) => {
 		stopCare: async (id) => {
 			const care = findCare(id);
 			if (!care) return;
-			await database.withExclusiveTransactionAsync(async (transaction) => {
-				await transaction.runAsync("DELETE FROM care WHERE id = ?", id);
-				await transaction.runAsync(
+			await database.withTransactionAsync(async () => {
+				await database.runAsync("DELETE FROM care WHERE id = ?", id);
+				await database.runAsync(
 					"DELETE FROM care_log WHERE plant_id = ? AND type = ? AND date = ?",
 					care.plantId,
 					care.type,
