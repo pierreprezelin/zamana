@@ -18,8 +18,8 @@ export function NeedTile({ icon, label, value, level }: NeedTileProps) {
 			accessibilityLabel={`${label} : ${value}`}
 			className="flex-1 gap-3 rounded-2xl border border-line bg-surface p-4"
 		>
-			<View className="size-10 items-center justify-center rounded-xl bg-primary-tint">
-				<Ionicons name={icon} size={20} className="text-primary" />
+			<View className="size-12 items-center justify-center rounded-xl bg-primary-tint">
+				<Ionicons name={icon} size={24} className="text-primary" />
 			</View>
 			<View className="flex-1">
 				<Text className="text-xs text-muted">{label}</Text>

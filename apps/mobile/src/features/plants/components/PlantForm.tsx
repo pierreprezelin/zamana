@@ -15,7 +15,7 @@ import Pressable from "@/components/Pressable";
 import SegmentedControl from "@/components/SegmentedControl";
 import SelectField from "@/components/SelectField";
 import Text from "@/components/Text";
-import Toggle from "@/components/Toggle";
+import ToggleRow from "@/components/ToggleRow";
 import { resolveBornAt } from "@/features/plants/age";
 import { DeletePlantSheet } from "@/features/plants/components/DeletePlantSheet";
 import { HelpSheet } from "@/features/plants/components/HelpSheet";
@@ -104,25 +104,6 @@ function LabeledField({
 			{helper && (
 				<Text className={`mt-2 text-xs ${helperClassName}`}>{helper}</Text>
 			)}
-		</View>
-	);
-}
-
-type ToggleRowProps = {
-	label: string;
-	helper?: string;
-	value: boolean;
-	onChange: (value: boolean) => void;
-};
-
-function ToggleRow({ label, helper, value, onChange }: ToggleRowProps) {
-	return (
-		<View className="flex-row items-center gap-4">
-			<View className="flex-1">
-				<Text className="font-outfit-semibold text-foreground">{label}</Text>
-				{helper && <Text className="text-xs text-muted">{helper}</Text>}
-			</View>
-			<Toggle accessibilityLabel={label} value={value} onChange={onChange} />
 		</View>
 	);
 }

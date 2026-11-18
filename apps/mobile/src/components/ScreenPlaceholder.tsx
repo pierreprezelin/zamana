@@ -1,6 +1,6 @@
 import { type Href, Link } from "expo-router";
 import type { ReactNode } from "react";
-import { View } from "react-native";
+import { ScrollView, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Ionicons } from "@/components/ionicons";
 import Pressable from "@/components/Pressable";
@@ -12,6 +12,8 @@ type ScreenPlaceholderProps = {
 	subtitle?: string;
 	links?: { label: string; href: Href }[];
 	showSettings?: boolean;
+	// Scrolls the content, clearing this bottom space (the floating tab bar)
+	scrollBottomInset?: number;
 	children?: ReactNode;
 };
 
@@ -20,47 +22,58 @@ export function ScreenPlaceholder({
 	subtitle,
 	links = [],
 	showSettings = false,
+	scrollBottomInset,
 	children,
 }: ScreenPlaceholderProps) {
 	const { top } = useSafeAreaInsets();
+	const content = (
+		<>
+			<View className="flex-row items-start justify-between gap-5">
+				<View>
+					<Text className="font-recoleta text-[28px] text-foreground">
+						{title}
+					</Text>
+					{subtitle && <Text className="text-base text-muted">{subtitle}</Text>}
+				</View>
+				{showSettings && (
+					<Link href="/settings" asChild>
+						<Pressable
+							accessibilityRole="button"
+							accessibilityLabel={t("common.settings")}
+							pressedOpacity={0.5}
+							hitSlop={8}
+							className="size-10 items-center justify-center rounded-full"
+						>
+							<Ionicons
+								name="settings-outline"
+								size={24}
+								className="text-foreground"
+							/>
+						</Pressable>
+					</Link>
+				)}
+			</View>
+			{links.map(({ label, href }) => (
+				<Link key={label} href={href} asChild>
+					<Text className="text-primary">→ {label}</Text>
+				</Link>
+			))}
+			{children}
+		</>
+	);
 
 	return (
 		<View style={{ flex: 1, paddingTop: top }}>
-			<View className="flex-1 gap-5 p-5">
-				<View className="flex-row items-start justify-between gap-5">
-					<View>
-						<Text className="font-recoleta text-[28px] text-foreground">
-							{title}
-						</Text>
-						{subtitle && (
-							<Text className="text-base text-muted">{subtitle}</Text>
-						)}
-					</View>
-					{showSettings && (
-						<Link href="/settings" asChild>
-							<Pressable
-								accessibilityRole="button"
-								accessibilityLabel={t("common.settings")}
-								pressedOpacity={0.5}
-								hitSlop={8}
-								className="size-10 items-center justify-center rounded-full"
-							>
-								<Ionicons
-									name="settings-outline"
-									size={24}
-									className="text-foreground"
-								/>
-							</Pressable>
-						</Link>
-					)}
-				</View>
-				{links.map(({ label, href }) => (
-					<Link key={label} href={href} asChild>
-						<Text className="text-primary">→ {label}</Text>
-					</Link>
-				))}
-				{children}
-			</View>
+			{scrollBottomInset === undefined ? (
+				<View className="flex-1 gap-5 p-5">{content}</View>
+			) : (
+				<ScrollView
+					contentContainerClassName="gap-5 p-5"
+					contentContainerStyle={{ paddingBottom: scrollBottomInset }}
+				>
+					{content}
+				</ScrollView>
+			)}
 		</View>
 	);
 }

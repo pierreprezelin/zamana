@@ -23,6 +23,7 @@ I designed Zamana to cover my needs, but also to be useful to everyone. You'll f
 - 🗒️ Fully customizable info about your plant (name, temp, watering, lifespan...)
 - 🌡️ Notifications about abnormally hot or cold temperatures, to bring your plants indoors
 - ⚠️ Alerts to remind you to take care of your plants at specific intervals
+- 💧 Watering reminders that follow the growing and rest seasons, wherever you live: northern or southern hemisphere, or the tropics
 - 🖼️ A timeline with the photos you've taken of your plant to watch its evolution
 - 📚 Help articles about how to take care of your plants
 - 📍 Everything stored locally on your phone...

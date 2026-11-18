@@ -16,7 +16,7 @@ export function PlantListRow({ plant }: { plant: Plant }) {
 				pressedOpacity={0.75}
 				className="flex-row items-center gap-4 rounded-2xl border border-line bg-surface p-3"
 			>
-				<PlantPhoto photo={plant.photo} className="size-16" />
+				<PlantPhoto photo={plant.photo} className="size-16 rounded-2xl" />
 				<View className="flex-1">
 					<Text
 						numberOfLines={1}

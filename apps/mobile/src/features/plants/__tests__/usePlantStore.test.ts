@@ -21,11 +21,22 @@ jest.mock("@/utils/database", () => ({
 			}
 			if (sql.startsWith("DELETE")) mockRows.delete(params[0] as string);
 		},
+		withExclusiveTransactionAsync: async (
+			task: (transaction: unknown) => Promise<void>,
+		) => {
+			const { database } = jest.requireMock("@/utils/database");
+			await task(database);
+		},
 	},
 }));
 
 const { usePlantStore } =
 	require("@/features/plants/usePlantStore") as typeof import("@/features/plants/usePlantStore");
+const { useCareStore } =
+	require("@/features/care/useCareStore") as typeof import("@/features/care/useCareStore");
+
+const caresOf = (plantId: string) =>
+	useCareStore.getState().cares.filter((care) => care.plantId === plantId);
 
 const data: PlantData = {
 	photo: "photo.jpg",
@@ -112,5 +123,18 @@ describe("usePlantStore", () => {
 		expect(plantOf(id)).toBeUndefined();
 		expect(mockRows.has(id)).toBe(false);
 		expect(mockDeletePhoto).toHaveBeenCalledWith("photo.jpg");
+	});
+
+	it("tracks the watering of a new plant", async () => {
+		const id = await usePlantStore.getState().createPlant(data);
+
+		expect(caresOf(id).map((care) => care.type)).toEqual(["watering"]);
+	});
+
+	it("forgets the cares of a deleted plant", async () => {
+		const id = await usePlantStore.getState().createPlant(data);
+		await usePlantStore.getState().deletePlant(id);
+
+		expect(caresOf(id)).toEqual([]);
 	});
 });

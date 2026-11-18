@@ -97,7 +97,7 @@ export default function PlantSectionsLayout() {
 			/>
 			<View className="gap-5 px-5 pb-2.5">
 				<View className="flex-row items-center gap-4">
-					<PlantPhoto photo={plant.photo} className="size-16" />
+					<PlantPhoto photo={plant.photo} className="size-16 rounded-2xl" />
 					<View className="flex-1">
 						<Text
 							numberOfLines={2}

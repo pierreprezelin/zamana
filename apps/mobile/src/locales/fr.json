@@ -52,7 +52,6 @@
 		}
 	},
 	"today": {
-		"subtitle": "Qu'allons-nous faire aujourd'hui ?",
 		"greeting": {
 			"night": "Belle soirée",
 			"morning": "Belle matinée",
@@ -262,11 +261,11 @@
 			},
 			"watering": {
 				"label": "Arrosage",
-				"levels": ["2-3 jours", "1-2 sem.", "1 mois"],
+				"levels": ["2-3 jours", "1-2 sem.", "4-6 sem."],
 				"details": [
 					"Tous les 2-3 jours",
 					"Toutes les 1-2 semaines",
-					"Une fois par mois"
+					"Toutes les 4 à 6 semaines"
 				]
 			},
 			"temperature": {
@@ -309,5 +308,161 @@
 		"title": "L'application a besoin d’une mise à jour",
 		"description": "Une nouvelle version corrige un problème important. Mettez Zamana à jour pour continuer à prendre soin de vos plantes ! 🌱",
 		"update": "Mettre à jour maintenant"
+	},
+	"care": {
+		"types": {
+			"watering": {
+				"name": "Arrosage",
+				"verb": "Arroser"
+			},
+			"fertilizing": {
+				"name": "Engrais",
+				"verb": "Alimenter"
+			},
+			"leafCleaning": {
+				"name": "Nettoyage des feuilles",
+				"verb": "Nettoyer"
+			},
+			"repotting": {
+				"name": "Rempotage",
+				"verb": "Rempoter"
+			},
+			"pruning": {
+				"name": "Taille",
+				"verb": "Tailler"
+			},
+			"treatment": {
+				"name": "Traitement",
+				"verb": "Traiter"
+			},
+			"misting": {
+				"name": "Brumisation",
+				"verb": "Brumiser"
+			}
+		},
+		"errors": {
+			"frequencyRequired": "Indiquez une fréquence pour recevoir des rappels.",
+			"frequencyOutOfRange": "La fréquence doit être comprise entre 1 et {{max}}."
+		},
+		"frequency": {
+			"none": "Aucune fréquence définie",
+			"day": { "one": "Tous les jours", "other": "Tous les {{amount}} jours" },
+			"week": {
+				"one": "Toutes les semaines",
+				"other": "Toutes les {{amount}} semaines"
+			},
+			"month": { "one": "Tous les mois", "other": "Tous les {{amount}} mois" },
+			"year": { "one": "Tous les ans", "other": "Tous les {{amount}} ans" },
+			"withPeriod": "{{frequency}}, de {{start}} à {{end}}"
+		},
+		"due": {
+			"late": {
+				"one": "En retard de {{amount}} jour",
+				"other": "En retard de {{amount}} jours"
+			},
+			"today": "Aujourd'hui",
+			"tomorrow": "Demain",
+			"inDays": "Dans {{amount}} jours",
+			"inMonth": "En {{month}}"
+		},
+		"lastDone": {
+			"never": "Jamais fait",
+			"today": "Fait aujourd'hui",
+			"ago": "Il y a {{age}}"
+		},
+		"doneAt": "Fait à {{hours}} h {{minutes}}",
+		"summary": {
+			"pending": {
+				"one": "{{amount}} soin à faire",
+				"other": "{{amount}} soins à faire"
+			},
+			"done": { "one": "{{amount}} fait", "other": "{{amount}} faits" }
+		},
+		"todo": "À faire",
+		"upcoming": "Prochains soins",
+		"manage": "Gérer",
+		"skip": "Pas besoin",
+		"markDone": "Marquer {{care}} comme fait",
+		"skipCare": "Pas besoin pour {{care}}",
+		"undo": "Annuler {{care}}",
+		"reminderOn": "Rappels activés",
+		"reminderOff": "Rappels coupés",
+		"actionFailed": "L'action a échoué, réessayez",
+		"upToDate": {
+			"title": "Rien à faire aujourd'hui 🌿",
+			"description": "{{name}} est à jour.",
+			"next": "Prochain soin : {{care}}, {{due}}."
+		},
+		"manageSheet": {
+			"title": "Gérer les soins",
+			"description": "Coupez ou réactivez les rappels, touchez le crayon pour modifier un soin, ou « Configurer » pour commencer à le suivre.",
+			"notTracked": "Non suivi",
+			"configure": "Configurer",
+			"edit": "Modifier {{care}}",
+			"reminders": "Rappels de {{care}}"
+		},
+		"form": {
+			"configureTitle": "Configurer le soin",
+			"editTitle": "Modifier le soin",
+			"type": "Type",
+			"frequency": "Fréquence",
+			"frequencyAmount": "Nombre",
+			"frequencyHelper": "Facultative si les rappels sont coupés.",
+			"units": {
+				"day": "Jours",
+				"week": "Semaines",
+				"month": "Mois",
+				"year": "Ans"
+			},
+			"period": "Période",
+			"allYear": "Toute l'année",
+			"someMonths": "Certains mois",
+			"from": "De",
+			"to": "À",
+			"lastDone": "Dernière fois",
+			"lastDonePlaceholder": "Choisir une date",
+			"lastDoneHelper": "Sert à calculer la date du prochain soin.",
+			"reminders": "Rappels",
+			"remindersHelper": "Notification le jour prévu, seulement pendant la période choisie.",
+			"wateringRemindersHelper": "Notification le jour prévu.",
+			"waterNeed": "Besoin en eau",
+			"currentInterval": {
+				"one": "En ce moment : tous les jours. Modifie aussi le besoin affiché dans Informations.",
+				"other": "En ce moment : tous les {{amount}} jours. Modifie aussi le besoin affiché dans Informations."
+			},
+			"stop": "Ne plus suivre ce soin"
+		},
+		"stop": {
+			"title": "Ne plus suivre le soin {{care}} ?",
+			"description": "Les rappels s'arrêteront et le soin {{care}} disparaîtra de l'écran Entretien. Les soins déjà validés resteront dans l'Historique. Vous pourrez le réactiver depuis « Gérer ».",
+			"confirm": "Ne plus suivre"
+		},
+		"tasks": {
+			"title": "Tâches",
+			"none": "Rien de prévu aujourd'hui, profitez-en !",
+			"count": {
+				"one": "Vous avez {{amount}} tâche prévue aujourd'hui !",
+				"other": "Vous avez {{amount}} tâches prévues aujourd'hui !"
+			}
+		},
+		"swipe": {
+			"done": "Fait",
+			"skip": "Pas besoin",
+			"undo": "Annuler"
+		},
+		"preferences": {
+			"climate": "Climat",
+			"climateHelper": "Adapte l'arrosage aux saisons de croissance et de repos.",
+			"climates": {
+				"north": "Nord",
+				"south": "Sud",
+				"tropics": "Tropiques"
+			},
+			"swipeRight": "Glisser une tâche vers la droite pour",
+			"swipeActions": {
+				"done": "La faire",
+				"skip": "Pas besoin"
+			}
+		}
 	}
 }

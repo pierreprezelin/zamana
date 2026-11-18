@@ -1,6 +1,7 @@
 import { randomUUID } from "expo-crypto";
 import { create } from "zustand";
 import { useShallow } from "zustand/react/shallow";
+import { useCareStore } from "@/features/care/useCareStore";
 import { deletePhoto } from "@/features/plants/plantPhoto";
 import type {
 	ArchiveReason,
@@ -149,14 +150,18 @@ export const usePlantStore = create<PlantState>()((set, get) => {
 		createPlant: async (data) => {
 			const id = randomUUID();
 			const now = new Date().toISOString();
-			await database.runAsync(
-				`INSERT INTO plant (id, ${DATA_COLUMNS.join(", ")}, created_at, updated_at)
-				VALUES (?, ${DATA_COLUMNS.map(() => "?").join(", ")}, ?, ?)`,
-				id,
-				...toParams(data),
-				now,
-				now,
-			);
+			// A new plant is never left without its watering
+			await database.withExclusiveTransactionAsync(async (transaction) => {
+				await transaction.runAsync(
+					`INSERT INTO plant (id, ${DATA_COLUMNS.join(", ")}, created_at, updated_at)
+					VALUES (?, ${DATA_COLUMNS.map(() => "?").join(", ")}, ?, ?)`,
+					id,
+					...toParams(data),
+					now,
+					now,
+				);
+				await useCareStore.getState().trackWatering(id, transaction);
+			});
 			const plant: Plant = {
 				...data,
 				id,
@@ -188,6 +193,7 @@ export const usePlantStore = create<PlantState>()((set, get) => {
 		deletePlant: async (id) => {
 			const photo = findPlant(id)?.photo;
 			await database.runAsync("DELETE FROM plant WHERE id = ?", id);
+			useCareStore.getState().forgetPlant(id);
 			set(({ plants }) => ({
 				plants: plants.filter((plant) => plant.id !== id),
 			}));
