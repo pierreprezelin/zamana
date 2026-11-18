@@ -19,8 +19,8 @@
 		"*": "biome check --write --no-errors-on-unmatched --files-ignore-unknown=true"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "2.5.15",
-		"lint-staged": "^17.6.0",
+		"@biomejs/biome": "^2.6.8",
+		"lint-staged": "^17.6.1",
 		"simple-git-hooks": "^2.14.0"
 	}
 }
