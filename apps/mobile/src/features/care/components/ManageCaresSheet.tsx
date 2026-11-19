@@ -53,7 +53,9 @@ export function ManageCaresSheet({
 								<CareBadge type={type} size={36} />
 							</View>
 							<View className="flex-1">
-								<Text className="font-outfit-semibold text-foreground">
+								<Text
+									className={`font-outfit-semibold ${care ? "text-foreground" : "text-muted"}`}
+								>
 									{name}
 								</Text>
 								<Text className="text-xs text-muted">
