@@ -6,7 +6,7 @@ import { Ionicons } from "@/components/ionicons";
 import Pressable from "@/components/Pressable";
 import Text from "@/components/Text";
 import { careAppearance } from "@/features/care/careAppearance";
-import { careVerb, dueLabel } from "@/features/care/careLabels";
+import { careName, dueLabel } from "@/features/care/careLabels";
 import { careStatus, type NextCare } from "@/features/care/careSchedule";
 import { PlantPhoto } from "@/features/plants/components/PlantPhoto";
 import { displayName } from "@/features/plants/plantLabels";
@@ -33,7 +33,7 @@ function NextCareLine({ next, today }: { next: NextCare; today: string }) {
 					late ? "text-danger" : "text-muted",
 				)}
 			>
-				{`${careVerb(next.care.type)} · ${dueLabel(next.dueDate, today).toLocaleLowerCase()}`}
+				{`${careName(next.care.type)} · ${dueLabel(next.dueDate, today).toLocaleLowerCase()}`}
 			</Text>
 			{next.otherDueCount > 0 && (
 				<Text

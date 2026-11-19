@@ -67,7 +67,7 @@ describe("rescheduleReminders", () => {
 		expect(Notifications.scheduleNotificationAsync).toHaveBeenCalledTimes(31);
 		expect(Notifications.scheduleNotificationAsync).toHaveBeenCalledWith(
 			expect.objectContaining({
-				content: { title: "1 soin à faire", body: "Pilea · Alimenter" },
+				content: { title: "1 soin à faire", body: "Pilea · Engrais" },
 				trigger: expect.objectContaining({
 					type: "date",
 					date: new Date(2026, 5, 10, 9, 0),

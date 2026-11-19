@@ -120,7 +120,7 @@ describe("dailyDigests", () => {
 		);
 		expect(digest.title).toBe("3 soins à faire");
 		expect(digest.body).toBe(
-			"“Pili” · Alimenter, monstera · Alimenter, Brumiser",
+			"“Pili” · Engrais, monstera · Engrais, Brumisation",
 		);
 	});
 
@@ -132,7 +132,7 @@ describe("dailyDigests", () => {
 		);
 		expect(digest.title).toBe("5 soins à faire");
 		expect(digest.body).toBe(
-			"a · Alimenter, b · Alimenter, c · Alimenter et 2 autres plantes",
+			"a · Engrais, b · Engrais, c · Engrais et 2 autres plantes",
 		);
 	});
 

@@ -1,4 +1,4 @@
-import { careVerb } from "@/features/care/careLabels";
+import { careName } from "@/features/care/careLabels";
 import { scheduleCares } from "@/features/care/careSchedule";
 import {
 	CARE_TYPES,
@@ -30,12 +30,12 @@ type DigestInput = {
 // The system shows a line or two: the rest would only weigh on the bridge
 const NAMED_PLANTS = 3;
 
-const digestBody = (verbsByPlant: Map<Plant, string[]>) => {
-	const named = [...verbsByPlant]
+const digestBody = (namesByPlant: Map<Plant, string[]>) => {
+	const named = [...namesByPlant]
 		.slice(0, NAMED_PLANTS)
-		.map(([plant, verbs]) => `${displayName(plant)} · ${verbs.join(", ")}`)
+		.map(([plant, names]) => `${displayName(plant)} · ${names.join(", ")}`)
 		.join(", ");
-	const others = verbsByPlant.size - NAMED_PLANTS;
+	const others = namesByPlant.size - NAMED_PLANTS;
 	return others > 0
 		? `${named} ${t(`notifications.digest.morePlants.${pluralForm(others)}`, { amount: others })}`
 		: named;
@@ -72,11 +72,11 @@ export const dailyDigests = ({
 		.sort((a, b) => a.dueDate.localeCompare(b.dueDate));
 	if (!scheduled.length) return [];
 
-	const verbs = Object.fromEntries(
-		CARE_TYPES.map((type) => [type, careVerb(type)]),
+	const names = Object.fromEntries(
+		CARE_TYPES.map((type) => [type, careName(type)]),
 	) as Record<CareType, string>;
 	// Sorted by due date, the due cares of a day extend those of the day before
-	const verbsByPlant = new Map<Plant, string[]>();
+	const namesByPlant = new Map<Plant, string[]>();
 	let dueCount = 0;
 	const firstDay = atReminderTime(reminderTime, now) > now ? 0 : 1;
 	const digests: Digest[] = [];
@@ -85,9 +85,9 @@ export const dailyDigests = ({
 		const day = toISODate(date);
 		while (dueCount < scheduled.length && scheduled[dueCount].dueDate <= day) {
 			const { care, plant } = scheduled[dueCount++];
-			verbsByPlant.set(plant, [
-				...(verbsByPlant.get(plant) ?? []),
-				verbs[care.type],
+			namesByPlant.set(plant, [
+				...(namesByPlant.get(plant) ?? []),
+				names[care.type],
 			]);
 		}
 		if (!dueCount) continue;
@@ -96,7 +96,7 @@ export const dailyDigests = ({
 			title: t(`notifications.digest.title.${pluralForm(dueCount)}`, {
 				amount: dueCount,
 			}),
-			body: digestBody(verbsByPlant),
+			body: digestBody(namesByPlant),
 		});
 	}
 	digests.push({
