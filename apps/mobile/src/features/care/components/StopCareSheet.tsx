@@ -3,7 +3,6 @@ import {
 	useBottomSheetModal,
 } from "@gorhom/bottom-sheet";
 import { type Ref, useState } from "react";
-import Toast from "react-native-toast-message";
 import BottomSheet from "@/components/BottomSheet";
 import Button from "@/components/Button";
 import Text from "@/components/Text";
@@ -11,6 +10,7 @@ import { careName } from "@/features/care/careLabels";
 import type { Care } from "@/features/care/careTypes";
 import { useCareStore } from "@/features/care/useCareStore";
 import { t } from "@/utils/i18n";
+import { showErrorToast } from "@/utils/toast";
 
 type StopCareSheetProps = {
 	ref: Ref<BottomSheetModal>;
@@ -29,7 +29,7 @@ export function StopCareSheet({ ref, care }: StopCareSheetProps) {
 			await stopCare(care.id);
 			dismissAll();
 		} catch {
-			Toast.show({ type: "error", text1: t("care.actionFailed") });
+			showErrorToast(t("care.actionFailed"));
 		} finally {
 			setStopping(false);
 		}

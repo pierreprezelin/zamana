@@ -4,6 +4,14 @@ import Swipeable, {
 	type SwipeableMethods,
 	SwipeDirection,
 } from "react-native-gesture-handler/ReanimatedSwipeable";
+import Animated, {
+	type SharedValue,
+	useAnimatedReaction,
+	useAnimatedStyle,
+	useDerivedValue,
+	useSharedValue,
+} from "react-native-reanimated";
+import { scheduleOnRN } from "react-native-worklets";
 import { twMerge } from "tailwind-merge";
 import { Ionicons, type IoniconsIconName } from "@/components/ionicons";
 import Pressable from "@/components/Pressable";
@@ -11,6 +19,11 @@ import Text from "@/components/Text";
 import { careAppearance } from "@/features/care/careAppearance";
 import { careVerb } from "@/features/care/careLabels";
 import type { CareType } from "@/features/care/careTypes";
+import {
+	crossedThreshold,
+	SWIPE_THRESHOLD,
+} from "@/features/care/swipeThreshold";
+import { selectionFeedback } from "@/utils/haptics";
 import { t } from "@/utils/i18n";
 
 export type SwipeAction = "done" | "skip" | "undo";
@@ -57,6 +70,70 @@ export function CareIconButton({
 	);
 }
 
+type SwipePanelProps = {
+	type: CareType;
+	action: SwipeAction;
+	side: "left" | "right";
+	translation: SharedValue<number>;
+	// False while the row opens and closes itself after a release
+	dragging: SharedValue<boolean>;
+	className?: string;
+};
+
+function SwipePanel({
+	type,
+	action,
+	side,
+	translation,
+	dragging,
+	className,
+}: SwipePanelProps) {
+	const appearance = careAppearance[type];
+
+	const dragOnThisSide = useDerivedValue(() =>
+		side === "left" ? translation.get() : -translation.get(),
+	);
+
+	// Ticks when the drag crosses the distance that triggers the action, both ways
+	useAnimatedReaction(
+		() => dragOnThisSide.get(),
+		(current, previous) => {
+			if (dragging.get() && crossedThreshold(previous, current))
+				scheduleOnRN(selectionFeedback);
+		},
+	);
+
+	// At rest the panel would show through the rounded corners of the row
+	const visibleStyle = useAnimatedStyle(() => ({
+		opacity: dragOnThisSide.get() > 0 ? 1 : 0,
+	}));
+
+	return (
+		<Animated.View
+			style={visibleStyle}
+			className={twMerge(
+				"w-28 items-center justify-center rounded-xl px-2",
+				action === "done" ? appearance.background : "bg-background",
+				className,
+			)}
+		>
+			<Text
+				className={twMerge(
+					"font-outfit-semibold",
+					action === "done"
+						? "text-surface"
+						: action === "skip"
+							? appearance.text
+							: "text-foreground",
+				)}
+			>
+				{/* The care's own verb, as on the buttons of the to-do cards */}
+				{action === "done" ? careVerb(type) : t(`care.swipe.${action}`)}
+			</Text>
+		</Animated.View>
+	);
+}
+
 type CareSwipeableProps = {
 	type: CareType;
 	// Revealed by dragging the row to the right, and to the left
@@ -76,33 +153,8 @@ export function CareSwipeable({
 	panelClassName,
 	children,
 }: CareSwipeableProps) {
-	const appearance = careAppearance[type];
 	const swipeableRef = useRef<SwipeableMethods>(null);
-
-	const panel = (action: SwipeAction, side: "left" | "right") => (
-		<View
-			className={twMerge(
-				"w-28 justify-center rounded-xl px-4",
-				side === "right" && "items-end",
-				action === "done" ? appearance.background : "bg-background",
-				panelClassName,
-			)}
-		>
-			<Text
-				className={twMerge(
-					"font-outfit-semibold",
-					action === "done"
-						? "text-surface"
-						: action === "skip"
-							? appearance.text
-							: "text-foreground",
-				)}
-			>
-				{/* The care's own verb, as on the buttons of the to-do cards */}
-				{action === "done" ? careVerb(type) : t(`care.swipe.${action}`)}
-			</Text>
-		</View>
-	);
+	const dragging = useSharedValue(true);
 
 	return (
 		<Swipeable
@@ -111,10 +163,30 @@ export function CareSwipeable({
 			// Stops the row at the panel width instead of dragging it across
 			overshootLeft={false}
 			overshootRight={false}
-			leftThreshold={64}
-			rightThreshold={64}
-			renderLeftActions={() => panel(leftAction, "left")}
-			renderRightActions={() => panel(rightAction, "right")}
+			leftThreshold={SWIPE_THRESHOLD}
+			rightThreshold={SWIPE_THRESHOLD}
+			renderLeftActions={(_progress, translation) => (
+				<SwipePanel
+					type={type}
+					action={leftAction}
+					side="left"
+					translation={translation}
+					dragging={dragging}
+					className={panelClassName}
+				/>
+			)}
+			renderRightActions={(_progress, translation) => (
+				<SwipePanel
+					type={type}
+					action={rightAction}
+					side="right"
+					translation={translation}
+					dragging={dragging}
+					className={panelClassName}
+				/>
+			)}
+			onSwipeableWillOpen={() => dragging.set(false)}
+			onSwipeableClose={() => dragging.set(true)}
 			onSwipeableOpen={(direction) => {
 				// The callback gets the drag direction: dragging right opens the left panel
 				onAction(direction === SwipeDirection.RIGHT ? leftAction : rightAction);

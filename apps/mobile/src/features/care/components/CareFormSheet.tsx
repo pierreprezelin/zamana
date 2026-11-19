@@ -4,7 +4,6 @@ import {
 } from "@gorhom/bottom-sheet";
 import { type Ref, useRef, useState } from "react";
 import { View } from "react-native";
-import Toast from "react-native-toast-message";
 import BottomSheet from "@/components/BottomSheet";
 import Button from "@/components/Button";
 import DateField from "@/components/DateField";
@@ -31,7 +30,9 @@ import { needs } from "@/features/plants/plantOptions";
 import type { Plant } from "@/features/plants/plantSchema";
 import { usePlantStore } from "@/features/plants/usePlantStore";
 import { toISODate } from "@/utils/dates";
+import { errorFeedback } from "@/utils/haptics";
 import { locale, pluralForm, t } from "@/utils/i18n";
+import { showErrorToast } from "@/utils/toast";
 
 const LEVELS = ["1", "2", "3"] as const;
 // Suggested when switching to "some months": the usual growing season
@@ -103,6 +104,7 @@ function CareForm({ plant, type, care }: CareFormProps) {
 			reminder,
 		});
 		if (!result.success) {
+			errorFeedback();
 			setErrors(
 				Object.fromEntries(
 					result.error.issues.map((issue) => [
@@ -122,7 +124,7 @@ function CareForm({ plant, type, care }: CareFormProps) {
 			else await createCare(plant.id, result.data);
 			dismissAll();
 		} catch {
-			Toast.show({ type: "error", text1: t("common.saveFailed") });
+			showErrorToast(t("common.saveFailed"));
 		} finally {
 			setSaving(false);
 		}

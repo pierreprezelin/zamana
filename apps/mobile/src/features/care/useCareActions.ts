@@ -6,7 +6,9 @@ import { useCarePreferencesStore } from "@/features/care/useCarePreferencesStore
 import { useCareStore } from "@/features/care/useCareStore";
 import type { Plant } from "@/features/plants/plantSchema";
 import { toISODate } from "@/utils/dates";
+import { successFeedback } from "@/utils/haptics";
 import { t } from "@/utils/i18n";
+import { showErrorToast } from "@/utils/toast";
 
 // Resolves to whether the action went through, so a success can be confirmed
 const run = async (action: () => Promise<void>) => {
@@ -14,7 +16,7 @@ const run = async (action: () => Promise<void>) => {
 		await action();
 		return true;
 	} catch {
-		Toast.show({ type: "error", text1: t("care.actionFailed") });
+		showErrorToast(t("care.actionFailed"));
 		return false;
 	}
 };
@@ -24,7 +26,11 @@ export const useCareActions = () => {
 	const { markDone, skipCare, undo, setReminder } = useCareStore.getState();
 
 	return {
-		done: (care: Care) => run(() => markDone(care.id)),
+		done: async (care: Care) => {
+			const succeeded = await run(() => markDone(care.id));
+			if (succeeded) successFeedback();
+			return succeeded;
+		},
 		skip: (care: Care, plant: Plant) =>
 			run(() =>
 				skipCare(

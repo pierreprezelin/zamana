@@ -21,6 +21,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Ionicons, type IoniconsIconName } from "@/components/ionicons";
 import PressFeedback from "@/components/Pressable";
 import type { tabs } from "@/constants/tabs";
+import { selectionFeedback } from "@/utils/haptics";
 import { t } from "@/utils/i18n";
 
 const MIN_BOTTOM_OFFSET = 20;
@@ -96,6 +97,10 @@ export function TabBarItem({
 	return (
 		<Pressable
 			{...props}
+			onPress={(event) => {
+				if (!isFocused) selectionFeedback();
+				props.onPress?.(event);
+			}}
 			onLayout={(event) => {
 				const measured = event.nativeEvent.layout;
 				itemX.set(measured.x);

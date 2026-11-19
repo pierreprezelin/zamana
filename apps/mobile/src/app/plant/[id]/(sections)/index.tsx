@@ -27,6 +27,7 @@ import {
 import { usePlant, usePlantStore } from "@/features/plants/usePlantStore";
 import { formatDate } from "@/utils/dates";
 import { t } from "@/utils/i18n";
+import { showErrorToast } from "@/utils/toast";
 
 export default function PlantInformationScreen() {
 	const { id } = useLocalSearchParams<{ id: string }>();
@@ -57,10 +58,7 @@ export default function PlantInformationScreen() {
 			});
 		} catch {
 			setRestoring(false);
-			Toast.show({
-				type: "error",
-				text1: t("plant.info.restoreFailed"),
-			});
+			showErrorToast(t("plant.info.restoreFailed"));
 		}
 	};
 

@@ -11,6 +11,7 @@ import { archiveReasonOptions } from "@/features/plants/plantOptions";
 import type { ArchiveReason, Plant } from "@/features/plants/plantSchema";
 import { usePlantStore } from "@/features/plants/usePlantStore";
 import { t } from "@/utils/i18n";
+import { showErrorToast } from "@/utils/toast";
 
 type ArchiveSheetProps = {
 	ref: Ref<BottomSheetModal>;
@@ -35,7 +36,7 @@ export function ArchiveSheet({ ref, plant, onDone }: ArchiveSheetProps) {
 				text1: t("plant.archive.archived", { name: displayName(plant) }),
 			});
 		} catch {
-			Toast.show({ type: "error", text1: t("plant.archive.failed") });
+			showErrorToast(t("plant.archive.failed"));
 		} finally {
 			setSaving(false);
 		}

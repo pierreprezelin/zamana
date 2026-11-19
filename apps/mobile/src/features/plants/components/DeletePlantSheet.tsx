@@ -9,6 +9,7 @@ import { displayName } from "@/features/plants/plantLabels";
 import type { Plant } from "@/features/plants/plantSchema";
 import { usePlantStore } from "@/features/plants/usePlantStore";
 import { t } from "@/utils/i18n";
+import { showErrorToast } from "@/utils/toast";
 
 type DeletePlantSheetProps = {
 	ref: Ref<BottomSheetModal>;
@@ -37,10 +38,7 @@ export function DeletePlantSheet({
 			});
 		} catch {
 			setDeleting(false);
-			Toast.show({
-				type: "error",
-				text1: t("plant.delete.failed"),
-			});
+			showErrorToast(t("plant.delete.failed"));
 		}
 	};
 

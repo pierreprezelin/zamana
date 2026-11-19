@@ -54,7 +54,9 @@ import {
 	SCIENTIFIC_NAME_MAX_LENGTH,
 } from "@/features/plants/plantSchema";
 import { usePlantStore } from "@/features/plants/usePlantStore";
+import { errorFeedback, successFeedback } from "@/utils/haptics";
 import { t } from "@/utils/i18n";
+import { showErrorToast } from "@/utils/toast";
 
 type ViewRef = ComponentRef<typeof View>;
 
@@ -175,6 +177,7 @@ export function PlantForm({ plant }: { plant?: Plant }) {
 	const submit = async () => {
 		const result = plantInputSchema.safeParse(toFormValues(form));
 		if (!result.success) {
+			errorFeedback();
 			showErrors(formErrors(result.error));
 			return;
 		}
@@ -196,6 +199,7 @@ export function PlantForm({ plant }: { plant?: Plant }) {
 				await updatePlant(plant.id, data);
 			} else {
 				await createPlant(data);
+				successFeedback();
 			}
 			router.back();
 			Toast.show({
@@ -205,10 +209,7 @@ export function PlantForm({ plant }: { plant?: Plant }) {
 					: t("plant.form.added", { name: displayName(data) }),
 			});
 		} catch {
-			Toast.show({
-				type: "error",
-				text1: t("common.saveFailed"),
-			});
+			showErrorToast(t("common.saveFailed"));
 		} finally {
 			setSaving(false);
 		}

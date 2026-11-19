@@ -2,7 +2,6 @@ import type { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { Image } from "expo-image";
 import { useRef } from "react";
 import { View } from "react-native";
-import Toast from "react-native-toast-message";
 import { withUniwind } from "uniwind";
 import BottomSheet from "@/components/BottomSheet";
 import Button from "@/components/Button";
@@ -12,6 +11,7 @@ import Text from "@/components/Text";
 import { type PhotoSource, pickPhoto } from "@/features/plants/plantPhoto";
 import { useGridTileWidth } from "@/features/plants/useGridTileWidth";
 import { t } from "@/utils/i18n";
+import { showErrorToast } from "@/utils/toast";
 
 const StyledImage = withUniwind(Image);
 
@@ -30,13 +30,9 @@ export function PhotoPicker({ uri, onChange }: PhotoPickerProps) {
 			const picked = await pickPhoto(source);
 			if (picked) onChange(picked);
 		} catch (error) {
-			Toast.show({
-				type: "error",
-				text1:
-					error instanceof Error
-						? error.message
-						: t("plant.photo.importFailed"),
-			});
+			showErrorToast(
+				error instanceof Error ? error.message : t("plant.photo.importFailed"),
+			);
 		}
 	};
 

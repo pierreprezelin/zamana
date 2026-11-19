@@ -1,6 +1,7 @@
 import { View } from "react-native";
 import { Ionicons, type IoniconsIconName } from "@/components/ionicons";
 import Pressable from "@/components/Pressable";
+import { selectionFeedback } from "@/utils/haptics";
 import { t } from "@/utils/i18n";
 
 export type ViewMode = "list" | "grid";
@@ -31,7 +32,10 @@ export function ViewModeToggle({ value, onChange }: ViewModeToggleProps) {
 						accessibilityState={{ checked: selected }}
 						pressedClassName=""
 						pressedOpacity={0.75}
-						onPress={() => onChange(mode.value)}
+						onPress={() => {
+							if (!selected) selectionFeedback();
+							onChange(mode.value);
+						}}
 						className={`size-8 items-center justify-center rounded-[10px] ${selected ? "bg-primary" : ""}`}
 					>
 						<Ionicons

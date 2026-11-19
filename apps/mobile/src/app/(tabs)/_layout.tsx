@@ -3,6 +3,7 @@ import { router } from "expo-router";
 import { NativeTabs } from "expo-router/native-tabs";
 import { useCSSVariable } from "uniwind";
 import { tabs } from "@/constants/tabs";
+import { selectionFeedback } from "@/utils/haptics";
 import { t } from "@/utils/i18n";
 
 export default function TabsLayout() {
@@ -14,7 +15,11 @@ export default function TabsLayout() {
 			labelStyle={{ fontFamily: "Outfit-Regular" }}
 		>
 			{tabs.map(({ name, label, icon }) => (
-				<NativeTabs.Trigger key={name} name={name}>
+				<NativeTabs.Trigger
+					key={name}
+					name={name}
+					listeners={{ tabPress: () => selectionFeedback() }}
+				>
 					<NativeTabs.Trigger.Icon
 						renderingMode="template"
 						src={{

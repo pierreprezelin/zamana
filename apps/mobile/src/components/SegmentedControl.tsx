@@ -9,6 +9,7 @@ import Animated, {
 import { twMerge } from "tailwind-merge";
 import { INDICATOR_TIMING } from "@/components/TabBar";
 import Text from "@/components/Text";
+import { selectionFeedback } from "@/utils/haptics";
 
 const CONTAINER_PADDING = 2;
 
@@ -104,7 +105,10 @@ export default function SegmentedControl<T extends string>({
 					index={index}
 					selected={index === selectedIndex}
 					indicatorPosition={indicatorPosition}
-					onPress={() => onChange(option.value)}
+					onPress={() => {
+						if (index !== selectedIndex) selectionFeedback();
+						onChange(option.value);
+					}}
 				/>
 			))}
 		</View>

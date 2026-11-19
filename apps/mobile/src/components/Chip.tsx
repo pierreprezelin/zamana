@@ -1,6 +1,7 @@
 import { twMerge } from "tailwind-merge";
 import Pressable, { type PressableProps } from "@/components/Pressable";
 import Text from "@/components/Text";
+import { selectionFeedback } from "@/utils/haptics";
 
 interface ChipProps extends PressableProps {
 	label: string;
@@ -11,6 +12,7 @@ export default function Chip({
 	label,
 	selected,
 	className,
+	onPress,
 	...props
 }: ChipProps) {
 	return (
@@ -25,6 +27,10 @@ export default function Chip({
 				className,
 			)}
 			{...props}
+			onPress={(event) => {
+				if (!selected) selectionFeedback();
+				onPress?.(event);
+			}}
 		>
 			<Text className={selected ? "text-on-primary" : "text-foreground"}>
 				{label}
