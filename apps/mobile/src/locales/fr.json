@@ -504,8 +504,6 @@
 			"none": "Rien de prévu aujourd'hui, profitez-en !",
 			"allDoneSubtitle": "Tout est fait pour aujourd'hui, bravo !",
 			"allDone": "Tout est fait pour aujourd'hui 🎉",
-			"nothing": "Rien de prévu aujourd'hui 🌿",
-			"upToDate": "Vos plantes sont à jour.",
 			"count": {
 				"one": "Vous avez {{amount}} tâche prévue aujourd'hui !",
 				"other": "Vous avez {{amount}} tâches prévues aujourd'hui !"

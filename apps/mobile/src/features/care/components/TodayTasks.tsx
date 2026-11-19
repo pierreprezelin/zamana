@@ -1,7 +1,6 @@
 import { Link } from "expo-router";
 import { View } from "react-native";
 import Pressable from "@/components/Pressable";
-import StatusCard from "@/components/StatusCard";
 import Text from "@/components/Text";
 import { plantTasksSummary } from "@/features/care/careLabels";
 import { TaskRow } from "@/features/care/components/TaskRow";
@@ -13,23 +12,13 @@ import { t } from "@/utils/i18n";
 type TodayTasksProps = { groups: TodayGroup[]; today: string };
 
 export function TodayTasks({ groups, today }: TodayTasksProps) {
-	const nothingLeft = groups.every((group) => !group.pendingCount);
-	// Cares done ahead of time alone do not make a day "all done"
-	const dueDone = groups.some((group) => group.dueDoneCount);
+	if (!groups.length) return null;
 
 	return (
 		<View className="gap-4">
 			<Text className="font-recoleta text-2xl text-foreground">
 				{t("care.tasks.title")}
 			</Text>
-			{/* Stays visible once everything is done, or undone back to nothing due */}
-			{nothingLeft && (
-				<StatusCard
-					icon="checkmark-outline"
-					title={t(dueDone ? "care.tasks.allDone" : "care.tasks.nothing")}
-					description={t("care.tasks.upToDate")}
-				/>
-			)}
 			<View className="gap-2">
 				{groups.map(({ plant, tasks, pendingCount, doneCount }) => (
 					<View
