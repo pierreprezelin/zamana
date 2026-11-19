@@ -42,7 +42,7 @@ You can see here what's left to do before the initial release!
 🚧 Searching for species
 ✅ Upcoming care tasks
 🚧 Weather reports
-🚧 Growth timeline
+✅ Growth timeline
 🚧 Help articles
 ✅ Notifications
 🚧 Translations
