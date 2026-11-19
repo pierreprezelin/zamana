@@ -26,27 +26,31 @@ I designed Zamana to cover my needs, but also to be useful to everyone. You'll f
 - 💧 Watering reminders that follow the growing and rest seasons, wherever you live: northern or southern hemisphere, or the tropics
 - 🖼️ A timeline with the photos you've taken of your plant to watch its evolution
 - 📚 Help articles about how to take care of your plants
-- 📍 Everything stored locally on your phone...
-- 💾 ...with maybe an optional account in the future, for online sync across devices
+- 🎓 Pro-tips and fun facts about flora!
+- 📍 Everything stored locally on your phone
 - 🌍 Translated into English and French (for now)
 - 💎 No subscription, no paid tier, no ads
 - 🍎 Available on Android and iOS
 
 ## Roadmap
 
-You can see here what's left to do before the initial release!
+You can see here what's planned for release and afterwards!
 
-### Core features
+### Core features on release
 
 ✅ Adding your plants
-🚧 Searching for species
 ✅ Upcoming care tasks
-🚧 Weather reports
-✅ Growth timeline
-🚧 Help articles
+🚧 Weather reports and alerts
+✅ Growth timeline with custom notes
+🚧 Pro-tips and fun facts
 ✅ Notifications
 🚧 Translations
 ✅ Dark theme
+
+### Upcoming features after initial release
+
+🚧 Searching for species
+🚧 Help articles
 
 ## Stack
 
