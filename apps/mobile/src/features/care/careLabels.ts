@@ -1,5 +1,5 @@
 import { careStatus } from "@/features/care/careSchedule";
-import type { Care, CareType } from "@/features/care/careTypes";
+import type { Care, CareLog, CareType } from "@/features/care/careTypes";
 import { formatAge } from "@/features/plants/age";
 import { needs } from "@/features/plants/plantOptions";
 import { parseISODate, toISODate } from "@/utils/dates";
@@ -10,6 +10,8 @@ const DAYS_SHOWN = 30;
 
 export const careName = (type: CareType) => t(`care.types.${type}.name`);
 export const careVerb = (type: CareType) => t(`care.types.${type}.verb`);
+export const careActionLabel = ({ type, outcome }: CareLog) =>
+	t(`care.types.${type}.${outcome}`);
 
 const monthName = (month: number) =>
 	new Date(2000, month - 1, 1).toLocaleDateString(locale(), { month: "long" });

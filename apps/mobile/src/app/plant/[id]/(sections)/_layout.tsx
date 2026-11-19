@@ -74,9 +74,14 @@ export default function PlantSectionsLayout() {
 	// The plant was just deleted, the screen is being dismissed
 	if (!plant) return null;
 
-	const headerAction = sections.find(
+	const section = sections.find(
 		(section) => pathname === `/plant/${id}${section.path}`,
-	)?.headerAction;
+	);
+	// The history of a past plant is read-only
+	const headerAction =
+		plant.archivedAt && section?.name === "history"
+			? undefined
+			: section?.headerAction;
 
 	return (
 		// Back leaves the plant, wherever it was opened, instead of walking back through its sections

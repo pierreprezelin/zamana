@@ -6,6 +6,7 @@
 		"clearSearch": "Effacer la recherche",
 		"close": "Fermer",
 		"confirm": "Confirmer",
+		"dateTime": "{{date}} · {{hours}}h{{minutes}}",
 		"learnMore": "En savoir plus : {{label}}",
 		"save": "Enregistrer",
 		"saveFailed": "L'enregistrement a échoué, réessayez",
@@ -347,31 +348,45 @@
 		"types": {
 			"watering": {
 				"name": "Arrosage",
-				"verb": "Arroser"
+				"verb": "Arroser",
+				"done": "Arrosage effectué",
+				"skipped": "Arrosage reporté"
 			},
 			"fertilizing": {
 				"name": "Engrais",
-				"verb": "Alimenter"
+				"verb": "Alimenter",
+				"done": "Engrais apporté",
+				"skipped": "Engrais reporté"
 			},
 			"leafCleaning": {
 				"name": "Nettoyage des feuilles",
-				"verb": "Nettoyer"
+				"verb": "Nettoyer",
+				"done": "Nettoyage des feuilles effectué",
+				"skipped": "Nettoyage des feuilles reporté"
 			},
 			"repotting": {
 				"name": "Rempotage",
-				"verb": "Rempoter"
+				"verb": "Rempoter",
+				"done": "Rempotage effectué",
+				"skipped": "Rempotage reporté"
 			},
 			"pruning": {
 				"name": "Taille",
-				"verb": "Tailler"
+				"verb": "Tailler",
+				"done": "Taille effectuée",
+				"skipped": "Taille reportée"
 			},
 			"treatment": {
 				"name": "Traitement",
-				"verb": "Traiter"
+				"verb": "Traiter",
+				"done": "Traitement effectué",
+				"skipped": "Traitement reporté"
 			},
 			"misting": {
 				"name": "Brumisation",
-				"verb": "Brumiser"
+				"verb": "Brumiser",
+				"done": "Brumisation effectuée",
+				"skipped": "Brumisation reportée"
 			}
 		},
 		"errors": {
@@ -513,6 +528,41 @@
 				"done": "La faire",
 				"skip": "La reporter"
 			}
+		}
+	},
+	"history": {
+		"summary": {
+			"entries": { "one": "{{amount}} entrée", "other": "{{amount}} entrées" },
+			"photos": { "one": "{{amount}} photo", "other": "{{amount}} photos" },
+			"cares": { "one": "{{amount}} soin", "other": "{{amount}} soins" },
+			"days": { "one": "{{amount}} jour", "other": "{{amount}} jours" }
+		},
+		"showCares": "Soins",
+		"added": "Ajoutée au jardin",
+		"add": "Ajouter une nouvelle entrée",
+		"newEntry": "Nouvelle entrée",
+		"editEntry": "Modifier l’entrée",
+		"note": "Note",
+		"noteCount": "{{count}} / {{max}} caractères",
+		"save": "Enregistrer l’entrée",
+		"saved": "Entrée enregistrée",
+		"delete": "Supprimer l’entrée",
+		"deleted": "Entrée supprimée",
+		"undoCare": "Supprimer : {{label}}",
+		"loadFailed": "L’historique n’a pas pu être chargé",
+		"deleteEntrySheet": {
+			"title": "Supprimer cette entrée ?",
+			"description": "La note et la photo seront définitivement supprimées.",
+			"confirm": "Supprimer"
+		},
+		"undoCareSheet": {
+			"title": "Supprimer « {{label}} » ?",
+			"description": "Le calendrier du soin reviendra à son état d’avant. Seule la dernière action d’un soin peut être annulée.",
+			"confirm": "Supprimer"
+		},
+		"errors": {
+			"noteTooLong": "La note ne doit pas dépasser {{max}} caractères.",
+			"empty": "Ajoutez une photo ou une note."
 		}
 	}
 }

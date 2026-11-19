@@ -18,7 +18,10 @@ export const photoUri = (filename: string) =>
 	new File(photosDirectory, filename).uri;
 
 // Returns the temporary picked uri, or null if the user cancelled
-export const pickPhoto = async (source: PhotoSource) => {
+export const pickPhoto = async (
+	source: PhotoSource,
+	aspect: [number, number],
+) => {
 	if (source === "camera") {
 		const { granted } = await requestCameraPermissionsAsync();
 		if (!granted) throw new Error(t("plant.photo.cameraDenied"));
@@ -29,7 +32,7 @@ export const pickPhoto = async (source: PhotoSource) => {
 	const result = await launch({
 		mediaTypes: "images",
 		allowsEditing: true,
-		aspect: [1, 1],
+		aspect,
 		quality: 0.75,
 	});
 	if (result.canceled) return null;
@@ -48,7 +51,10 @@ export const savePhoto = async (uri: string) => {
 	return photo.name;
 };
 
+// Best effort: a leftover file beats failing an action already saved in the database
 export const deletePhoto = (filename: string) => {
-	const photo = new File(photosDirectory, filename);
-	if (photo.exists) photo.delete();
+	try {
+		const photo = new File(photosDirectory, filename);
+		if (photo.exists) photo.delete();
+	} catch {}
 };

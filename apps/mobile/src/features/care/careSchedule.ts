@@ -26,7 +26,7 @@ export type CareStatus =
 	| { kind: "today" }
 	| { kind: "upcoming"; days: number };
 
-const daysBetween = (from: string, to: string) =>
+export const daysBetween = (from: string, to: string) =>
 	Math.round(
 		(parseISODate(to).getTime() - parseISODate(from).getTime()) / DAY_IN_MS,
 	);

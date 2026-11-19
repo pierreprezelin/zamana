@@ -60,4 +60,14 @@ database.execSync(`
 		previous_snoozed_until TEXT
 	);
 	CREATE INDEX IF NOT EXISTS care_log_date ON care_log (date);
+	CREATE INDEX IF NOT EXISTS care_log_plant ON care_log (plant_id);
+	CREATE TABLE IF NOT EXISTS history_entry (
+		id TEXT PRIMARY KEY,
+		plant_id TEXT NOT NULL REFERENCES plant (id) ON DELETE CASCADE,
+		photo TEXT,
+		note TEXT,
+		created_at TEXT NOT NULL,
+		updated_at TEXT NOT NULL
+	);
+	CREATE INDEX IF NOT EXISTS history_entry_plant ON history_entry (plant_id);
 `);

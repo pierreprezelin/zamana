@@ -1,4 +1,4 @@
-import { locale } from "@/utils/i18n";
+import { locale, t } from "@/utils/i18n";
 
 const pad = (value: number) => String(value).padStart(2, "0");
 
@@ -17,3 +17,12 @@ export const formatDate = (isoDate: string) =>
 		month: "long",
 		year: "numeric",
 	});
+
+export const formatDateTime = (timestamp: string) => {
+	const date = new Date(timestamp);
+	return t("common.dateTime", {
+		date: formatDate(toISODate(date)),
+		hours: date.getHours(),
+		minutes: pad(date.getMinutes()),
+	});
+};

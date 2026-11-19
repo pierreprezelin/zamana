@@ -2,6 +2,7 @@ import { randomUUID } from "expo-crypto";
 import { create } from "zustand";
 import { useShallow } from "zustand/react/shallow";
 import { useCareStore } from "@/features/care/useCareStore";
+import { useHistoryStore } from "@/features/history/useHistoryStore";
 import { deletePhoto } from "@/features/plants/plantPhoto";
 import type {
 	ArchiveReason,
@@ -194,6 +195,7 @@ export const usePlantStore = create<PlantState>()((set, get) => {
 			const photo = findPlant(id)?.photo;
 			await database.runAsync("DELETE FROM plant WHERE id = ?", id);
 			useCareStore.getState().forgetPlant(id);
+			useHistoryStore.getState().forgetPlant(id);
 			set(({ plants }) => ({
 				plants: plants.filter((plant) => plant.id !== id),
 			}));

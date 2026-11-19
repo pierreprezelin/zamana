@@ -30,6 +30,9 @@ const { usePlantStore } =
 const { useCareStore } =
 	require("@/features/care/useCareStore") as typeof import("@/features/care/useCareStore");
 
+const { useHistoryStore } =
+	require("@/features/history/useHistoryStore") as typeof import("@/features/history/useHistoryStore");
+
 const caresOf = (plantId: string) =>
 	useCareStore.getState().cares.filter((care) => care.plantId === plantId);
 
@@ -124,6 +127,18 @@ describe("usePlantStore", () => {
 		const id = await usePlantStore.getState().createPlant(data);
 
 		expect(caresOf(id).map((care) => care.type)).toEqual(["watering"]);
+	});
+
+	it("deletes the photos of the history entries of a deleted plant", async () => {
+		const id = await usePlantStore.getState().createPlant(data);
+		await useHistoryStore
+			.getState()
+			.createEntry(id, { photo: "entry.jpg", note: null });
+
+		await usePlantStore.getState().deletePlant(id);
+
+		expect(mockDeletePhoto).toHaveBeenCalledWith("entry.jpg");
+		expect(useHistoryStore.getState().entries).toEqual([]);
 	});
 
 	it("forgets the cares of a deleted plant", async () => {

@@ -18,16 +18,22 @@ const StyledImage = withUniwind(Image);
 type PhotoPickerProps = {
 	uri: string | null;
 	onChange: (uri: string | null) => void;
+	// Crop ratio, square by default like the garden tiles
+	aspect?: [number, number];
 };
 
-export function PhotoPicker({ uri, onChange }: PhotoPickerProps) {
+export function PhotoPicker({
+	uri,
+	onChange,
+	aspect = [1, 1],
+}: PhotoPickerProps) {
 	const sheetRef = useRef<BottomSheetModal>(null);
 	const tileWidth = useGridTileWidth();
 
 	const pick = async (source: PhotoSource) => {
 		sheetRef.current?.dismiss();
 		try {
-			const picked = await pickPhoto(source);
+			const picked = await pickPhoto(source, aspect);
 			if (picked) onChange(picked);
 		} catch (error) {
 			showErrorToast(
@@ -39,7 +45,7 @@ export function PhotoPicker({ uri, onChange }: PhotoPickerProps) {
 	return (
 		<View>
 			{uri ? (
-				// Same size as a tile of the garden grid
+				// As wide as a tile of the garden grid, in the crop ratio
 				<View className="flex-row items-center gap-4">
 					<Pressable
 						accessibilityRole="button"
@@ -47,8 +53,8 @@ export function PhotoPicker({ uri, onChange }: PhotoPickerProps) {
 						pressedClassName=""
 						pressedOpacity={0.75}
 						onPress={() => sheetRef.current?.present()}
-						className="aspect-square rounded-2xl"
-						style={{ width: tileWidth }}
+						className="rounded-2xl"
+						style={{ width: tileWidth, aspectRatio: aspect[0] / aspect[1] }}
 					>
 						<StyledImage
 							source={{ uri }}
@@ -83,7 +89,7 @@ export function PhotoPicker({ uri, onChange }: PhotoPickerProps) {
 					pressedOpacity={0.75}
 					onPress={() => sheetRef.current?.present()}
 					className="items-center justify-center rounded-2xl border border-dashed border-primary bg-primary-tint"
-					// Same height as the imported photo square
+					// Same height as an imported square photo
 					style={{ height: tileWidth }}
 				>
 					<Ionicons
