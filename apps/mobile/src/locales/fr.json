@@ -447,6 +447,10 @@
 		"doneEarly": "{{care}} noté, prochain soin {{due}}",
 		"doneNoted": "{{care}} noté",
 		"undone": "{{care}} annulé",
+		"paused": {
+			"title": "Soins en pause",
+			"description": "{{name}} est dans vos plantes passées : plus de tâches, ni de rappels. Replacez-la dans votre jardin pour reprendre son suivi."
+		},
 		"noCare": {
 			"title": "Aucun soin suivi pour {{name}}",
 			"description": "Configurez l'arrosage, l'engrais… pour savoir quand vous en occuper.",

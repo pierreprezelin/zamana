@@ -111,7 +111,7 @@ export function UpcomingCareRow({
 				)}
 			</View>
 			{/* Done today from the form: once a day, nothing left to do */}
-			{!plant.archivedAt && care.lastDoneAt !== today && (
+			{care.lastDoneAt !== today && (
 				<Button
 					variant="ghost"
 					title={careVerb(care.type)}

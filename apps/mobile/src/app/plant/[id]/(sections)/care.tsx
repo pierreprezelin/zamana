@@ -43,6 +43,21 @@ export default function PlantCareScreen() {
 
 	if (!plant) return null;
 
+	// A past plant leaves Today and the reminders: its schedule would only keep running late
+	if (plant.archivedAt) {
+		return (
+			<View className="px-4 pt-3">
+				<StatusCard
+					icon="pause-outline"
+					title={t("care.paused.title")}
+					description={t("care.paused.description", {
+						name: displayName(plant),
+					})}
+				/>
+			</View>
+		);
+	}
+
 	const today = toISODate(new Date());
 	const context = { wateringLevel: plant.watering, climate };
 	const { due, handledToday, upcoming, next } = plantCareSections({
@@ -124,7 +139,6 @@ export default function PlantCareScreen() {
 								key={care.id}
 								care={care}
 								handledLog={handledLog}
-								plant={plant}
 								dueDate={dueDate}
 								today={today}
 							/>
@@ -136,17 +150,15 @@ export default function PlantCareScreen() {
 							<Text className="font-recoleta text-2xl text-foreground">
 								{t("care.upcoming")}
 							</Text>
-							{!plant.archivedAt && (
-								<Button
-									variant="ghost"
-									title={t("care.manage")}
-									icon="options-outline"
-									// Same discreet link as "Voir tout" next to the garden title
-									className="h-8 px-0"
-									textClassName="text-muted"
-									onPress={() => manageSheetRef.current?.present()}
-								/>
-							)}
+							<Button
+								variant="ghost"
+								title={t("care.manage")}
+								icon="options-outline"
+								// Same discreet link as "Voir tout" next to the garden title
+								className="h-8 px-0"
+								textClassName="text-muted"
+								onPress={() => manageSheetRef.current?.present()}
+							/>
 						</View>
 						<View className="gap-2">
 							{upcoming.map(({ care, dueDate }) => (
@@ -169,13 +181,11 @@ export default function PlantCareScreen() {
 						title={t("care.noCare.title", { name: displayName(plant) })}
 						description={t("care.noCare.description")}
 					>
-						{!plant.archivedAt && (
-							<Button
-								title={t("care.noCare.configure")}
-								className="mt-2 h-9 px-4"
-								onPress={() => manageSheetRef.current?.present()}
-							/>
-						)}
+						<Button
+							title={t("care.noCare.configure")}
+							className="mt-2 h-9 px-4"
+							onPress={() => manageSheetRef.current?.present()}
+						/>
 					</StatusCard>
 				</View>
 			)}

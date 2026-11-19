@@ -62,25 +62,23 @@ export function DueCareCard({
 					</Text>
 				</View>
 			</View>
-			{!plant.archivedAt && (
-				<View className="flex-row gap-2">
-					<Button
-						variant="ghost"
-						title={t("care.skip")}
-						icon="hourglass-outline"
-						className="h-9 flex-1 bg-surface px-3"
-						textClassName={appearance.text}
-						onPress={() => skip(care, plant)}
-					/>
-					<Button
-						title={careVerb(care.type)}
-						icon="checkmark-outline"
-						className={twMerge("h-9 flex-1 px-3", appearance.background)}
-						textClassName="text-surface"
-						onPress={() => done(care)}
-					/>
-				</View>
-			)}
+			<View className="flex-row gap-2">
+				<Button
+					variant="ghost"
+					title={t("care.skip")}
+					icon="hourglass-outline"
+					className="h-9 flex-1 bg-surface px-3"
+					textClassName={appearance.text}
+					onPress={() => skip(care, plant)}
+				/>
+				<Button
+					title={careVerb(care.type)}
+					icon="checkmark-outline"
+					className={twMerge("h-9 flex-1 px-3", appearance.background)}
+					textClassName="text-surface"
+					onPress={() => done(care)}
+				/>
+			</View>
 		</View>
 	);
 }
@@ -88,7 +86,6 @@ export function DueCareCard({
 type HandledCareCardProps = {
 	care: Care;
 	handledLog: CareLog;
-	plant: Plant;
 	dueDate: string | null;
 	today: string;
 };
@@ -97,43 +94,12 @@ type HandledCareCardProps = {
 export function HandledCareCard({
 	care,
 	handledLog,
-	plant,
 	dueDate,
 	today,
 }: HandledCareCardProps) {
 	const { undo } = useCareActions();
 	const name = careName(care.type);
 
-	const card = (
-		<View className="flex-row items-center gap-3 rounded-2xl border border-line bg-surface p-4">
-			<CareBadge type={care.type} size={48} muted />
-			<View className="flex-1 gap-0.5">
-				<Text
-					className={twMerge(
-						"font-outfit-semibold text-base text-muted",
-						handledLog.outcome === "done" && "line-through",
-					)}
-				>
-					{name}
-				</Text>
-				<Text className="text-xs text-foreground">
-					{handledLabel(handledLog, dueDate, today)}
-				</Text>
-			</View>
-			{!plant.archivedAt && (
-				<CareIconButton
-					icon="refresh-outline"
-					mirrored
-					label={t("care.undo", { care: name })}
-					className="size-9"
-					iconClassName="text-muted"
-					onPress={() => undo(handledLog)}
-				/>
-			)}
-		</View>
-	);
-
-	if (plant.archivedAt) return card;
 	return (
 		<CareSwipeable
 			type={care.type}
@@ -142,7 +108,30 @@ export function HandledCareCard({
 			onAction={() => undo(handledLog)}
 			panelClassName="rounded-2xl"
 		>
-			{card}
+			<View className="flex-row items-center gap-3 rounded-2xl border border-line bg-surface p-4">
+				<CareBadge type={care.type} size={48} muted />
+				<View className="flex-1 gap-0.5">
+					<Text
+						className={twMerge(
+							"font-outfit-semibold text-base text-muted",
+							handledLog.outcome === "done" && "line-through",
+						)}
+					>
+						{name}
+					</Text>
+					<Text className="text-xs text-foreground">
+						{handledLabel(handledLog, dueDate, today)}
+					</Text>
+				</View>
+				<CareIconButton
+					icon="refresh-outline"
+					mirrored
+					label={t("care.undo", { care: name })}
+					className="size-9"
+					iconClassName="text-muted"
+					onPress={() => undo(handledLog)}
+				/>
+			</View>
 		</CareSwipeable>
 	);
 }
