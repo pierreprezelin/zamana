@@ -42,8 +42,12 @@ export function TaskRow({ task, plant, today }: TaskRowProps) {
 			rightAction={rightAction}
 			onAction={run}
 		>
+			{/* Remounts the row: Android loses the badge radius when its background changes in place */}
 			{handledLog ? (
-				<View className="flex-row items-center gap-3 rounded-xl border border-line bg-surface p-2">
+				<View
+					key="handled"
+					className="flex-row items-center gap-3 rounded-xl border border-line bg-surface p-2"
+				>
 					<CareBadge type={care.type} size={32} muted />
 					<View className="flex-1">
 						<Text
@@ -68,6 +72,7 @@ export function TaskRow({ task, plant, today }: TaskRowProps) {
 				</View>
 			) : (
 				<View
+					key="pending"
 					className={twMerge(
 						"flex-row items-center gap-3 rounded-xl p-2",
 						appearance.tint,
