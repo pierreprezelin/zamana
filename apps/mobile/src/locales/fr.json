@@ -173,7 +173,7 @@
 		"archive": {
 			"title": "Je n’ai plus cette plante",
 			"description": "Elle rejoindra l’onglet « Passées » de votre jardin. Vous pourrez la replacer à tout moment.",
-			"archived": "{{name}} est passée dans les plantes passées",
+			"archived": "{{name}} a été déplacée dans les plantes passées",
 			"failed": "L'archivage a échoué, réessayez"
 		},
 		"delete": {
