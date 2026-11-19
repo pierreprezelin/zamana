@@ -1,5 +1,10 @@
 import { stepIndicatorStyle } from "@/features/onboarding/stepIndicatorStyle";
 
+// Reanimated 4.7.1 throws when its entry point initializes under Jest
+jest.mock("react-native-reanimated", () =>
+	require("react-native-reanimated/src/interpolation"),
+);
+
 describe("stepIndicatorStyle", () => {
 	it("stretches and fully colors the active step", () => {
 		expect(stepIndicatorStyle(1, 1)).toEqual({ width: 36, opacity: 1 });
