@@ -19,6 +19,13 @@ const variants = {
 		textClassName: "text-foreground",
 		indicatorClassName: "accent-foreground",
 	},
+	ghostDanger: {
+		className: "",
+		pressedClassName: "",
+		pressedOpacity: 0.9,
+		textClassName: "text-danger",
+		indicatorClassName: "accent-danger",
+	},
 	danger: {
 		className: "bg-danger",
 		pressedClassName: "bg-white/10",
@@ -26,12 +33,12 @@ const variants = {
 		textClassName: "text-on-danger",
 		indicatorClassName: "accent-on-danger",
 	},
-	ghostDanger: {
-		className: "",
-		pressedClassName: "",
-		pressedOpacity: 0.9,
-		textClassName: "text-danger",
-		indicatorClassName: "accent-danger",
+	warning: {
+		className: "bg-warning",
+		pressedClassName: "bg-white/10",
+		pressedOpacity: 1,
+		textClassName: "text-on-warning",
+		indicatorClassName: "accent-on-warning",
 	},
 };
 

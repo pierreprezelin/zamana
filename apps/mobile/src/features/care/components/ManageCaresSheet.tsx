@@ -15,6 +15,8 @@ import {
 } from "@/features/care/careTypes";
 import { CareBadge } from "@/features/care/components/CareBadge";
 import { useCareActions } from "@/features/care/useCareActions";
+import { RemindersOffBanner } from "@/features/notifications/components/RemindersOffBanner";
+import { useRemindersOff } from "@/features/notifications/useRemindersOff";
 import type { Plant } from "@/features/plants/plantSchema";
 import { t } from "@/utils/i18n";
 
@@ -32,10 +34,12 @@ export function ManageCaresSheet({
 	onEdit,
 }: ManageCaresSheetProps) {
 	const { setReminder } = useCareActions();
+	const remindersOff = useRemindersOff().reason !== null;
 
 	return (
 		<BottomSheet ref={ref} title={t("care.manageSheet.title")}>
 			<Text className="text-muted">{t("care.manageSheet.description")}</Text>
+			<RemindersOffBanner />
 			<View className="rounded-2xl border border-line px-4">
 				{CARE_TYPES.map((type, index) => {
 					const care = cares.find((tracked) => tracked.type === type);
@@ -82,6 +86,7 @@ export function ManageCaresSheet({
 										})}
 										value={care.reminder}
 										onChange={(reminder) => setReminder(care, reminder)}
+										disabled={remindersOff}
 									/>
 								</>
 							) : (

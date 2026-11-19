@@ -6,6 +6,7 @@ import { TodayTasks } from "@/features/care/components/TodayTasks";
 import { todayTasks } from "@/features/care/todayTasks";
 import { useCarePreferencesStore } from "@/features/care/useCarePreferencesStore";
 import { useCareStore } from "@/features/care/useCareStore";
+import { RemindersBanner } from "@/features/notifications/components/RemindersBanner";
 import { GardenPreview } from "@/features/plants/components/GardenPreview";
 import { usePlantStore } from "@/features/plants/usePlantStore";
 import { greeting } from "@/features/user/greeting";
@@ -41,6 +42,7 @@ export default function TodayScreen() {
 			showSettings
 			scrollBottomInset={tabBarOffset + 16}
 		>
+			{plants.length > 0 && <RemindersBanner />}
 			{plants.length > 0 && <TodayTasks groups={groups} today={today} />}
 			<GardenPreview />
 		</ScreenPlaceholder>

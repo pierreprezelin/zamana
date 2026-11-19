@@ -5,8 +5,8 @@ import { ScrollView, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Toast from "react-native-toast-message";
 import Button from "@/components/Button";
-import { Ionicons } from "@/components/ionicons";
 import Text from "@/components/Text";
+import WarningBanner from "@/components/WarningBanner";
 import { formatAge } from "@/features/plants/age";
 import { ArchiveSheet } from "@/features/plants/components/ArchiveSheet";
 import { HelpSheet } from "@/features/plants/components/HelpSheet";
@@ -77,12 +77,7 @@ export default function PlantInformationScreen() {
 				contentContainerStyle={{ paddingBottom: bottom }}
 			>
 				{plant.toxic && (
-					<View className="flex-row items-center gap-3 rounded-2xl border border-warning bg-warning-tint p-4">
-						<Ionicons name="paw-outline" size={20} className="text-warning" />
-						<Text className="flex-1 font-outfit-semibold text-warning">
-							{t("plant.info.toxic")}
-						</Text>
-					</View>
+					<WarningBanner icon="paw-outline" message={t("plant.info.toxic")} />
 				)}
 				<View className="gap-3">
 					<Text className="font-recoleta text-xl text-foreground">

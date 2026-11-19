@@ -7,6 +7,7 @@ type ToggleRowProps = {
 	helper?: string;
 	value: boolean;
 	onChange: (value: boolean) => void;
+	disabled?: boolean;
 };
 
 export default function ToggleRow({
@@ -14,6 +15,7 @@ export default function ToggleRow({
 	helper,
 	value,
 	onChange,
+	disabled,
 }: ToggleRowProps) {
 	return (
 		<View className="flex-row items-center gap-4">
@@ -21,7 +23,12 @@ export default function ToggleRow({
 				<Text className="font-outfit-semibold text-foreground">{label}</Text>
 				{helper && <Text className="text-xs text-muted">{helper}</Text>}
 			</View>
-			<Toggle accessibilityLabel={label} value={value} onChange={onChange} />
+			<Toggle
+				accessibilityLabel={label}
+				value={value}
+				onChange={onChange}
+				disabled={disabled}
+			/>
 		</View>
 	);
 }

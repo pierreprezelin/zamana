@@ -1,7 +1,12 @@
 import "../global.css";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
+import {
+	clearLastNotificationResponse,
+	DEFAULT_ACTION_IDENTIFIER,
+	useLastNotificationResponse,
+} from "expo-notifications";
 import { ObserveRoot, useObserve } from "expo-observe";
-import { Stack } from "expo-router";
+import { router, Stack } from "expo-router";
 import {
 	DarkTheme,
 	DefaultTheme,
@@ -17,11 +22,14 @@ import Toast from "react-native-toast-message";
 import { HeaderBackButton } from "@/components/HeaderBackButton";
 import { toastConfig } from "@/components/toastConfig";
 import { ForceUpdateSheet } from "@/features/appVersion/components/ForceUpdateSheet";
+import { startReminderScheduler } from "@/features/notifications/scheduleReminders";
 import { useOnboardingStore } from "@/features/onboarding/useOnboardingStore";
 // Loaded eagerly so the saved theme is applied before the first render
 import "@/features/theme/useThemeStore";
 import { useCSSVariable } from "uniwind";
 import { t } from "@/utils/i18n";
+
+startReminderScheduler();
 
 SplashScreen.setOptions({
 	duration: 1000,
@@ -52,6 +60,15 @@ function RootLayout() {
 	useEffect(() => {
 		markInteractive();
 	}, [markInteractive]);
+
+	// The daily digest leads to the tasks of the day
+	const notificationResponse = useLastNotificationResponse();
+	useEffect(() => {
+		if (notificationResponse?.actionIdentifier !== DEFAULT_ACTION_IDENTIFIER)
+			return;
+		clearLastNotificationResponse();
+		router.navigate("/");
+	}, [notificationResponse]);
 
 	return (
 		<GestureHandlerRootView style={{ flex: 1 }}>

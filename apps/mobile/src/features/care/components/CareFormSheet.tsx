@@ -26,6 +26,8 @@ import { CareBadge } from "@/features/care/components/CareBadge";
 import { StopCareSheet } from "@/features/care/components/StopCareSheet";
 import { useCarePreferencesStore } from "@/features/care/useCarePreferencesStore";
 import { useCareStore } from "@/features/care/useCareStore";
+import { RemindersOffBanner } from "@/features/notifications/components/RemindersOffBanner";
+import { useRemindersOff } from "@/features/notifications/useRemindersOff";
 import { needs } from "@/features/plants/plantOptions";
 import type { Plant } from "@/features/plants/plantSchema";
 import { usePlantStore } from "@/features/plants/usePlantStore";
@@ -88,6 +90,7 @@ function CareForm({ plant, type, care }: CareFormProps) {
 	);
 	const [lastDoneAt, setLastDoneAt] = useState(care?.lastDoneAt ?? null);
 	const [reminder, setReminder] = useState(care?.reminder ?? true);
+	const remindersOff = useRemindersOff().reason !== null;
 	const [errors, setErrors] = useState<Record<string, string>>({});
 	const [saving, setSaving] = useState(false);
 
@@ -244,16 +247,20 @@ function CareForm({ plant, type, care }: CareFormProps) {
 				</Text>
 			</View>
 
-			<ToggleRow
-				label={t("care.form.reminders")}
-				helper={t(
-					isWatering
-						? "care.form.wateringRemindersHelper"
-						: "care.form.remindersHelper",
-				)}
-				value={reminder}
-				onChange={setReminder}
-			/>
+			<View className="gap-3">
+				<ToggleRow
+					label={t("care.form.reminders")}
+					helper={t(
+						isWatering
+							? "care.form.wateringRemindersHelper"
+							: "care.form.remindersHelper",
+					)}
+					value={reminder}
+					onChange={setReminder}
+					disabled={remindersOff}
+				/>
+				<RemindersOffBanner />
+			</View>
 
 			<View className="gap-2">
 				<Button title={t("common.save")} loading={saving} onPress={save} />

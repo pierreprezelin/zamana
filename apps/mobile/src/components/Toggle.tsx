@@ -13,12 +13,14 @@ type ToggleProps = {
 	value: boolean;
 	onChange: (value: boolean) => void;
 	accessibilityLabel: string;
+	disabled?: boolean;
 };
 
 export default function Toggle({
 	value,
 	onChange,
 	accessibilityLabel,
+	disabled,
 }: ToggleProps) {
 	const progress = useSharedValue(Number(value));
 
@@ -35,7 +37,9 @@ export default function Toggle({
 		<Pressable
 			accessibilityRole="switch"
 			accessibilityLabel={accessibilityLabel}
-			accessibilityState={{ checked: value }}
+			accessibilityState={{ checked: value, disabled }}
+			disabled={disabled}
+			className={disabled ? "opacity-50" : undefined}
 			hitSlop={12}
 			onPress={() => onChange(!value)}
 		>

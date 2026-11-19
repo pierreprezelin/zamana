@@ -16,6 +16,7 @@ import type { Care } from "@/features/care/careTypes";
 import { CareBadge } from "@/features/care/components/CareBadge";
 import { useCareActions } from "@/features/care/useCareActions";
 import { useCarePreferencesStore } from "@/features/care/useCarePreferencesStore";
+import { useRemindersOff } from "@/features/notifications/useRemindersOff";
 import type { Plant } from "@/features/plants/plantSchema";
 import { t } from "@/utils/i18n";
 
@@ -45,6 +46,8 @@ export function UpcomingCareRow({
 	const appearance = careAppearance[care.type];
 	const { done } = useCareActions();
 	const name = careName(care.type);
+	const remindersOff = useRemindersOff().reason !== null;
+	const notified = care.reminder && !remindersOff;
 
 	const doEarly = async () => {
 		if (!(await done(care))) return;
@@ -81,14 +84,12 @@ export function UpcomingCareRow({
 					</Text>
 					<Ionicons
 						name={
-							care.reminder
-								? "notifications-outline"
-								: "notifications-off-outline"
+							notified ? "notifications-outline" : "notifications-off-outline"
 						}
 						size={14}
 						className="text-muted"
 						accessibilityLabel={t(
-							care.reminder ? "care.reminderOn" : "care.reminderOff",
+							notified ? "care.reminderOn" : "care.reminderOff",
 						)}
 					/>
 				</View>

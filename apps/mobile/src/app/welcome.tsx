@@ -8,6 +8,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Button from "@/components/Button";
 import { Ionicons, type IoniconsIconName } from "@/components/ionicons";
 import Text from "@/components/Text";
+import { useNotificationPermissionStore } from "@/features/notifications/useNotificationPermissionStore";
 import { StepsIndicator } from "@/features/onboarding/components/StepsIndicator";
 import { useOnboardingStore } from "@/features/onboarding/useOnboardingStore";
 import { t } from "@/utils/i18n";
@@ -82,9 +83,15 @@ export default function WelcomeScreen() {
 						</View>
 						<Button
 							title={t(`welcome.${step.key}.action`)}
-							onPress={() =>
-								index === lastStep ? complete() : goToStep(index + 1)
-							}
+							onPress={async () => {
+								try {
+									if (step.key === "reminders")
+										await useNotificationPermissionStore.getState().request();
+								} finally {
+									if (index === lastStep) complete();
+									else goToStep(index + 1);
+								}
+							}}
 						/>
 					</View>
 				))}
