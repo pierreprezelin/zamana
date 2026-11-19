@@ -3,10 +3,11 @@ import {
 	doneAtLabel,
 	dueLabel,
 	frequencyLabel,
+	handledLabel,
 	lastDoneLabel,
 	plantTasksSummary,
 } from "@/features/care/careLabels";
-import type { Care } from "@/features/care/careTypes";
+import type { Care, CareLog } from "@/features/care/careTypes";
 
 const care = (overrides: Partial<Care> = {}): Care => ({
 	id: "care-1",
@@ -94,9 +95,43 @@ it("tells the time a care was done", () => {
 });
 
 it.each([
-	[2, 0, "2 soins à faire"],
-	[1, 1, "1 soin à faire · 1 fait"],
-	[0, 2, "2 faits"],
-])("sums up %i pending and %i done cares", (pending, done, label) => {
-	expect(plantTasksSummary(pending, done)).toBe(label);
+	[2, 0, 0, "2 soins à faire"],
+	[1, 1, 0, "1 soin à faire · 1 fait"],
+	[0, 2, 0, "2 faits"],
+	[1, 0, 1, "1 soin à faire · 1 reporté"],
+	[0, 1, 2, "1 fait · 2 reportés"],
+])(
+	"sums up %i pending, %i done and %i skipped cares",
+	(pending, done, skipped, label) => {
+		expect(plantTasksSummary(pending, done, skipped)).toBe(label);
+	},
+);
+
+describe("handledLabel", () => {
+	const log = (outcome: CareLog["outcome"]): CareLog => ({
+		id: "log-1",
+		plantId: "plant-1",
+		type: "watering",
+		outcome,
+		date: "2026-06-10",
+		createdAt: new Date(2026, 5, 10, 9, 5).toISOString(),
+		previousLastDoneAt: null,
+		previousSnoozedUntil: null,
+	});
+
+	it("tells the time a care was done", () => {
+		expect(handledLabel(log("done"), "2026-06-17", "2026-06-10")).toBe(
+			"Fait à 9 h 05",
+		);
+	});
+
+	it("tells when a skipped care is due next", () => {
+		expect(handledLabel(log("skipped"), "2026-06-11", "2026-06-10")).toBe(
+			"Reporté, prochain soin demain",
+		);
+	});
+
+	it("still tells a care was skipped once it has no due date", () => {
+		expect(handledLabel(log("skipped"), null, "2026-06-10")).toBe("Reporté");
+	});
 });

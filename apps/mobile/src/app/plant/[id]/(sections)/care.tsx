@@ -6,6 +6,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Button from "@/components/Button";
 import StatusCard from "@/components/StatusCard";
 import Text from "@/components/Text";
+import { undoableLogIds } from "@/features/care/careHistory";
 import { careName, dueLabel } from "@/features/care/careLabels";
 import {
 	careProgress,
@@ -17,12 +18,12 @@ import {
 import type { CareLog, CareType } from "@/features/care/careTypes";
 import { CareFormSheet } from "@/features/care/components/CareFormSheet";
 import {
-	DoneCareCard,
 	DueCareCard,
+	HandledCareCard,
 } from "@/features/care/components/DueCareCard";
 import { ManageCaresSheet } from "@/features/care/components/ManageCaresSheet";
 import { UpcomingCareRow } from "@/features/care/components/UpcomingCareRow";
-import { doneTodayLog } from "@/features/care/todayTasks";
+import { handledTodayLog } from "@/features/care/todayTasks";
 import { useCarePreferencesStore } from "@/features/care/useCarePreferencesStore";
 import { useCareStore, usePlantCares } from "@/features/care/useCareStore";
 import { displayName } from "@/features/plants/plantLabels";
@@ -47,22 +48,27 @@ export default function PlantCareScreen() {
 
 	const today = toISODate(new Date());
 	const context = { wateringLevel: plant.watering, climate };
+	const undoable = undoableLogIds(logs, cares);
 	const scheduled = scheduleCares(cares, context, today).map((entry) => ({
 		...entry,
-		doneLog: doneTodayLog(logs, entry.care, today),
+		handledLog: handledTodayLog(logs, entry.care, today, undoable),
 	}));
-	const doneToday = scheduled.filter(
-		(entry): entry is typeof entry & { doneLog: CareLog } =>
-			entry.doneLog !== undefined,
+	const handledToday = scheduled.filter(
+		(entry): entry is typeof entry & { handledLog: CareLog } =>
+			entry.handledLog !== undefined,
 	);
 	const due = scheduled.filter(
 		(entry): entry is typeof entry & { dueDate: string } =>
-			!entry.doneLog && isDue(entry.dueDate, today),
+			!entry.handledLog && isDue(entry.dueDate, today),
 	);
 	const upcoming = scheduled.filter(
-		(entry) => !entry.doneLog && !isDue(entry.dueDate, today),
+		(entry) => !entry.handledLog && !isDue(entry.dueDate, today),
 	);
-	const next = upcoming.find(({ dueDate }) => dueDate);
+	// A care skipped today comes back later, so it can be the next one
+	const next = scheduled.find(
+		({ dueDate, handledLog }) =>
+			handledLog?.outcome !== "done" && dueDate && !isDue(dueDate, today),
+	);
 
 	const manageSheet = (
 		<>
@@ -129,8 +135,10 @@ export default function PlantCareScreen() {
 					<StatusCard
 						icon="checkmark-outline"
 						title={t(
-							doneToday.some(({ care, doneLog }) =>
-								wasDueWhenDone(care, doneLog, context, today),
+							handledToday.some(
+								({ care, handledLog }) =>
+									handledLog.outcome === "done" &&
+									wasDueWhenDone(care, handledLog, context, today),
 							)
 								? "care.tasks.allDone"
 								: "care.upToDate.title",
@@ -147,12 +155,14 @@ export default function PlantCareScreen() {
 							.join("\n")}
 					/>
 				)}
-				{doneToday.map(({ care, doneLog }) => (
-					<DoneCareCard
+				{handledToday.map(({ care, handledLog, dueDate }) => (
+					<HandledCareCard
 						key={care.id}
 						care={care}
-						doneLog={doneLog}
+						handledLog={handledLog}
 						plant={plant}
+						dueDate={dueDate}
+						today={today}
 					/>
 				))}
 			</View>

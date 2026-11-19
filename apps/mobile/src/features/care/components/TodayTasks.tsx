@@ -20,42 +20,44 @@ export function TodayTasks({ groups, today }: TodayTasksProps) {
 				{t("care.tasks.title")}
 			</Text>
 			<View className="gap-2">
-				{groups.map(({ plant, tasks, pendingCount, doneCount }) => (
-					<View
-						key={plant.id}
-						className="gap-2 rounded-2xl border border-line bg-surface p-2"
-					>
-						<Link href={`/plant/${plant.id}/care`} asChild>
-							<Pressable
-								accessibilityRole="button"
-								pressedClassName=""
-								pressedOpacity={0.75}
-								className="flex-row items-center gap-3 p-2"
-							>
-								<PlantPhoto photo={plant.photo} className="size-12" />
-								<View className="flex-1">
-									<Text
-										numberOfLines={1}
-										className="font-outfit-semibold text-base text-foreground"
-									>
-										{displayName(plant)}
-									</Text>
-									<Text className="text-xs text-muted">
-										{plantTasksSummary(pendingCount, doneCount)}
-									</Text>
-								</View>
-							</Pressable>
-						</Link>
-						{tasks.map((task) => (
-							<TaskRow
-								key={task.care.id}
-								task={task}
-								plant={plant}
-								today={today}
-							/>
-						))}
-					</View>
-				))}
+				{groups.map(
+					({ plant, tasks, pendingCount, doneCount, skippedCount }) => (
+						<View
+							key={plant.id}
+							className="gap-2 rounded-2xl border border-line bg-surface p-2"
+						>
+							<Link href={`/plant/${plant.id}/care`} asChild>
+								<Pressable
+									accessibilityRole="button"
+									pressedClassName=""
+									pressedOpacity={0.75}
+									className="flex-row items-center gap-3 p-2"
+								>
+									<PlantPhoto photo={plant.photo} className="size-12" />
+									<View className="flex-1">
+										<Text
+											numberOfLines={1}
+											className="font-outfit-semibold text-base text-foreground"
+										>
+											{displayName(plant)}
+										</Text>
+										<Text className="text-xs text-muted">
+											{plantTasksSummary(pendingCount, doneCount, skippedCount)}
+										</Text>
+									</View>
+								</Pressable>
+							</Link>
+							{tasks.map((task) => (
+								<TaskRow
+									key={task.care.id}
+									task={task}
+									plant={plant}
+									today={today}
+								/>
+							))}
+						</View>
+					),
+				)}
 			</View>
 		</View>
 	);

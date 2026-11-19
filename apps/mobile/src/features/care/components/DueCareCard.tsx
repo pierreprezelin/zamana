@@ -7,8 +7,8 @@ import {
 	careName,
 	careSubtitle,
 	careVerb,
-	doneAtLabel,
 	dueLabel,
+	handledLabel,
 } from "@/features/care/careLabels";
 import type { CareStatus } from "@/features/care/careSchedule";
 import type { Care, CareLog } from "@/features/care/careTypes";
@@ -85,10 +85,22 @@ export function DueCareCard({
 	);
 }
 
-type DoneCareCardProps = { care: Care; doneLog: CareLog; plant: Plant };
+type HandledCareCardProps = {
+	care: Care;
+	handledLog: CareLog;
+	plant: Plant;
+	dueDate: string | null;
+	today: string;
+};
 
-// A care done today, kept in place until the day is over so it can be undone
-export function DoneCareCard({ care, doneLog, plant }: DoneCareCardProps) {
+// A care done or skipped today, kept in place until the day is over so it can be undone
+export function HandledCareCard({
+	care,
+	handledLog,
+	plant,
+	dueDate,
+	today,
+}: HandledCareCardProps) {
 	const { undo } = useCareActions();
 	const name = careName(care.type);
 
@@ -96,11 +108,16 @@ export function DoneCareCard({ care, doneLog, plant }: DoneCareCardProps) {
 		<View className="flex-row items-center gap-3 rounded-2xl border border-line bg-surface p-4">
 			<CareBadge type={care.type} size={48} muted />
 			<View className="flex-1 gap-0.5">
-				<Text className="font-outfit-semibold text-base text-muted line-through">
+				<Text
+					className={twMerge(
+						"font-outfit-semibold text-base text-muted",
+						handledLog.outcome === "done" && "line-through",
+					)}
+				>
 					{name}
 				</Text>
 				<Text className="text-xs text-foreground">
-					{doneAtLabel(doneLog.createdAt)}
+					{handledLabel(handledLog, dueDate, today)}
 				</Text>
 			</View>
 			{!plant.archivedAt && (
@@ -110,7 +127,7 @@ export function DoneCareCard({ care, doneLog, plant }: DoneCareCardProps) {
 					label={t("care.undo", { care: name })}
 					className="size-9"
 					iconClassName="text-muted"
-					onPress={() => undo(doneLog)}
+					onPress={() => undo(handledLog)}
 				/>
 			)}
 		</View>
@@ -122,7 +139,7 @@ export function DoneCareCard({ care, doneLog, plant }: DoneCareCardProps) {
 			type={care.type}
 			leftAction="undo"
 			rightAction="undo"
-			onAction={() => undo(doneLog)}
+			onAction={() => undo(handledLog)}
 			panelClassName="rounded-2xl"
 		>
 			{card}

@@ -70,11 +70,30 @@ export const doneAtLabel = (createdAt: string) => {
 	return t("care.doneAt", { hours: date.getHours(), minutes });
 };
 
-export const plantTasksSummary = (pending: number, done: number) =>
+export const handledLabel = (
+	log: CareLog,
+	dueDate: string | null,
+	today: string,
+) => {
+	if (log.outcome === "done") return doneAtLabel(log.createdAt);
+	return dueDate
+		? t("care.skippedNext", {
+				due: dueLabel(dueDate, today).toLocaleLowerCase(),
+			})
+		: t("care.skipped");
+};
+
+export const plantTasksSummary = (
+	pending: number,
+	done: number,
+	skipped: number,
+) =>
 	[
 		pending &&
 			t(`care.summary.pending.${pluralForm(pending)}`, { amount: pending }),
 		done && t(`care.summary.done.${pluralForm(done)}`, { amount: done }),
+		skipped &&
+			t(`care.summary.skipped.${pluralForm(skipped)}`, { amount: skipped }),
 	]
 		.filter(Boolean)
 		.join(" · ");

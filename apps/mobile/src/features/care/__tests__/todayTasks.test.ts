@@ -21,15 +21,16 @@ const care = (
 	reminder: true,
 });
 
-const doneLog = (
+const careLog = (
 	plantId: string,
 	type: Care["type"],
 	date = "2026-06-10",
+	outcome: CareLog["outcome"] = "done",
 ): CareLog => ({
 	id: `log-${plantId}-${type}`,
 	plantId,
 	type,
-	outcome: "done",
+	outcome,
 	date,
 	createdAt: `${date}T09:42:00.000Z`,
 	previousLastDoneAt: null,
@@ -76,13 +77,13 @@ describe("todayTasks", () => {
 				care("monstera", "leafCleaning", "2026-06-10"),
 			],
 			[
-				doneLog("monstera", "leafCleaning"),
-				doneLog("monstera", "fertilizing", "2026-06-09"),
+				careLog("monstera", "leafCleaning"),
+				careLog("monstera", "fertilizing", "2026-06-09"),
 			],
 		);
 
 		expect(
-			groups[0].tasks.map((task) => [task.care.type, task.doneLog?.id]),
+			groups[0].tasks.map((task) => [task.care.type, task.handledLog?.id]),
 		).toEqual([
 			["watering", undefined],
 			["leafCleaning", "log-monstera-leafCleaning"],
@@ -90,6 +91,54 @@ describe("todayTasks", () => {
 		expect(groups[0].pendingCount).toBe(1);
 		expect(groups[0].doneCount).toBe(1);
 		expect(groups[0].dueDoneCount).toBe(1);
+	});
+
+	it("keeps the cares skipped today, with their log, so they can be undone", () => {
+		const skipped = {
+			...care("monstera", "watering", "2026-06-03"),
+			snoozedUntil: "2026-06-11",
+		};
+		const groups = run(
+			[plant("monstera")],
+			[skipped],
+			[
+				{
+					...careLog("monstera", "watering", "2026-06-10", "skipped"),
+					previousLastDoneAt: "2026-06-03",
+				},
+			],
+		);
+
+		expect(
+			groups[0].tasks.map((task) => [task.care.type, task.handledLog?.id]),
+		).toEqual([["watering", "log-monstera-watering"]]);
+		expect(groups[0].pendingCount).toBe(0);
+		expect(groups[0].doneCount).toBe(0);
+		expect(groups[0].skippedCount).toBe(1);
+		expect(groups[0].dueDoneCount).toBe(0);
+	});
+
+	it("leaves out an action of today that the care was edited since", () => {
+		const edited = { ...care("monstera", "watering", "2026-06-09") };
+		const groups = run(
+			[plant("monstera")],
+			[edited],
+			[careLog("monstera", "watering", "2026-06-10", "skipped")],
+		);
+		expect(groups).toEqual([]);
+	});
+
+	it("leaves out the cares skipped on another day", () => {
+		const skipped = {
+			...care("monstera", "watering", "2026-06-03"),
+			snoozedUntil: "2026-06-12",
+		};
+		const groups = run(
+			[plant("monstera")],
+			[skipped],
+			[careLog("monstera", "watering", "2026-06-09", "skipped")],
+		);
+		expect(groups).toEqual([]);
 	});
 
 	it("shows the latest plants first", () => {

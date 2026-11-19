@@ -2,7 +2,7 @@ import { View } from "react-native";
 import { twMerge } from "tailwind-merge";
 import Text from "@/components/Text";
 import { careAppearance } from "@/features/care/careAppearance";
-import { careName, doneAtLabel, dueLabel } from "@/features/care/careLabels";
+import { careName, dueLabel, handledLabel } from "@/features/care/careLabels";
 import { CareBadge } from "@/features/care/components/CareBadge";
 import {
 	CareIconButton,
@@ -18,7 +18,7 @@ import { t } from "@/utils/i18n";
 type TaskRowProps = { task: TodayTask; plant: Plant; today: string };
 
 export function TaskRow({ task, plant, today }: TaskRowProps) {
-	const { care, doneLog } = task;
+	const { care, handledLog } = task;
 	const appearance = careAppearance[care.type];
 	const swipeLeft = useCarePreferencesStore((state) => state.swipeLeft);
 	const { done, skip, undo } = useCareActions();
@@ -27,13 +27,13 @@ export function TaskRow({ task, plant, today }: TaskRowProps) {
 	const run = (action: SwipeAction) => {
 		if (action === "done") return done(care);
 		if (action === "skip") return skip(care, plant);
-		if (doneLog) return undo(doneLog);
+		if (handledLog) return undo(handledLog);
 	};
 
 	// Dragging the row to the left reveals its right panel
 	const otherAction: SwipeAction = swipeLeft === "done" ? "skip" : "done";
-	const rightAction: SwipeAction = doneLog ? "undo" : swipeLeft;
-	const leftAction: SwipeAction = doneLog ? "undo" : otherAction;
+	const rightAction: SwipeAction = handledLog ? "undo" : swipeLeft;
+	const leftAction: SwipeAction = handledLog ? "undo" : otherAction;
 
 	return (
 		<CareSwipeable
@@ -42,15 +42,20 @@ export function TaskRow({ task, plant, today }: TaskRowProps) {
 			rightAction={rightAction}
 			onAction={run}
 		>
-			{doneLog ? (
+			{handledLog ? (
 				<View className="flex-row items-center gap-3 rounded-xl border border-line bg-surface p-2">
 					<CareBadge type={care.type} size={32} muted />
 					<View className="flex-1">
-						<Text className="font-outfit-semibold text-muted line-through">
+						<Text
+							className={twMerge(
+								"font-outfit-semibold text-muted",
+								handledLog.outcome === "done" && "line-through",
+							)}
+						>
 							{name}
 						</Text>
 						<Text className="text-xs text-foreground">
-							{doneAtLabel(doneLog.createdAt)}
+							{handledLabel(handledLog, task.dueDate, today)}
 						</Text>
 					</View>
 					<CareIconButton

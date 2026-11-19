@@ -1,3 +1,4 @@
+import { undoableLogIds } from "@/features/care/careHistory";
 import {
 	type CareStatus,
 	careStatus,
@@ -12,8 +13,8 @@ export type TodayTask = {
 	care: Care;
 	dueDate: string;
 	status: CareStatus;
-	// Set when the care was done today, so it can be undone
-	doneLog?: CareLog;
+	// Set when the care was done or skipped today, so it can be undone
+	handledLog?: CareLog;
 };
 
 export type TodayGroup = {
@@ -21,9 +22,12 @@ export type TodayGroup = {
 	tasks: TodayTask[];
 	pendingCount: number;
 	doneCount: number;
+	skippedCount: number;
 	// Done today while due, as opposed to ahead of time
 	dueDoneCount: number;
 };
+
+type HandledTask = TodayTask & { handledLog: CareLog };
 
 type TodayInput = {
 	plants: Plant[];
@@ -33,14 +37,20 @@ type TodayInput = {
 	climate: Climate;
 };
 
-// The care is done for the day: it stays listed, and can be undone
-export const doneTodayLog = (logs: CareLog[], care: Care, today: string) =>
+// The care is done or skipped for the day: it stays listed, and can be undone.
+// Once it can no longer be undone, it is shown on its schedule again
+export const handledTodayLog = (
+	logs: CareLog[],
+	care: Care,
+	today: string,
+	undoable: Set<string>,
+) =>
 	logs.findLast(
 		(log) =>
-			log.outcome === "done" &&
 			log.date === today &&
 			log.plantId === care.plantId &&
-			log.type === care.type,
+			log.type === care.type &&
+			undoable.has(log.id),
 	);
 
 export const todayTasks = ({
@@ -50,12 +60,13 @@ export const todayTasks = ({
 	today,
 	climate,
 }: TodayInput): TodayGroup[] => {
+	const undoable = undoableLogIds(logs, cares);
 	const groups = plants
 		.filter((plant) => !plant.archivedAt)
 		.map((plant) => {
 			const context = { wateringLevel: plant.watering, climate };
 			const pending: TodayTask[] = [];
-			const done: TodayTask[] = [];
+			const handled: HandledTask[] = [];
 			const plantCares = cares.filter((care) => care.plantId === plant.id);
 			for (const { care, dueDate } of scheduleCares(
 				plantCares,
@@ -63,20 +74,20 @@ export const todayTasks = ({
 				today,
 			)) {
 				if (!dueDate) continue;
-				const doneLog = doneTodayLog(logs, care, today);
+				const handledLog = handledTodayLog(logs, care, today, undoable);
 				const task = { care, dueDate, status: careStatus(dueDate, today) };
-				if (doneLog) done.push({ ...task, doneLog });
+				if (handledLog) handled.push({ ...task, handledLog });
 				else if (isDue(dueDate, today)) pending.push(task);
 			}
+			const done = handled.filter((task) => task.handledLog.outcome === "done");
 			return {
 				plant,
-				tasks: [...pending, ...done],
+				tasks: [...pending, ...handled],
 				pendingCount: pending.length,
 				doneCount: done.length,
-				dueDoneCount: done.filter(
-					(task) =>
-						task.doneLog &&
-						wasDueWhenDone(task.care, task.doneLog, context, today),
+				skippedCount: handled.length - done.length,
+				dueDoneCount: done.filter((task) =>
+					wasDueWhenDone(task.care, task.handledLog, context, today),
 				).length,
 			};
 		})

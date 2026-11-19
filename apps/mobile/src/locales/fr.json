@@ -424,12 +424,15 @@
 			"ago": "Il y a {{age}}"
 		},
 		"doneAt": "Fait à {{hours}} h {{minutes}}",
+		"skipped": "Reporté",
+		"skippedNext": "Reporté, prochain soin {{due}}",
 		"summary": {
 			"pending": {
 				"one": "{{amount}} soin à faire",
 				"other": "{{amount}} soins à faire"
 			},
-			"done": { "one": "{{amount}} fait", "other": "{{amount}} faits" }
+			"done": { "one": "{{amount}} fait", "other": "{{amount}} faits" },
+			"skipped": { "one": "{{amount}} reporté", "other": "{{amount}} reportés" }
 		},
 		"todo": "À faire",
 		"upcoming": "Prochains soins",
