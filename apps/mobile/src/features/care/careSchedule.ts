@@ -167,6 +167,31 @@ export const scheduleCares = (
 export const isDue = (dueDate: string | null, today: string) =>
 	dueDate !== null && dueDate <= today;
 
+export type NextCare = {
+	care: Care;
+	dueDate: string;
+	otherDueCount: number;
+};
+
+// The care to show for a plant at a glance, and how many others are due with it
+export const nextCare = (
+	cares: Care[],
+	context: ScheduleContext,
+	today: string,
+): NextCare | null => {
+	const scheduled = scheduleCares(cares, context, today);
+	const [next] = scheduled;
+	if (!next?.dueDate) return null;
+	const dueCount = scheduled.filter(({ dueDate }) =>
+		isDue(dueDate, today),
+	).length;
+	return {
+		care: next.care,
+		dueDate: next.dueDate,
+		otherDueCount: Math.max(0, dueCount - 1),
+	};
+};
+
 // "Not needed" asks again after a quarter of the interval, at least a day later
 export const snoozeUntil = (
 	care: Care,

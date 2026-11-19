@@ -1,5 +1,5 @@
-import { Link, router, useLocalSearchParams } from "expo-router";
-import { useState } from "react";
+import { Link, router, useIsFocused, useLocalSearchParams } from "expo-router";
+import { useMemo, useState } from "react";
 import { FlatList, View } from "react-native";
 import Button from "@/components/Button";
 import Chip from "@/components/Chip";
@@ -7,6 +7,10 @@ import { ScreenPlaceholder } from "@/components/ScreenPlaceholder";
 import SearchField from "@/components/SearchField";
 import { useTabBarOffset } from "@/components/TabBar";
 import Text from "@/components/Text";
+import { nextCare } from "@/features/care/careSchedule";
+import type { Care } from "@/features/care/careTypes";
+import { useCarePreferencesStore } from "@/features/care/useCarePreferencesStore";
+import { useCareStore } from "@/features/care/useCareStore";
 import { EmptyGarden } from "@/features/plants/components/EmptyGarden";
 import { PlantCard } from "@/features/plants/components/PlantCard";
 import { PlantListRow } from "@/features/plants/components/PlantListRow";
@@ -23,6 +27,7 @@ import {
 	useCurrentPlants,
 	usePastPlants,
 } from "@/features/plants/usePlantStore";
+import { toISODate } from "@/utils/dates";
 import { pluralForm, t } from "@/utils/i18n";
 
 type Tab = "current" | "past";
@@ -40,6 +45,31 @@ export default function GardenScreen() {
 	const [viewMode, setViewMode] = useState<ViewMode>("list");
 	const [query, setQuery] = useState("");
 	const tabBarOffset = useTabBarOffset();
+	const cares = useCareStore((state) => state.cares);
+	const climate = useCarePreferencesStore((state) => state.climate);
+	// Re-renders on focus, so a screen left open overnight catches up with the date
+	useIsFocused();
+	const today = toISODate(new Date());
+	// Once for the whole list, not in every row
+	const nextCares = useMemo(() => {
+		const caresByPlant = new Map<string, Care[]>();
+		for (const care of cares) {
+			caresByPlant.set(care.plantId, [
+				...(caresByPlant.get(care.plantId) ?? []),
+				care,
+			]);
+		}
+		return new Map(
+			currentPlants.map((plant) => [
+				plant.id,
+				nextCare(
+					caresByPlant.get(plant.id) ?? [],
+					{ wateringLevel: plant.watering, climate },
+					today,
+				),
+			]),
+		);
+	}, [cares, currentPlants, climate, today]);
 
 	const plantCount = currentPlants.length;
 	const hasPlants = plantCount + pastPlants.length > 0;
@@ -97,7 +127,11 @@ export default function GardenScreen() {
 							viewMode === "grid" ? (
 								<PlantCard plant={item} style={{ width: tileWidth }} />
 							) : (
-								<PlantListRow plant={item} />
+								<PlantListRow
+									plant={item}
+									nextCare={nextCares.get(item.id)}
+									today={today}
+								/>
 							)
 						}
 						keyboardDismissMode="on-drag"

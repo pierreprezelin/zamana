@@ -389,6 +389,10 @@
 			"year": { "one": "Tous les ans", "other": "Tous les {{amount}} ans" },
 			"withPeriod": "{{frequency}}, de {{start}} à {{end}}"
 		},
+		"otherDue": {
+			"one": "{{amount}} autre soin à faire",
+			"other": "{{amount}} autres soins à faire"
+		},
 		"due": {
 			"late": {
 				"one": "En retard de {{amount}} jour",

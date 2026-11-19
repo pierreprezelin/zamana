@@ -1,6 +1,7 @@
 import {
 	careProgress,
 	careStatus,
+	nextCare,
 	nextDueDate,
 	snoozeUntil,
 	wasDueWhenDone,
@@ -301,5 +302,46 @@ describe("wasDueWhenDone", () => {
 		expect(
 			wasDueWhenDone(doneToday, log("2026-06-08"), context(), "2026-06-10"),
 		).toBe(false);
+	});
+});
+
+describe("nextCare", () => {
+	// Weekly cares: done on June 1 means due on June 8
+	const weekly = (id: string, lastDoneAt: string, overrides = {}) =>
+		care({
+			id,
+			frequency: { amount: 1, unit: "week" },
+			lastDoneAt,
+			...overrides,
+		});
+
+	it("picks the care due the soonest, the latest first", () => {
+		const next = nextCare(
+			[weekly("upcoming", "2026-06-08"), weekly("late", "2026-06-01")],
+			context(),
+			"2026-06-10",
+		);
+		expect(next?.care.id).toBe("late");
+		expect(next?.dueDate).toBe("2026-06-08");
+	});
+
+	it("counts the other due cares, not the upcoming ones", () => {
+		const next = nextCare(
+			[
+				weekly("late", "2026-06-01"),
+				weekly("today", "2026-06-03", { type: "pruning" }),
+				weekly("upcoming", "2026-06-08", { type: "misting" }),
+			],
+			context(),
+			"2026-06-10",
+		);
+		expect(next?.otherDueCount).toBe(1);
+	});
+
+	it("skips the cares without a due date", () => {
+		expect(
+			nextCare([care({ frequency: null })], context(), "2026-06-10"),
+		).toBeNull();
+		expect(nextCare([], context(), "2026-06-10")).toBeNull();
 	});
 });

@@ -1,5 +1,4 @@
 import { type ReactNode, useRef } from "react";
-import { View } from "react-native";
 import Swipeable, {
 	type SwipeableMethods,
 	SwipeDirection,
