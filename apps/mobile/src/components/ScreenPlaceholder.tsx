@@ -2,8 +2,7 @@ import { type Href, Link } from "expo-router";
 import type { ReactNode } from "react";
 import { ScrollView, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { Ionicons } from "@/components/ionicons";
-import Pressable from "@/components/Pressable";
+import { HeaderIconButton } from "@/components/HeaderIconButton";
 import Text from "@/components/Text";
 import { t } from "@/utils/i18n";
 
@@ -37,19 +36,11 @@ export function ScreenPlaceholder({
 				</View>
 				{showSettings && (
 					<Link href="/settings" asChild>
-						<Pressable
-							accessibilityRole="button"
+						<HeaderIconButton
+							className="-mr-2"
+							icon="settings-outline"
 							accessibilityLabel={t("common.settings")}
-							pressedOpacity={0.5}
-							hitSlop={8}
-							className="size-10 items-center justify-center rounded-full"
-						>
-							<Ionicons
-								name="settings-outline"
-								size={24}
-								className="text-foreground"
-							/>
-						</Pressable>
+						/>
 					</Link>
 				)}
 			</View>

@@ -87,6 +87,7 @@ export default function PlantSectionsLayout() {
 						? () => (
 								<Link href={`/plant/${id}${headerAction.path}`} asChild>
 									<HeaderIconButton
+										className="-mr-3"
 										icon={headerAction.icon}
 										iconSize={headerAction.iconSize}
 										accessibilityLabel={headerAction.label}
