@@ -73,4 +73,4 @@ Docs: <https://docs.expo.dev/eas/index.md>
 
 ## API
 
-To make sure implementation of endpoints is right, you can check the API project at ```../api```.
+To make sure implementation of endpoints is right, you can check the API project at `../api`.

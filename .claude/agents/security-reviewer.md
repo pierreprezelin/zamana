@@ -1,4 +1,5 @@
 ---
+
 name: security-reviewer
 description: Audits Zamana's pending changes for security flaws in the Expo app (local storage, files, permissions, navigation) and the Express + tRPC API. Run after a change that touches the API, storage, photos, permissions, deep links or dependencies. Read-only; returns a findings report.
 tools: Read, Grep, Glob, Bash
