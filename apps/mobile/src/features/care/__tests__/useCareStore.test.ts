@@ -6,8 +6,9 @@ jest.mock("expo-crypto", () => ({ randomUUID: () => `id-${++mockUuid}` }));
 jest.mock("@/utils/database", () => ({
 	database: {
 		getAllSync: () => [],
-		runAsync: async (sql: string) => {
+		runAsync: async (sql: string, ...params: unknown[]) => {
 			mockQueries.push(sql.trim().split(/\s+/).slice(0, 3).join(" "));
+			return { changes: params.includes("gone-log") ? 0 : 1 };
 		},
 		withTransactionAsync: async (task: () => Promise<void>) => task(),
 	},
@@ -104,13 +105,50 @@ describe("useCareStore", () => {
 		const log = state().logs.at(-1);
 		if (!log) throw new Error("No log");
 
-		await state().undo(log.id);
+		await state().undo(log);
 
 		expect(careOf(id)).toMatchObject({
 			lastDoneAt: "2026-06-01",
 			snoozedUntil: null,
 		});
 		expect(state().logs).toEqual([]);
+	});
+
+	it("undoes an action of a past day, missing from today's logs", async () => {
+		const id = await state().createCare("plant-1", {
+			...fertilizing,
+			lastDoneAt: "2026-06-08",
+		});
+		mockQueries.length = 0;
+
+		await state().undo({
+			id: "past-log",
+			plantId: "plant-1",
+			type: "fertilizing",
+			outcome: "done",
+			date: "2026-06-08",
+			createdAt: "2026-06-08T07:00:00.000Z",
+			previousLastDoneAt: "2026-05-10",
+			previousSnoozedUntil: null,
+		});
+
+		expect(mockQueries).toEqual(["DELETE FROM care_log", "UPDATE care SET"]);
+		expect(careOf(id)).toMatchObject({
+			lastDoneAt: "2026-05-10",
+			snoozedUntil: null,
+		});
+	});
+
+	it("ignores an undo of a log already gone, so a stale one cannot roll back the care", async () => {
+		const id = await state().createCare("plant-1", fertilizing);
+		await state().markDone(id);
+		const log = state().logs.at(-1);
+		if (!log) throw new Error("No log");
+
+		await state().undo({ ...log, id: "gone-log" });
+
+		expect(careOf(id)).toMatchObject({ lastDoneAt: "2026-06-10" });
+		expect(mockQueries.at(-1)).toBe("DELETE FROM care_log");
 	});
 
 	it("stops a care", async () => {

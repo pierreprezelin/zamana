@@ -25,7 +25,7 @@ type CareRow = {
 	reminder: number;
 };
 
-type CareLogRow = {
+export type CareLogRow = {
 	id: string;
 	plant_id: string;
 	type: CareType;
@@ -54,7 +54,7 @@ const toCare = (row: CareRow): Care => ({
 	reminder: Boolean(row.reminder),
 });
 
-const toCareLog = (row: CareLogRow): CareLog => ({
+export const toCareLog = (row: CareLogRow): CareLog => ({
 	id: row.id,
 	plantId: row.plant_id,
 	type: row.type,
@@ -92,7 +92,7 @@ type CareState = {
 	setReminder: (id: string, reminder: boolean) => Promise<void>;
 	markDone: (id: string) => Promise<void>;
 	skipCare: (id: string, snoozedUntil: string) => Promise<void>;
-	undo: (logId: string) => Promise<void>;
+	undo: (log: CareLog) => Promise<void>;
 	stopCare: (id: string) => Promise<void>;
 	forgetPlant: (plantId: string) => void;
 };
@@ -251,16 +251,20 @@ export const useCareStore = create<CareState>()((set, get) => {
 				lastDoneAt: care.lastDoneAt,
 				snoozedUntil,
 			})),
-		undo: async (logId) => {
-			const entry = get().logs.find((log) => log.id === logId);
-			if (!entry) return;
-			// Stopping a care drops its logs of the day, so this one is still its own
+		// Only for a log of undoableLogIds, so the care found is the one it was logged on
+		undo: async (entry) => {
 			const care = get().cares.find(
 				(care) => care.plantId === entry.plantId && care.type === entry.type,
 			);
+			let deleted = false;
 			await database.withTransactionAsync(async () => {
-				await database.runAsync("DELETE FROM care_log WHERE id = ?", logId);
-				if (care) {
+				const { changes } = await database.runAsync(
+					"DELETE FROM care_log WHERE id = ?",
+					entry.id,
+				);
+				// A stale log, undone twice, would roll back whatever came after it
+				deleted = changes > 0;
+				if (deleted && care) {
 					await updateProgress(
 						care.id,
 						entry.previousLastDoneAt,
@@ -268,6 +272,7 @@ export const useCareStore = create<CareState>()((set, get) => {
 					);
 				}
 			});
+			if (!deleted) return;
 			set(({ cares, logs }) => ({
 				cares: care
 					? withPatch(cares, care.id, {
@@ -275,7 +280,7 @@ export const useCareStore = create<CareState>()((set, get) => {
 							snoozedUntil: entry.previousSnoozedUntil,
 						})
 					: cares,
-				logs: logs.filter((log) => log.id !== logId),
+				logs: logs.filter((log) => log.id !== entry.id),
 			}));
 		},
 		stopCare: async (id) => {

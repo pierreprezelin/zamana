@@ -42,7 +42,7 @@ export const useCareActions = () => {
 				),
 			),
 		undo: async (log: CareLog) => {
-			if (!(await run(() => undo(log.id)))) return;
+			if (!(await run(() => undo(log)))) return;
 			Toast.show({
 				type: "success",
 				text1: t("care.undone", { care: careName(log.type) }),
