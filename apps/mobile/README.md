@@ -21,13 +21,13 @@ If you ever stop by, make sure to pay it a visit!
 I designed Zamana to cover my needs, but also to be useful to everyone. You'll find:
 
 - 🗒️ Fully customizable info about your plant (name, temp, watering, lifespan...)
-- 🌡️ Notifications about abnormally hot or cold temperatures, to bring your plants indoors
 - ⚠️ A daily reminder, at the time of your choice, of the care your plants need
 - 💧 Watering reminders that follow the growing and rest seasons, wherever you live: northern or southern hemisphere, or the tropics
+- 🌡️ Notifications about incoming storms, strong winds, abnormally hot or cold temperatures, to bring your plants indoors
 - 🖼️ A timeline with the photos you've taken of your plant to watch its evolution
 - 📚 Help articles about how to take care of your plants
 - 🎓 Pro-tips and fun facts about flora!
-- 📍 Everything stored locally on your phone
+- 📍 Everything stored locally on your phone: only an approximate location (about 10 km) is sent to [Open-Meteo](https://open-meteo.com) for weather alerts, and only if you have outdoor plants
 - 🌍 Translated into English and French (for now)
 - 💎 No subscription, no paid tier, no ads
 - 🍎 Available on Android and iOS
@@ -40,7 +40,7 @@ You can see here what's planned for release and afterwards!
 
 ✅ Adding your plants
 ✅ Upcoming care tasks
-🚧 Weather reports and alerts
+✅ Weather alerts (hot, cold, storm, wind)
 ✅ Growth timeline with custom notes
 🚧 Pro-tips and fun facts
 ✅ Notifications
@@ -60,6 +60,7 @@ You can see here what's planned for release and afterwards!
 - [TanStack Query](https://tanstack.com/query/latest) for caching, invalidation, refetch...
 - [TypeScript](https://www.typescriptlang.org/) with [tRPC](https://trpc.io/) for end-to-end type-safety
 - [SQLite](https://sqlite.org/) for the local database
+- [Open-Meteo](https://open-meteo.com) for weather forecasts and city search
 - [Bun](https://bun.com/) as package manager
 - [Vercel](https://vercel.com/) for hosting and deployments
 
