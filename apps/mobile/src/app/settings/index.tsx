@@ -22,6 +22,9 @@ export default function SettingsScreen() {
 				<Link href="/settings/location" asChild>
 					<SettingsRow icon="earth-outline" title={t("screens.location")} />
 				</Link>
+				<Link href="/settings/home" asChild>
+					<SettingsRow icon="home-outline" title={t("screens.home")} />
+				</Link>
 				<Link href="/settings/ergonomics" asChild>
 					<SettingsRow
 						icon="hand-left-outline"

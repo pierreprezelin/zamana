@@ -20,6 +20,7 @@
 		"historyEntry": "Entrée d'historique",
 		"newPlant": "Ajouter une plante",
 		"ergonomics": "Ergonomie",
+		"home": "Accueil",
 		"location": "Localisation",
 		"notifications": "Notifications",
 		"settings": "Paramètres"
@@ -630,7 +631,7 @@
 			"funfact": "Le saviez-vous ?"
 		},
 		"preferences": {
-			"show": "Afficher les conseils sur l’accueil",
+			"show": "Afficher les conseils",
 			"showHelper": "Une astuce ou une anecdote par jour.",
 			"reset": "Revoir tous les conseils",
 			"resetDone": "Les conseils déjà vus seront de nouveau proposés."
