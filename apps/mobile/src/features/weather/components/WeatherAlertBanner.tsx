@@ -47,30 +47,30 @@ export function WeatherAlertBanner() {
 
 	return (
 		<View className="gap-2">
-			<View className="flex-row items-center gap-4 rounded-2xl bg-danger p-4">
-				<View className="size-12 items-center justify-center rounded-3xl bg-on-danger/25">
+			<View className="flex-row items-center gap-4 rounded-2xl bg-danger-strong p-4">
+				<View className="size-12 items-center justify-center rounded-3xl bg-on-primary/25">
 					<Ionicons
 						name={RISK_ICONS[risks[0].kind]}
 						size={24}
-						className="text-on-danger"
+						className="text-on-primary"
 					/>
 				</View>
 				<View className="flex-1 gap-0.5">
-					<Text className="font-outfit-semibold text-base text-on-danger">
+					<Text className="font-outfit-semibold text-base text-on-primary">
 						{t("weather.banner.title", { place: placeShortName(place.name) })}
 					</Text>
 					{risks.map((risk) => {
 						const { summary, advice } = riskParts(risk, today);
 						return (
 							<View key={risk.kind}>
-								<Text className="text-sm text-on-danger/80">
+								<Text className="text-sm text-on-primary/80">
 									{summary} {advice}
 								</Text>
 							</View>
 						);
 					})}
 					<View className="mt-1">
-						<OpenMeteoCredit textClassName="text-on-danger/60" />
+						<OpenMeteoCredit textClassName="text-on-primary/60" />
 					</View>
 				</View>
 			</View>
@@ -93,7 +93,7 @@ export function WeatherAlertBanner() {
 						hitSlop={8}
 						onPress={() => router.push(`/plant/${plant.id}/edit?section=needs`)}
 					>
-						<Text className="font-outfit-semibold text-xs text-primary underline">
+						<Text className="font-outfit-semibold text-xs text-foreground underline">
 							{t("weather.banner.editPlant", { name: displayName(plant) })}
 						</Text>
 					</Pressable>

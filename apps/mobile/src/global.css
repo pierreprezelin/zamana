@@ -9,6 +9,8 @@
 			--color-primary-tint: #E7EFEC;
 			--color-primary-tint-strong: #D0DEDA;
 			--color-on-primary: #FFFFFF;
+			/* Filled card with white text, in both themes */
+			--color-danger-strong: #C63931;
 			--color-foreground: #0C3D2D;
 			--color-background: #FFFFFF;
 			--color-surface: #FFFFFF;
@@ -49,6 +51,7 @@
 			--color-primary-tint: #24372F;
 			--color-primary-tint-strong: #324A40;
 			--color-on-primary: #FFFFFF;
+			--color-danger-strong: #2E2220;
 			--color-foreground: #E0EFE9;
 			--color-background: #09110E;
 			--color-surface: #121C18;
