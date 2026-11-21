@@ -291,6 +291,10 @@
 	},
 	"settings": {
 		"appearance": "Apparence",
+		"haptics": {
+			"title": "Retours haptiques",
+			"helper": "Vibrations légères lors des actions."
+		},
 		"theme": {
 			"light": "Clair",
 			"dark": "Sombre",

@@ -15,13 +15,27 @@ jest.mock("expo-haptics", () => ({
 	NotificationFeedbackType: { Success: "success", Error: "error" },
 }));
 
+const mockStoredItems = new Map<string, string>();
+
+jest.mock("expo-sqlite/kv-store", () => ({
+	Storage: {
+		getItemSync: (key: string) => mockStoredItems.get(key) ?? null,
+		setItemSync: (key: string, value: string) =>
+			mockStoredItems.set(key, value),
+		removeItemSync: (key: string) => mockStoredItems.delete(key),
+	},
+}));
+
 const loadOn = (OS: "ios" | "android", Version: number) => {
 	jest.resetModules();
 	jest.doMock("react-native", () => ({ Platform: { OS, Version } }));
 	return require("@/utils/haptics") as typeof import("@/utils/haptics");
 };
 
-beforeEach(() => jest.clearAllMocks());
+beforeEach(() => {
+	jest.clearAllMocks();
+	mockStoredItems.clear();
+});
 
 describe("selectionFeedback", () => {
 	it("plays the segment tick from Android 14", () => {
@@ -72,4 +86,44 @@ describe("successFeedback and errorFeedback", () => {
 it("swallows a rejection of the native module", async () => {
 	mockHaptics.selectionAsync.mockRejectedValueOnce(new Error("unsupported"));
 	await expect(loadOn("ios", 26).selectionFeedback()).resolves.toBeUndefined();
+});
+
+describe("useHapticsStore", () => {
+	it("plays the haptics by default", () => {
+		const haptics = loadOn("ios", 26);
+		expect(haptics.useHapticsStore.getState().enabled).toBe(true);
+	});
+
+	it.each([
+		["android", 34],
+		["android", 29],
+		["ios", 26],
+	] as const)("silences every haptic once disabled on %s %i", (os, version) => {
+		const haptics = loadOn(os, version);
+		haptics.useHapticsStore.getState().setEnabled(false);
+
+		haptics.selectionFeedback();
+		haptics.successFeedback();
+		haptics.errorFeedback();
+
+		for (const native of Object.values(mockHaptics)) {
+			expect(native).not.toHaveBeenCalled();
+		}
+	});
+
+	it("saves the choice", () => {
+		loadOn("ios", 26).useHapticsStore.getState().setEnabled(false);
+		expect(JSON.parse(mockStoredItems.get("haptics") ?? "{}").state).toEqual({
+			enabled: false,
+		});
+	});
+
+	it("plays the haptics again from an unreadable save", () => {
+		mockStoredItems.set(
+			"haptics",
+			JSON.stringify({ state: { enabled: "false" }, version: 0 }),
+		);
+		const { useHapticsStore } = loadOn("ios", 26);
+		expect(useHapticsStore.getState().enabled).toBe(true);
+	});
 });
