@@ -54,6 +54,7 @@ import {
 	SCIENTIFIC_NAME_MAX_LENGTH,
 } from "@/features/plants/plantSchema";
 import { usePlantStore } from "@/features/plants/usePlantStore";
+import { outdoorHelper } from "@/features/weather/weatherLabels";
 import { errorFeedback, successFeedback } from "@/utils/haptics";
 import { t } from "@/utils/i18n";
 import { showErrorToast } from "@/utils/toast";
@@ -110,7 +111,13 @@ function LabeledField({
 	);
 }
 
-export function PlantForm({ plant }: { plant?: Plant }) {
+type PlantFormProps = {
+	plant?: Plant;
+	// Opened from a shortcut to one setting, like the outdoor toggle of a weather alert
+	openSection?: FormSection;
+};
+
+export function PlantForm({ plant, openSection }: PlantFormProps) {
 	const createPlant = usePlantStore((state) => state.createPlant);
 	const updatePlant = usePlantStore((state) => state.updatePlant);
 	const headerHeight = useHeaderHeight();
@@ -120,10 +127,10 @@ export function PlantForm({ plant }: { plant?: Plant }) {
 	const [errors, setErrors] = useState<FormErrors>({});
 	const [saving, setSaving] = useState(false);
 	const [expanded, setExpanded] = useState<Record<FormSection, boolean>>({
-		details: false,
-		needs: false,
-		lifecycle: false,
-		notes: false,
+		details: openSection === "details",
+		needs: openSection === "needs",
+		lifecycle: openSection === "lifecycle",
+		notes: openSection === "notes",
 	});
 	const [help, setHelp] = useState(floweringTypeHelp);
 	const scrollRef = useRef<ComponentRef<typeof ScrollView>>(null);
@@ -411,7 +418,7 @@ export function PlantForm({ plant }: { plant?: Plant }) {
 							))}
 							<ToggleRow
 								label={t("plant.form.outdoor")}
-								helper={t("plant.form.outdoorHelper")}
+								helper={outdoorHelper(form.temperature)}
 								value={form.outdoor}
 								onChange={(value) => update("outdoor", value)}
 							/>

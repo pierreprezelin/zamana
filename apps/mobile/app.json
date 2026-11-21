@@ -15,7 +15,8 @@
 				"backgroundImage": "./assets/images/android-icon-background.png",
 				"monochromeImage": "./assets/images/android-icon-monochrome.png"
 			},
-			"predictiveBackGestureEnabled": false
+			"predictiveBackGestureEnabled": false,
+			"blockedPermissions": ["android.permission.ACCESS_FINE_LOCATION"]
 		},
 		"ios": {
 			"bundleIdentifier": "com.pierreprezelin.zamana",
@@ -69,7 +70,19 @@
 			],
 			"expo-status-bar",
 			"expo-web-browser",
-			"@react-native-vector-icons/ionicons"
+			"@react-native-vector-icons/ionicons",
+			"expo-background-task",
+			[
+				"expo-location",
+				{
+					"locationWhenInUsePermission": "Zamana utilise votre position approximative pour vous prévenir quand la météo menace vos plantes d'extérieur.",
+					"locationAlwaysAndWhenInUsePermission": false,
+					"locationAlwaysPermission": false,
+					"locationFullAccuracyPermission": false,
+					"isIosReducedAccuracyByDefault": true,
+					"isAndroidBackgroundLocationEnabled": false
+				}
+			]
 		],
 		"experiments": {
 			"typedRoutes": true,

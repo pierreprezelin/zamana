@@ -2,6 +2,7 @@ import {
 	firstErrorField,
 	formErrors,
 	initialFormState,
+	isFormSection,
 	toFormValues,
 } from "@/features/plants/plantForm";
 import { plantInputSchema } from "@/features/plants/plantSchema";
@@ -75,5 +76,13 @@ describe("plantForm", () => {
 			"name",
 		);
 		expect(firstErrorField({})).toBeUndefined();
+	});
+});
+
+describe("isFormSection", () => {
+	it("only opens a known section from a route parameter", () => {
+		expect(isFormSection("needs")).toBe(true);
+		expect(isFormSection("admin")).toBe(false);
+		expect(isFormSection(undefined)).toBe(false);
 	});
 });

@@ -11,6 +11,8 @@ import { GardenPreview } from "@/features/plants/components/GardenPreview";
 import { usePlantStore } from "@/features/plants/usePlantStore";
 import { greeting } from "@/features/user/greeting";
 import { useUserStore } from "@/features/user/useUserStore";
+import { WeatherAlertBanner } from "@/features/weather/components/WeatherAlertBanner";
+import { WeatherPlaceBanner } from "@/features/weather/components/WeatherPlaceBanner";
 import { toISODate } from "@/utils/dates";
 import { pluralForm, t } from "@/utils/i18n";
 
@@ -42,6 +44,8 @@ export default function TodayScreen() {
 			showSettings
 			scrollBottomInset={tabBarOffset + 16}
 		>
+			<WeatherPlaceBanner />
+			<WeatherAlertBanner />
 			{plants.length > 0 && <RemindersBanner />}
 			{plants.length > 0 && <TodayTasks groups={groups} today={today} />}
 			<GardenPreview />

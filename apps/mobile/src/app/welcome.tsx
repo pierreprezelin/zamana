@@ -11,6 +11,7 @@ import Text from "@/components/Text";
 import { useNotificationPermissionStore } from "@/features/notifications/useNotificationPermissionStore";
 import { StepsIndicator } from "@/features/onboarding/components/StepsIndicator";
 import { useOnboardingStore } from "@/features/onboarding/useOnboardingStore";
+import { useLocationPermissionStore } from "@/features/weather/useLocationPermissionStore";
 import { t } from "@/utils/i18n";
 
 type Step = {
@@ -87,6 +88,9 @@ export default function WelcomeScreen() {
 								try {
 									if (step.key === "reminders")
 										await useNotificationPermissionStore.getState().request();
+									// The place is read later, once an outdoor plant needs alerts
+									if (step.key === "weather")
+										await useLocationPermissionStore.getState().request();
 								} finally {
 									if (index === lastStep) complete();
 									else goToStep(index + 1);

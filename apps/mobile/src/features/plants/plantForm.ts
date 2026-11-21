@@ -86,7 +86,17 @@ export const formErrors = (error: z.ZodError): FormErrors => {
 export const firstErrorField = (errors: FormErrors) =>
 	FIELD_ORDER.find((field) => errors[field]);
 
-export type FormSection = "details" | "needs" | "lifecycle" | "notes";
+export const FORM_SECTIONS = [
+	"details",
+	"needs",
+	"lifecycle",
+	"notes",
+] as const;
+export type FormSection = (typeof FORM_SECTIONS)[number];
+
+// A route parameter is any string: only a known section opens
+export const isFormSection = (value: unknown): value is FormSection =>
+	FORM_SECTIONS.includes(value as FormSection);
 
 export const SECTION_FIELDS: Record<FormSection, FormField[]> = {
 	details: ["scientificName", "origin", "acquiredAt", "location", "ageAmount"],

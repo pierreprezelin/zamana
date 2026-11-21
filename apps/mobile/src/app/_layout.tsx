@@ -24,12 +24,18 @@ import { toastConfig } from "@/components/toastConfig";
 import { ForceUpdateSheet } from "@/features/appVersion/components/ForceUpdateSheet";
 import { startReminderScheduler } from "@/features/notifications/scheduleReminders";
 import { useOnboardingStore } from "@/features/onboarding/useOnboardingStore";
+import {
+	defineWeatherTask,
+	startWeatherTaskSync,
+} from "@/features/weather/weatherTask";
 // Loaded eagerly so the saved theme is applied before the first render
 import "@/features/theme/useThemeStore";
 import { useCSSVariable } from "uniwind";
 import { t } from "@/utils/i18n";
 
+defineWeatherTask();
 startReminderScheduler();
+startWeatherTaskSync();
 
 SplashScreen.setOptions({
 	duration: 1000,

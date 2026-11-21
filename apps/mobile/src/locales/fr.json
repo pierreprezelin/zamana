@@ -139,7 +139,6 @@
 			"needs": "Besoins",
 			"needsSummary": "Lumière, arrosage, température, humidité, extérieur, toxicité",
 			"outdoor": "Plante d’extérieur",
-			"outdoorHelper": "Active les alertes météo (gel, canicule).",
 			"toxic": "Toxicité pour les animaux",
 			"lifecycle": "Cycle de vie",
 			"lifecycleSummary": "Floraison, type de floraison, durée de vie",
@@ -568,6 +567,61 @@
 		"errors": {
 			"noteTooLong": "La note ne doit pas dépasser {{max}} caractères.",
 			"empty": "Ajoutez une photo ou une note."
+		}
+	},
+	"weather": {
+		"day": {
+			"today": "aujourd'hui",
+			"tomorrow": "demain"
+		},
+		"risk": {
+			"cold": "Froid : {{value}} °C {{day}} vers {{hour}} h",
+			"heat": "Chaleur : {{value}} °C {{day}} vers {{hour}} h",
+			"storm": "Orage {{day}} vers {{hour}} h",
+			"wind": "Vent : rafales à {{value}} km/h {{day}} vers {{hour}} h"
+		},
+		"advice": {
+			"fleece": "À rentrer à l'abri, ou à couvrir d'un voile d'hivernage.",
+			"frost": "À rentrer à l'abri du gel (maison, garage, véranda).",
+			"cold": "À rentrer à l'abri du froid (maison, véranda).",
+			"heat": "À mettre à l'ombre et à arroser.",
+			"storm": "À abriter ou à attacher.",
+			"wind": "À abriter ou à attacher."
+		},
+		"riskSummary": "{{line}} · {{plants}}.",
+		"and": " et ",
+		"seasonHint": "Rentrée pour la saison ? Décochez « Plante d'extérieur » dans sa fiche.",
+		"outdoorHelper": "Une alerte en cas de froid (sous {{cold}} °C), de chaleur (plus de {{heat}} °C), d'orage ou de vent fort.",
+		"banner": {
+			"title": "Alerte météo · {{place}}",
+			"seasonQuestion": "Plante rentrée pour la saison ?",
+			"editPlant": "Modifier la fiche de {{name}}"
+		},
+		"placeMissing": {
+			"title": "Où sont vos plantes d’extérieur ?",
+			"description": "Choisissez votre position ou une ville pour recevoir les alertes en cas de froid, de chaleur, d’orage ou de vent fort.",
+			"action": "Choisir un lieu"
+		},
+		"credit": "Météo par Open-Meteo.com",
+		"geonamesCredit": "Lieux par GeoNames",
+		"settings": {
+			"alerts": "Alertes météo",
+			"alertsHelper": "Pour vos plantes d’extérieur : froid, chaleur, orage, vent fort.",
+			"time": "Heure de l’alerte météo",
+			"timeHelper": "À {{time}}, pour les 24 heures suivantes.",
+			"place": "Lieu des alertes météo",
+			"device": "Ma position",
+			"city": "Une ville",
+			"searchPlaceholder": "Rechercher une ville…",
+			"noPlace": "Aucun lieu pour l’instant.",
+			"loading": "Prévisions en cours de mise à jour…",
+			"updatedAt": "Prévisions mises à jour à {{time}}",
+			"failedSince": "Prévisions indisponibles depuis {{time}}",
+			"ask": "Autorisez la localisation pour recevoir les alertes là où vous êtes, ou choisissez une ville.",
+			"denied": "Sans localisation, Zamana ne peut pas vous prévenir pour votre position. Choisissez une ville ou autorisez la localisation dans les réglages du téléphone.",
+			"allow": "Autoriser la localisation",
+			"openSettings": "Ouvrir les réglages",
+			"noResult": "Aucune ville trouvée."
 		}
 	}
 }
