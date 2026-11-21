@@ -14,7 +14,6 @@ The app default language is French, being translated into English later for the 
 - API with Node.js (Express) on a remote server
 - Zustand for local stores
 - Zod for form schema validations
-- Tanstack Query for caching, invalidation, refetch...
 - TypeScript with tRPC for end-to-end type-safety
 - SQLite (with the expo-sqlite package) as database, local and offline
 - Unit testing with jest and the jest-expo package
