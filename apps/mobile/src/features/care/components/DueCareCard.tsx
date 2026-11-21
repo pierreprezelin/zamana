@@ -67,14 +67,16 @@ export function DueCareCard({
 					variant="ghost"
 					title={t("care.skip")}
 					icon="hourglass-outline"
-					className="h-9 flex-1 bg-surface px-3"
+					size="small"
+					className="flex-1 bg-surface px-3"
 					textClassName={appearance.text}
 					onPress={() => skip(care, plant)}
 				/>
 				<Button
 					title={careVerb(care.type)}
 					icon="checkmark-outline"
-					className={twMerge("h-9 flex-1 px-3", appearance.background)}
+					size="small"
+					className={twMerge("flex-1 px-3", appearance.background)}
 					textClassName="text-surface"
 					onPress={() => done(care)}
 				/>

@@ -184,7 +184,7 @@ export function WeatherPlaceSettings() {
 									? "weather.settings.allow"
 									: "weather.settings.openSettings",
 							)}
-							className="h-9"
+							size="small"
 							onPress={followDevice}
 						/>
 					}

@@ -60,7 +60,7 @@ export default function FieldButton({
 						})}
 						pressedClassName=""
 						pressedOpacity={0.5}
-						hitSlop={12}
+						hitSlop={13}
 						onPress={onClear}
 					>
 						<Ionicons name="close-circle" size={18} className="text-muted" />

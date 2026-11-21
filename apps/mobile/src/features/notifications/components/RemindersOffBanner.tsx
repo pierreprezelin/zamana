@@ -16,7 +16,7 @@ export function RemindersOffBanner() {
 				<Button
 					variant="warning"
 					title={enableTitle}
-					className="h-9"
+					size="small"
 					onPress={enable}
 				/>
 			}

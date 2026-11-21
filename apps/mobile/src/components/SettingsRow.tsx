@@ -20,7 +20,7 @@ export default function SettingsRow({
 			accessibilityRole="button"
 			pressedClassName=""
 			pressedOpacity={0.5}
-			className="flex-row items-center gap-4"
+			className="flex-row items-center gap-4 py-3"
 			{...props}
 		>
 			<Ionicons name={icon} size={24} className="text-foreground" />

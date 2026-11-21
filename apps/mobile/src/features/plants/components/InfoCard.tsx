@@ -39,7 +39,7 @@ export function InfoCard({ title, rows }: InfoCardProps) {
 									accessibilityLabel={`En savoir plus : ${row.label}`}
 									pressedClassName=""
 									pressedOpacity={0.5}
-									hitSlop={12}
+									hitSlop={13}
 									onPress={row.onInfoPress}
 								>
 									<Ionicons

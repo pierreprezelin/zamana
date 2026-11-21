@@ -42,9 +42,15 @@ const variants = {
 	},
 };
 
+const sizes = {
+	default: { className: "h-12", hitSlop: undefined },
+	small: { className: "h-9", hitSlop: { top: 4, bottom: 4 } },
+};
+
 interface ButtonProps extends PressableProps {
 	title: string;
 	variant?: keyof typeof variants;
+	size?: keyof typeof sizes;
 	textClassName?: string;
 	icon?: IoniconsIconName;
 	loading?: boolean;
@@ -53,6 +59,7 @@ interface ButtonProps extends PressableProps {
 export default function Button({
 	title,
 	variant = "primary",
+	size = "default",
 	className,
 	textClassName,
 	icon,
@@ -67,8 +74,10 @@ export default function Button({
 		<Pressable
 			pressedClassName={styles.pressedClassName}
 			pressedOpacity={styles.pressedOpacity}
+			hitSlop={sizes[size].hitSlop}
 			className={twMerge(
-				"h-12 flex-row items-center justify-center gap-2 rounded-xl px-8",
+				"flex-row items-center justify-center gap-2 rounded-xl px-8",
+				sizes[size].className,
 				styles.className,
 				className,
 			)}

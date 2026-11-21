@@ -37,7 +37,7 @@ export function WeatherPlaceBanner() {
 			</View>
 			<Button
 				title={t("weather.placeMissing.action")}
-				className="h-9"
+				size="small"
 				onPress={() => router.push("/settings/location")}
 			/>
 		</View>

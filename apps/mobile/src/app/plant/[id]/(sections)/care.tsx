@@ -183,7 +183,8 @@ export default function PlantCareScreen() {
 					>
 						<Button
 							title={t("care.noCare.configure")}
-							className="mt-2 h-9 px-4"
+							size="small"
+							className="mt-2 px-4"
 							onPress={() => manageSheetRef.current?.present()}
 						/>
 					</StatusCard>

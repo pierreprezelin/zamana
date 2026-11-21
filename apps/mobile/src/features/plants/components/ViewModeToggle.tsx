@@ -32,6 +32,7 @@ export function ViewModeToggle({ value, onChange }: ViewModeToggleProps) {
 						accessibilityState={{ checked: selected }}
 						pressedClassName=""
 						pressedOpacity={0.75}
+						hitSlop={{ top: 6, bottom: 6 }}
 						onPress={() => {
 							if (!selected) selectionFeedback();
 							onChange(mode.value);

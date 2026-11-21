@@ -52,7 +52,7 @@ export function RemindersBanner() {
 					<Ionicons name="close" size={20} className="text-muted" />
 				</Pressable>
 			</View>
-			<Button title={enableTitle} className="h-9" onPress={enable} />
+			<Button title={enableTitle} size="small" onPress={enable} />
 		</View>
 	);
 }

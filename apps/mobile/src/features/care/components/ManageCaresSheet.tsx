@@ -65,7 +65,7 @@ export function ManageCaresSheet({
 								</Text>
 							</View>
 							{care ? (
-								<>
+								<View className="flex-row items-center gap-4">
 									<Pressable
 										accessibilityRole="button"
 										accessibilityLabel={t("care.manageSheet.edit", {
@@ -90,12 +90,13 @@ export function ManageCaresSheet({
 										onChange={(reminder) => setReminder(care, reminder)}
 										disabled={remindersOff}
 									/>
-								</>
+								</View>
 							) : (
 								<Button
 									variant="ghost"
 									title={t("care.manageSheet.configure")}
-									className="h-9 bg-primary-tint px-4"
+									size="small"
+									className="bg-primary-tint px-4"
 									onPress={() => onEdit(type)}
 								/>
 							)}

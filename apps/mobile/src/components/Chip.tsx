@@ -21,6 +21,7 @@ export default function Chip({
 			accessibilityState={{ selected }}
 			pressedClassName=""
 			pressedOpacity={0.75}
+			hitSlop={{ top: 4, bottom: 4 }}
 			className={twMerge(
 				"h-9 items-center justify-center rounded-xl px-4",
 				selected ? "bg-primary" : "bg-primary-tint",

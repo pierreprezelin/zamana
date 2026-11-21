@@ -18,7 +18,7 @@ export default function SettingsScreen() {
 			style={{ paddingBottom: insets.bottom + 16 }}
 		>
 			<ThemeSelector />
-			<View className="gap-4">
+			<View>
 				<Link href="/settings/location" asChild>
 					<SettingsRow icon="earth-outline" title={t("screens.location")} />
 				</Link>

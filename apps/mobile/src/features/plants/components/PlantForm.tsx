@@ -91,7 +91,7 @@ function LabeledField({
 						accessibilityLabel={t("common.learnMore", { label })}
 						pressedClassName=""
 						pressedOpacity={0.5}
-						hitSlop={12}
+						hitSlop={13}
 						onPress={onInfoPress}
 						className="mb-2"
 					>

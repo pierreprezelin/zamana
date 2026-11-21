@@ -115,7 +115,8 @@ export function UpcomingCareRow({
 				<Button
 					variant="ghost"
 					title={careVerb(care.type)}
-					className="h-9 bg-primary-tint px-4"
+					size="small"
+					className="bg-primary-tint px-4"
 					onPress={doEarly}
 				/>
 			)}

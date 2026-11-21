@@ -80,7 +80,7 @@ export default function BottomSheet({
 								accessibilityLabel={t("common.close")}
 								pressedOpacity={0.5}
 								pressedClassName=""
-								hitSlop={8}
+								hitSlop={10}
 								onPress={() => dismiss()}
 							>
 								<Ionicons name="close" size={24} className="text-foreground" />

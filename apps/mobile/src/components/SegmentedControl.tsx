@@ -45,6 +45,7 @@ function Segment({
 			onPress={onPress}
 			accessibilityRole="radio"
 			accessibilityState={{ checked: selected }}
+			hitSlop={{ top: 6, bottom: 6 }}
 			className="flex-1 items-center justify-center px-1"
 		>
 			<View>
