@@ -27,7 +27,7 @@ export function TipCard({ today, climate }: TipCardProps) {
 	const body = t(`tips.items.${tip.id}.body`);
 
 	return (
-		<View className="flex-row items-center gap-4 rounded-2xl bg-highlight p-4">
+		<View className="flex-row items-start gap-4 rounded-2xl bg-highlight p-4">
 			<View className="size-12 items-center justify-center rounded-3xl bg-on-primary/25">
 				<Ionicons
 					name={tip.kind === "protip" ? "bulb-outline" : "sparkles-outline"}
