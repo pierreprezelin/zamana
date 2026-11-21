@@ -43,10 +43,17 @@ export const useNotificationPreferencesStore =
 					const saved = persisted as Partial<NotificationPreferences>;
 					return {
 						...current,
-						...saved,
+						remindersEnabled:
+							typeof saved?.remindersEnabled === "boolean"
+								? saved.remindersEnabled
+								: current.remindersEnabled,
 						reminderTime: isReminderTime(saved?.reminderTime)
 							? saved.reminderTime
 							: current.reminderTime,
+						bannerDismissed:
+							typeof saved?.bannerDismissed === "boolean"
+								? saved.bannerDismissed
+								: current.bannerDismissed,
 					};
 				},
 			},
