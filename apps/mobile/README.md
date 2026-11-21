@@ -42,7 +42,7 @@ You can see here what's planned for release and afterwards!
 ✅ Upcoming care tasks
 ✅ Weather alerts (hot, cold, storm, wind)
 ✅ Growth timeline with custom notes
-🚧 Pro-tips and fun facts
+✅ Pro-tips and fun facts
 ✅ Notifications
 🚧 Translations
 ✅ Dark theme
@@ -51,13 +51,14 @@ You can see here what's planned for release and afterwards!
 
 🚧 Searching for species
 🚧 Help articles
+🚧 More pro-tips and fun facts!
 
 ## Stack
 
 - [React Native](https://reactnative.dev) with [Expo](https://expo.dev) for cross-platform development
+- [Expo EAS](https://expo.dev/services) for Over-the-Air updates
 - [Node.js](https://nodejs.org) with [Express](https://expressjs.com) for the API
 - [Zustand](https://zustand-demo.pmnd.rs/) for local stores
-- [TanStack Query](https://tanstack.com/query/latest) for caching, invalidation, refetch...
 - [TypeScript](https://www.typescriptlang.org/) with [tRPC](https://trpc.io/) for end-to-end type-safety
 - [SQLite](https://sqlite.org/) for the local database
 - [Open-Meteo](https://open-meteo.com) for weather forecasts and city search

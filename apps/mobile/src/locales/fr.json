@@ -623,5 +623,107 @@
 			"openSettings": "Ouvrir les réglages",
 			"noResult": "Aucune ville trouvée."
 		}
+	},
+	"tips": {
+		"card": {
+			"protip": "Conseil",
+			"funfact": "Le saviez-vous ?"
+		},
+		"preferences": {
+			"show": "Afficher les conseils sur l’accueil",
+			"showHelper": "Une astuce ou une anecdote par jour.",
+			"reset": "Revoir tous les conseils",
+			"resetDone": "Les conseils déjà vus seront de nouveau proposés."
+		},
+		"items": {
+			"fingerTest": {
+				"title": "Le test du doigt",
+				"body": "Enfoncez un doigt de 2 à 3 cm dans le terreau : s’il est sec, c’est le moment d’arroser."
+			},
+			"roomTemperatureWater": {
+				"title": "Pas d’eau glacée",
+				"body": "Arrosez à l’eau à température ambiante pour ne pas brusquer les racines."
+			},
+			"drainage": {
+				"title": "Des pieds au sec",
+				"body": "Videz la soucoupe un quart d’heure après l’arrosage : l’eau stagnante fait pourrir les racines."
+			},
+			"dustyLeaves": {
+				"title": "Des feuilles qui respirent",
+				"body": "Un chiffon humide sur les feuilles enlève la poussière qui freine la photosynthèse."
+			},
+			"quarterTurn": {
+				"title": "Un quart de tour",
+				"body": "Tournez vos pots de temps en temps pour que la plante ne penche pas vers la fenêtre."
+			},
+			"yellowLeaves": {
+				"title": "Feuilles jaunes ?",
+				"body": "C’est souvent un excès d’arrosage. Laissez sécher le terreau avant le prochain."
+			},
+			"springRepotting": {
+				"title": "C’est la saison du rempotage",
+				"body": "Si les racines sortent du pot, passez à un pot un peu plus grand, de 2 à 4 cm de plus."
+			},
+			"springFertilizer": {
+				"title": "Reprise de l’engrais",
+				"body": "La croissance repart : c’est le moment de reprendre l’engrais, à la dose indiquée ou moins."
+			},
+			"summerWateringTime": {
+				"title": "Arroser au frais",
+				"body": "En été, arrosez tôt le matin ou le soir : moins d’eau s’évapore."
+			},
+			"summerWindowBurn": {
+				"title": "Gare à la vitre",
+				"body": "Derrière une fenêtre en plein soleil, les feuilles peuvent brûler. Un voilage suffit à les protéger."
+			},
+			"autumnBringIn": {
+				"title": "Rentrer avant le gel",
+				"body": "Rentrez les plantes frileuses avant les premières gelées, souvent dès 10 °C la nuit."
+			},
+			"autumnPests": {
+				"title": "Inspection d’entrée",
+				"body": "Avant de rentrer une plante, vérifiez le dessous des feuilles pour ne pas inviter de parasites."
+			},
+			"winterRadiators": {
+				"title": "Loin des radiateurs",
+				"body": "L’air chaud et sec d’un radiateur assèche les feuilles. Éloignez vos plantes ou regroupez-les."
+			},
+			"winterLessWater": {
+				"title": "Moins d’eau en hiver",
+				"body": "La plupart des plantes se reposent : espacez les arrosages."
+			},
+			"oldestTree": {
+				"title": "Plus de 4 800 ans !",
+				"body": "Mathusalem, un pin de Californie, est l’un des plus vieux arbres connus."
+			},
+			"bamboo": {
+				"title": "Près d’un mètre par jour",
+				"body": "Certains bambous font partie des plantes qui poussent le plus vite au monde."
+			},
+			"mimosa": {
+				"title": "Une plante timide",
+				"body": "Le Mimosa pudica replie ses feuilles dès qu’on les touche."
+			},
+			"banana": {
+				"title": "La banane est une baie",
+				"body": "Pour les botanistes, la fraise n’en est pas une !"
+			},
+			"monstera": {
+				"title": "Des trous qui ont un nom",
+				"body": "Les trous des feuilles de Monstera s’appellent des fenestrations."
+			},
+			"cactusSpines": {
+				"title": "Des épines qui étaient des feuilles",
+				"body": "Chez les cactus, les épines sont des feuilles transformées pour limiter la perte d’eau."
+			},
+			"vanilla": {
+				"title": "La vanille est une orchidée",
+				"body": "Ses gousses sont les fruits d’une orchidée grimpante."
+			},
+			"sunflower": {
+				"title": "Suivre le soleil",
+				"body": "Les jeunes tournesols suivent le soleil, puis se fixent vers l’est une fois en fleur."
+			}
+		}
 	}
 }

@@ -9,6 +9,7 @@ import { useCareStore } from "@/features/care/useCareStore";
 import { RemindersBanner } from "@/features/notifications/components/RemindersBanner";
 import { GardenPreview } from "@/features/plants/components/GardenPreview";
 import { usePlantStore } from "@/features/plants/usePlantStore";
+import { TipCard } from "@/features/tips/components/TipCard";
 import { greeting } from "@/features/user/greeting";
 import { useUserStore } from "@/features/user/useUserStore";
 import { WeatherAlertBanner } from "@/features/weather/components/WeatherAlertBanner";
@@ -46,6 +47,7 @@ export default function TodayScreen() {
 		>
 			<WeatherPlaceBanner />
 			<WeatherAlertBanner />
+			<TipCard today={today} climate={climate} />
 			{plants.length > 0 && <RemindersBanner />}
 			{plants.length > 0 && <TodayTasks groups={groups} today={today} />}
 			<GardenPreview />
