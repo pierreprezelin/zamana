@@ -1,16 +1,34 @@
 ---
-import type { Dictionary } from "@/i18n";
+import { getRelativeLocaleUrl } from "astro:i18n";
+import { type Dictionary, type Locale, privacyPaths } from "@/i18n";
 
 interface Props {
 	t: Dictionary;
+	locale: Locale;
 }
 
-const { t } = Astro.props;
+const { t, locale } = Astro.props;
 const year = new Date().getFullYear();
 ---
 
 <footer class="border-t">
-	<p class="px-4 py-8 text-center text-sm text-muted-foreground">
-		© {year} Zamana. {t.footer.rights}
-	</p>
+	<div
+		class="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 px-4 py-8 text-sm text-muted-foreground"
+	>
+		<p>© {year} Zamana. {t.footer.rights}</p>
+		<span aria-hidden="true">·</span>
+		<a
+			href={getRelativeLocaleUrl(locale, privacyPaths[locale])}
+			class="underline-offset-4 hover:text-foreground hover:underline"
+		>
+			{t.footer.privacy}
+		</a>
+		<span aria-hidden="true">·</span>
+		<a
+			href="mailto:contact@pierreprezelin.com"
+			class="underline-offset-4 hover:text-foreground hover:underline"
+		>
+			{t.footer.contact}
+		</a>
+	</div>
 </footer>

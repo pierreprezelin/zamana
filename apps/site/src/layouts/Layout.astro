@@ -12,10 +12,12 @@ interface Props {
 	locale: Locale;
 	title: string;
 	description: string;
+	// The page path in each locale, the home page by default
+	paths?: Record<Locale, string>;
 }
 
-const { locale, title, description } = Astro.props;
-const canonicalUrl = getAbsoluteLocaleUrl(locale);
+const { locale, title, description, paths } = Astro.props;
+const canonicalUrl = getAbsoluteLocaleUrl(locale, paths?.[locale]);
 const isIndexed = indexedLocales.includes(locale);
 const hasAlternates = indexedLocales.length > 1;
 ---
@@ -43,15 +45,20 @@ const hasAlternates = indexedLocales.length > 1;
 		{!isIndexed && <meta name="robots" content="noindex" />}
 		{
 			hasAlternates &&
-				[...indexedLocales, "x-default"].map((hreflang) => (
-					<link
-						rel="alternate"
-						hreflang={hreflang}
-						href={getAbsoluteLocaleUrl(
-							hreflang === "x-default" ? defaultLocale : hreflang,
-						)}
-					/>
-				))
+				[...indexedLocales, "x-default"].map((hreflang) => {
+					const alternateLocale =
+						hreflang === "x-default" ? defaultLocale : (hreflang as Locale);
+					return (
+						<link
+							rel="alternate"
+							hreflang={hreflang}
+							href={getAbsoluteLocaleUrl(
+								alternateLocale,
+								paths?.[alternateLocale],
+							)}
+						/>
+					);
+				})
 		}
 		<meta property="og:type" content="website" />
 		<meta property="og:site_name" content="Zamana" />

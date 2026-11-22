@@ -1,0 +1,52 @@
+---
+import Footer from "@/components/Footer.astro";
+import Header from "@/components/Header.astro";
+import { getDictionary, type Locale, privacyPaths } from "@/i18n";
+import Layout from "@/layouts/Layout.astro";
+
+interface Props {
+	frontmatter: {
+		locale: Locale;
+		title: string;
+		description: string;
+		updatedAt: string;
+	};
+}
+
+const { locale, title, description, updatedAt } = Astro.props.frontmatter;
+const t = getDictionary(locale);
+// "2026-11-22" is read as UTC midnight
+const updatedOn = new Date(updatedAt).toLocaleDateString(locale, {
+	dateStyle: "long",
+	timeZone: "UTC",
+});
+---
+
+<Layout
+	locale={locale}
+	title={`${title} · Zamana`}
+	description={description}
+	paths={privacyPaths}
+>
+	<a
+		href="#main"
+		class="sr-only rounded-lg bg-primary px-4 py-2 font-semibold text-primary-foreground focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50"
+	>
+		{t.skipToContent}
+	</a>
+	<Header t={t} locale={locale} paths={privacyPaths} />
+	<main id="main" class="mx-auto max-w-2xl px-4 pt-32 pb-24">
+		<h1
+			class="font-heading text-4xl leading-tight font-semibold text-balance sm:text-5xl"
+		>
+			{title}
+		</h1>
+		<p class="mt-4 text-muted-foreground">{t.legal.updatedOn} {updatedOn}</p>
+		<div
+			class="mt-12 flex flex-col gap-4 text-lg text-pretty [&_a]:text-primary [&_a]:underline [&_a]:underline-offset-4 [&_h2]:mt-8 [&_h2]:font-heading [&_h2]:text-2xl [&_h2]:font-semibold [&_li]:mt-2 [&_ul]:list-disc [&_ul]:pl-6"
+		>
+			<slot />
+		</div>
+	</main>
+	<Footer t={t} locale={locale} />
+</Layout>
