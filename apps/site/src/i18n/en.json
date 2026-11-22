@@ -89,6 +89,11 @@
 		"comingSoon": "Coming soon"
 	},
 	"footer": {
-		"rights": "All rights reserved."
+		"rights": "All rights reserved.",
+		"privacy": "Privacy",
+		"contact": "Contact"
+	},
+	"legal": {
+		"updatedOn": "Last updated on"
 	}
 }

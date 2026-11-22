@@ -13,3 +13,8 @@ export const defaultLocale: Locale = "fr";
 export const indexedLocales: Locale[] = ["fr"];
 
 export const getDictionary = (locale: Locale) => dictionaries[locale];
+
+export const privacyPaths: Record<Locale, string> = {
+	fr: "confidentialite",
+	en: "privacy",
+};

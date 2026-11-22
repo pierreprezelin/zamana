@@ -12,6 +12,7 @@ interface Props {
 }
 
 const { t, locale } = Astro.props;
+const homeUrl = getRelativeLocaleUrl(locale);
 // const otherLocale: Locale = locale === "fr" ? "en" : "fr";
 const focusRing =
 	"outline-none focus-visible:ring-3 focus-visible:ring-outline/50";
@@ -27,12 +28,12 @@ const iconButtonClass = `flex size-9 items-center justify-center rounded-full tr
 			<nav aria-label={t.nav.label} class="ml-auto max-[359px]:hidden md:ml-0">
 				<ul class="flex items-center">
 					<li>
-						<a href={`#${t.anchors.features}`} class={linkClass}>
+						<a href={`${homeUrl}#${t.anchors.features}`} class={linkClass}>
 							{t.nav.features}
 						</a>
 					</li>
 					<li>
-						<a href={`#${t.anchors.download}`} class={linkClass}>
+						<a href={`${homeUrl}#${t.anchors.download}`} class={linkClass}>
 							{t.nav.download}
 						</a>
 					</li>
@@ -52,7 +53,7 @@ const iconButtonClass = `flex size-9 items-center justify-center rounded-full tr
 				</ul>
 			</nav>
 			<a
-				href={getRelativeLocaleUrl(locale)}
+				href={homeUrl}
 				aria-label={t.nav.home}
 				class:list={[
 					"-order-1 flex items-center gap-3 rounded-full md:order-none md:justify-self-center",
