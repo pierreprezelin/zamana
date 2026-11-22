@@ -42,7 +42,7 @@
 			},
 			"weather": {
 				"title": "Alertes météo",
-				"description": "Rentrez vos plantes à l’intérieur si le temps est anormalement froid ou chaud. Seule votre position approximative (à 10 km près) est envoyée au service météo Open-Meteo."
+				"description": "Rentrez vos plantes à l’intérieur si le temps est anormalement froid ou chaud."
 			},
 			"knowledge": {
 				"title": "Encyclopédie et conseils",

@@ -42,7 +42,7 @@
 			},
 			"weather": {
 				"title": "Weather alerts",
-				"description": "Bring your plants indoors when the weather gets unusually cold or hot. Only your approximate location (within about 10 km) is sent to the Open-Meteo weather service."
+				"description": "Bring your plants indoors when the weather gets unusually cold or hot."
 			},
 			"knowledge": {
 				"title": "Encyclopedia and tips",
