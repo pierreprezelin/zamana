@@ -9,8 +9,7 @@ export type Locale = keyof typeof dictionaries;
 
 export const defaultLocale: Locale = "fr";
 
-// English is built but not linked nor indexed until the app screenshots exist in English
-export const indexedLocales: Locale[] = ["fr"];
+export const indexedLocales: Locale[] = ["fr", "en"];
 
 export const getDictionary = (locale: Locale) => dictionaries[locale];
 
