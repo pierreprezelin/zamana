@@ -1,5 +1,6 @@
 import { useIsFocused } from "expo-router";
 import { useMemo } from "react";
+import { View } from "react-native";
 import { ScreenPlaceholder } from "@/components/ScreenPlaceholder";
 import { useTabBarOffset } from "@/components/TabBar";
 import { ResourcesPreview } from "@/features/articles/components/ResourcesPreview";
@@ -10,12 +11,15 @@ import { useCareStore } from "@/features/care/useCareStore";
 import { RemindersBanner } from "@/features/notifications/components/RemindersBanner";
 import { GardenPreview } from "@/features/plants/components/GardenPreview";
 import { NewPlantCard } from "@/features/plants/components/NewPlantCard";
+import { useNewPlantToFeature } from "@/features/plants/useNewPlantToFeature";
 import { usePlantStore } from "@/features/plants/usePlantStore";
 import { TipCard } from "@/features/tips/components/TipCard";
+import { useTodayTip } from "@/features/tips/useTodayTip";
 import { greeting } from "@/features/user/greeting";
 import { useUserStore } from "@/features/user/useUserStore";
 import { WeatherAlertBanner } from "@/features/weather/components/WeatherAlertBanner";
 import { WeatherPlaceBanner } from "@/features/weather/components/WeatherPlaceBanner";
+import { useWeatherAlert } from "@/features/weather/useWeatherAlert";
 import { toISODate } from "@/utils/dates";
 import { pluralForm, t } from "@/utils/i18n";
 
@@ -26,10 +30,13 @@ export default function TodayScreen() {
 	const logs = useCareStore((state) => state.logs);
 	const climate = useCarePreferencesStore((state) => state.climate);
 	const tabBarOffset = useTabBarOffset();
+	const today = toISODate(new Date());
+	const weatherAlert = useWeatherAlert();
+	const tip = useTodayTip(today, climate);
+	const newPlant = useNewPlantToFeature();
 	// Re-renders on focus so the greeting and the tasks follow the time of day
 	useIsFocused();
 
-	const today = toISODate(new Date());
 	const groups = useMemo(
 		() => todayTasks({ plants, cares, logs, today, climate }),
 		[plants, cares, logs, today, climate],
@@ -48,11 +55,14 @@ export default function TodayScreen() {
 			scrollBottomInset={tabBarOffset + 16}
 		>
 			<WeatherPlaceBanner />
-			<WeatherAlertBanner>
-				<TipCard today={today} climate={climate} />
-			</WeatherAlertBanner>
+			{(weatherAlert || tip || newPlant) && (
+				<View className="gap-2">
+					{weatherAlert && <WeatherAlertBanner alert={weatherAlert} />}
+					{tip && <TipCard tip={tip} today={today} />}
+					{newPlant && <NewPlantCard plant={newPlant} />}
+				</View>
+			)}
 			{plants.length > 0 && <RemindersBanner />}
-			<NewPlantCard />
 			{plants.length > 0 && <TodayTasks groups={groups} today={today} />}
 			<GardenPreview />
 			<ResourcesPreview />

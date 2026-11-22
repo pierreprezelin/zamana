@@ -1,28 +1,13 @@
-import { useEffect } from "react";
 import { View } from "react-native";
 import { Ionicons } from "@/components/ionicons";
 import Pressable from "@/components/Pressable";
 import Text from "@/components/Text";
-import type { Climate } from "@/features/care/careTypes";
-import { useTipStore, visibleTip } from "@/features/tips/useTipStore";
+import type { Tip } from "@/features/tips/tips";
+import { useTipStore } from "@/features/tips/useTipStore";
 import { t } from "@/utils/i18n";
 
-type TipCardProps = { today: string; climate: Climate };
-
-export function TipCard({ today, climate }: TipCardProps) {
-	const enabled = useTipStore((state) => state.enabled);
-	const todayTip = useTipStore((state) => state.todayTip);
-	const dismissedOn = useTipStore((state) => state.dismissedOn);
-	const pickTodayTip = useTipStore((state) => state.pickTodayTip);
+export function TipCard({ tip, today }: { tip: Tip; today: string }) {
 	const dismiss = useTipStore((state) => state.dismiss);
-
-	// Also runs after a reset from the settings, which clears today's tip
-	useEffect(() => {
-		if (enabled && todayTip?.date !== today) pickTodayTip(today, climate);
-	}, [enabled, todayTip, today, climate, pickTodayTip]);
-
-	const tip = visibleTip({ enabled, todayTip, dismissedOn }, today);
-	if (!tip) return null;
 	const title = t(`tips.items.${tip.id}.title`);
 	const body = t(`tips.items.${tip.id}.body`);
 

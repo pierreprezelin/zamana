@@ -1,19 +1,13 @@
 import { router } from "expo-router";
-import type { ReactNode } from "react";
 import { View } from "react-native";
 import { Ionicons, type IoniconsIconName } from "@/components/ionicons";
 import Pressable from "@/components/Pressable";
 import Text from "@/components/Text";
 import { displayName } from "@/features/plants/plantLabels";
-import { usePlantStore } from "@/features/plants/usePlantStore";
 import { OpenMeteoCredit } from "@/features/weather/components/OpenMeteoCredit";
-import { useWeatherStore } from "@/features/weather/useWeatherStore";
+import type { WeatherAlert } from "@/features/weather/useWeatherAlert";
 import { placeShortName, riskParts } from "@/features/weather/weatherLabels";
-import { weatherWindow } from "@/features/weather/weatherNotifications";
-import {
-	type WeatherRiskKind,
-	weatherRisks,
-} from "@/features/weather/weatherRisks";
+import type { WeatherRiskKind } from "@/features/weather/weatherRisks";
 import { toISODate } from "@/utils/dates";
 import { t } from "@/utils/i18n";
 
@@ -24,23 +18,12 @@ const RISK_ICONS: Record<WeatherRiskKind, IoniconsIconName> = {
 	wind: "flag-outline",
 };
 
-// The risks of the next 24 hours, shown as long as one is forecast.
-// The children follow the season question as closely as it follows the alert.
-export function WeatherAlertBanner({ children }: { children?: ReactNode }) {
-	const plants = usePlantStore((state) => state.plants);
-	const alertsEnabled = useWeatherStore((state) => state.alertsEnabled);
-	const forecast = useWeatherStore((state) => state.forecast);
-	const place = useWeatherStore((state) => state.place);
-
-	if (!alertsEnabled || !forecast || !place) return children;
-	const now = new Date();
-	const risks = weatherRisks({
-		hours: forecast.hours,
-		plants,
-		...weatherWindow(now),
-	});
-	if (!risks.length) return children;
-	const today = toISODate(now);
+export function WeatherAlertBanner({
+	alert: { place, risks },
+}: {
+	alert: WeatherAlert;
+}) {
+	const today = toISODate(new Date());
 	const alertedPlants = [
 		...new Map(
 			risks.flatMap((risk) => risk.plants).map((plant) => [plant.id, plant]),
@@ -101,7 +84,6 @@ export function WeatherAlertBanner({ children }: { children?: ReactNode }) {
 					</Pressable>
 				))}
 			</View>
-			{children}
 		</View>
 	);
 }

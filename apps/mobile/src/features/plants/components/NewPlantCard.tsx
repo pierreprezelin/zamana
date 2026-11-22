@@ -2,19 +2,12 @@ import { View } from "react-native";
 import { Ionicons } from "@/components/ionicons";
 import Pressable from "@/components/Pressable";
 import Text from "@/components/Text";
-import { newPlantToFeature } from "@/features/plants/newPlant";
 import { displayName } from "@/features/plants/plantLabels";
+import type { Plant } from "@/features/plants/plantSchema";
 import { useNewPlantStore } from "@/features/plants/useNewPlantStore";
-import { usePlantStore } from "@/features/plants/usePlantStore";
 import { t } from "@/utils/i18n";
 
-export function NewPlantCard() {
-	const plants = usePlantStore((state) => state.plants);
-	const enabled = useNewPlantStore((state) => state.enabled);
-	const dismissedUpTo = useNewPlantStore((state) => state.dismissedUpTo);
-
-	const plant = newPlantToFeature({ plants, dismissedUpTo, now: new Date() });
-	if (!enabled || !plant) return null;
+export function NewPlantCard({ plant }: { plant: Plant }) {
 	const title = t("plant.newPlantCard.title");
 	const description = t("plant.newPlantCard.description", {
 		name: displayName(plant),
