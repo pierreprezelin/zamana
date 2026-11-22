@@ -19,25 +19,35 @@ export default function SettingsScreen() {
 		>
 			<ThemeSelector />
 			<View>
+				<UserNameSetting />
+				<Link href="/settings/notifications" asChild>
+					<SettingsRow
+						icon="notifications-outline"
+						title={t("screens.notifications")}
+						value={t("settings.summaries.notifications")}
+					/>
+				</Link>
 				<Link href="/settings/location" asChild>
-					<SettingsRow icon="earth-outline" title={t("screens.location")} />
+					<SettingsRow
+						icon="earth-outline"
+						title={t("screens.location")}
+						value={t("settings.summaries.location")}
+					/>
 				</Link>
 				<Link href="/settings/home" asChild>
-					<SettingsRow icon="home-outline" title={t("screens.home")} />
+					<SettingsRow
+						icon="home-outline"
+						title={t("screens.home")}
+						value={t("settings.summaries.home")}
+					/>
 				</Link>
 				<Link href="/settings/ergonomics" asChild>
 					<SettingsRow
 						icon="hand-left-outline"
 						title={t("screens.ergonomics")}
+						value={t("settings.summaries.ergonomics")}
 					/>
 				</Link>
-				<Link href="/settings/notifications" asChild>
-					<SettingsRow
-						icon="notifications-outline"
-						title={t("screens.notifications")}
-					/>
-				</Link>
-				<UserNameSetting />
 				<SettingsRow
 					icon="refresh-outline"
 					title={t("settings.restartOnboarding")}
