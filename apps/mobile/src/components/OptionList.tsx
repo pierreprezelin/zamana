@@ -22,7 +22,7 @@ export default function OptionList<T extends string>({
 		<View
 			accessibilityRole={multiple ? undefined : "radiogroup"}
 			// Aligns the labels with the sheet title despite the row padding
-			className="-mx-3 gap-1"
+			className="-mx-2 gap-1"
 		>
 			{options.map((option) => {
 				const checked = selected.includes(option.value);
@@ -34,7 +34,7 @@ export default function OptionList<T extends string>({
 						pressedClassName=""
 						pressedOpacity={0.5}
 						onPress={() => onPress(option.value)}
-						className={`h-11 flex-row items-center justify-between rounded-xl px-3 ${checked ? "bg-primary-tint" : ""}`}
+						className={`h-11 flex-row items-center justify-between rounded-xl px-2 ${checked ? "bg-primary-tint" : ""}`}
 					>
 						<Text
 							className={
