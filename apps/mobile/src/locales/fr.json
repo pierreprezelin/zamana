@@ -51,6 +51,10 @@
 		"loadFailed": "Les articles n’ont pas pu être chargés. Vérifiez votre connexion.",
 		"retry": "Réessayer"
 	},
+	"resources": {
+		"title": "Ressources",
+		"seeMore": "En savoir plus"
+	},
 	"tabs": {
 		"add": "Ajouter",
 		"encyclopedia": "Encyclopédie",

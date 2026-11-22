@@ -51,6 +51,10 @@
 		"loadFailed": "The articles couldn’t be loaded. Check your connection.",
 		"retry": "Try again"
 	},
+	"resources": {
+		"title": "Resources",
+		"seeMore": "Learn more"
+	},
 	"tabs": {
 		"add": "Add",
 		"encyclopedia": "Encyclopedia",

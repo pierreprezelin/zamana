@@ -2,6 +2,7 @@ import { useIsFocused } from "expo-router";
 import { useMemo } from "react";
 import { ScreenPlaceholder } from "@/components/ScreenPlaceholder";
 import { useTabBarOffset } from "@/components/TabBar";
+import { ResourcesPreview } from "@/features/articles/components/ResourcesPreview";
 import { TodayTasks } from "@/features/care/components/TodayTasks";
 import { todayTasks } from "@/features/care/todayTasks";
 import { useCarePreferencesStore } from "@/features/care/useCarePreferencesStore";
@@ -52,6 +53,7 @@ export default function TodayScreen() {
 			{plants.length > 0 && <RemindersBanner />}
 			{plants.length > 0 && <TodayTasks groups={groups} today={today} />}
 			<GardenPreview />
+			<ResourcesPreview />
 		</ScreenPlaceholder>
 	);
 }
