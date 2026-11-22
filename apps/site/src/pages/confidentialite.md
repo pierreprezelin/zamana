@@ -9,7 +9,7 @@ updatedAt: 2026-11-22
 
 Zamana est une application gratuite, sans publicité et **sans compte**. Vous n’avez rien à créer ni à renseigner pour l’utiliser, et aucune donnée n’est vendue ni utilisée à des fins publicitaires.
 
-Le responsable du traitement est Pierre Prezelin, joignable à [contact@pierreprezelin.com](mailto:contact@pierreprezelin.com).
+Le responsable du traitement est Pierre Prézelin, joignable à [contact@pierreprezelin.com](mailto:contact@pierreprezelin.com).
 
 ## Ce qui reste sur votre téléphone
 
@@ -23,7 +23,8 @@ Quelques données quittent votre téléphone pour faire fonctionner l’applicat
 
 - **Open-Meteo**, pour les alertes météo : la ville que vous recherchez dans les réglages et, seulement si vous avez des plantes d’extérieur, votre position arrondie à environ 10 km et votre fuseau horaire pour les prévisions. Voir la [politique de confidentialité d’Open-Meteo](https://open-meteo.com/en/terms#privacy).
 - **Le service de localisation de votre téléphone** (Apple ou Google), si vous choisissez « Ma position » : votre position arrondie, pour afficher le nom de la ville correspondante.
-- **L’API de Zamana**, hébergée par Vercel, pour vérifier que votre version de l’application est à jour : votre adresse IP et les informations techniques de la connexion. L’application compare elle-même sa version au minimum requis. Vercel conserve ces journaux techniques quelques jours au plus. Voir la [politique de confidentialité de Vercel](https://vercel.com/legal/privacy-policy).
+- **L’API de Zamana**, hébergée par Vercel, pour vérifier que votre version de l’application est à jour : votre adresse IP et les informations techniques de la connexion. L’application compare elle-même sa version au minimum requis. Vercel conserve ces journaux techniques une heure. Voir la [politique de confidentialité de Vercel](https://vercel.com/legal/privacy-policy).
+- **Le site zamana.garden**, hébergé par Cloudflare, pour télécharger les articles d’aide : votre adresse IP et la langue de l’application. Voir la [politique de confidentialité de Cloudflare](https://www.cloudflare.com/privacypolicy/).
 - **Expo Observe**, pour mesurer les performances et corriger les bugs : temps de chargement, erreurs et plantages, état de la batterie et du réseau au lancement, modèle du téléphone, versions du système et de l’application, ainsi qu’un identifiant d’installation aléatoire. Il n’est relié ni à votre nom ni à vos plantes. Ces données sont conservées 90 jours. Voir la [politique de confidentialité d’Expo](https://expo.dev/privacy).
 
 Comme pour tout échange sur internet, ces services voient aussi l’adresse IP de votre connexion.

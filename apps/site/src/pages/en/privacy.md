@@ -9,7 +9,7 @@ updatedAt: 2026-11-22
 
 Zamana is a free app, with no ads and **no account**. There's nothing to sign up for or fill in to use it, and no data is sold or used for advertising.
 
-The data controller is Pierre Prezelin, who you can reach at [contact@pierreprezelin.com](mailto:contact@pierreprezelin.com).
+The data controller is Pierre Prézelin, who you can reach at [contact@pierreprezelin.com](mailto:contact@pierreprezelin.com).
 
 ## What stays on your phone
 
@@ -23,7 +23,8 @@ A few pieces of data leave your phone to make the app work:
 
 - **Open-Meteo**, for weather alerts: the city you search for in the settings and, only if you have outdoor plants, your location rounded to about 10 km and your time zone for the forecast. See [Open-Meteo's privacy policy](https://open-meteo.com/en/terms#privacy).
 - **Your phone's location service** (Apple or Google), if you choose "My location": your rounded location, to show the name of the matching city.
-- **The Zamana API**, hosted by Vercel, to check that your version of the app is up to date: your IP address and the technical details of the connection. The app compares its version with the required minimum itself. Vercel keeps these technical logs for a few days at most. See [Vercel's privacy policy](https://vercel.com/legal/privacy-policy).
+- **The Zamana API**, hosted by Vercel, to check that your version of the app is up to date: your IP address and the technical details of the connection. The app compares its version with the required minimum itself. Vercel keeps these technical logs for one hour. See [Vercel's privacy policy](https://vercel.com/legal/privacy-policy).
+- **The zamana.garden website**, hosted by Cloudflare, to download the help articles: your IP address and the app language. See [Cloudflare's privacy policy](https://www.cloudflare.com/privacypolicy/).
 - **Expo Observe**, to measure performance and fix bugs: loading times, errors and crashes, battery and network state at launch, phone model, system and app versions, and a random installation ID. It isn't linked to your name or your plants. This data is kept for 90 days. See [Expo's privacy policy](https://expo.dev/privacy).
 
 As with any exchange over the internet, these services also see the IP address of your connection.
