@@ -92,7 +92,7 @@ export default function GardenScreen() {
 			showSettings
 		>
 			{hasPlants ? (
-				<>
+				<View className="flex-1 gap-4">
 					<View className="gap-4">
 						<SearchField
 							value={query}
@@ -156,7 +156,7 @@ export default function GardenScreen() {
 							) : undefined
 						}
 					/>
-				</>
+				</View>
 			) : (
 				<View
 					className="flex-1 justify-center"

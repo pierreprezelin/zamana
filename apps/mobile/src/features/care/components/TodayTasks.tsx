@@ -15,7 +15,7 @@ export function TodayTasks({ groups, today }: TodayTasksProps) {
 	if (!groups.length) return null;
 
 	return (
-		<View className="gap-4">
+		<View className="gap-3">
 			<Text className="font-recoleta text-2xl text-foreground">
 				{t("care.tasks.title")}
 			</Text>

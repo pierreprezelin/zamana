@@ -10,7 +10,7 @@ export function GardenPreview() {
 	const plants = useCurrentPlants();
 
 	return (
-		<View className="gap-4">
+		<View className="gap-3">
 			<View className="flex-row items-center justify-between">
 				<Text className="font-recoleta text-2xl text-foreground">
 					{t("garden.title")}

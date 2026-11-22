@@ -95,8 +95,8 @@ export default function PlantCareScreen() {
 					contentContainerClassName="gap-6 px-4 pt-3"
 					contentContainerStyle={{ paddingBottom: bottom + 16 }}
 				>
-					<View className="gap-4">
-						<Text className="font-recoleta text-2xl text-foreground">
+					<View className="gap-3">
+						<Text className="font-recoleta text-xl text-foreground">
 							{t("care.todo")}
 						</Text>
 						{due.length ? (
@@ -145,9 +145,9 @@ export default function PlantCareScreen() {
 						))}
 					</View>
 
-					<View className="gap-4">
+					<View className="gap-3">
 						<View className="flex-row items-center justify-between">
-							<Text className="font-recoleta text-2xl text-foreground">
+							<Text className="font-recoleta text-xl text-foreground">
 								{t("care.upcoming")}
 							</Text>
 							<Button
