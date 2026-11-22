@@ -27,31 +27,10 @@ I designed Zamana to cover my needs, but also to be useful to everyone. You'll f
 - 🖼️ A timeline with the photos you've taken of your plant to watch its evolution
 - 📚 Help articles about how to take care of your plants
 - 🎓 A pro-tip or fun fact about flora every day!
-- 📍 No account: your plants and photos stay on your phone. Only an approximate location (about 10 km) is sent to [Open-Meteo](https://open-meteo.com) for weather alerts, if you have outdoor plants, plus anonymous performance and crash reports (see the [privacy policy](https://zamana.garden/en/privacy))
-- 🌍 In English and French, following your phone's language or the one you pick in the app
+- 📍 No account: your plants and photos stay on your phone
 - 💎 No subscription, no paid tier, no ads
+- 🌍 Translated in English and French
 - 🍎 Available on Android and iOS
-
-## Roadmap
-
-You can see here what's planned for release and afterwards!
-
-### Core features on release
-
-✅ Adding your plants
-✅ Upcoming care tasks
-✅ Weather alerts (hot, cold, storm, wind)
-✅ Growth timeline with custom notes
-✅ Pro-tips and fun facts
-✅ Notifications
-✅ Translations
-✅ Dark theme
-
-### Upcoming features after initial release
-
-🚧 Searching for species
-🚧 Help articles
-🚧 More pro-tips, fun facts!
 
 ## Stack
 
@@ -62,6 +41,7 @@ You can see here what's planned for release and afterwards!
 - [TypeScript](https://www.typescriptlang.org/) with [tRPC](https://trpc.io/) for end-to-end type-safety
 - [SQLite](https://sqlite.org/) for the local database
 - [Open-Meteo](https://open-meteo.com) for weather forecasts and city search
+- [iNaturalist](https://www.inaturalist.org) for species search
 - [Bun](https://bun.com/) as package manager
 - [Vercel](https://vercel.com/) for hosting and deployments
 
