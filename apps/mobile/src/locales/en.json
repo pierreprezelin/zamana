@@ -14,7 +14,6 @@
 		"validate": "Done"
 	},
 	"screens": {
-		"article": "Article",
 		"editPlant": "Edit details",
 		"encyclopedia": "Encyclopedia",
 		"historyEntry": "History entry",
@@ -26,9 +25,31 @@
 		"settings": "Settings"
 	},
 	"placeholder": {
-		"article": "Article #{{id}}",
 		"result": "Result #{{id}}",
 		"addToGarden": "Add to my garden"
+	},
+	"articles": {
+		"count": {
+			"one": "{{amount}} article",
+			"other": "{{amount}} articles"
+		},
+		"searchPlaceholder": "Search for an article...",
+		"categoriesTitle": "Categories",
+		"categories": {
+			"basics": "The basics",
+			"watering": "Watering",
+			"light": "Light",
+			"seasons": "Seasons",
+			"propagation": "Propagation",
+			"health": "Plant health"
+		},
+		"noSearchResult": "No article matches your search",
+		"emptyCategory": "No article in this category yet",
+		"empty": "No articles yet.",
+		"categoryNotFound": "This category doesn’t exist",
+		"notFound": "This article is no longer available",
+		"loadFailed": "The articles couldn’t be loaded. Check your connection.",
+		"retry": "Try again"
 	},
 	"tabs": {
 		"add": "Add",

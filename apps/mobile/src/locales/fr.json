@@ -14,7 +14,6 @@
 		"validate": "Valider"
 	},
 	"screens": {
-		"article": "Article",
 		"editPlant": "Modifier les informations",
 		"encyclopedia": "Encyclopédie",
 		"historyEntry": "Entrée d'historique",
@@ -26,9 +25,31 @@
 		"settings": "Paramètres"
 	},
 	"placeholder": {
-		"article": "Article n° {{id}}",
 		"result": "Résultat n° {{id}}",
 		"addToGarden": "Ajouter à mon jardin"
+	},
+	"articles": {
+		"count": {
+			"one": "{{amount}} article",
+			"other": "{{amount}} articles"
+		},
+		"searchPlaceholder": "Rechercher un article...",
+		"categoriesTitle": "Catégories",
+		"categories": {
+			"basics": "Les bases",
+			"watering": "Arrosage",
+			"light": "Lumière",
+			"seasons": "Saisons",
+			"propagation": "Multiplication",
+			"health": "Santé"
+		},
+		"noSearchResult": "Aucun article ne correspond à votre recherche",
+		"emptyCategory": "Aucun article dans cette catégorie pour l’instant",
+		"empty": "Aucun article pour l’instant.",
+		"categoryNotFound": "Cette catégorie n’existe pas",
+		"notFound": "Cet article n’est plus disponible",
+		"loadFailed": "Les articles n’ont pas pu être chargés. Vérifiez votre connexion.",
+		"retry": "Réessayer"
 	},
 	"tabs": {
 		"add": "Ajouter",

@@ -149,10 +149,8 @@ function RootLayout() {
 							name="encyclopedia/[id]"
 							options={{ title: t("screens.encyclopedia") }}
 						/>
-						<Stack.Screen
-							name="tips/[id]"
-							options={{ title: t("screens.article") }}
-						/>
+						<Stack.Screen name="tips/[id]" options={{ title: "" }} />
+						<Stack.Screen name="tips/category/[id]" />
 					</Stack>
 					<ForceUpdateSheet />
 				</BottomSheetModalProvider>

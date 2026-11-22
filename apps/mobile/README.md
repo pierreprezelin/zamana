@@ -25,7 +25,7 @@ I designed Zamana to cover my needs, but also to be useful to everyone. You'll f
 - 💧 Watering reminders that follow the growing and rest seasons, wherever you live: northern or southern hemisphere, or the tropics
 - 🌡️ Notifications about incoming storms, strong winds, abnormally hot or cold temperatures, to bring your plants indoors
 - 🖼️ A timeline with the photos you've taken of your plant to watch its evolution
-- 📚 Help articles about how to take care of your plants (soon)
+- 📚 Help articles about how to take care of your plants
 - 🎓 A pro-tip or fun fact about flora every day!
 - 📍 No account: your plants and photos stay on your phone. Only an approximate location (about 10 km) is sent to [Open-Meteo](https://open-meteo.com) for weather alerts, if you have outdoor plants, plus anonymous performance and crash reports (see the [privacy policy](https://zamana.garden/en/privacy))
 - 🌍 In English and French, following your phone's language or the one you pick in the app
