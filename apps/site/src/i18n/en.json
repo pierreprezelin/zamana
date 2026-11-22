@@ -2,7 +2,7 @@
 	"meta": {
 		"ogLocale": "en_US",
 		"title": "Zamana · Your plant care reminder",
-		"description": "Zamana reminds you when to water, feed or repot your plants, and warns you about frost and heatwaves. Free, no ads, and your data stays on your phone."
+		"description": "Zamana reminds you when to water, feed or repot your plants, and warns you about frost and heatwaves. Free, no ads and no account: your plants stay on your phone."
 	},
 	"skipToContent": "Skip to content",
 	"nav": {
@@ -20,7 +20,7 @@
 	},
 	"promises": {
 		"free": "Free, no ads, no subscription",
-		"local": "Your data stays on your phone"
+		"local": "No account, your plants stay on your phone"
 	},
 	"hero": {
 		"eyebrow": "Indoor and outdoor plants",
@@ -55,6 +55,8 @@
 		"soon": "Soon",
 		"items": {
 			"timeline": "A photo timeline to watch them grow",
+			"seasons": "Watering that follows the seasons, wherever you live",
+			"dailyTip": "A tip or fun fact every day",
 			"species": "Search by species",
 			"platforms": "On Android and iOS",
 			"darkTheme": "Dark theme",

@@ -21,22 +21,36 @@ interface Props {
 const { t } = Astro.props;
 
 const features = [
-	{ id: "garden", icon: "ion:leaf", tone: "bg-primary-tint text-primary" },
+	{
+		id: "garden",
+		icon: "ion:leaf",
+		tone: "bg-primary-tint text-primary",
+		isUpcoming: false,
+	},
 	{
 		id: "reminders",
 		icon: "ion:notifications",
 		tone: "bg-care-water-tint text-care-water",
+		isUpcoming: false,
 	},
-	{ id: "weather", icon: "ion:thermometer", tone: "bg-error-tint text-error" },
+	{
+		id: "weather",
+		icon: "ion:thermometer",
+		tone: "bg-error-tint text-error",
+		isUpcoming: false,
+	},
 	{
 		id: "knowledge",
 		icon: "ion:book",
 		tone: "bg-care-prune-tint text-care-prune",
+		isUpcoming: true,
 	},
 ] as const;
 
 const moreFeatures = [
 	{ id: "timeline", icon: "ion:images", isUpcoming: false },
+	{ id: "seasons", icon: "ion:water", isUpcoming: false },
+	{ id: "dailyTip", icon: "ion:bulb", isUpcoming: false },
 	{ id: "species", icon: "ion:search", isUpcoming: true },
 	{ id: "platforms", icon: "ion:phone-portrait", isUpcoming: false },
 	{ id: "darkTheme", icon: "ion:contrast", isUpcoming: false },
@@ -45,18 +59,26 @@ const moreFeatures = [
 ] as const;
 
 const showcases = [
-	{ id: "care", screen: careScreen, illustration: "runner", isFlipped: true },
+	{
+		id: "care",
+		screen: careScreen,
+		illustration: "runner",
+		isFlipped: true,
+		isUpcoming: false,
+	},
 	{
 		id: "garden",
 		screen: gardenScreen,
 		illustration: "chaoticGood",
 		isFlipped: false,
+		isUpcoming: false,
 	},
 	{
 		id: "encyclopedia",
 		screen: encyclopediaScreen,
 		illustration: "growth",
 		isFlipped: false,
+		isUpcoming: true,
 	},
 ] as const;
 ---
@@ -79,7 +101,7 @@ const showcases = [
 			</div>
 			<ul class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
 				{
-					features.map(({ id, icon, tone }) => (
+					features.map(({ id, icon, tone, isUpcoming }) => (
 						<li>
 							<Card class="h-full rounded-2xl [--card-spacing:--spacing(6)]">
 								<CardHeader class="gap-4">
@@ -91,8 +113,13 @@ const showcases = [
 									>
 										<Icon name={icon} class="size-6" aria-hidden="true" />
 									</span>
-									<CardTitle class="font-semibold">
+									<CardTitle class="flex flex-wrap items-center gap-2 font-semibold">
 										<h3>{t.features.items[id].title}</h3>
+										{isUpcoming && (
+											<Badge variant="secondary" size="sm" class="font-semibold">
+												{t.more.soon}
+											</Badge>
+										)}
 									</CardTitle>
 									<CardDescription>
 										{t.features.items[id].description}
@@ -123,7 +150,8 @@ const showcases = [
 			</div>
 		</div>
 		{
-			showcases.map(({ id, screen, illustration, isFlipped }, index) => (
+			showcases.map(
+				({ id, screen, illustration, isFlipped, isUpcoming }, index) => (
 				<div class="grid items-center gap-12 lg:grid-cols-2">
 					<div
 						class:list={[
@@ -148,12 +176,19 @@ const showcases = [
 						/>
 					</div>
 					<div class="flex flex-col items-start gap-4">
-						<p
-							aria-hidden="true"
-							class="font-heading text-7xl leading-none font-semibold text-transparent [-webkit-text-stroke:2px_var(--color-primary)]"
-						>
-							{String(index + 1).padStart(2, "0")}
-						</p>
+						<div class="flex items-center gap-4">
+							<p
+								aria-hidden="true"
+								class="font-heading text-7xl leading-none font-semibold text-transparent [-webkit-text-stroke:2px_var(--color-primary)]"
+							>
+								{String(index + 1).padStart(2, "0")}
+							</p>
+							{isUpcoming && (
+								<Badge variant="secondary" class="font-semibold">
+									{t.more.soon}
+								</Badge>
+							)}
+						</div>
 						<h3 class="font-heading text-3xl leading-tight font-semibold text-balance sm:text-4xl">
 							{t.showcases[id].title}
 						</h3>
@@ -162,7 +197,8 @@ const showcases = [
 						</p>
 					</div>
 				</div>
-			))
+				),
+			)
 		}
 	</div>
 </section>

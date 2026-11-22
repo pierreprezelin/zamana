@@ -2,7 +2,7 @@
 	"meta": {
 		"ogLocale": "fr_FR",
 		"title": "Zamana · Le pense-bête de vos plantes",
-		"description": "Zamana vous rappelle quand arroser, nourrir ou rempoter vos plantes, et vous prévient en cas de gel ou de canicule. Gratuit, sans pub, et vos données restent sur votre téléphone."
+		"description": "Zamana vous rappelle quand arroser, nourrir ou rempoter vos plantes, et vous prévient en cas de gel ou de canicule. Gratuit, sans pub et sans compte : vos plantes restent sur votre téléphone."
 	},
 	"skipToContent": "Aller au contenu",
 	"nav": {
@@ -20,7 +20,7 @@
 	},
 	"promises": {
 		"free": "Gratuit, sans pub ni abonnement",
-		"local": "Vos données restent sur votre téléphone"
+		"local": "Sans compte, vos plantes restent sur votre téléphone"
 	},
 	"hero": {
 		"eyebrow": "Plantes d’intérieur et d’extérieur",
@@ -55,6 +55,8 @@
 		"soon": "Bientôt",
 		"items": {
 			"timeline": "Une frise de photos pour suivre leur croissance",
+			"seasons": "Un arrosage qui suit les saisons, où que vous viviez",
+			"dailyTip": "Une astuce ou une anecdote chaque jour",
 			"species": "Recherche par espèce",
 			"platforms": "Disponible sur Android et iOS",
 			"darkTheme": "Thème sombre",
