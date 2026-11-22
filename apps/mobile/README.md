@@ -26,8 +26,8 @@ I designed Zamana to cover my needs, but also to be useful to everyone. You'll f
 - 🌡️ Notifications about incoming storms, strong winds, abnormally hot or cold temperatures, to bring your plants indoors
 - 🖼️ A timeline with the photos you've taken of your plant to watch its evolution
 - 📚 Help articles about how to take care of your plants
-- 🎓 Pro-tips and fun facts about flora!
-- 📍 Everything stored locally on your phone: only an approximate location (about 10 km) is sent to [Open-Meteo](https://open-meteo.com) for weather alerts, and only if you have outdoor plants
+- 🎓 A pro-tip or fun fact about flora every day!
+- 📍 No account: your plants and photos stay on your phone. Only an approximate location (about 10 km) is sent to [Open-Meteo](https://open-meteo.com) for weather alerts, if you have outdoor plants, plus anonymous performance and crash reports (see the [privacy policy](https://zamana.garden/en/privacy))
 - 🌍 Translated into English and French (for now)
 - 💎 No subscription, no paid tier, no ads
 - 🍎 Available on Android and iOS
@@ -51,7 +51,7 @@ You can see here what's planned for release and afterwards!
 
 🚧 Searching for species
 🚧 Help articles
-🚧 More pro-tips and fun facts!
+🚧 More pro-tips, fun facts!
 
 ## Stack
 
