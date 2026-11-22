@@ -61,9 +61,10 @@ const iconButtonClass = `flex size-9 items-center justify-center rounded-full tr
 					hreflang={otherLocale}
 					lang={otherLocale}
 					aria-label={t.nav.otherLocaleLabel}
-					class:list={[iconButtonClass, "text-sm font-semibold uppercase"]}
+					title={t.nav.otherLocaleLabel}
+					class={iconButtonClass}
 				>
-					{otherLocale}
+					<Icon name="ion:language" class="size-5" aria-hidden="true" />
 				</a>
 				<button
 					type="button"

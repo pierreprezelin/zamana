@@ -5,7 +5,6 @@ import encyclopediaScreen from "@/assets/screens/encyclopedia.png";
 import gardenScreen from "@/assets/screens/garden.png";
 import Illustration from "@/components/Illustration.astro";
 import PhoneMockup from "@/components/PhoneMockup.astro";
-import { Badge } from "@/components/starwind/badge";
 import {
 	Card,
 	CardDescription,
@@ -25,37 +24,33 @@ const features = [
 		id: "garden",
 		icon: "ion:leaf",
 		tone: "bg-primary-tint text-primary",
-		isUpcoming: false,
 	},
 	{
 		id: "reminders",
 		icon: "ion:notifications",
 		tone: "bg-care-water-tint text-care-water",
-		isUpcoming: false,
 	},
 	{
 		id: "weather",
 		icon: "ion:thermometer",
 		tone: "bg-error-tint text-error",
-		isUpcoming: false,
 	},
 	{
 		id: "knowledge",
 		icon: "ion:book",
 		tone: "bg-care-prune-tint text-care-prune",
-		isUpcoming: true,
 	},
 ] as const;
 
 const moreFeatures = [
-	{ id: "timeline", icon: "ion:images", isUpcoming: false },
-	{ id: "seasons", icon: "ion:water", isUpcoming: false },
-	{ id: "dailyTip", icon: "ion:bulb", isUpcoming: false },
-	{ id: "species", icon: "ion:search", isUpcoming: true },
-	{ id: "platforms", icon: "ion:phone-portrait", isUpcoming: false },
-	{ id: "darkTheme", icon: "ion:contrast", isUpcoming: false },
-	{ id: "languages", icon: "ion:language", isUpcoming: false },
-	{ id: "openSource", icon: "ion:code-slash", isUpcoming: false },
+	{ id: "timeline", icon: "ion:images" },
+	{ id: "seasons", icon: "ion:water" },
+	{ id: "dailyTip", icon: "ion:bulb" },
+	{ id: "species", icon: "ion:search" },
+	{ id: "platforms", icon: "ion:phone-portrait" },
+	{ id: "darkTheme", icon: "ion:contrast" },
+	{ id: "languages", icon: "ion:language" },
+	{ id: "openSource", icon: "ion:code-slash" },
 ] as const;
 
 const showcases = [
@@ -64,21 +59,18 @@ const showcases = [
 		screen: careScreen,
 		illustration: "runner",
 		isFlipped: true,
-		isUpcoming: false,
 	},
 	{
 		id: "garden",
 		screen: gardenScreen,
 		illustration: "chaoticGood",
 		isFlipped: false,
-		isUpcoming: false,
 	},
 	{
 		id: "encyclopedia",
 		screen: encyclopediaScreen,
 		illustration: "growth",
 		isFlipped: false,
-		isUpcoming: true,
 	},
 ] as const;
 ---
@@ -101,25 +93,18 @@ const showcases = [
 			</div>
 			<ul class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
 				{
-					features.map(({ id, icon, tone, isUpcoming }) => (
+					features.map(({ id, icon, tone }) => (
 						<li>
 							<Card class="h-full rounded-2xl [--card-spacing:--spacing(6)]">
 								<CardHeader class="gap-4">
-									<div class="flex items-start justify-between gap-2">
-										<span
-											class:list={[
-												"flex size-12 items-center justify-center rounded-xl",
-												tone,
-											]}
-										>
-											<Icon name={icon} class="size-6" aria-hidden="true" />
-										</span>
-										{isUpcoming && (
-											<Badge variant="secondary" size="sm" class="font-semibold">
-												{t.more.soon}
-											</Badge>
-										)}
-									</div>
+									<span
+										class:list={[
+											"flex size-12 items-center justify-center rounded-xl",
+											tone,
+										]}
+									>
+										<Icon name={icon} class="size-6" aria-hidden="true" />
+									</span>
 									<CardTitle class="font-semibold">
 										<h3>{t.features.items[id].title}</h3>
 									</CardTitle>
@@ -136,15 +121,10 @@ const showcases = [
 				<h3 class="font-heading text-2xl leading-tight font-semibold">{t.more.title}</h3>
 				<ul class="flex max-w-4xl flex-wrap justify-center gap-3">
 					{
-						moreFeatures.map(({ id, icon, isUpcoming }) => (
+						moreFeatures.map(({ id, icon }) => (
 							<li class="flex items-center gap-2 rounded-full border bg-card py-2 pr-4 pl-3 font-semibold">
 								<Icon name={icon} class="size-5 shrink-0 text-primary" aria-hidden="true" />
 								{t.more.items[id]}
-								{isUpcoming && (
-									<Badge variant="secondary" size="sm" class="font-semibold">
-										{t.more.soon}
-									</Badge>
-								)}
 							</li>
 						))
 					}
@@ -153,7 +133,7 @@ const showcases = [
 		</div>
 		{
 			showcases.map(
-				({ id, screen, illustration, isFlipped, isUpcoming }, index) => (
+				({ id, screen, illustration, isFlipped }, index) => (
 				<div class="grid items-center gap-12 lg:grid-cols-2">
 					<div
 						class:list={[
@@ -190,11 +170,6 @@ const showcases = [
 						<p class="text-lg text-pretty text-muted-foreground">
 							{t.showcases[id].description}
 						</p>
-						{isUpcoming && (
-							<Badge variant="secondary" class="font-semibold">
-								{t.more.soon}
-							</Badge>
-						)}
 					</div>
 				</div>
 				),

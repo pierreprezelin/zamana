@@ -52,16 +52,15 @@
 	},
 	"more": {
 		"title": "And that’s not all!",
-		"soon": "Soon",
 		"items": {
-			"timeline": "A photo timeline to watch them grow",
-			"seasons": "Watering that follows the seasons, wherever you live",
+			"timeline": "A photo timeline to follow growth",
+			"seasons": "Watering paced by the seasons and climate",
 			"dailyTip": "A tip or fun fact every day",
-			"species": "Search by species",
-			"platforms": "On Android and iOS",
-			"darkTheme": "Dark theme",
-			"languages": "In English and French",
-			"openSource": "Open source"
+			"species": "A species search",
+			"platforms": "An app for Android and iOS",
+			"darkTheme": "A dark theme",
+			"languages": "French and English versions",
+			"openSource": "Open source code"
 		}
 	},
 	"showcases": {

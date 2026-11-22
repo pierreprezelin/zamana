@@ -34,7 +34,7 @@
 		"items": {
 			"reminders": {
 				"title": "Rappels d’entretien",
-				"description": "Arrosage, engrais, rempotage, taille : chaque plante a son rythme, Zamana s’en souvient pour vous."
+				"description": "Arrosage, engrais, rempotage, taille : chaque plante a son rythme et Zamana s’en souvient pour vous."
 			},
 			"garden": {
 				"title": "Votre jardin",
@@ -52,16 +52,15 @@
 	},
 	"more": {
 		"title": "Et ce n’est pas tout !",
-		"soon": "Bientôt",
 		"items": {
-			"timeline": "Une frise de photos pour suivre leur croissance",
-			"seasons": "Un arrosage qui suit les saisons, où que vous viviez",
+			"timeline": "Une frise de photos pour suivre la croissance",
+			"seasons": "Un arrosage au rythme des saisons et du climat",
 			"dailyTip": "Une astuce ou une anecdote chaque jour",
-			"species": "Recherche par espèce",
-			"platforms": "Disponible sur Android et iOS",
-			"darkTheme": "Thème sombre",
-			"languages": "En français et en anglais",
-			"openSource": "Code source ouvert"
+			"species": "Une recherche par espèce",
+			"platforms": "Une app pour Android et iOS",
+			"darkTheme": "Un thème sombre",
+			"languages": "Une version française et anglaise",
+			"openSource": "Un code source ouvert"
 		}
 	},
 	"showcases": {
