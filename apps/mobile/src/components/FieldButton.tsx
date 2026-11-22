@@ -11,6 +11,9 @@ type FieldButtonProps = {
 	icon: IoniconsIconName;
 	onPress: () => void;
 	onClear?: () => void;
+	// A field with a default value resets to it, instead of being emptied
+	clearKind?: "empty" | "reset";
+	clearLabel?: string;
 	error?: string;
 	disabled?: boolean;
 	accessibilityLabel: string;
@@ -23,6 +26,8 @@ export default function FieldButton({
 	icon,
 	onPress,
 	onClear,
+	clearKind = "empty",
+	clearLabel,
 	error,
 	disabled,
 	accessibilityLabel,
@@ -55,15 +60,19 @@ export default function FieldButton({
 				{value && onClear && !disabled && (
 					<Pressable
 						accessibilityRole="button"
-						accessibilityLabel={t("common.clear", {
-							label: accessibilityLabel,
-						})}
+						accessibilityLabel={
+							clearLabel ?? t("common.clear", { label: accessibilityLabel })
+						}
 						pressedClassName=""
 						pressedOpacity={0.5}
 						hitSlop={13}
 						onPress={onClear}
 					>
-						<Ionicons name="close-circle" size={18} className="text-muted" />
+						<Ionicons
+							name={clearKind === "reset" ? "refresh-circle" : "close-circle"}
+							size={18}
+							className={clearKind === "reset" ? "text-primary" : "text-muted"}
+						/>
 					</Pressable>
 				)}
 				<Ionicons

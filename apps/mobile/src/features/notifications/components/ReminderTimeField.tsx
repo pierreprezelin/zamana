@@ -15,12 +15,14 @@ import { locale, t } from "@/utils/i18n";
 
 type ReminderTimeFieldProps = {
 	value: ReminderTime;
+	defaultValue: ReminderTime;
 	onChange: (value: ReminderTime) => void;
 	disabled?: boolean;
 };
 
 export function ReminderTimeField({
 	value,
+	defaultValue,
 	onChange,
 	disabled,
 }: ReminderTimeFieldProps) {
@@ -44,6 +46,13 @@ export function ReminderTimeField({
 				icon="time-outline"
 				accessibilityLabel={title}
 				disabled={disabled}
+				onClear={
+					value === defaultValue ? undefined : () => onChange(defaultValue)
+				}
+				clearKind="reset"
+				clearLabel={t("notifications.resetTime", {
+					time: formatReminderTime(defaultValue),
+				})}
 				onPress={() =>
 					Platform.OS === "android"
 						? setAndroidDialogOpen(true)

@@ -373,6 +373,7 @@
 		"channel": "Rappels d’entretien",
 		"reminders": "Rappels de tâche",
 		"remindersHelper": "Une notification quand un soin est à faire",
+		"resetTime": "Rétablir {{time}}",
 		"time": "Heure du rappel",
 		"timeHelper": "Les rappels sont prévus 30 jours à l’avance : ouvrez Zamana au moins une fois par mois pour les garder.",
 		"permissionMissing": "Autorisez les notifications pour recevoir vos rappels.",
