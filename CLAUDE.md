@@ -15,4 +15,4 @@ Monorepo: `apps/mobile` (Expo), `apps/api` (Express + tRPC), `apps/site` (Astro)
 6. Fix the findings, or explain in the chat why one is dismissed. Run `bun run verify` again.
 7. **Never commit.** When Pierre asks, propose a split into atomic Conventional Commits (in English), stage the first group (`git add <files>`, or `git apply --cached` for part of a file), wait for Pierre to commit, then stage the next group when he says so.
 
-Work happens directly on `dev`.
+Work happens on a branch created from `dev` (`feat/…`, `fix/…`), one topic per branch, merged back into `dev`. Small changes that fit no topic go directly on `dev`.
