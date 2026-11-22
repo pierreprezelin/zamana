@@ -1,7 +1,7 @@
 ---
 
 title: Reconnaître et traiter les cochenilles
-category: pests
+category: health
 ---
 
 Les cochenilles sont parmi les parasites les plus courants des plantes d'intérieur. Repérées tôt, elles se traitent facilement.

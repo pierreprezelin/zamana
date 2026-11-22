@@ -17,7 +17,7 @@ export const GET: APIRoute = async ({ params }) => {
 		articles.map(({ id, data, body }) => ({
 			slug: id.slice(prefix.length),
 			...data,
-			body: body?.trim(),
+			body: body?.trim() ?? "",
 		})),
 	);
 };

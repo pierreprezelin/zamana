@@ -7,7 +7,14 @@ const articles = defineCollection({
 	loader: glob({ pattern: "{fr,en}/*.md", base: "./src/content/articles" }),
 	schema: z.object({
 		title: z.string(),
-		category: z.enum(["basics", "watering", "light", "pests"]),
+		category: z.enum([
+			"basics",
+			"watering",
+			"light",
+			"seasons",
+			"propagation",
+			"health",
+		]),
 	}),
 });
 

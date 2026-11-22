@@ -1,7 +1,7 @@
 ---
 
 title: Spotting and treating mealybugs and scale
-category: pests
+category: health
 ---
 
 Mealybugs and scale insects are among the most common houseplant pests. Spotted early, they're easy to deal with.
