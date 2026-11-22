@@ -291,6 +291,7 @@
 	},
 	"settings": {
 		"appearance": "Apparence",
+		"restartOnboarding": "Revoir l’introduction",
 		"haptics": {
 			"title": "Retours haptiques",
 			"helper": "Vibrations légères lors des actions."

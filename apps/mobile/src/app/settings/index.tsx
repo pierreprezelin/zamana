@@ -38,17 +38,14 @@ export default function SettingsScreen() {
 					/>
 				</Link>
 				<UserNameSetting />
-				{/* ponytail: temporary dev shortcut, remove once onboarding is done */}
-				{__DEV__ && (
-					<SettingsRow
-						icon="refresh-outline"
-						title="Recommencer l'onboarding"
-						onPress={() => {
-							useOnboardingStore.setState({ completed: false });
-							router.replace("/welcome");
-						}}
-					/>
-				)}
+				<SettingsRow
+					icon="refresh-outline"
+					title={t("settings.restartOnboarding")}
+					onPress={() => {
+						useOnboardingStore.setState({ completed: false });
+						router.replace("/welcome");
+					}}
+				/>
 			</View>
 			<Text className="mt-auto text-center text-xs text-foreground opacity-50">
 				v{nativeApplicationVersion}
