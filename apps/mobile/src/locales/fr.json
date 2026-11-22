@@ -330,7 +330,6 @@
 		"language": {
 			"title": "Langue",
 			"system": "Langue du téléphone",
-			"current": "Actuelle : {{language}}",
 			"restartHint": "Zamana redémarrera dans la langue choisie."
 		},
 		"restartOnboarding": "Revoir l’introduction",

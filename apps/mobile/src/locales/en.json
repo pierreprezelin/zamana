@@ -326,7 +326,6 @@
 		"language": {
 			"title": "Language",
 			"system": "Phone language",
-			"current": "Current: {{language}}",
 			"restartHint": "Zamana will restart in the chosen language."
 		},
 		"restartOnboarding": "Replay the introduction",

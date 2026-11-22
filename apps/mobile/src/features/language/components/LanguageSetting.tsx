@@ -13,9 +13,9 @@ import { t } from "@/utils/i18n";
 
 // Language names stay in their own language, to be found by whoever reads it
 const languageOptions: Option<LanguagePreference>[] = [
-	{ value: "system", label: `📱 ${t("settings.language.system")}` },
-	{ value: "fr", label: "🇫🇷 Français" },
-	{ value: "en", label: "🇬🇧 English" },
+	{ value: "system", label: t("settings.language.system") },
+	{ value: "fr", label: "Français" },
+	{ value: "en", label: "English" },
 ];
 
 const languageLabel = (preference: LanguagePreference) =>
@@ -32,9 +32,7 @@ export function LanguageSetting() {
 			<SettingsRow
 				icon="language-outline"
 				title={t("settings.language.title")}
-				value={t("settings.language.current", {
-					language: languageLabel(preference),
-				})}
+				value={languageLabel(preference)}
 				onPress={() => {
 					setChoice(preference);
 					sheetRef.current?.present();
