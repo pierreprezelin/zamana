@@ -114,6 +114,12 @@
 		"grid": "Grid"
 	},
 	"plant": {
+		"newPlantCard": {
+			"title": "New plant day! 🎉",
+			"description": "Welcome {{name}} to your garden.",
+			"show": "Show new plants",
+			"showHelper": "Highlights the latest added plant for 24 hours."
+		},
 		"outdoor": "Outdoor",
 		"indoor": "Indoor",
 		"info": {
@@ -319,7 +325,7 @@
 		"appearance": "Appearance",
 		"summaries": {
 			"location": "Weather, climate",
-			"home": "Tips",
+			"home": "New plants, tips",
 			"ergonomics": "Swipe, haptics",
 			"notifications": "Reminders, weather alerts"
 		},

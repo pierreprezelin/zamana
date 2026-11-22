@@ -114,6 +114,12 @@
 		"grid": "Grille"
 	},
 	"plant": {
+		"newPlantCard": {
+			"title": "Nouvelle plante ! 🎉",
+			"description": "Bienvenue à {{name}} dans votre jardin.",
+			"show": "Afficher les nouvelles plantes",
+			"showHelper": "Met en avant la dernière plante ajoutée pendant 24 h."
+		},
 		"outdoor": "Extérieur",
 		"indoor": "Intérieur",
 		"info": {
@@ -323,7 +329,7 @@
 		"appearance": "Apparence",
 		"summaries": {
 			"location": "Météo, climat",
-			"home": "Conseils",
+			"home": "Nouvelles plantes, conseils",
 			"ergonomics": "Glissement, vibrations",
 			"notifications": "Rappels, alertes météo"
 		},
