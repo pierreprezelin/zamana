@@ -46,8 +46,9 @@ export default function TodayScreen() {
 			scrollBottomInset={tabBarOffset + 16}
 		>
 			<WeatherPlaceBanner />
-			<WeatherAlertBanner />
-			<TipCard today={today} climate={climate} />
+			<WeatherAlertBanner>
+				<TipCard today={today} climate={climate} />
+			</WeatherAlertBanner>
 			{plants.length > 0 && <RemindersBanner />}
 			{plants.length > 0 && <TodayTasks groups={groups} today={today} />}
 			<GardenPreview />
