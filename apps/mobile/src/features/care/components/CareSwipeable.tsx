@@ -118,7 +118,7 @@ function SwipePanel({
 		>
 			<Text
 				className={twMerge(
-					"font-outfit-semibold",
+					"text-center font-outfit-semibold",
 					action === "done"
 						? "text-surface"
 						: action === "skip"
