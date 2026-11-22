@@ -116,8 +116,8 @@ export default function GardenScreen() {
 						</View>
 					</View>
 					<FlatList
-						// Scrolls under the tab bar down to the screen edge
-						className="-mb-5"
+						// Scrolls under the tab bar down to the screen edge, its scroll bar along the screen side
+						className="-mx-4 -mb-4"
 						// numColumns can't change on the fly
 						key={viewMode}
 						data={plants}
@@ -136,7 +136,7 @@ export default function GardenScreen() {
 						}
 						keyboardDismissMode="on-drag"
 						keyboardShouldPersistTaps="handled"
-						contentContainerClassName="gap-2"
+						contentContainerClassName="gap-2 px-4"
 						contentContainerStyle={{ paddingBottom: tabBarOffset + 16 }}
 						columnWrapperClassName={viewMode === "grid" ? "gap-2" : undefined}
 						ListEmptyComponent={
