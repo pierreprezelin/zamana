@@ -24,7 +24,7 @@ import type { tabs } from "@/constants/tabs";
 import { selectionFeedback } from "@/utils/haptics";
 import { t } from "@/utils/i18n";
 
-const MIN_BOTTOM_OFFSET = 20;
+const MIN_BOTTOM_OFFSET = 16;
 const TAB_BAR_HEIGHT = 56;
 
 export const TAB_BAR_SHADOW = "0px 8px 24px rgba(8, 41, 30, 0.15)";
