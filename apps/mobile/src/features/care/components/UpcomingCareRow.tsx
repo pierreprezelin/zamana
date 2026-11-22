@@ -18,7 +18,7 @@ import { useCareActions } from "@/features/care/useCareActions";
 import { useCarePreferencesStore } from "@/features/care/useCarePreferencesStore";
 import { useRemindersOff } from "@/features/notifications/useRemindersOff";
 import type { Plant } from "@/features/plants/plantSchema";
-import { t } from "@/utils/i18n";
+import { lowerFirst, t } from "@/utils/i18n";
 
 type UpcomingCareRowProps = {
 	care: Care;
@@ -32,7 +32,7 @@ const upcomingLabel = (care: Care, dueDate: string | null, today: string) => {
 	if (!dueDate) return lastDoneLabel(care.lastDoneAt, new Date());
 	const due = dueLabel(dueDate, today);
 	return care.lastDoneAt === today
-		? `${t("care.lastDone.today")} · ${due.toLocaleLowerCase()}`
+		? `${t("care.lastDone.today")} · ${lowerFirst(due)}`
 		: due;
 };
 
@@ -65,7 +65,7 @@ export function UpcomingCareRow({
 			text1: next
 				? t("care.doneEarly", {
 						care: name,
-						due: dueLabel(next, today).toLocaleLowerCase(),
+						due: lowerFirst(dueLabel(next, today)),
 					})
 				: t("care.doneNoted", { care: name }),
 		});

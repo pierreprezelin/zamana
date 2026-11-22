@@ -6,7 +6,7 @@
 		"clearSearch": "Effacer la recherche",
 		"close": "Fermer",
 		"confirm": "Confirmer",
-		"dateTime": "{{date}} · {{hours}}h{{minutes}}",
+		"dateTime": "{{date}} · {{time}}",
 		"learnMore": "En savoir plus : {{label}}",
 		"save": "Enregistrer",
 		"saveFailed": "L'enregistrement a échoué, réessayez",
@@ -24,6 +24,11 @@
 		"location": "Localisation",
 		"notifications": "Notifications",
 		"settings": "Paramètres"
+	},
+	"placeholder": {
+		"article": "Article n° {{id}}",
+		"result": "Résultat n° {{id}}",
+		"addToGarden": "Ajouter à mon jardin"
 	},
 	"tabs": {
 		"add": "Ajouter",
@@ -297,6 +302,12 @@
 			"ergonomics": "Glissement, vibrations",
 			"notifications": "Rappels, météo"
 		},
+		"language": {
+			"title": "Langue",
+			"system": "Langue du téléphone",
+			"current": "Actuelle : {{language}}",
+			"restartHint": "Zamana redémarrera dans la langue choisie."
+		},
 		"restartOnboarding": "Revoir l’introduction",
 		"haptics": {
 			"title": "Retours haptiques",
@@ -434,7 +445,7 @@
 			"today": "Fait aujourd'hui",
 			"ago": "Il y a {{age}}"
 		},
-		"doneAt": "Fait à {{hours}} h {{minutes}}",
+		"doneAt": "Fait à {{time}}",
 		"skipped": "Reporté",
 		"skippedNext": "Reporté, prochain soin {{due}}",
 		"summary": {
@@ -587,10 +598,10 @@
 			"tomorrow": "demain"
 		},
 		"risk": {
-			"cold": "Froid : {{value}} °C {{day}} vers {{hour}} h",
-			"heat": "Chaleur : {{value}} °C {{day}} vers {{hour}} h",
-			"storm": "Orage {{day}} vers {{hour}} h",
-			"wind": "Vent : rafales à {{value}} km/h {{day}} vers {{hour}} h"
+			"cold": "Froid : {{value}} °C {{day}} vers {{hour}}",
+			"heat": "Chaleur : {{value}} °C {{day}} vers {{hour}}",
+			"storm": "Orage {{day}} vers {{hour}}",
+			"wind": "Vent : rafales à {{value}} km/h {{day}} vers {{hour}}"
 		},
 		"advice": {
 			"fleece": "À rentrer à l'abri, ou à couvrir d'un voile d'hivernage.",

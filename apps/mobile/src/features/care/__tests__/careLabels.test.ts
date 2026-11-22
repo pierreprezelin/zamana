@@ -1,3 +1,4 @@
+import i18next from "i18next";
 import {
 	careSubtitle,
 	doneAtLabel,
@@ -133,5 +134,33 @@ describe("handledLabel", () => {
 
 	it("still tells a care was skipped once it has no due date", () => {
 		expect(handledLabel(log("skipped"), null, "2026-06-10")).toBe("Reporté");
+	});
+});
+
+describe("in English", () => {
+	beforeEach(() => i18next.changeLanguage("en"));
+	afterEach(() => i18next.changeLanguage("fr"));
+
+	it("keeps the month capitalized in a skipped care", () => {
+		const skipped: CareLog = {
+			id: "log-1",
+			plantId: "plant-1",
+			type: "watering",
+			outcome: "skipped",
+			date: "2026-06-10",
+			createdAt: new Date(2026, 5, 10, 9, 5).toISOString(),
+			previousLastDoneAt: null,
+			previousSnoozedUntil: null,
+		};
+
+		expect(handledLabel(skipped, "2027-03-01", "2026-06-10")).toBe(
+			"Skipped, next care in March 2027",
+		);
+	});
+
+	it("tells the time a care was done on 12 hours", () => {
+		expect(doneAtLabel(new Date(2026, 5, 10, 21, 5).toISOString())).toMatch(
+			/^Done at 9:05\sPM$/,
+		);
 	});
 });

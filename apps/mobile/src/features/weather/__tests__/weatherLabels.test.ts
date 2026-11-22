@@ -1,3 +1,4 @@
+import i18next from "i18next";
 import type { Plant } from "@/features/plants/plantSchema";
 import {
 	outdoorHelper,
@@ -24,6 +25,8 @@ const risk = (overrides: Partial<WeatherRisk>): WeatherRisk => ({
 
 const today = "2026-11-20";
 
+afterEach(() => i18next.changeLanguage("fr"));
+
 describe("riskLine", () => {
 	it.each([
 		[risk({ kind: "cold" }), "Froid : -2 °C demain vers 5 h"],
@@ -38,6 +41,14 @@ describe("riskLine", () => {
 		],
 	])("describes the risk", (input, line) => {
 		expect(riskLine(input, today)).toBe(line);
+	});
+
+	it("tells the hour on 12 hours in English", async () => {
+		await i18next.changeLanguage("en");
+
+		expect(
+			riskLine(risk({ kind: "heat", at: "2026-11-20T15:00" }), today),
+		).toMatch(/^Heat: -2 °C today around 3\sPM$/);
 	});
 });
 

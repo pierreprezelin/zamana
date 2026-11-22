@@ -4,6 +4,7 @@ import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import SettingsRow from "@/components/SettingsRow";
 import Text from "@/components/Text";
+import { LanguageSetting } from "@/features/language/components/LanguageSetting";
 import { useOnboardingStore } from "@/features/onboarding/useOnboardingStore";
 import { ThemeSelector } from "@/features/theme/components/ThemeSelector";
 import { UserNameSetting } from "@/features/user/components/UserNameSetting";
@@ -48,6 +49,7 @@ export default function SettingsScreen() {
 						value={t("settings.summaries.ergonomics")}
 					/>
 				</Link>
+				<LanguageSetting />
 				<SettingsRow
 					icon="refresh-outline"
 					title={t("settings.restartOnboarding")}

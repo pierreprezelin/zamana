@@ -26,7 +26,7 @@ import { useCareStore, usePlantCares } from "@/features/care/useCareStore";
 import { displayName } from "@/features/plants/plantLabels";
 import { usePlant } from "@/features/plants/usePlantStore";
 import { toISODate } from "@/utils/dates";
-import { t } from "@/utils/i18n";
+import { lowerFirst, t } from "@/utils/i18n";
 
 export default function PlantCareScreen() {
 	const { id } = useLocalSearchParams<{ id: string }>();
@@ -127,7 +127,7 @@ export default function PlantCareScreen() {
 									next?.dueDate &&
 										t("care.upToDate.next", {
 											care: careName(next.care.type).toLocaleLowerCase(),
-											due: dueLabel(next.dueDate, today).toLocaleLowerCase(),
+											due: lowerFirst(dueLabel(next.dueDate, today)),
 										}),
 								]
 									.filter(Boolean)

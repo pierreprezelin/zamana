@@ -28,7 +28,7 @@ I designed Zamana to cover my needs, but also to be useful to everyone. You'll f
 - 📚 Help articles about how to take care of your plants
 - 🎓 A pro-tip or fun fact about flora every day!
 - 📍 No account: your plants and photos stay on your phone. Only an approximate location (about 10 km) is sent to [Open-Meteo](https://open-meteo.com) for weather alerts, if you have outdoor plants, plus anonymous performance and crash reports (see the [privacy policy](https://zamana.garden/en/privacy))
-- 🌍 Translated into English and French (for now)
+- 🌍 In English and French, following your phone's language or the one you pick in the app
 - 💎 No subscription, no paid tier, no ads
 - 🍎 Available on Android and iOS
 
@@ -44,7 +44,7 @@ You can see here what's planned for release and afterwards!
 ✅ Growth timeline with custom notes
 ✅ Pro-tips and fun facts
 ✅ Notifications
-🚧 Translations
+✅ Translations
 ✅ Dark theme
 
 ### Upcoming features after initial release

@@ -18,11 +18,27 @@ export const formatDate = (isoDate: string) =>
 		year: "numeric",
 	});
 
+const atTime = (hours: number, minutes = 0) =>
+	new Date(2000, 0, 1, hours, minutes);
+
+// French writes "9 h 05", Intl would give "09:05"
+export const formatTime = (hours: number, minutes: number) =>
+	locale() === "fr"
+		? `${hours} h ${pad(minutes)}`
+		: atTime(hours, minutes).toLocaleTimeString(locale(), {
+				hour: "numeric",
+				minute: "2-digit",
+			});
+
+export const formatHour = (hours: number) =>
+	locale() === "fr"
+		? `${hours} h`
+		: atTime(hours).toLocaleTimeString(locale(), { hour: "numeric" });
+
 export const formatDateTime = (timestamp: string) => {
 	const date = new Date(timestamp);
 	return t("common.dateTime", {
 		date: formatDate(toISODate(date)),
-		hours: date.getHours(),
-		minutes: pad(date.getMinutes()),
+		time: formatTime(date.getHours(), date.getMinutes()),
 	});
 };

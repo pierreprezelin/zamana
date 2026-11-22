@@ -1,0 +1,748 @@
+{
+	"common": {
+		"back": "Back",
+		"cancel": "Cancel",
+		"clear": "Clear {{label}}",
+		"clearSearch": "Clear search",
+		"close": "Close",
+		"confirm": "Confirm",
+		"dateTime": "{{date}} · {{time}}",
+		"learnMore": "Learn more: {{label}}",
+		"save": "Save",
+		"saveFailed": "Saving failed, please try again",
+		"settings": "Settings",
+		"validate": "Done"
+	},
+	"screens": {
+		"article": "Article",
+		"editPlant": "Edit details",
+		"encyclopedia": "Encyclopedia",
+		"historyEntry": "History entry",
+		"newPlant": "Add a plant",
+		"ergonomics": "Ergonomics",
+		"home": "Home",
+		"location": "Location",
+		"notifications": "Notifications",
+		"settings": "Settings"
+	},
+	"placeholder": {
+		"article": "Article #{{id}}",
+		"result": "Result #{{id}}",
+		"addToGarden": "Add to my garden"
+	},
+	"tabs": {
+		"add": "Add",
+		"encyclopedia": "Encyclopedia",
+		"garden": "Garden",
+		"tips": "Tips",
+		"today": "Today"
+	},
+	"welcome": {
+		"skip": "Skip",
+		"intro": {
+			"title": "Welcome to Zamana!",
+			"description": "A little reminder to help you look after your plants.",
+			"action": "Set up the app"
+		},
+		"reminders": {
+			"title": "Get reminders",
+			"description": "A reminder every morning at 9 AM to water and look after your plants. You can change it in the settings.",
+			"action": "Allow notifications"
+		},
+		"weather": {
+			"title": "Get weather alerts",
+			"description": "Bring your plants indoors when it gets unusually cold or hot.",
+			"action": "Allow location"
+		},
+		"done": {
+			"title": "That’s it!",
+			"description": "Your garden is waiting for you, along with other useful resources to look after it.",
+			"action": "Get started"
+		}
+	},
+	"today": {
+		"greeting": {
+			"night": "Good evening",
+			"morning": "Good morning",
+			"afternoon": "Hello",
+			"evening": "Good evening"
+		}
+	},
+	"garden": {
+		"title": "Garden",
+		"seeAll": "See all",
+		"plantCount": {
+			"one": "{{amount}} plant",
+			"other": "{{amount}} plants"
+		},
+		"noPlant": "No plants",
+		"searchPlaceholder": "Search my garden...",
+		"current": "Current",
+		"past": "Past",
+		"noCurrentPlant": "No current plants",
+		"noPastPlant": "No past plants",
+		"noSearchResult": "No plant matches your search",
+		"addPlant": "Add a plant",
+		"empty": "Your garden is empty",
+		"addFirstPlant": "Add my first plant",
+		"list": "List",
+		"grid": "Grid"
+	},
+	"plant": {
+		"outdoor": "Outdoor",
+		"indoor": "Indoor",
+		"info": {
+			"sections": {
+				"information": "Details",
+				"care": "Care",
+				"history": "History"
+			},
+			"edit": "Edit details",
+			"addHistoryEntry": "Add an entry",
+			"toxic": "Toxic to pets if eaten.",
+			"needs": "Needs",
+			"identity": "Identity",
+			"lifecycle": "Life cycle",
+			"notes": "Notes",
+			"name": "Name",
+			"type": "Type",
+			"acquiredAt": "Acquired on",
+			"origin": "Origin",
+			"age": "Age",
+			"location": "Location",
+			"flowering": "Flowering",
+			"floweringType": "Flowering type",
+			"lifespan": "Lifespan",
+			"restore": "Put back in my garden",
+			"restored": "{{name}} is back in your garden! 🌱",
+			"restoreFailed": "Restoring failed, please try again",
+			"noLongerHave": "I no longer have this plant"
+		},
+		"form": {
+			"photo": "Photo",
+			"identity": "Identity",
+			"nickname": "Nickname",
+			"nicknamePlaceholder": "E.g. Raven",
+			"name": "Name",
+			"nameRequired": "Name *",
+			"namePlaceholder": "E.g. ZZ plant",
+			"type": "Type",
+			"typePlaceholder": "Choose a type",
+			"information": "Details",
+			"details": "More details",
+			"detailsSummary": "Scientific name, origin, acquisition date, location, age",
+			"scientificName": "Scientific name",
+			"scientificNamePlaceholder": "E.g. Zamioculcas zamiifolia",
+			"origin": "Origin",
+			"originPlaceholder": "Choose an origin",
+			"acquiredAt": "Acquisition date",
+			"datePlaceholder": "Choose a date",
+			"location": "Location",
+			"locationPlaceholder": "Choose a room",
+			"locationUnavailable": "Not available for an outdoor plant (see Needs).",
+			"age": "Age",
+			"agePlaceholder": "E.g. 3",
+			"needs": "Needs",
+			"needsSummary": "Light, watering, temperature, humidity, outdoor, toxicity",
+			"outdoor": "Outdoor plant",
+			"toxic": "Toxic to pets",
+			"lifecycle": "Life cycle",
+			"lifecycleSummary": "Flowering, flowering type, lifespan",
+			"flowering": "Flowering",
+			"floweringPlaceholder": "Choose the seasons",
+			"floweringType": "Flowering type",
+			"floweringTypePlaceholder": "Choose a flowering type",
+			"lifespan": "Lifespan",
+			"lifespanPlaceholder": "Choose a lifespan",
+			"notes": "Notes",
+			"notesSummary": "Anecdotes, tips, quirks",
+			"notesPlaceholder": "E.g. A birthday gift, turn it towards the window now and then.",
+			"notesLength": "{{length}} / {{max}} characters",
+			"add": "Add the plant",
+			"delete": "Delete the plant",
+			"saved": "Your changes have been saved! 🎉",
+			"added": "{{name}} joined your garden! 🌱"
+		},
+		"photo": {
+			"change": "Change the photo",
+			"importAnother": "Import another photo",
+			"delete": "Delete the photo",
+			"add": "Take or import a photo",
+			"maxSize": "2 MB max.",
+			"sheetTitle": "Plant photo",
+			"takePhoto": "Take a photo",
+			"chooseFromLibrary": "Choose from library",
+			"importFailed": "Importing the photo failed",
+			"cameraDenied": "Camera access was denied.",
+			"tooLarge": "The photo must not exceed 2 MB."
+		},
+		"archive": {
+			"title": "I no longer have this plant",
+			"description": "It will move to the “Past” tab of your garden. You can put it back at any time.",
+			"archived": "{{name}} was moved to your past plants",
+			"failed": "Archiving failed, please try again"
+		},
+		"delete": {
+			"title": "Delete {{name}}?",
+			"description": "The plant and its history will be deleted for good. To keep it in your garden, choose “I no longer have this plant” instead.",
+			"confirm": "Delete for good",
+			"deleted": "{{name}} was deleted",
+			"failed": "Deleting failed, please try again"
+		},
+		"errors": {
+			"nicknameTooLong": "The nickname can’t be longer than {{max}} characters.",
+			"nameRequired": "The name is required.",
+			"nameTooLong": "The name can’t be longer than {{max}} characters.",
+			"scientificNameTooLong": "The scientific name can’t be longer than {{max}} characters.",
+			"notesTooLong": "The note can’t be longer than {{max}} characters.",
+			"futureDate": "The date can’t be in the future.",
+			"ageNotInteger": "The age must be a whole number.",
+			"ageOutOfRange": "The age must be between 1 and {{max}}."
+		},
+		"type": {
+			"citrus": "Citrus",
+			"fruitTree": "Fruit tree",
+			"shrub": "Shrub",
+			"herb": "Herb",
+			"bonsai": "Bonsai",
+			"cactus": "Cactus",
+			"carnivorous": "Carnivorous",
+			"fern": "Fern",
+			"climber": "Climber",
+			"orchid": "Orchid",
+			"palm": "Palm",
+			"succulent": "Succulent"
+		},
+		"origin": {
+			"cutting": "Cutting",
+			"gift": "Gift",
+			"swap": "Swap",
+			"store": "Store",
+			"rescued": "Rescued",
+			"seed": "Seed"
+		},
+		"location": {
+			"office": "Office",
+			"bedroom": "Bedroom",
+			"kitchen": "Kitchen",
+			"entrance": "Entrance",
+			"bathroom": "Bathroom",
+			"livingRoom": "Living room",
+			"veranda": "Veranda"
+		},
+		"season": {
+			"spring": "Spring",
+			"summer": "Summer",
+			"autumn": "Autumn",
+			"winter": "Winter"
+		},
+		"floweringType": {
+			"monocarpic": "Monocarpic",
+			"polycarpic": "Polycarpic"
+		},
+		"lifespan": {
+			"annual": "Annual",
+			"biennial": "Biennial",
+			"perennial": "Perennial"
+		},
+		"ageUnit": {
+			"day": "Days",
+			"month": "Months",
+			"year": "Years"
+		},
+		"age": {
+			"day": { "one": "{{amount}} day", "other": "{{amount}} days" },
+			"month": { "one": "{{amount}} month", "other": "{{amount}} months" },
+			"year": { "one": "{{amount}} year", "other": "{{amount}} years" }
+		},
+		"archiveReason": {
+			"dead": "It died",
+			"given": "I gave it away",
+			"lost": "I lost it",
+			"sold": "I sold it",
+			"other": "Other reason"
+		},
+		"needs": {
+			"light": {
+				"label": "Light",
+				"levels": ["Low", "Indirect", "Direct"]
+			},
+			"watering": {
+				"label": "Watering",
+				"levels": ["2-3 days", "1-2 wks", "4-6 wks"],
+				"details": ["Every 2-3 days", "Every 1-2 weeks", "Every 4 to 6 weeks"]
+			},
+			"temperature": {
+				"label": "Temperature",
+				"levels": ["Cool", "Mild", "Warm"],
+				"helper": "Cool: 10-15 °C · Mild: 15-24 °C · Warm: 24 °C and up"
+			},
+			"humidity": {
+				"label": "Humidity",
+				"levels": ["Low", "Normal", "High"]
+			}
+		},
+		"help": {
+			"monocarpic": "Flowers only once and then dies, sometimes after many years (agave, bromeliad).",
+			"polycarpic": "Flowers several times during its life (orchid, rose).",
+			"annual": "Completes its whole life cycle in a single season.",
+			"biennial": "Lives two years: leaves the first year, flowers the second.",
+			"perennial": "Lives for several years. If it’s also monocarpic, it may flower only once after 10, 20 or 30 years, then die."
+		}
+	},
+	"settings": {
+		"appearance": "Appearance",
+		"summaries": {
+			"location": "Weather, climate",
+			"home": "Tips",
+			"ergonomics": "Swipe, haptics",
+			"notifications": "Reminders, weather"
+		},
+		"language": {
+			"title": "Language",
+			"system": "Phone language",
+			"current": "Current: {{language}}",
+			"restartHint": "Zamana will restart in the chosen language."
+		},
+		"restartOnboarding": "Replay the introduction",
+		"haptics": {
+			"title": "Haptic feedback",
+			"helper": "Light vibrations on actions."
+		},
+		"theme": {
+			"light": "Light",
+			"dark": "Dark",
+			"system": "System"
+		},
+		"userName": {
+			"title": "My name in the app",
+			"empty": "Not set",
+			"description": "Without a name, messages stay neutral (e.g. “Hello 👋”).",
+			"placeholder": "E.g. Sam",
+			"saved": "Your name has been saved! 🎉",
+			"deleted": "Your name has been removed! 🎉",
+			"tooLong": "The name can’t be longer than {{max}} characters.",
+			"invalid": "The name can only contain letters, a hyphen or an apostrophe."
+		}
+	},
+	"appVersion": {
+		"title": "The app needs an update",
+		"description": "A new version fixes an important issue. Update Zamana to keep looking after your plants! 🌱",
+		"update": "Update now"
+	},
+	"notifications": {
+		"digest": {
+			"title": {
+				"one": "{{amount}} care to do",
+				"other": "{{amount}} cares to do"
+			},
+			"morePlants": {
+				"one": "and {{amount}} other plant",
+				"other": "and {{amount}} other plants"
+			}
+		},
+		"paused": {
+			"title": "Your reminders are paused",
+			"body": "Open Zamana to resume them."
+		},
+		"channel": "Care reminders",
+		"reminders": "Task reminders",
+		"remindersHelper": "A notification when a care is due",
+		"time": "Reminder time",
+		"timeHelper": "Reminders are scheduled 30 days ahead: open Zamana at least once a month to keep them.",
+		"permissionMissing": "Allow notifications to get your reminders.",
+		"enable": "Turn on reminders",
+		"openSettings": "Open settings",
+		"banner": {
+			"title": "Never miss a care",
+			"description": "A reminder every day at {{time}}.",
+			"dismiss": "Hide"
+		},
+		"disabledInSettings": "Reminders are turned off in the settings.",
+		"notAllowed": "Notifications aren’t allowed.",
+		"settingsLink": "Settings"
+	},
+	"care": {
+		"types": {
+			"watering": {
+				"name": "Watering",
+				"verb": "Water",
+				"done": "Watered",
+				"skipped": "Watering skipped"
+			},
+			"fertilizing": {
+				"name": "Fertilizer",
+				"verb": "Fertilize",
+				"done": "Fertilized",
+				"skipped": "Fertilizer skipped"
+			},
+			"leafCleaning": {
+				"name": "Leaf cleaning",
+				"verb": "Clean",
+				"done": "Leaves cleaned",
+				"skipped": "Leaf cleaning skipped"
+			},
+			"repotting": {
+				"name": "Repotting",
+				"verb": "Repot",
+				"done": "Repotted",
+				"skipped": "Repotting skipped"
+			},
+			"pruning": {
+				"name": "Pruning",
+				"verb": "Prune",
+				"done": "Pruned",
+				"skipped": "Pruning skipped"
+			},
+			"treatment": {
+				"name": "Treatment",
+				"verb": "Treat",
+				"done": "Treated",
+				"skipped": "Treatment skipped"
+			},
+			"misting": {
+				"name": "Misting",
+				"verb": "Mist",
+				"done": "Misted",
+				"skipped": "Misting skipped"
+			}
+		},
+		"errors": {
+			"frequencyRequired": "Set a frequency to get reminders.",
+			"frequencyOutOfRange": "The frequency must be between 1 and {{max}}."
+		},
+		"frequency": {
+			"none": "No frequency set",
+			"day": { "one": "Every day", "other": "Every {{amount}} days" },
+			"week": {
+				"one": "Every week",
+				"other": "Every {{amount}} weeks"
+			},
+			"month": { "one": "Every month", "other": "Every {{amount}} months" },
+			"year": { "one": "Every year", "other": "Every {{amount}} years" },
+			"withPeriod": "{{frequency}}, from {{start}} to {{end}}"
+		},
+		"otherDue": {
+			"one": "{{amount}} more care to do",
+			"other": "{{amount}} more cares to do"
+		},
+		"due": {
+			"late": {
+				"one": "{{amount}} day late",
+				"other": "{{amount}} days late"
+			},
+			"today": "Today",
+			"tomorrow": "Tomorrow",
+			"inDays": "In {{amount}} days",
+			"inMonth": "In {{month}}"
+		},
+		"lastDone": {
+			"never": "Never done",
+			"today": "Done today",
+			"ago": "{{age}} ago"
+		},
+		"doneAt": "Done at {{time}}",
+		"skipped": "Skipped",
+		"skippedNext": "Skipped, next care {{due}}",
+		"summary": {
+			"pending": {
+				"one": "{{amount}} care to do",
+				"other": "{{amount}} cares to do"
+			},
+			"done": { "one": "{{amount}} done", "other": "{{amount}} done" },
+			"skipped": { "one": "{{amount}} skipped", "other": "{{amount}} skipped" }
+		},
+		"todo": "To do",
+		"upcoming": "Upcoming care",
+		"manage": "Manage",
+		"skip": "Skip",
+		"markDone": "Mark {{care}} as done",
+		"skipCare": "Skip {{care}}",
+		"undo": "Undo {{care}}",
+		"reminderOn": "Reminders on",
+		"reminderOff": "Reminders off",
+		"actionFailed": "The action failed, please try again",
+		"doneEarly": "{{care}} noted, next care {{due}}",
+		"doneNoted": "{{care}} noted",
+		"undone": "{{care}} undone",
+		"paused": {
+			"title": "Care paused",
+			"description": "{{name}} is in your past plants: no more tasks or reminders. Put it back in your garden to resume its care."
+		},
+		"noCare": {
+			"title": "No care tracked for {{name}}",
+			"description": "Set up watering, fertilizer… to know when to look after it.",
+			"configure": "Set up care"
+		},
+		"upToDate": {
+			"title": "Nothing to do today 🌿",
+			"description": "{{name}} is up to date.",
+			"next": "Next care: {{care}}, {{due}}."
+		},
+		"manageSheet": {
+			"title": "Manage care",
+			"description": "Choose the care to track for this plant, then adjust how often and the reminders.",
+			"notTracked": "Not tracked",
+			"configure": "Set up",
+			"edit": "Edit {{care}}",
+			"reminders": "{{care}} reminders"
+		},
+		"form": {
+			"configureTitle": "Set up care",
+			"editTitle": "Edit care",
+			"type": "Type",
+			"frequency": "Frequency",
+			"frequencyAmount": "Amount",
+			"frequencyPlaceholder": "1",
+			"frequencyHelper": "Optional when reminders are off.",
+			"units": {
+				"day": "Days",
+				"week": "Weeks",
+				"month": "Months",
+				"year": "Years"
+			},
+			"period": "Period",
+			"allYear": "All year",
+			"someMonths": "Some months",
+			"from": "From",
+			"to": "To",
+			"lastDone": "Last time",
+			"lastDonePlaceholder": "Choose a date",
+			"lastDoneHelper": "Used to work out the next care date.",
+			"reminders": "Reminders",
+			"remindersHelper": "A notification on the due day, only during the chosen period.",
+			"wateringRemindersHelper": "A notification on the due day.",
+			"waterNeed": "Water need",
+			"currentInterval": {
+				"one": "Right now: every day. Also changes the need shown in Details.",
+				"other": "Right now: every {{amount}} days. Also changes the need shown in Details."
+			},
+			"stop": "Stop tracking this care"
+		},
+		"stop": {
+			"title": "Stop tracking {{care}}?",
+			"description": "Reminders will stop and {{care}} will disappear from the Care screen. Cares already done stay in the History. You can turn it back on from “Manage”.",
+			"confirm": "Stop tracking"
+		},
+		"tasks": {
+			"title": "Tasks",
+			"none": "Nothing planned today, enjoy!",
+			"allDoneSubtitle": "Everything is done for today, well done!",
+			"allDone": "Everything is done for today 🎉",
+			"count": {
+				"one": "You have {{amount}} task planned today!",
+				"other": "You have {{amount}} tasks planned today!"
+			}
+		},
+		"swipe": {
+			"skip": "Skip",
+			"undo": "Undo"
+		},
+		"preferences": {
+			"climate": "Climate",
+			"climateHelper": "Adapts watering to the growing and rest seasons.",
+			"climates": {
+				"north": "North",
+				"south": "South",
+				"tropics": "Tropics"
+			},
+			"swipeLeft": "Swipe a task to the left to",
+			"swipeActions": {
+				"done": "Do it",
+				"skip": "Skip it"
+			}
+		}
+	},
+	"history": {
+		"summary": {
+			"entries": { "one": "{{amount}} entry", "other": "{{amount}} entries" },
+			"photos": { "one": "{{amount}} photo", "other": "{{amount}} photos" },
+			"cares": { "one": "{{amount}} care", "other": "{{amount}} cares" },
+			"days": { "one": "{{amount}} day", "other": "{{amount}} days" }
+		},
+		"showCares": "Care",
+		"added": "Added to the garden",
+		"add": "Add a new entry",
+		"newEntry": "New entry",
+		"editEntry": "Edit entry",
+		"note": "Note",
+		"noteCount": "{{count}} / {{max}} characters",
+		"save": "Save entry",
+		"saved": "Entry saved",
+		"delete": "Delete entry",
+		"deleted": "Entry deleted",
+		"undoCare": "Delete: {{label}}",
+		"loadFailed": "The history couldn’t be loaded",
+		"deleteEntrySheet": {
+			"title": "Delete this entry?",
+			"description": "The note and the photo will be deleted for good.",
+			"confirm": "Delete"
+		},
+		"undoCareSheet": {
+			"title": "Delete “{{label}}”?",
+			"description": "The care schedule will go back to how it was before. Only the latest action of a care can be undone.",
+			"confirm": "Delete"
+		},
+		"errors": {
+			"noteTooLong": "The note must not exceed {{max}} characters.",
+			"empty": "Add a photo or a note."
+		}
+	},
+	"weather": {
+		"day": {
+			"today": "today",
+			"tomorrow": "tomorrow"
+		},
+		"risk": {
+			"cold": "Cold: {{value}} °C {{day}} around {{hour}}",
+			"heat": "Heat: {{value}} °C {{day}} around {{hour}}",
+			"storm": "Storm {{day}} around {{hour}}",
+			"wind": "Wind: gusts up to {{value}} km/h {{day}} around {{hour}}"
+		},
+		"advice": {
+			"fleece": "Bring under shelter, or cover with a frost fleece.",
+			"frost": "Bring under shelter from frost (house, garage, veranda).",
+			"cold": "Bring under shelter from the cold (house, veranda).",
+			"heat": "Move to the shade and water.",
+			"storm": "Shelter or tie down.",
+			"wind": "Shelter or tie down."
+		},
+		"riskSummary": "{{line}} · {{plants}}.",
+		"and": " and ",
+		"seasonHint": "Brought in for the season? Uncheck “Outdoor plant” in its details.",
+		"outdoorHelper": "An alert for cold (below {{cold}} °C), heat (above {{heat}} °C), storms or strong wind.",
+		"banner": {
+			"title": "Weather alert · {{place}}",
+			"seasonQuestion": "Plant brought in for the season?",
+			"editPlant": "Edit the details of {{name}}"
+		},
+		"placeMissing": {
+			"title": "Where are your outdoor plants?",
+			"description": "Choose your location or a city to get alerts for cold, heat, storms or strong wind.",
+			"action": "Choose a place"
+		},
+		"credit": "Weather by Open-Meteo.com",
+		"geonamesCredit": "Places by GeoNames",
+		"settings": {
+			"alerts": "Weather alerts",
+			"alertsHelper": "For your outdoor plants: cold, heat, storms, strong wind.",
+			"time": "Weather alert time",
+			"timeHelper": "At {{time}}, for the next 24 hours.",
+			"place": "Weather alert location",
+			"device": "My location",
+			"city": "A city",
+			"searchPlaceholder": "Search for a city…",
+			"noPlace": "No place yet.",
+			"loading": "Updating the forecast…",
+			"updatedAt": "Forecast updated at {{time}}",
+			"failedSince": "Forecast unavailable since {{time}}",
+			"ask": "Allow location to get alerts where you are, or choose a city.",
+			"denied": "Without location, Zamana can’t warn you for where you are. Choose a city or allow location in your phone settings.",
+			"allow": "Allow location",
+			"openSettings": "Open settings",
+			"noResult": "No city found."
+		}
+	},
+	"tips": {
+		"card": {
+			"protip": "Tip",
+			"funfact": "Did you know?"
+		},
+		"preferences": {
+			"show": "Show tips",
+			"showHelper": "One tip or fun fact a day.",
+			"reset": "See all tips again",
+			"resetDone": "Tips you’ve already seen will show up again."
+		},
+		"items": {
+			"fingerTest": {
+				"title": "The finger test",
+				"body": "Push a finger 2 to 3 cm into the soil: if it’s dry, it’s time to water."
+			},
+			"roomTemperatureWater": {
+				"title": "No icy water",
+				"body": "Water at room temperature so you don’t shock the roots."
+			},
+			"drainage": {
+				"title": "Keep their feet dry",
+				"body": "Empty the saucer 15 minutes after watering: standing water rots the roots."
+			},
+			"dustyLeaves": {
+				"title": "Let the leaves breathe",
+				"body": "A damp cloth on the leaves wipes off the dust that slows down photosynthesis."
+			},
+			"quarterTurn": {
+				"title": "A quarter turn",
+				"body": "Turn your pots now and then so the plant doesn’t lean towards the window."
+			},
+			"yellowLeaves": {
+				"title": "Yellow leaves?",
+				"body": "It’s often too much water. Let the soil dry out before the next watering."
+			},
+			"springRepotting": {
+				"title": "Repotting season",
+				"body": "If roots are coming out of the pot, move to a slightly bigger one, 2 to 4 cm wider."
+			},
+			"springFertilizer": {
+				"title": "Back to fertilizer",
+				"body": "Growth is picking up again: time to resume fertilizer, at the recommended dose or less."
+			},
+			"summerWateringTime": {
+				"title": "Water when it’s cool",
+				"body": "In summer, water early in the morning or in the evening: less water evaporates."
+			},
+			"summerWindowBurn": {
+				"title": "Mind the window",
+				"body": "Behind a window in full sun, leaves can burn. A sheer curtain is enough to protect them."
+			},
+			"autumnBringIn": {
+				"title": "Bring them in before the frost",
+				"body": "Bring tender plants indoors before the first frosts, often as soon as nights drop to 10 °C."
+			},
+			"autumnPests": {
+				"title": "Check before coming in",
+				"body": "Before bringing a plant indoors, check under its leaves so you don’t invite pests in."
+			},
+			"winterRadiators": {
+				"title": "Away from radiators",
+				"body": "The hot, dry air of a radiator dries out leaves. Move your plants away or group them together."
+			},
+			"winterLessWater": {
+				"title": "Less water in winter",
+				"body": "Most plants are resting: water less often."
+			},
+			"oldestTree": {
+				"title": "Over 4,800 years old!",
+				"body": "Methuselah, a Great Basin bristlecone pine in California, is one of the oldest known trees."
+			},
+			"bamboo": {
+				"title": "Almost a metre a day",
+				"body": "Some bamboos are among the fastest-growing plants in the world."
+			},
+			"mimosa": {
+				"title": "A shy plant",
+				"body": "Mimosa pudica folds its leaves as soon as you touch them."
+			},
+			"banana": {
+				"title": "A banana is a berry",
+				"body": "To botanists, a strawberry isn’t one!"
+			},
+			"monstera": {
+				"title": "Holes with a name",
+				"body": "The holes in Monstera leaves are called fenestrations."
+			},
+			"cactusSpines": {
+				"title": "Spines that used to be leaves",
+				"body": "In cacti, spines are leaves that changed shape to lose less water."
+			},
+			"vanilla": {
+				"title": "Vanilla is an orchid",
+				"body": "Its pods are the fruit of a climbing orchid."
+			},
+			"sunflower": {
+				"title": "Following the sun",
+				"body": "Young sunflowers follow the sun, then settle facing east once they bloom."
+			}
+		}
+	}
+}

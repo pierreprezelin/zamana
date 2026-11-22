@@ -1,4 +1,4 @@
-import { locale } from "@/utils/i18n";
+import { formatTime } from "@/utils/dates";
 
 // Local hours and minutes, like "09:00"
 export type ReminderTime = `${number}:${number}`;
@@ -28,8 +28,7 @@ export const toReminderTime = (date: Date) =>
 		.map((part) => String(part).padStart(2, "0"))
 		.join(":") as ReminderTime;
 
-export const formatReminderTime = (time: ReminderTime) =>
-	atReminderTime(time, new Date()).toLocaleTimeString(locale(), {
-		hour: "2-digit",
-		minute: "2-digit",
-	});
+export const formatReminderTime = (time: ReminderTime) => {
+	const [hours, minutes] = time.split(":").map(Number);
+	return formatTime(hours, minutes);
+};

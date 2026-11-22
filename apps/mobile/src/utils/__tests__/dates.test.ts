@@ -1,9 +1,16 @@
+import i18next from "i18next";
 import {
 	formatDate,
 	formatDateTime,
+	formatHour,
+	formatTime,
 	parseISODate,
 	toISODate,
 } from "@/utils/dates";
+
+afterEach(() => i18next.changeLanguage("fr"));
+
+const inEnglish = () => i18next.changeLanguage("en");
 
 describe("dates", () => {
 	it("formats a local date", () => {
@@ -20,7 +27,42 @@ describe("dates", () => {
 
 	it("formats a local date and time in French", () => {
 		expect(formatDateTime(new Date(2026, 8, 23, 7, 6).toISOString())).toBe(
-			"23 septembre 2026 · 7h06",
+			"23 septembre 2026 · 7 h 06",
 		);
+	});
+
+	it("formats a local date and time in English", async () => {
+		await inEnglish();
+
+		expect(formatDateTime(new Date(2026, 8, 23, 19, 6).toISOString())).toMatch(
+			/^September 23, 2026 · 7:06\sPM$/,
+		);
+	});
+});
+
+describe("formatTime", () => {
+	it("writes French hours with an h", () => {
+		expect(formatTime(9, 5)).toBe("9 h 05");
+		expect(formatTime(21, 0)).toBe("21 h 00");
+	});
+
+	it("writes English hours on 12 hours", async () => {
+		await inEnglish();
+
+		expect(formatTime(9, 5)).toMatch(/^9:05\sAM$/);
+		expect(formatTime(21, 0)).toMatch(/^9:00\sPM$/);
+	});
+});
+
+describe("formatHour", () => {
+	it("writes a French round hour without minutes", () => {
+		expect(formatHour(5)).toBe("5 h");
+	});
+
+	it("writes an English round hour without minutes", async () => {
+		await inEnglish();
+
+		expect(formatHour(5)).toMatch(/^5\sAM$/);
+		expect(formatHour(15)).toMatch(/^3\sPM$/);
 	});
 });

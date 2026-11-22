@@ -8,10 +8,6 @@ import SearchField from "@/components/SearchField";
 import SegmentedControl from "@/components/SegmentedControl";
 import Text from "@/components/Text";
 import WarningBanner from "@/components/WarningBanner";
-import {
-	formatReminderTime,
-	toReminderTime,
-} from "@/features/notifications/reminderTime";
 import { usePlantStore } from "@/features/plants/usePlantStore";
 import { switchToDevicePlace } from "@/features/weather/devicePlace";
 import { searchCities } from "@/features/weather/openMeteo";
@@ -22,6 +18,7 @@ import {
 } from "@/features/weather/useWeatherStore";
 import { alertedPlants } from "@/features/weather/weatherRisks";
 import type { Place } from "@/features/weather/weatherTypes";
+import { formatTime } from "@/utils/dates";
 import { t } from "@/utils/i18n";
 
 const SEARCH_DELAY_MS = 400;
@@ -32,8 +29,10 @@ const sourceOptions: { value: PlaceSource; label: string }[] = [
 	{ value: "city", label: t("weather.settings.city") },
 ];
 
-const timeOf = (iso: string) =>
-	formatReminderTime(toReminderTime(new Date(iso)));
+const timeOf = (iso: string) => {
+	const date = new Date(iso);
+	return formatTime(date.getHours(), date.getMinutes());
+};
 
 const useCitySearch = (query: string) => {
 	const [results, setResults] = useState<Place[] | null>(null);

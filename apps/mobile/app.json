@@ -20,7 +20,14 @@
 		},
 		"ios": {
 			"bundleIdentifier": "com.pierreprezelin.zamana",
-			"icon": "./assets/expo.icon"
+			"icon": "./assets/expo.icon",
+			"infoPlist": {
+				"CFBundleAllowMixedLocalizations": true
+			}
+		},
+		"locales": {
+			"fr": "./src/locales/native/fr.json",
+			"en": "./src/locales/native/en.json"
 		},
 		"plugins": [
 			[
@@ -82,7 +89,8 @@
 					"isIosReducedAccuracyByDefault": true,
 					"isAndroidBackgroundLocationEnabled": false
 				}
-			]
+			],
+			"expo-localization"
 		],
 		"experiments": {
 			"typedRoutes": true,

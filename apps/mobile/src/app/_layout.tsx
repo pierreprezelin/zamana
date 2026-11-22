@@ -15,13 +15,14 @@ import {
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
-import { Platform, useColorScheme } from "react-native";
+import { AppState, Platform, useColorScheme } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Toast from "react-native-toast-message";
 import { HeaderBackButton } from "@/components/HeaderBackButton";
 import { toastConfig } from "@/components/toastConfig";
 import { ForceUpdateSheet } from "@/features/appVersion/components/ForceUpdateSheet";
+import { reloadIfLanguageChanged } from "@/features/language/useLanguageStore";
 import { startReminderScheduler } from "@/features/notifications/scheduleReminders";
 import { useOnboardingStore } from "@/features/onboarding/useOnboardingStore";
 import {
@@ -36,6 +37,10 @@ import { t } from "@/utils/i18n";
 defineWeatherTask();
 startReminderScheduler();
 startWeatherTaskSync();
+// Android keeps the app running when the phone language changes
+AppState.addEventListener("change", (state) => {
+	if (state === "active") reloadIfLanguageChanged();
+});
 
 SplashScreen.setOptions({
 	duration: 1000,

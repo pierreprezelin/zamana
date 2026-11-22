@@ -2,8 +2,8 @@ import { careStatus } from "@/features/care/careSchedule";
 import type { Care, CareLog, CareType } from "@/features/care/careTypes";
 import { formatAge } from "@/features/plants/age";
 import { needs } from "@/features/plants/plantOptions";
-import { parseISODate, toISODate } from "@/utils/dates";
-import { locale, pluralForm, t } from "@/utils/i18n";
+import { formatTime, parseISODate, toISODate } from "@/utils/dates";
+import { locale, lowerFirst, pluralForm, t } from "@/utils/i18n";
 
 // Beyond a month, a due date reads better as a month
 const DAYS_SHOWN = 30;
@@ -61,13 +61,14 @@ export const lastDoneLabel = (lastDoneAt: string | null, now: Date) => {
 
 export const careSubtitle = (care: Care, wateringLevel: number, now: Date) => {
 	const frequency = frequencyLabel(care, wateringLevel);
-	return `${lastDoneLabel(care.lastDoneAt, now)} · ${frequency.charAt(0).toLocaleLowerCase(locale())}${frequency.slice(1)}`;
+	return `${lastDoneLabel(care.lastDoneAt, now)} · ${lowerFirst(frequency)}`;
 };
 
 export const doneAtLabel = (createdAt: string) => {
 	const date = new Date(createdAt);
-	const minutes = String(date.getMinutes()).padStart(2, "0");
-	return t("care.doneAt", { hours: date.getHours(), minutes });
+	return t("care.doneAt", {
+		time: formatTime(date.getHours(), date.getMinutes()),
+	});
 };
 
 export const handledLabel = (
@@ -78,7 +79,7 @@ export const handledLabel = (
 	if (log.outcome === "done") return doneAtLabel(log.createdAt);
 	return dueDate
 		? t("care.skippedNext", {
-				due: dueLabel(dueDate, today).toLocaleLowerCase(),
+				due: lowerFirst(dueLabel(dueDate, today)),
 			})
 		: t("care.skipped");
 };

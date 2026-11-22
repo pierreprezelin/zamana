@@ -1,11 +1,14 @@
 import { ScreenPlaceholder } from "@/components/ScreenPlaceholder";
+import { t } from "@/utils/i18n";
 
 export default function EncyclopediaScreen() {
 	return (
 		<ScreenPlaceholder
-			title="Encyclopédie"
+			title={t("tabs.encyclopedia")}
 			showSettings
-			links={[{ label: "Résultat #1", href: "/encyclopedia/1" }]}
+			links={[
+				{ label: t("placeholder.result", { id: 1 }), href: "/encyclopedia/1" },
+			]}
 		/>
 	);
 }

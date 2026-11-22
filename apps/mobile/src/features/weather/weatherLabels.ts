@@ -5,6 +5,7 @@ import {
 	HEAT_THRESHOLD,
 	type WeatherRisk,
 } from "@/features/weather/weatherRisks";
+import { formatHour } from "@/utils/dates";
 import { t } from "@/utils/i18n";
 
 // "2026-11-21T05:00": the date of the place, then its hour
@@ -17,7 +18,7 @@ export const riskLine = (risk: WeatherRisk, today: string) =>
 		day: t(
 			dateOf(risk.at) === today ? "weather.day.today" : "weather.day.tomorrow",
 		),
-		hour: hourOf(risk.at),
+		hour: formatHour(hourOf(risk.at)),
 	});
 
 export const riskAdvice = (risk: WeatherRisk) => {

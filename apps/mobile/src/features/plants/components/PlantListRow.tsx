@@ -12,7 +12,7 @@ import { PlantPhoto } from "@/features/plants/components/PlantPhoto";
 import { displayName } from "@/features/plants/plantLabels";
 import { archiveReasonLabel } from "@/features/plants/plantOptions";
 import type { Plant } from "@/features/plants/plantSchema";
-import { pluralForm, t } from "@/utils/i18n";
+import { lowerFirst, pluralForm, t } from "@/utils/i18n";
 
 type PlantListRowProps = {
 	plant: Plant;
@@ -33,7 +33,7 @@ function NextCareLine({ next, today }: { next: NextCare; today: string }) {
 					late ? "text-danger" : "text-muted",
 				)}
 			>
-				{`${careName(next.care.type)} · ${dueLabel(next.dueDate, today).toLocaleLowerCase()}`}
+				{`${careName(next.care.type)} · ${lowerFirst(dueLabel(next.dueDate, today))}`}
 			</Text>
 			{next.otherDueCount > 0 && (
 				<Text
