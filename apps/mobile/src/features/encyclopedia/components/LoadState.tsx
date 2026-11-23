@@ -18,6 +18,7 @@ export function LoadState({ failed, onRetry }: LoadStateProps) {
 					</Text>
 					<Button
 						variant="ghost"
+						icon="refresh-outline"
 						title={t("encyclopedia.retry")}
 						onPress={onRetry}
 					/>
