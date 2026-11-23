@@ -43,7 +43,11 @@ export default function EncyclopediaResultScreen() {
 	);
 
 	if (status === "error") {
-		return <LoadState failed onRetry={retry} />;
+		return (
+			<View className="px-4">
+				<LoadState failed onRetry={retry} />
+			</View>
+		);
 	}
 	if (status !== "success") {
 		return <TaxonDetailSkeleton />;
