@@ -4,7 +4,7 @@ layout: ../layouts/LegalLayout.astro
 locale: fr
 title: Politique de confidentialité
 description: Ce que l’application Zamana fait de vos données, ce qu’elle envoie et à qui.
-updatedAt: 2026-11-22
+updatedAt: 2026-11-23
 ---
 
 Zamana est une application gratuite, sans publicité et **sans compte**. Vous n’avez rien à créer ni à renseigner pour l’utiliser, et aucune donnée n’est vendue ni utilisée à des fins publicitaires.
@@ -22,6 +22,7 @@ Les rappels sont des notifications locales, programmées par l’application ell
 Quelques données quittent votre téléphone pour faire fonctionner l’application :
 
 - **Open-Meteo**, pour les alertes météo : la ville que vous recherchez dans les réglages et, seulement si vous avez des plantes d’extérieur, votre position arrondie à environ 10 km et votre fuseau horaire pour les prévisions. Voir la [politique de confidentialité d’Open-Meteo](https://open-meteo.com/en/terms#privacy).
+- **iNaturalist**, pour l’encyclopédie des plantes : le texte de vos recherches de plantes, la langue et la version de l’application. Les plantes populaires sont chargées dès l’ouverture de l’encyclopédie, et les photos des plantes affichées ou ajoutées depuis l’encyclopédie sont servies par Amazon Web Services pour iNaturalist. Aucun compte ni aucune position ne sont envoyés. Voir la [politique de confidentialité d’iNaturalist](https://www.inaturalist.org/pages/privacy).
 - **Le service de localisation de votre téléphone** (Apple ou Google), si vous choisissez « Ma position » : votre position arrondie, pour afficher le nom de la ville correspondante.
 - **L’API de Zamana**, hébergée par Vercel, pour vérifier que votre version de l’application est à jour : votre adresse IP et les informations techniques de la connexion. L’application compare elle-même sa version au minimum requis. Vercel conserve ces journaux techniques une heure. Voir la [politique de confidentialité de Vercel](https://vercel.com/legal/privacy-policy).
 - **Le site zamana.garden**, hébergé par Cloudflare, pour télécharger les articles d’aide : votre adresse IP et la langue de l’application. Voir la [politique de confidentialité de Cloudflare](https://www.cloudflare.com/privacypolicy/).
