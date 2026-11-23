@@ -1,5 +1,7 @@
 import {
 	archiveReasonOptions,
+	needs,
+	needValue,
 	originOptions,
 	seasonOptions,
 } from "@/features/plants/plantOptions";
@@ -27,5 +29,22 @@ describe("plant options", () => {
 			"Hiver",
 		]);
 		expect(archiveReasonOptions.at(-1)?.value).toBe("other");
+	});
+});
+
+describe("needValue", () => {
+	const plant = { light: 2, watering: 1, temperature: 2, humidity: 2 };
+	const [, watering, temperature] = needs;
+
+	it("details the watering frequency", () => {
+		expect(needValue(watering, { ...plant, outdoor: false })).toBe(
+			"Tous les 2-3 jours",
+		);
+	});
+
+	it("says where the temperature applies", () => {
+		expect(needValue(temperature, { ...plant, outdoor: true })).toBe(
+			"Tempérée · Extérieur",
+		);
 	});
 });

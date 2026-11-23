@@ -4,6 +4,7 @@ import type {
 	ForecastHour,
 	Place,
 } from "@/features/weather/weatherTypes";
+import { getJson } from "@/utils/getJson";
 import { locale } from "@/utils/i18n";
 
 const FORECAST_URL = "https://api.open-meteo.com/v1/forecast";
@@ -11,8 +12,6 @@ const GEOCODING_URL = "https://geocoding-api.open-meteo.com/v1/search";
 // Today, the night after and a margin for the alerts scheduled ahead
 const FORECAST_DAYS = 4;
 const CITY_RESULTS = 5;
-// A background task has about 30 seconds: a silent service must not use them up
-const TIMEOUT_MS = 10_000;
 
 const values = z.array(z.number().nullable());
 const forecastSchema = z.object({
@@ -39,22 +38,6 @@ export const roundCoordinate = (value: number) => Math.round(value * 10) / 10;
 // The hours come back in the phone's time, even for a far-away city
 const deviceTimeZone = () =>
 	Intl.DateTimeFormat().resolvedOptions().timeZone ?? "auto";
-
-const getJson = async (url: string, params: Record<string, string>) => {
-	const controller = new AbortController();
-	const timer = setTimeout(() => controller.abort(), TIMEOUT_MS);
-	try {
-		const response = await fetch(`${url}?${new URLSearchParams(params)}`, {
-			signal: controller.signal,
-		});
-		if (!response.ok) {
-			throw new Error(`Open-Meteo answered ${response.status}`);
-		}
-		return (await response.json()) as unknown;
-	} finally {
-		clearTimeout(timer);
-	}
-};
 
 export const fetchForecast = async (
 	latitude: number,

@@ -72,7 +72,7 @@ export const PlantListRow = memo(function PlantListRow({
 						{displayName(plant)}
 					</Text>
 					{plant.scientificName && (
-						<Text numberOfLines={1} className="text-base text-foreground">
+						<Text numberOfLines={1} className="text-base text-muted">
 							{plant.scientificName}
 						</Text>
 					)}

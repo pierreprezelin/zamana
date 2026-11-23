@@ -1,8 +1,9 @@
 import { openDatabaseSync } from "expo-sqlite";
+import { migrate } from "@/utils/migrations";
 
 export const database = openDatabaseSync("zamana.db");
 
-// ponytail: CREATE IF NOT EXISTS only, add versioned migrations once a table changes
+// The first version of the tables: later changes go to the migrations, so old databases follow
 database.execSync(`
 	PRAGMA foreign_keys = ON;
 	CREATE TABLE IF NOT EXISTS user (
@@ -71,3 +72,5 @@ database.execSync(`
 	);
 	CREATE INDEX IF NOT EXISTS history_entry_plant ON history_entry (plant_id);
 `);
+
+migrate(database);

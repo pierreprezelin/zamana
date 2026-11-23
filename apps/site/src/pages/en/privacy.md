@@ -4,7 +4,7 @@ layout: ../../layouts/LegalLayout.astro
 locale: en
 title: Privacy policy
 description: What the Zamana app does with your data, what it sends and to whom.
-updatedAt: 2026-11-22
+updatedAt: 2026-11-23
 ---
 
 Zamana is a free app, with no ads and **no account**. There's nothing to sign up for or fill in to use it, and no data is sold or used for advertising.
@@ -22,6 +22,7 @@ Reminders are local notifications, scheduled by the app itself: no server is nee
 A few pieces of data leave your phone to make the app work:
 
 - **Open-Meteo**, for weather alerts: the city you search for in the settings and, only if you have outdoor plants, your location rounded to about 10 km and your time zone for the forecast. See [Open-Meteo's privacy policy](https://open-meteo.com/en/terms#privacy).
+- **iNaturalist**, for the plant encyclopedia: the text of your plant searches, and the app language and version. Popular plants load as soon as you open the encyclopedia, and the photos of the plants shown or added from it are served by Amazon Web Services for iNaturalist. No account or location is sent. See [iNaturalist's privacy policy](https://www.inaturalist.org/pages/privacy).
 - **Your phone's location service** (Apple or Google), if you choose "My location": your rounded location, to show the name of the matching city.
 - **The Zamana API**, hosted by Vercel, to check that your version of the app is up to date: your IP address and the technical details of the connection. The app compares its version with the required minimum itself. Vercel keeps these technical logs for one hour. See [Vercel's privacy policy](https://vercel.com/legal/privacy-policy).
 - **The zamana.garden website**, hosted by Cloudflare, to download the help articles: your IP address and the app language. See [Cloudflare's privacy policy](https://www.cloudflare.com/privacypolicy/).

@@ -34,11 +34,13 @@ export const FIELD_ORDER: FormField[] = [
 export const initialFormState = (
 	plant: Plant | undefined,
 	now: Date,
+	prefill: Partial<PlantFormState> = {},
 ): PlantFormState => {
 	const age = plant?.bornAt ? bornAtToAge(plant.bornAt, now) : null;
 
 	return {
 		photoUri: plant?.photo ? photoUri(plant.photo) : null,
+		photoCredit: plant?.photoCredit ?? null,
 		nickname: plant?.nickname ?? "",
 		name: plant?.name ?? "",
 		type: plant?.type ?? null,
@@ -58,6 +60,7 @@ export const initialFormState = (
 		floweringType: plant?.floweringType ?? null,
 		lifespan: plant?.lifespan ?? null,
 		notes: plant?.notes ?? "",
+		...prefill,
 	};
 };
 

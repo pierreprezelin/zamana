@@ -1,10 +1,12 @@
 import {
 	type PlantFormValues,
+	parsePhotoCredit,
 	plantInputSchema,
 } from "@/features/plants/plantSchema";
 
 const validPlant: PlantFormValues = {
 	photo: null,
+	photoCredit: null,
 	nickname: "",
 	name: "Monstera",
 	type: null,
@@ -90,6 +92,42 @@ describe("plantInputSchema", () => {
 		expect(parse({ acquiredAt: "2020-05-12" }).success).toBe(true);
 	});
 
+	it("keeps the credit of a photo from the encyclopedia", () => {
+		const photoCredit = {
+			attribution: "(c) Jane, some rights reserved (CC BY)",
+			url: "https://www.inaturalist.org/photos/1",
+		};
+
+		expect(
+			plantInputSchema.parse({ ...validPlant, photo: "photo.jpg", photoCredit })
+				.photoCredit,
+		).toEqual(photoCredit);
+	});
+
+	it("drops the credit of a removed photo", () => {
+		const plant = plantInputSchema.parse({
+			...validPlant,
+			photo: null,
+			photoCredit: { attribution: "(c) Jane", url: "https://x.org/1" },
+		});
+
+		expect(plant.photoCredit).toBeNull();
+	});
+
+	it.each([
+		"javascript:alert(1)",
+		"https://phishing.example/photos/1",
+		"https://www.inaturalist.org/login",
+	])("drops a credit linking to %s, without blocking the plant", (url) => {
+		const plant = plantInputSchema.parse({
+			...validPlant,
+			photo: "photo.jpg",
+			photoCredit: { attribution: "(c) Jane", url },
+		});
+
+		expect(plant.photoCredit).toBeNull();
+	});
+
 	it("removes the room of an outdoor plant", () => {
 		expect(
 			plantInputSchema.parse({
@@ -99,4 +137,21 @@ describe("plantInputSchema", () => {
 			}).location,
 		).toBeNull();
 	});
+});
+
+describe("parsePhotoCredit", () => {
+	it("reads a stored credit", () => {
+		const credit = {
+			attribution: "(c) Jane",
+			url: "https://www.inaturalist.org/photos/1",
+		};
+		expect(parsePhotoCredit(JSON.stringify(credit))).toEqual(credit);
+	});
+
+	it.each([null, "", "x", '{"attribution":"(c) Jane"}'])(
+		"reads %p as no credit, rather than breaking the garden",
+		(stored) => {
+			expect(parsePhotoCredit(stored)).toBeNull();
+		},
+	);
 });
