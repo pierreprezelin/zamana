@@ -10,7 +10,12 @@ import { PlantPhoto } from "@/features/plants/components/PlantPhoto";
 import { t } from "@/utils/i18n";
 
 // Two side by side buttons, not nested, so screen readers reach the add one
-export const TaxonCard = memo(function TaxonCard({ taxon }: { taxon: Taxon }) {
+type TaxonCardProps = { taxon: Taxon; photoLoading?: boolean };
+
+export const TaxonCard = memo(function TaxonCard({
+	taxon,
+	photoLoading = false,
+}: TaxonCardProps) {
 	return (
 		<View className="flex-row items-center rounded-2xl border border-line bg-surface">
 			<Link href={`/encyclopedia/${taxon.id}`} asChild>
@@ -22,6 +27,7 @@ export const TaxonCard = memo(function TaxonCard({ taxon }: { taxon: Taxon }) {
 				>
 					<PlantPhoto
 						url={taxon.photo?.thumbnailUrl}
+						loading={photoLoading}
 						className="size-16 rounded-2xl"
 					/>
 					<View className="flex-1">
@@ -31,11 +37,9 @@ export const TaxonCard = memo(function TaxonCard({ taxon }: { taxon: Taxon }) {
 						>
 							{taxon.name}
 						</Text>
-						{taxon.name !== taxon.scientificName && (
-							<Text numberOfLines={1} className="text-base text-muted">
-								{taxon.scientificName}
-							</Text>
-						)}
+						<Text numberOfLines={1} className="text-sm text-muted">
+							{taxon.scientificName}
+						</Text>
 					</View>
 				</Pressable>
 			</Link>

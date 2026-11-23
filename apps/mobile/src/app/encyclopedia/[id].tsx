@@ -9,6 +9,7 @@ import Text from "@/components/Text";
 import WarningBanner from "@/components/WarningBanner";
 import { LimitedInfoNote } from "@/features/encyclopedia/components/LimitedInfoNote";
 import { LoadState } from "@/features/encyclopedia/components/LoadState";
+import { TaxonDetailSkeleton } from "@/features/encyclopedia/components/TaxonDetailSkeleton";
 import { curatedPlant } from "@/features/encyclopedia/curatedPlants";
 import { fetchTaxon } from "@/features/encyclopedia/inaturalist";
 import { prefillParams } from "@/features/encyclopedia/plantPrefill";
@@ -41,8 +42,11 @@ export default function EncyclopediaResultScreen() {
 		Number.isInteger(taxonId) ? fetchTaxon(taxonId) : Promise.resolve(null),
 	);
 
+	if (status === "error") {
+		return <LoadState failed onRetry={retry} />;
+	}
 	if (status !== "success") {
-		return <LoadState failed={status === "error"} onRetry={retry} />;
+		return <TaxonDetailSkeleton />;
 	}
 	if (!taxon) {
 		return (
@@ -62,7 +66,7 @@ export default function EncyclopediaResultScreen() {
 	return (
 		<>
 			<Stack.Screen options={{ title: taxon.name }} />
-			<ScrollView contentContainerClassName="gap-8 px-4 pt-2.5 pb-8">
+			<ScrollView contentContainerClassName="gap-6 px-4 pt-2.5 pb-3.5">
 				<View className="gap-4">
 					<View className="gap-1">
 						<PlantPhoto
@@ -82,11 +86,7 @@ export default function EncyclopediaResultScreen() {
 						<Text className="font-recoleta text-[28px] leading-[1.25] text-foreground">
 							{taxon.name}
 						</Text>
-						{taxon.name !== taxon.scientificName && (
-							<Text className="text-base text-muted">
-								{taxon.scientificName}
-							</Text>
-						)}
+						<Text className="text-base text-muted">{taxon.scientificName}</Text>
 						{taxon.family && (
 							<Text className="text-xs text-muted">
 								{t("encyclopedia.family", { name: taxon.family })}

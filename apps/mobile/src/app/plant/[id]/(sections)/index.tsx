@@ -66,7 +66,7 @@ export default function PlantInformationScreen() {
 		<>
 			<ScrollView
 				// grow + mt-auto keep the actions at the bottom when few fields are filled
-				contentContainerClassName="grow gap-8 px-4 pt-2.5"
+				contentContainerClassName="grow gap-6 px-4 pt-2.5"
 				contentContainerStyle={{ paddingBottom: bottom }}
 			>
 				{plant.toxic && (

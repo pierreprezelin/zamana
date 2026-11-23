@@ -1,3 +1,4 @@
+import { pickedPhoto } from "@/features/encyclopedia/curatedPlants";
 import {
 	countPlants,
 	fetchTaxa,
@@ -28,7 +29,7 @@ const reservedPhoto = {
 };
 
 const rubberPlant = {
-	id: 126507,
+	id: 53940,
 	name: "Ficus elastica",
 	preferred_common_name: "caoutchouc",
 	ancestor_ids: [48460, 47126, 50998],
@@ -49,6 +50,7 @@ describe("searchTaxa", () => {
 		expect(params.get("rank")).toBe("species,hybrid,variety,form");
 		expect(params.get("page")).toBe("2");
 		expect(params.get("per_page")).toBe("20");
+		expect(params.get("fields")).toContain("default_photo");
 	});
 
 	it("names each plant by its common name, capitalized, with its free photo", async () => {
@@ -58,7 +60,7 @@ describe("searchTaxa", () => {
 			total: 583,
 			taxa: [
 				{
-					id: 126507,
+					id: 53940,
 					name: "Caoutchouc",
 					scientificName: "Ficus elastica",
 					family: null,
@@ -126,25 +128,18 @@ describe("searchTaxa", () => {
 		},
 	);
 
-	it("falls back on the photo picked for a curated plant without an open one", async () => {
+	it("shows the indoor photo picked for a curated plant, even over an open one", async () => {
 		const sansevieria = 67710;
 		respond({
 			total_results: 1,
-			results: [
-				{ ...rubberPlant, id: sansevieria, default_photo: reservedPhoto },
-			],
+			results: [{ ...rubberPlant, id: sansevieria, default_photo: freePhoto }],
 		});
 
 		const { taxa } = await searchTaxa("sansevieria", 1);
 
-		expect(taxa[0].photo).toEqual({
-			thumbnailUrl:
-				"https://inaturalist-open-data.s3.amazonaws.com/photos/698006029/small.jpg",
-			largeUrl:
-				"https://inaturalist-open-data.s3.amazonaws.com/photos/698006029/large.jpg",
-			attribution: "© zebedeugalinha, some rights reserved (CC BY)",
-			pageUrl: "https://www.inaturalist.org/photos/698006029",
-		});
+		expect(taxa[0].photo?.largeUrl).toBe(
+			pickedPhoto(sansevieria)?.url.replace("/medium.", "/large."),
+		);
 	});
 
 	it("only shows photos served over https by iNaturalist", async () => {
@@ -182,7 +177,7 @@ describe("searchTaxa", () => {
 
 		const { taxa } = await searchTaxa("ficus", 1);
 
-		expect(taxa.map((taxon) => taxon.id)).toEqual([126507]);
+		expect(taxa.map((taxon) => taxon.id)).toEqual([53940]);
 	});
 
 	it("gives up on a service that does not answer", async () => {
@@ -221,8 +216,9 @@ describe("fetchTaxa", () => {
 
 		const taxa = await fetchTaxa([1, 2]);
 
-		expect(requestedUrl().pathname).toBe("/v1/taxa/1,2");
+		expect(requestedUrl().pathname).toBe("/v2/taxa/1,2");
 		expect(requestedUrl().searchParams.get("locale")).toBe("fr");
+		expect(requestedUrl().searchParams.get("fields")).toContain("taxon_photos");
 		expect(taxa.map((taxon) => taxon.id)).toEqual([1, 2]);
 	});
 
@@ -255,9 +251,9 @@ describe("fetchTaxon", () => {
 			],
 		});
 
-		const taxon = await fetchTaxon(126507);
+		const taxon = await fetchTaxon(53940);
 
-		expect(requestedUrl().pathname).toBe("/v1/taxa/126507");
+		expect(requestedUrl().pathname).toBe("/v2/taxa/53940");
 		expect(taxon?.family).toBe("Moraceae");
 		expect(taxon?.photo?.attribution).toBe(
 			"© Jane, some rights reserved (CC BY)",
@@ -266,7 +262,7 @@ describe("fetchTaxon", () => {
 
 	it("finds nothing for a taxon that is not a plant", async () => {
 		respond({ results: [{ ...rubberPlant, ancestor_ids: [48460, 1] }] });
-		expect(await fetchTaxon(126507)).toBeNull();
+		expect(await fetchTaxon(53940)).toBeNull();
 	});
 
 	it("finds nothing for an unknown plant", async () => {

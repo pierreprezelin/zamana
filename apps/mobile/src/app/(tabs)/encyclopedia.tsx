@@ -1,6 +1,6 @@
 import { useNavigation } from "expo-router";
-import { useEffect, useState } from "react";
-import { FlatList, ScrollView, View } from "react-native";
+import { type ComponentRef, useEffect, useRef, useState } from "react";
+import { FlatList, ScrollView, useWindowDimensions, View } from "react-native";
 import Chip from "@/components/Chip";
 import { ScreenPlaceholder } from "@/components/ScreenPlaceholder";
 import SearchField from "@/components/SearchField";
@@ -8,6 +8,7 @@ import { useTabBarOffset } from "@/components/TabBar";
 import Text from "@/components/Text";
 import { LoadState } from "@/features/encyclopedia/components/LoadState";
 import { TaxonCard } from "@/features/encyclopedia/components/TaxonCard";
+import { TaxonListSkeleton } from "@/features/encyclopedia/components/TaxonCardSkeleton";
 import {
 	CATEGORIES,
 	type Category,
@@ -19,6 +20,10 @@ import { useTaxaSearch } from "@/features/encyclopedia/useTaxaSearch";
 import { usePlantStore } from "@/features/plants/usePlantStore";
 import { locale, pluralForm, t } from "@/utils/i18n";
 import { SEARCH_MIN_LENGTH } from "@/utils/useDebouncedSearch";
+
+// Enough to fill the screen, then a hint of the next page at the bottom
+const LOADING_CARDS = 6;
+const NEXT_PAGE_LOADING_CARDS = 2;
 
 const plantCount = (amount: number) =>
 	t(`garden.plantCount.${pluralForm(amount)}`, {
@@ -58,6 +63,24 @@ function Encyclopedia() {
 	const [query, setQuery] = useState("");
 	const [category, setCategory] = useState<Category>("popular");
 	const tabBarOffset = useTabBarOffset();
+	const { width } = useWindowDimensions();
+	const chipsRef = useRef<ComponentRef<typeof ScrollView>>(null);
+	const chipLayouts = useRef<
+		Partial<Record<Category, { x: number; width: number }>>
+	>({});
+	const chipsWidth = useRef(0);
+	// Centers the chosen tab, so one cut by the screen edge shows whole.
+	// iOS does not clamp the offset: the first and last tabs would leave a gap
+	const selectCategory = (key: Category) => {
+		setCategory(key);
+		const layout = chipLayouts.current[key];
+		if (layout) {
+			const centered = layout.x + layout.width / 2 - width / 2;
+			chipsRef.current?.scrollTo({
+				x: Math.max(0, Math.min(centered, chipsWidth.current - width)),
+			});
+		}
+	};
 	const searching = query.trim().length >= SEARCH_MIN_LENGTH;
 	const search = useTaxaSearch(query);
 	const popular = useCachedFetch(`popular:${locale()}:${category}`, () =>
@@ -105,7 +128,12 @@ function Encyclopedia() {
 					// The previous results stay while the next search loads, rather than flashing an empty list
 					data={shown.taxa}
 					keyExtractor={(taxon) => String(taxon.id)}
-					renderItem={({ item }) => <TaxonCard taxon={item} />}
+					renderItem={({ item }) => (
+						<TaxonCard
+							taxon={item}
+							photoLoading={searching && search.isPhotoLoading(item.id)}
+						/>
+					)}
 					keyboardDismissMode="on-drag"
 					keyboardShouldPersistTaps="handled"
 					contentContainerClassName="gap-2 px-4"
@@ -116,6 +144,10 @@ function Encyclopedia() {
 						<View className="gap-6 pb-2">
 							{!searching && (
 								<ScrollView
+									ref={chipsRef}
+									onContentSizeChange={(contentWidth) => {
+										chipsWidth.current = contentWidth;
+									}}
 									horizontal
 									showsHorizontalScrollIndicator={false}
 									accessibilityRole="tablist"
@@ -127,7 +159,10 @@ function Encyclopedia() {
 											key={key}
 											label={t(`encyclopedia.categories.${key}`)}
 											selected={category === key}
-											onPress={() => setCategory(key)}
+											onLayout={({ nativeEvent }) => {
+												chipLayouts.current[key] = nativeEvent.layout;
+											}}
+											onPress={() => selectCategory(key)}
 										/>
 									))}
 								</ScrollView>
@@ -146,19 +181,19 @@ function Encyclopedia() {
 									? t("encyclopedia.noResult", { query: query.trim() })
 									: t("encyclopedia.loadFailed")}
 							</Text>
+						) : shown.status === "error" ? (
+							<LoadState failed onRetry={shown.retry} />
 						) : (
-							<LoadState
-								failed={shown.status === "error"}
-								onRetry={shown.retry}
-							/>
+							<TaxonListSkeleton count={LOADING_CARDS} />
 						)
 					}
 					ListFooterComponent={
-						searching && (search.loadingMore || search.moreFailed) ? (
-							<LoadState
-								failed={search.moreFailed}
-								onRetry={search.retryMore}
-							/>
+						!searching ? undefined : search.moreFailed ? (
+							<LoadState failed onRetry={search.retryMore} />
+						) : search.loadingMore ? (
+							<View className="pt-2">
+								<TaxonListSkeleton count={NEXT_PAGE_LOADING_CARDS} />
+							</View>
 						) : undefined
 					}
 				/>
