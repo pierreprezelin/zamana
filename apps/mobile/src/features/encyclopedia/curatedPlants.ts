@@ -4,11 +4,17 @@ import type {
 	PlantType,
 	Season,
 } from "@/features/plants/plantSchema";
+import { locale } from "@/utils/i18n";
+import { normalizeForSearch } from "@/utils/search";
 
 type Level = 1 | 2 | 3;
 
+type UsageNames = { fr: string; en: string };
+
 export type CuratedPlant = {
 	taxonId: number;
+	scientificName: string;
+	names: UsageNames;
 	type: PlantType | null;
 	light: Level;
 	watering: Level;
@@ -30,6 +36,8 @@ type CareDetails = Partial<
 
 const curated = (
 	taxonId: number,
+	scientificName: string,
+	names: UsageNames,
 	type: PlantType | null,
 	[light, watering, temperature, humidity]: [Level, Level, Level, Level],
 	{
@@ -41,6 +49,8 @@ const curated = (
 	}: CareDetails = {},
 ): CuratedPlant => ({
 	taxonId,
+	scientificName,
+	names,
 	type,
 	light,
 	watering,
@@ -56,115 +66,518 @@ const curated = (
 // The most popular first. Needs are [light, watering, temperature, humidity], on the form levels:
 // watering 1 is every 2-3 days, 3 every 4-6 weeks
 export const CURATED_PLANTS: CuratedPlant[] = [
-	curated(122521, "foliage", [2, 2, 2, 2], { toxic: true }), // Monstera deliciosa
-	curated(367277, "foliage", [1, 3, 2, 1], { toxic: true }), // Zamioculcas zamiifolia
-	curated(126507, "foliage", [2, 2, 2, 2], { toxic: true }), // Ficus elastica
-	curated(69223, "climber", [1, 2, 2, 2], { toxic: true }), // Epipremnum aureum
-	curated(67710, "succulent", [1, 3, 2, 1], { toxic: true }), // Sansevieria trifasciata
-	curated(284040, "foliage", [1, 2, 2, 3], {
-		toxic: true,
-		floweringSeasons: ["spring", "summer"],
-	}), // Spathiphyllum wallisii
-	curated(140477, "orchid", [2, 2, 2, 2], {
-		floweringSeasons: ["winter", "spring"],
-	}), // Phalaenopsis
-	curated(322492, "foliage", [2, 2, 2, 2]), // Chlorophytum comosum
-	curated(126882, "succulent", [3, 3, 2, 1], { toxic: true }), // Aloe vera
-	curated(201458, "foliage", [3, 2, 2, 2], { toxic: true }), // Ficus lyrata
-	curated(866988, "foliage", [2, 2, 2, 3]), // Goeppertia orbifolia (Calathea)
-	curated(125439, "foliage", [2, 2, 2, 2]), // Pilea peperomioides
-	curated(49143, "foliage", [3, 2, 2, 2], { toxic: true }), // Strelitzia reginae
-	curated(126509, "foliage", [2, 2, 2, 1], { toxic: true }), // Dracaena reflexa angustifolia (marginata)
-	curated(126515, "foliage", [1, 2, 2, 2], { toxic: true }), // Dracaena fragrans
-	curated(158118, "foliage", [1, 2, 2, 2], { toxic: true }), // Aglaonema commutatum
-	curated(120490, "climber", [1, 2, 2, 2], { toxic: true }), // Philodendron hederaceum
-	curated(166493, "foliage", [2, 2, 2, 2]), // Peperomia obtusifolia
-	curated(366346, "foliage", [2, 2, 2, 3]), // Maranta leuconeura
-	curated(327855, "foliage", [2, 1, 2, 3]), // Fittonia albivenis
-	curated(169883, "foliage", [2, 2, 2, 2], { toxic: true }), // Tradescantia zebrina
-	curated(125396, "foliage", [1, 2, 1, 1]), // Aspidistra elatior
-	curated(84356, "fern", [1, 2, 2, 3]), // Asplenium nidus
-	curated(130866, "fern", [2, 1, 2, 3]), // Nephrolepis exaltata
-	curated(276548, "palm", [2, 2, 2, 2]), // Chrysalidocarpus lutescens (Areca)
-	curated(135400, "palm", [1, 2, 2, 2]), // Howea forsteriana (Kentia)
-	curated(283400, "palm", [1, 2, 2, 2]), // Chamaedorea elegans
-	curated(206192, "succulent", [3, 3, 2, 1]), // Beaucarnea recurvata
-	curated(206749, "succulent", [3, 3, 2, 1], {
-		floweringSeasons: ["spring", "summer"],
-	}), // Echeveria elegans
-	curated(76465, "succulent", [3, 3, 2, 1], { toxic: true }), // Crassula ovata
-	curated(276072, "succulent", [3, 3, 2, 1]), // Sedum morganianum
-	curated(164326, "succulent", [3, 3, 2, 1], {
-		toxic: true,
-		floweringSeasons: ["winter", "spring"],
-	}), // Kalanchoe blossfeldiana
-	curated(78267, "cactus", [3, 3, 2, 1]), // Opuntia microdasys
-	curated(273594, "cactus", [3, 3, 2, 1], { floweringSeasons: ["spring"] }), // Mammillaria elongata
-	curated(869962, "cactus", [3, 3, 2, 1]), // Kroenleinia grusonii
-	curated(51223, "cactus", [2, 2, 1, 2], { floweringSeasons: ["winter"] }), // Schlumbergera truncata
-	curated(322318, "succulent", [3, 3, 2, 1], { toxic: true }), // Euphorbia trigona
-	curated(479482, "succulent", [2, 3, 2, 1]), // Gasteria carinata
-	curated(186097, "succulent", [3, 3, 2, 1], { floweringSeasons: ["autumn"] }), // Lithops
-	curated(69235, null, [2, 2, 3, 3], {
-		toxic: true,
-		floweringSeasons: ["spring", "summer", "autumn"],
-	}), // Anthurium andraeanum
-	curated(129523, "climber", [2, 2, 2, 2], { floweringSeasons: ["summer"] }), // Hoya carnosa
-	curated(927983, null, [2, 2, 2, 2], {
-		floweringSeasons: ["spring", "summer", "autumn", "winter"],
-	}), // Streptocarpus ionanthus (Saintpaulia)
-	curated(341141, null, [2, 2, 1, 2], {
-		toxic: true,
-		floweringSeasons: ["autumn", "winter"],
-	}), // Cyclamen persicum
-	curated(327898, "foliage", [2, 2, 2, 3], { toxic: true }), // Begonia rex
-	curated(1628098, "shrub", [3, 1, 2, 2], {
-		floweringSeasons: ["spring", "summer"],
-	}), // Hibiscus rosa-sinensis
-	curated(67756, "orchid", [3, 2, 2, 2], {
-		floweringSeasons: ["winter", "spring"],
-	}), // Dendrobium nobile
-	curated(331124, "citrus", [3, 2, 2, 2], {
-		toxic: true,
-		floweringSeasons: ["spring"],
-	}), // Citrus limon
-	curated(210990, "shrub", [2, 2, 2, 3], {
-		toxic: true,
-		floweringSeasons: ["summer"],
-	}), // Gardenia jasminoides
-	curated(342641, "climber", [3, 2, 1, 2], {
-		floweringSeasons: ["winter", "spring"],
-	}), // Jasminum polyanthum
-	curated(276734, null, [2, 2, 2, 3], {
-		floweringSeasons: ["summer"],
-		floweringType: "monocarpic",
-	}), // Guzmania lingulata
-	curated(52666, "carnivorous", [3, 1, 2, 3], {
-		floweringSeasons: ["spring"],
-	}), // Dionaea muscipula
-	curated(61398, "herb", [3, 1, 3, 2], {
-		floweringSeasons: ["summer"],
-		floweringType: "monocarpic",
-		lifespan: "annual",
-	}), // Ocimum basilicum
-	curated(62652, "herb", [2, 1, 2, 2], {
-		toxic: true,
-		outdoor: true,
-		floweringSeasons: ["summer"],
-	}), // Mentha spicata
-	curated(636795, "herb", [3, 2, 1, 1], {
-		outdoor: true,
-		floweringSeasons: ["spring"],
-	}), // Salvia rosmarinus
-	curated(50996, "foliage", [2, 2, 2, 2], { toxic: true }), // Ficus benjamina
-	curated(143208, "climber", [2, 2, 2, 2], { toxic: true }), // Syngonium podophyllum
-	curated(418734, "climber", [2, 2, 2, 1], { floweringSeasons: ["summer"] }), // Ceropegia woodii
-	curated(943005, "succulent", [2, 2, 2, 1], {
-		toxic: true,
-		floweringSeasons: ["spring"],
-	}), // Curio rowleyanus
-	curated(291380, "bonsai", [3, 2, 2, 2], { toxic: true }), // Ficus retusa
-	curated(54982, "bonsai", [3, 2, 2, 2], { toxic: true }), // Ficus microcarpa
+	curated(
+		122521,
+		"Monstera deliciosa",
+		{ fr: "Monstera", en: "Monstera" },
+		"foliage",
+		[2, 2, 2, 2],
+		{ toxic: true },
+	),
+	curated(
+		367277,
+		"Zamioculcas zamiifolia",
+		{ fr: "Zamioculcas", en: "ZZ plant" },
+		"foliage",
+		[1, 3, 2, 1],
+		{ toxic: true },
+	),
+	curated(
+		126507,
+		"Ficus elastica",
+		{ fr: "Caoutchouc", en: "Rubber plant" },
+		"foliage",
+		[2, 2, 2, 2],
+		{ toxic: true },
+	),
+	curated(
+		69223,
+		"Epipremnum aureum",
+		{ fr: "Pothos", en: "Pothos" },
+		"climber",
+		[1, 2, 2, 2],
+		{ toxic: true },
+	),
+	curated(
+		67710,
+		"Sansevieria trifasciata",
+		{ fr: "Langue de belle-mère", en: "Snake plant" },
+		"succulent",
+		[1, 3, 2, 1],
+		{ toxic: true },
+	),
+	curated(
+		284040,
+		"Spathiphyllum wallisii",
+		{ fr: "Spathiphyllum", en: "Peace lily" },
+		"foliage",
+		[1, 2, 2, 3],
+		{
+			toxic: true,
+			floweringSeasons: ["spring", "summer"],
+		},
+	),
+	curated(
+		140477,
+		"Phalaenopsis",
+		{ fr: "Orchidée papillon", en: "Moth orchid" },
+		"orchid",
+		[2, 2, 2, 2],
+		{
+			floweringSeasons: ["winter", "spring"],
+		},
+	),
+	curated(
+		322492,
+		"Chlorophytum comosum",
+		{ fr: "Plante araignée", en: "Spider plant" },
+		"foliage",
+		[2, 2, 2, 2],
+	),
+	curated(
+		126882,
+		"Aloe vera",
+		{ fr: "Aloe vera", en: "Aloe vera" },
+		"succulent",
+		[3, 3, 2, 1],
+		{ toxic: true },
+	),
+	curated(
+		201458,
+		"Ficus lyrata",
+		{ fr: "Ficus lyrata", en: "Fiddle-leaf fig" },
+		"foliage",
+		[3, 2, 2, 2],
+		{ toxic: true },
+	),
+	curated(
+		866988,
+		"Goeppertia orbifolia",
+		{ fr: "Calathea orbifolia", en: "Calathea orbifolia" },
+		"foliage",
+		[2, 2, 2, 3],
+	),
+	curated(
+		125439,
+		"Pilea peperomioides",
+		{ fr: "Pilea", en: "Chinese money plant" },
+		"foliage",
+		[2, 2, 2, 2],
+	),
+	curated(
+		49143,
+		"Strelitzia reginae",
+		{ fr: "Oiseau de paradis", en: "Bird of paradise" },
+		"foliage",
+		[3, 2, 2, 2],
+		{ toxic: true },
+	),
+	curated(
+		126509,
+		"Dracaena reflexa angustifolia",
+		{ fr: "Dracaena marginata", en: "Dragon tree" },
+		"foliage",
+		[2, 2, 2, 1],
+		{ toxic: true },
+	),
+	curated(
+		126515,
+		"Dracaena fragrans",
+		{ fr: "Dracaena fragrans", en: "Corn plant" },
+		"foliage",
+		[1, 2, 2, 2],
+		{ toxic: true },
+	),
+	curated(
+		158118,
+		"Aglaonema commutatum",
+		{ fr: "Aglaonema", en: "Chinese evergreen" },
+		"foliage",
+		[1, 2, 2, 2],
+		{ toxic: true },
+	),
+	curated(
+		120490,
+		"Philodendron hederaceum",
+		{ fr: "Philodendron grimpant", en: "Heartleaf philodendron" },
+		"climber",
+		[1, 2, 2, 2],
+		{ toxic: true },
+	),
+	curated(
+		166493,
+		"Peperomia obtusifolia",
+		{ fr: "Pépéromia", en: "Baby rubber plant" },
+		"foliage",
+		[2, 2, 2, 2],
+	),
+	curated(
+		366346,
+		"Maranta leuconeura",
+		{ fr: "Maranta", en: "Prayer plant" },
+		"foliage",
+		[2, 2, 2, 3],
+	),
+	curated(
+		327855,
+		"Fittonia albivenis",
+		{ fr: "Fittonia", en: "Nerve plant" },
+		"foliage",
+		[2, 1, 2, 3],
+	),
+	curated(
+		169883,
+		"Tradescantia zebrina",
+		{ fr: "Misère", en: "Inch plant" },
+		"foliage",
+		[2, 2, 2, 2],
+		{ toxic: true },
+	),
+	curated(
+		125396,
+		"Aspidistra elatior",
+		{ fr: "Aspidistra", en: "Cast iron plant" },
+		"foliage",
+		[1, 2, 1, 1],
+	),
+	curated(
+		84356,
+		"Asplenium nidus",
+		{ fr: "Fougère nid d'oiseau", en: "Bird's nest fern" },
+		"fern",
+		[1, 2, 2, 3],
+	),
+	curated(
+		130866,
+		"Nephrolepis exaltata",
+		{ fr: "Fougère de Boston", en: "Boston fern" },
+		"fern",
+		[2, 1, 2, 3],
+	),
+	curated(
+		276548,
+		"Chrysalidocarpus lutescens",
+		{ fr: "Palmier Areca", en: "Areca palm" },
+		"palm",
+		[2, 2, 2, 2],
+	),
+	curated(
+		135400,
+		"Howea forsteriana",
+		{ fr: "Kentia", en: "Kentia palm" },
+		"palm",
+		[1, 2, 2, 2],
+	),
+	curated(
+		283400,
+		"Chamaedorea elegans",
+		{ fr: "Palmier nain", en: "Parlour palm" },
+		"palm",
+		[1, 2, 2, 2],
+	),
+	curated(
+		206192,
+		"Beaucarnea recurvata",
+		{ fr: "Pied d'éléphant", en: "Ponytail palm" },
+		"succulent",
+		[3, 3, 2, 1],
+	),
+	curated(
+		206749,
+		"Echeveria elegans",
+		{ fr: "Echeveria", en: "Mexican snowball" },
+		"succulent",
+		[3, 3, 2, 1],
+		{
+			floweringSeasons: ["spring", "summer"],
+		},
+	),
+	curated(
+		76465,
+		"Crassula ovata",
+		{ fr: "Arbre de jade", en: "Jade plant" },
+		"succulent",
+		[3, 3, 2, 1],
+		{ toxic: true },
+	),
+	curated(
+		276072,
+		"Sedum morganianum",
+		{ fr: "Queue d'âne", en: "Burro's tail" },
+		"succulent",
+		[3, 3, 2, 1],
+	),
+	curated(
+		164326,
+		"Kalanchoe blossfeldiana",
+		{ fr: "Kalanchoé", en: "Flaming Katy" },
+		"succulent",
+		[3, 3, 2, 1],
+		{
+			toxic: true,
+			floweringSeasons: ["winter", "spring"],
+		},
+	),
+	curated(
+		78267,
+		"Opuntia microdasys",
+		{ fr: "Oreilles de lapin", en: "Bunny ears cactus" },
+		"cactus",
+		[3, 3, 2, 1],
+	),
+	curated(
+		273594,
+		"Mammillaria elongata",
+		{ fr: "Mammillaria", en: "Ladyfinger cactus" },
+		"cactus",
+		[3, 3, 2, 1],
+		{ floweringSeasons: ["spring"] },
+	),
+	curated(
+		869962,
+		"Kroenleinia grusonii",
+		{ fr: "Coussin de belle-mère", en: "Golden barrel cactus" },
+		"cactus",
+		[3, 3, 2, 1],
+	),
+	curated(
+		51223,
+		"Schlumbergera truncata",
+		{ fr: "Cactus de Noël", en: "Christmas cactus" },
+		"cactus",
+		[2, 2, 1, 2],
+		{ floweringSeasons: ["winter"] },
+	),
+	curated(
+		322318,
+		"Euphorbia trigona",
+		{ fr: "Cactus cathédrale", en: "African milk tree" },
+		"succulent",
+		[3, 3, 2, 1],
+		{ toxic: true },
+	),
+	curated(
+		479482,
+		"Gasteria carinata",
+		{ fr: "Gasteria", en: "Gasteria" },
+		"succulent",
+		[2, 3, 2, 1],
+	),
+	curated(
+		186097,
+		"Lithops",
+		{ fr: "Plante caillou", en: "Living stones" },
+		"succulent",
+		[3, 3, 2, 1],
+		{ floweringSeasons: ["autumn"] },
+	),
+	curated(
+		69235,
+		"Anthurium andraeanum",
+		{ fr: "Anthurium", en: "Flamingo flower" },
+		null,
+		[2, 2, 3, 3],
+		{
+			toxic: true,
+			floweringSeasons: ["spring", "summer", "autumn"],
+		},
+	),
+	curated(
+		129523,
+		"Hoya carnosa",
+		{ fr: "Fleur de porcelaine", en: "Wax plant" },
+		"climber",
+		[2, 2, 2, 2],
+		{ floweringSeasons: ["summer"] },
+	),
+	curated(
+		927983,
+		"Streptocarpus ionanthus",
+		{ fr: "Violette africaine", en: "African violet" },
+		null,
+		[2, 2, 2, 2],
+		{
+			floweringSeasons: ["spring", "summer", "autumn", "winter"],
+		},
+	),
+	curated(
+		341141,
+		"Cyclamen persicum",
+		{ fr: "Cyclamen", en: "Cyclamen" },
+		null,
+		[2, 2, 1, 2],
+		{
+			toxic: true,
+			floweringSeasons: ["autumn", "winter"],
+		},
+	),
+	curated(
+		327898,
+		"Begonia rex",
+		{ fr: "Bégonia rex", en: "Rex begonia" },
+		"foliage",
+		[2, 2, 2, 3],
+		{ toxic: true },
+	),
+	curated(
+		1628098,
+		"Hibiscus rosa-sinensis",
+		{ fr: "Hibiscus", en: "Hibiscus" },
+		"shrub",
+		[3, 1, 2, 2],
+		{
+			floweringSeasons: ["spring", "summer"],
+		},
+	),
+	curated(
+		67756,
+		"Dendrobium nobile",
+		{ fr: "Dendrobium", en: "Dendrobium" },
+		"orchid",
+		[3, 2, 2, 2],
+		{
+			floweringSeasons: ["winter", "spring"],
+		},
+	),
+	curated(
+		331124,
+		"Citrus limon",
+		{ fr: "Citronnier", en: "Lemon tree" },
+		"citrus",
+		[3, 2, 2, 2],
+		{
+			toxic: true,
+			floweringSeasons: ["spring"],
+		},
+	),
+	curated(
+		210990,
+		"Gardenia jasminoides",
+		{ fr: "Gardénia", en: "Gardenia" },
+		"shrub",
+		[2, 2, 2, 3],
+		{
+			toxic: true,
+			floweringSeasons: ["summer"],
+		},
+	),
+	curated(
+		342641,
+		"Jasminum polyanthum",
+		{ fr: "Jasmin de Chine", en: "Pink jasmine" },
+		"climber",
+		[3, 2, 1, 2],
+		{
+			floweringSeasons: ["winter", "spring"],
+		},
+	),
+	curated(
+		276734,
+		"Guzmania lingulata",
+		{ fr: "Guzmania", en: "Guzmania" },
+		null,
+		[2, 2, 2, 3],
+		{
+			floweringSeasons: ["summer"],
+			floweringType: "monocarpic",
+		},
+	),
+	curated(
+		52666,
+		"Dionaea muscipula",
+		{ fr: "Dionée", en: "Venus flytrap" },
+		"carnivorous",
+		[3, 1, 2, 3],
+		{
+			floweringSeasons: ["spring"],
+		},
+	),
+	curated(
+		61398,
+		"Ocimum basilicum",
+		{ fr: "Basilic", en: "Basil" },
+		"herb",
+		[3, 1, 3, 2],
+		{
+			floweringSeasons: ["summer"],
+			floweringType: "monocarpic",
+			lifespan: "annual",
+		},
+	),
+	curated(
+		62652,
+		"Mentha spicata",
+		{ fr: "Menthe verte", en: "Spearmint" },
+		"herb",
+		[2, 1, 2, 2],
+		{
+			toxic: true,
+			outdoor: true,
+			floweringSeasons: ["summer"],
+		},
+	),
+	curated(
+		636795,
+		"Salvia rosmarinus",
+		{ fr: "Romarin", en: "Rosemary" },
+		"herb",
+		[3, 2, 1, 1],
+		{
+			outdoor: true,
+			floweringSeasons: ["spring"],
+		},
+	),
+	curated(
+		50996,
+		"Ficus benjamina",
+		{ fr: "Figuier pleureur", en: "Weeping fig" },
+		"foliage",
+		[2, 2, 2, 2],
+		{ toxic: true },
+	),
+	curated(
+		143208,
+		"Syngonium podophyllum",
+		{ fr: "Syngonium", en: "Arrowhead plant" },
+		"climber",
+		[2, 2, 2, 2],
+		{ toxic: true },
+	),
+	curated(
+		418734,
+		"Ceropegia woodii",
+		{ fr: "Chaîne des cœurs", en: "String of hearts" },
+		"climber",
+		[2, 2, 2, 1],
+		{ floweringSeasons: ["summer"] },
+	),
+	curated(
+		943005,
+		"Curio rowleyanus",
+		{ fr: "Collier de perles", en: "String of pearls" },
+		"succulent",
+		[2, 2, 2, 1],
+		{
+			toxic: true,
+			floweringSeasons: ["spring"],
+		},
+	),
+	curated(
+		291380,
+		"Ficus retusa",
+		{ fr: "Ficus retusa", en: "Cuban laurel" },
+		"bonsai",
+		[3, 2, 2, 2],
+		{ toxic: true },
+	),
+	curated(
+		54982,
+		"Ficus microcarpa",
+		{ fr: "Ficus Ginseng", en: "Ginseng fig" },
+		"bonsai",
+		[3, 2, 2, 2],
+		{ toxic: true },
+	),
 ];
 
 type PickedPhoto = { url: string; attribution: string };
@@ -449,3 +862,14 @@ export const categoryTaxonIds = (category: Category) =>
 
 export const curatedPlant = (taxonId: number) =>
 	CURATED_PLANTS.find((plant) => plant.taxonId === taxonId);
+
+export const usageName = (plant: CuratedPlant) =>
+	locale() === "en" ? plant.names.en : plant.names.fr;
+
+// The names people use, like "Pothos", that iNaturalist may not know
+export const searchCuratedPlants = (query: string) => {
+	const needle = normalizeForSearch(query.trim());
+	return CURATED_PLANTS.filter((plant) =>
+		normalizeForSearch(usageName(plant)).includes(needle),
+	);
+};

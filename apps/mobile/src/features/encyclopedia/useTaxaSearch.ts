@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react";
 import {
 	fetchTaxa,
+	searchFirstPage,
 	searchTaxa,
 	type TaxaPage,
 	type Taxon,
 	type TaxonPhoto,
 } from "@/features/encyclopedia/inaturalist";
 import { useDebouncedSearch } from "@/utils/useDebouncedSearch";
-
-const firstPage = (query: string) => searchTaxa(query, 1);
 
 type NextPages = {
 	firstPage: TaxaPage | null;
@@ -82,7 +81,7 @@ const useCompletedPhotos = (taxa: Taxon[]) => {
 };
 
 export const useTaxaSearch = (query: string) => {
-	const search = useDebouncedSearch<TaxaPage>(query, firstPage);
+	const search = useDebouncedSearch<TaxaPage>(query, searchFirstPage);
 	const [stored, setStored] = useState(noNextPages(null));
 	// Pages loaded, or loading, after another first page belong to an older search
 	const next =

@@ -7,8 +7,14 @@ import {
 import { useTaxaSearch } from "@/features/encyclopedia/useTaxaSearch";
 import { SEARCH_DELAY_MS } from "@/utils/useDebouncedSearch";
 
+// The first page goes through the merged search, its curated part tested on its own
 jest.mock("@/features/encyclopedia/inaturalist", () => ({
 	searchTaxa: jest.fn(),
+	searchFirstPage: jest.fn((query: string) =>
+		jest
+			.requireMock("@/features/encyclopedia/inaturalist")
+			.searchTaxa(query, 1),
+	),
 	fetchTaxa: jest.fn(),
 }));
 

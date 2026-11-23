@@ -1,6 +1,12 @@
 import { nativeApplicationVersion } from "expo-application";
 import { z } from "zod";
-import { pickedPhoto } from "@/features/encyclopedia/curatedPlants";
+import {
+	type CuratedPlant,
+	curatedPlant,
+	pickedPhoto,
+	searchCuratedPlants,
+	usageName,
+} from "@/features/encyclopedia/curatedPlants";
 import type { PlantType } from "@/features/plants/plantSchema";
 import { getJson } from "@/utils/getJson";
 import { locale } from "@/utils/i18n";
@@ -120,6 +126,13 @@ const pickedTaxonPhoto = (taxonId: number) => {
 	return photo ? toTaxonPhoto(photo.url, photo.attribution) : null;
 };
 
+// A curated plant goes by the name people use, like "Monstera" rather than "Faux philodendron"
+const commonName = (id: number, inaturalistName: string | null | undefined) => {
+	const plant = curatedPlant(id);
+	if (plant) return usageName(plant);
+	return inaturalistName ? upperFirst(inaturalistName) : null;
+};
+
 const toTaxon = (result: unknown): Taxon[] => {
 	const parsed = taxonSchema.safeParse(result);
 	if (!parsed.success) return [];
@@ -129,9 +142,7 @@ const toTaxon = (result: unknown): Taxon[] => {
 	return [
 		{
 			id: taxon.id,
-			name: taxon.preferred_common_name
-				? upperFirst(taxon.preferred_common_name)
-				: taxon.name,
+			name: commonName(taxon.id, taxon.preferred_common_name) ?? taxon.name,
 			scientificName: taxon.name,
 			family:
 				taxon.ancestors?.find((ancestor) => ancestor.rank === "family")?.name ??
@@ -143,7 +154,8 @@ const toTaxon = (result: unknown): Taxon[] => {
 					taxon.default_photo,
 					...(taxon.taxon_photos ?? []).map(({ photo }) => photo),
 				]),
-			guessedType: guessPlantType(taxon.ancestor_ids),
+			guessedType:
+				curatedPlant(taxon.id)?.type ?? guessPlantType(taxon.ancestor_ids),
 		},
 	];
 };
@@ -175,6 +187,33 @@ export const searchTaxa = (query: string, page: number): Promise<TaxaPage> =>
 		page: String(page),
 		per_page: String(SEARCH_PAGE_SIZE),
 	});
+
+// Built from the curated data alone: the family comes with the detail screen
+const curatedTaxon = (plant: CuratedPlant): Taxon => ({
+	id: plant.taxonId,
+	name: usageName(plant),
+	scientificName: plant.scientificName,
+	family: null,
+	photo: pickedTaxonPhoto(plant.taxonId),
+	guessedType: plant.type,
+});
+
+// The curated plants known by that name come first, then iNaturalist's; offline, they show alone.
+// ponytail: one found again on a later iNaturalist page is counted twice in the total, and the
+// list then only ends on an empty page: one request more
+export const searchFirstPage = async (query: string): Promise<TaxaPage> => {
+	const curated = searchCuratedPlants(query).map(curatedTaxon);
+	const page = await searchTaxa(query, 1).catch((error: unknown) => {
+		if (curated.length === 0) throw error;
+		return { total: 0, taxa: [] };
+	});
+	const curatedIds = new Set(curated.map((taxon) => taxon.id));
+	const others = page.taxa.filter((taxon) => !curatedIds.has(taxon.id));
+	return {
+		total: page.total + curated.length - (page.taxa.length - others.length),
+		taxa: [...curated, ...others],
+	};
+};
 
 // A page of 0 results is ignored by the service: 1 is the lightest
 export const countPlants = async () =>
