@@ -30,6 +30,7 @@
 			"en": "./src/locales/native/en.json"
 		},
 		"plugins": [
+			"expo-background-task",
 			[
 				"expo-build-properties",
 				{
@@ -57,28 +58,7 @@
 					"microphonePermission": false
 				}
 			],
-			[
-				"expo-notifications",
-				{
-					"enableRemoteNotifications": false,
-					"icon": "./assets/images/notification-icon.png",
-					"color": "#125B44"
-				}
-			],
-			"expo-router",
-			"expo-sqlite",
-			[
-				"expo-splash-screen",
-				{
-					"backgroundColor": "#125B44",
-					"image": "./assets/images/splash-icon.png",
-					"imageWidth": 125
-				}
-			],
-			"expo-status-bar",
-			"expo-web-browser",
-			"@react-native-vector-icons/ionicons",
-			"expo-background-task",
+			"expo-localization",
 			[
 				"expo-location",
 				{
@@ -90,7 +70,27 @@
 					"isAndroidBackgroundLocationEnabled": false
 				}
 			],
-			"expo-localization"
+			[
+				"expo-notifications",
+				{
+					"enableRemoteNotifications": false,
+					"icon": "./assets/images/notification-icon.png",
+					"color": "#125B44"
+				}
+			],
+			"expo-router",
+			[
+				"expo-splash-screen",
+				{
+					"backgroundColor": "#125B44",
+					"image": "./assets/images/splash-icon.png",
+					"imageWidth": 125
+				}
+			],
+			"expo-sqlite",
+			"expo-status-bar",
+			"expo-web-browser",
+			"@react-native-vector-icons/ionicons"
 		],
 		"experiments": {
 			"typedRoutes": true,
