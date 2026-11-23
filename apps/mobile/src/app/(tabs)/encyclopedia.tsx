@@ -1,6 +1,6 @@
 import { useNavigation } from "expo-router";
-import { useEffect, useState } from "react";
-import { FlatList, ScrollView, View } from "react-native";
+import { type ComponentRef, useEffect, useRef, useState } from "react";
+import { FlatList, ScrollView, useWindowDimensions, View } from "react-native";
 import Chip from "@/components/Chip";
 import { ScreenPlaceholder } from "@/components/ScreenPlaceholder";
 import SearchField from "@/components/SearchField";
@@ -63,6 +63,24 @@ function Encyclopedia() {
 	const [query, setQuery] = useState("");
 	const [category, setCategory] = useState<Category>("popular");
 	const tabBarOffset = useTabBarOffset();
+	const { width } = useWindowDimensions();
+	const chipsRef = useRef<ComponentRef<typeof ScrollView>>(null);
+	const chipLayouts = useRef<
+		Partial<Record<Category, { x: number; width: number }>>
+	>({});
+	const chipsWidth = useRef(0);
+	// Centers the chosen tab, so one cut by the screen edge shows whole.
+	// iOS does not clamp the offset: the first and last tabs would leave a gap
+	const selectCategory = (key: Category) => {
+		setCategory(key);
+		const layout = chipLayouts.current[key];
+		if (layout) {
+			const centered = layout.x + layout.width / 2 - width / 2;
+			chipsRef.current?.scrollTo({
+				x: Math.max(0, Math.min(centered, chipsWidth.current - width)),
+			});
+		}
+	};
 	const searching = query.trim().length >= SEARCH_MIN_LENGTH;
 	const search = useTaxaSearch(query);
 	const popular = useCachedFetch(`popular:${locale()}:${category}`, () =>
@@ -126,6 +144,10 @@ function Encyclopedia() {
 						<View className="gap-6 pb-2">
 							{!searching && (
 								<ScrollView
+									ref={chipsRef}
+									onContentSizeChange={(contentWidth) => {
+										chipsWidth.current = contentWidth;
+									}}
 									horizontal
 									showsHorizontalScrollIndicator={false}
 									accessibilityRole="tablist"
@@ -137,7 +159,10 @@ function Encyclopedia() {
 											key={key}
 											label={t(`encyclopedia.categories.${key}`)}
 											selected={category === key}
-											onPress={() => setCategory(key)}
+											onLayout={({ nativeEvent }) => {
+												chipLayouts.current[key] = nativeEvent.layout;
+											}}
+											onPress={() => selectCategory(key)}
 										/>
 									))}
 								</ScrollView>
