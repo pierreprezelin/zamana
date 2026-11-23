@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import {
 	fetchTaxa,
+	MAX_IDS_PER_REQUEST,
 	searchFirstPage,
 	searchTaxa,
 	type TaxaPage,
@@ -28,40 +29,49 @@ const noNextPages = (page: TaxaPage | null): NextPages => ({
 });
 
 const LOADING = "loading";
+const FAILED = "failed";
 
 // Search results only come with their default photo, often under a closed licence,
 // while the full plant has more: fetched for the results left without one
 const useCompletedPhotos = (taxa: Taxon[]) => {
 	// null once answered without an open photo, so the plant is not asked again
 	const [photos, setPhotos] = useState<
-		Record<number, TaxonPhoto | null | typeof LOADING>
+		Record<number, TaxonPhoto | null | typeof LOADING | typeof FAILED>
 	>({});
 	const missingIds = taxa
 		.filter((taxon) => !taxon.photo && !(taxon.id in photos))
 		.map((taxon) => taxon.id)
 		.join(",");
+	const failedIds = taxa
+		.filter((taxon) => photos[taxon.id] === FAILED)
+		.map((taxon) => taxon.id);
 
+	// biome-ignore lint/correctness/useExhaustiveDependencies: the failed photos ride along with the next missing ones, rather than hammering the service offline
 	useEffect(() => {
 		if (!missingIds) return;
-		const ids = missingIds.split(",").map(Number);
-		const answer = (found: Taxon[]) =>
+		const missing = missingIds.split(",").map(Number);
+		const ids = [
+			...missing,
+			...failedIds.slice(0, Math.max(0, MAX_IDS_PER_REQUEST - missing.length)),
+		];
+		const settle = (status: null | typeof FAILED, found: Taxon[] = []) =>
 			setPhotos((current) => ({
 				...current,
-				...Object.fromEntries(ids.map((id) => [id, null])),
+				...Object.fromEntries(ids.map((id) => [id, status])),
 				...Object.fromEntries(found.map((taxon) => [taxon.id, taxon.photo])),
 			}));
 		setPhotos((current) => ({
-			...Object.fromEntries(ids.map((id) => [id, LOADING])),
 			...current,
+			...Object.fromEntries(ids.map((id) => [id, LOADING])),
 		}));
 		fetchTaxa(ids)
-			.then(answer)
-			.catch(() => answer([]));
+			.then((found) => settle(null, found))
+			.catch(() => settle(FAILED));
 	}, [missingIds]);
 
 	const photoOf = (id: number) => {
 		const photo = photos[id];
-		return photo === LOADING ? null : photo;
+		return photo === LOADING || photo === FAILED ? null : photo;
 	};
 
 	const withoutPhoto = new Set(

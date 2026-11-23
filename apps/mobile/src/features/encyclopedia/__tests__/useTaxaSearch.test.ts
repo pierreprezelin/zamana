@@ -16,6 +16,7 @@ jest.mock("@/features/encyclopedia/inaturalist", () => ({
 			.searchTaxa(query, 1),
 	),
 	fetchTaxa: jest.fn(),
+	MAX_IDS_PER_REQUEST: 30,
 }));
 
 jest.useFakeTimers();
@@ -218,6 +219,30 @@ describe("useTaxaSearch", () => {
 		await settle();
 
 		expect(result.current.taxa).toEqual([taxon(1)]);
+		expect(result.current.isPhotoLoading(1)).toBe(false);
+	});
+
+	it("asks again the photos it failed to complete with the next ones", async () => {
+		mockedSearch
+			.mockResolvedValueOnce({ total: 2, taxa: [taxon(1)] })
+			.mockResolvedValueOnce({ total: 2, taxa: [taxon(2)] });
+		mockedFetchTaxa
+			.mockRejectedValueOnce(new Error("offline"))
+			.mockResolvedValueOnce([
+				{ ...taxon(2), photo: photo(2) },
+				{ ...taxon(1), photo: photo(1) },
+			]);
+		const { result } = await renderHook(() => useTaxaSearch("ficus"));
+		await settle();
+
+		await act(async () => result.current.loadMore());
+
+		expect(mockedFetchTaxa).toHaveBeenCalledTimes(2);
+		expect(mockedFetchTaxa).toHaveBeenLastCalledWith([2, 1]);
+		expect(result.current.taxa.map(({ photo }) => photo)).toEqual([
+			photo(1),
+			photo(2),
+		]);
 	});
 	it("tells which photos are still being completed", async () => {
 		let answerPhotos: (taxa: Taxon[]) => void = () => {};

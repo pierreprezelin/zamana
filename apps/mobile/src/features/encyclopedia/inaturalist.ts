@@ -20,7 +20,7 @@ const PLANTAE_ID = "47126";
 // What a gardener adds, without the genera and families
 const RANKS = "species,hybrid,variety,form";
 export const SEARCH_PAGE_SIZE = 20;
-const MAX_IDS_PER_REQUEST = 30;
+export const MAX_IDS_PER_REQUEST = 30;
 
 const HEADERS = { "User-Agent": `Zamana/${nativeApplicationVersion ?? "dev"}` };
 
