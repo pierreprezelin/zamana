@@ -17,12 +17,9 @@ import {
 	useWeatherStore,
 } from "@/features/weather/useWeatherStore";
 import { alertedPlants } from "@/features/weather/weatherRisks";
-import type { Place } from "@/features/weather/weatherTypes";
 import { formatTime } from "@/utils/dates";
 import { t } from "@/utils/i18n";
-
-const SEARCH_DELAY_MS = 400;
-const SEARCH_MIN_LENGTH = 2;
+import { useDebouncedSearch } from "@/utils/useDebouncedSearch";
 
 const sourceOptions: { value: PlaceSource; label: string }[] = [
 	{ value: "device", label: t("weather.settings.device") },
@@ -32,29 +29,6 @@ const sourceOptions: { value: PlaceSource; label: string }[] = [
 const timeOf = (iso: string) => {
 	const date = new Date(iso);
 	return formatTime(date.getHours(), date.getMinutes());
-};
-
-const useCitySearch = (query: string) => {
-	const [results, setResults] = useState<Place[] | null>(null);
-
-	useEffect(() => {
-		if (query.trim().length < SEARCH_MIN_LENGTH) {
-			setResults(null);
-			return;
-		}
-		let current = true;
-		const timer = setTimeout(() => {
-			searchCities(query.trim())
-				.then((places) => current && setResults(places))
-				.catch(() => current && setResults([]));
-		}, SEARCH_DELAY_MS);
-		return () => {
-			current = false;
-			clearTimeout(timer);
-		};
-	}, [query]);
-
-	return results;
 };
 
 function ForecastStatus({ switching }: { switching: boolean }) {
@@ -96,7 +70,9 @@ function ForecastStatus({ switching }: { switching: boolean }) {
 
 function CitySearch() {
 	const [query, setQuery] = useState("");
-	const results = useCitySearch(query);
+	const search = useDebouncedSearch(query, searchCities);
+	// A failed search reads as no city found, like a wrong spelling
+	const results = search.status === "error" ? [] : search.result;
 	const setCity = useWeatherStore((state) => state.setCity);
 
 	return (
