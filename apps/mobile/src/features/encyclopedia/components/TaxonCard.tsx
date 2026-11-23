@@ -37,11 +37,9 @@ export const TaxonCard = memo(function TaxonCard({
 						>
 							{taxon.name}
 						</Text>
-						{taxon.name !== taxon.scientificName && (
-							<Text numberOfLines={1} className="text-base text-muted">
-								{taxon.scientificName}
-							</Text>
-						)}
+						<Text numberOfLines={1} className="text-sm text-muted">
+							{taxon.scientificName}
+						</Text>
 					</View>
 				</Pressable>
 			</Link>
