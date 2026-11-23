@@ -28,11 +28,15 @@ const noNextPages = (page: TaxaPage | null): NextPages => ({
 	failed: false,
 });
 
+const LOADING = "loading";
+
 // Search results only come with their default photo, often under a closed licence,
 // while the full plant has more: fetched for the results left without one
 const useCompletedPhotos = (taxa: Taxon[]) => {
-	// null once asked, so a plant without any open photo is not asked again
-	const [photos, setPhotos] = useState<Record<number, TaxonPhoto | null>>({});
+	// null once answered without an open photo, so the plant is not asked again
+	const [photos, setPhotos] = useState<
+		Record<number, TaxonPhoto | null | typeof LOADING>
+	>({});
 	const missingIds = taxa
 		.filter((taxon) => !taxon.photo && !(taxon.id in photos))
 		.map((taxon) => taxon.id)
@@ -41,23 +45,40 @@ const useCompletedPhotos = (taxa: Taxon[]) => {
 	useEffect(() => {
 		if (!missingIds) return;
 		const ids = missingIds.split(",").map(Number);
-		const asked = Object.fromEntries(ids.map((id) => [id, null]));
-		setPhotos((current) => ({ ...asked, ...current }));
+		const answer = (found: Taxon[]) =>
+			setPhotos((current) => ({
+				...current,
+				...Object.fromEntries(ids.map((id) => [id, null])),
+				...Object.fromEntries(found.map((taxon) => [taxon.id, taxon.photo])),
+			}));
+		setPhotos((current) => ({
+			...Object.fromEntries(ids.map((id) => [id, LOADING])),
+			...current,
+		}));
 		fetchTaxa(ids)
-			.then((found) =>
-				setPhotos((current) => ({
-					...current,
-					...Object.fromEntries(found.map((taxon) => [taxon.id, taxon.photo])),
-				})),
-			)
-			.catch(() => {});
+			.then(answer)
+			.catch(() => answer([]));
 	}, [missingIds]);
 
-	return taxa.map((taxon) =>
-		taxon.photo || !photos[taxon.id]
-			? taxon
-			: { ...taxon, photo: photos[taxon.id] },
+	const photoOf = (id: number) => {
+		const photo = photos[id];
+		return photo === LOADING ? null : photo;
+	};
+
+	const withoutPhoto = new Set(
+		taxa.filter((taxon) => !taxon.photo).map((taxon) => taxon.id),
 	);
+
+	return {
+		completedTaxa: taxa.map((taxon) =>
+			taxon.photo || !photoOf(taxon.id)
+				? taxon
+				: { ...taxon, photo: photoOf(taxon.id) },
+		),
+		// A result just shown, not asked yet, is loading too
+		isPhotoLoading: (id: number) =>
+			photos[id] === LOADING || (!(id in photos) && withoutPhoto.has(id)),
+	};
 };
 
 export const useTaxaSearch = (query: string) => {
@@ -68,7 +89,7 @@ export const useTaxaSearch = (query: string) => {
 		stored.firstPage === search.result ? stored : noNextPages(search.result);
 
 	const taxa = [...(search.result?.taxa ?? []), ...next.taxa];
-	const completedTaxa = useCompletedPhotos(taxa);
+	const { completedTaxa, isPhotoLoading } = useCompletedPhotos(taxa);
 	const total = search.result?.total ?? 0;
 	const hasMore =
 		search.status === "success" &&
@@ -104,6 +125,7 @@ export const useTaxaSearch = (query: string) => {
 		status: search.status,
 		retry: search.retry,
 		taxa: completedTaxa,
+		isPhotoLoading,
 		total,
 		hasMore,
 		loadingMore: next.loading,

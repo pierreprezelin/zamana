@@ -8,6 +8,7 @@ import { useTabBarOffset } from "@/components/TabBar";
 import Text from "@/components/Text";
 import { LoadState } from "@/features/encyclopedia/components/LoadState";
 import { TaxonCard } from "@/features/encyclopedia/components/TaxonCard";
+import { TaxonListSkeleton } from "@/features/encyclopedia/components/TaxonCardSkeleton";
 import {
 	CATEGORIES,
 	type Category,
@@ -19,6 +20,10 @@ import { useTaxaSearch } from "@/features/encyclopedia/useTaxaSearch";
 import { usePlantStore } from "@/features/plants/usePlantStore";
 import { locale, pluralForm, t } from "@/utils/i18n";
 import { SEARCH_MIN_LENGTH } from "@/utils/useDebouncedSearch";
+
+// Enough to fill the screen, then a hint of the next page at the bottom
+const LOADING_CARDS = 6;
+const NEXT_PAGE_LOADING_CARDS = 2;
 
 const plantCount = (amount: number) =>
 	t(`garden.plantCount.${pluralForm(amount)}`, {
@@ -105,7 +110,12 @@ function Encyclopedia() {
 					// The previous results stay while the next search loads, rather than flashing an empty list
 					data={shown.taxa}
 					keyExtractor={(taxon) => String(taxon.id)}
-					renderItem={({ item }) => <TaxonCard taxon={item} />}
+					renderItem={({ item }) => (
+						<TaxonCard
+							taxon={item}
+							photoLoading={searching && search.isPhotoLoading(item.id)}
+						/>
+					)}
 					keyboardDismissMode="on-drag"
 					keyboardShouldPersistTaps="handled"
 					contentContainerClassName="gap-2 px-4"
@@ -146,19 +156,19 @@ function Encyclopedia() {
 									? t("encyclopedia.noResult", { query: query.trim() })
 									: t("encyclopedia.loadFailed")}
 							</Text>
+						) : shown.status === "error" ? (
+							<LoadState failed onRetry={shown.retry} />
 						) : (
-							<LoadState
-								failed={shown.status === "error"}
-								onRetry={shown.retry}
-							/>
+							<TaxonListSkeleton count={LOADING_CARDS} />
 						)
 					}
 					ListFooterComponent={
-						searching && (search.loadingMore || search.moreFailed) ? (
-							<LoadState
-								failed={search.moreFailed}
-								onRetry={search.retryMore}
-							/>
+						!searching ? undefined : search.moreFailed ? (
+							<LoadState failed onRetry={search.retryMore} />
+						) : search.loadingMore ? (
+							<View className="pt-2">
+								<TaxonListSkeleton count={NEXT_PAGE_LOADING_CARDS} />
+							</View>
 						) : undefined
 					}
 				/>

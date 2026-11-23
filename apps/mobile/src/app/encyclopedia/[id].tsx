@@ -9,6 +9,7 @@ import Text from "@/components/Text";
 import WarningBanner from "@/components/WarningBanner";
 import { LimitedInfoNote } from "@/features/encyclopedia/components/LimitedInfoNote";
 import { LoadState } from "@/features/encyclopedia/components/LoadState";
+import { TaxonDetailSkeleton } from "@/features/encyclopedia/components/TaxonDetailSkeleton";
 import { curatedPlant } from "@/features/encyclopedia/curatedPlants";
 import { fetchTaxon } from "@/features/encyclopedia/inaturalist";
 import { prefillParams } from "@/features/encyclopedia/plantPrefill";
@@ -41,8 +42,11 @@ export default function EncyclopediaResultScreen() {
 		Number.isInteger(taxonId) ? fetchTaxon(taxonId) : Promise.resolve(null),
 	);
 
+	if (status === "error") {
+		return <LoadState failed onRetry={retry} />;
+	}
 	if (status !== "success") {
-		return <LoadState failed={status === "error"} onRetry={retry} />;
+		return <TaxonDetailSkeleton />;
 	}
 	if (!taxon) {
 		return (

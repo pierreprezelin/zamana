@@ -213,4 +213,23 @@ describe("useTaxaSearch", () => {
 
 		expect(result.current.taxa).toEqual([taxon(1)]);
 	});
+	it("tells which photos are still being completed", async () => {
+		let answerPhotos: (taxa: Taxon[]) => void = () => {};
+		mockedSearch.mockResolvedValue({
+			total: 2,
+			taxa: [{ ...taxon(1), photo: photo(1) }, taxon(2)],
+		});
+		mockedFetchTaxa.mockImplementation(
+			() => new Promise((resolve) => (answerPhotos = resolve)),
+		);
+		const { result } = await renderHook(() => useTaxaSearch("ficus"));
+		await settle();
+
+		expect(result.current.isPhotoLoading(1)).toBe(false);
+		expect(result.current.isPhotoLoading(2)).toBe(true);
+
+		await act(async () => answerPhotos([]));
+
+		expect(result.current.isPhotoLoading(2)).toBe(false);
+	});
 });

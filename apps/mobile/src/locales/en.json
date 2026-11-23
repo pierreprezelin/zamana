@@ -7,6 +7,7 @@
 		"close": "Close",
 		"confirm": "Confirm",
 		"dateTime": "{{date}} · {{time}}",
+		"loading": "Loading…",
 		"learnMore": "Learn more: {{label}}",
 		"save": "Save",
 		"saveFailed": "Saving failed, please try again",
