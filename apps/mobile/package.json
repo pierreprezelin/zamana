@@ -5,6 +5,7 @@
 	"private": true,
 	"scripts": {
 		"start": "expo start",
+		"eas-build-pre-install": "test -f assets/fonts/Recoleta-SemiBold.otf || curl -fsSL \"$RECOLETA_OTF_URL\" -o assets/fonts/Recoleta-SemiBold.otf",
 		"update:android": "expo run:android",
 		"update:android:clean": "expo prebuild --clean --platform android && expo run:android",
 		"update:ios": "expo run:ios",

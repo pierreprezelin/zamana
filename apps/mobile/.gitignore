@@ -14,6 +14,10 @@ dist/
 web-build/
 expo-env.d.ts
 
+# Fonts
+# Commercial font, not redistributable: downloaded at build time from RECOLETA_OTF_URL on EAS build servers
+assets/fonts/Recoleta-SemiBold.otf
+
 # iOS
 /ios
 *.ipa
