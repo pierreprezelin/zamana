@@ -132,11 +132,13 @@ const toTaxon = (result: unknown): Taxon[] => {
 			family:
 				taxon.ancestors?.find((ancestor) => ancestor.rank === "family")?.name ??
 				null,
+			// A curated plant shows an indoor photo, as it grows at home, rather than in the wild
 			photo:
+				pickedTaxonPhoto(taxon.id) ??
 				freePhoto([
 					taxon.default_photo,
 					...(taxon.taxon_photos ?? []).map(({ photo }) => photo),
-				]) ?? pickedTaxonPhoto(taxon.id),
+				]),
 			guessedType: guessPlantType(taxon.ancestor_ids),
 		},
 	];

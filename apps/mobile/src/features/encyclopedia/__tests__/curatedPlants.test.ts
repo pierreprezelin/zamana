@@ -3,7 +3,9 @@ import {
 	CURATED_PLANTS,
 	categoryTaxonIds,
 	curatedPlant,
+	pickedPhoto,
 } from "@/features/encyclopedia/curatedPlants";
+import { isInaturalistPhoto } from "@/features/encyclopedia/inaturalist";
 import { plantInputSchema } from "@/features/plants/plantSchema";
 
 const plantsOf = (category: (typeof CATEGORIES)[number]) =>
@@ -69,6 +71,16 @@ describe("curatedPlants", () => {
 				(plant) => plant?.type === "succulent" || plant?.type === "cactus",
 			),
 		).toBe(true);
+	});
+
+	it("picks for each plant an open photo served by iNaturalist", () => {
+		for (const { taxonId } of CURATED_PLANTS) {
+			const photo = pickedPhoto(taxonId);
+			expect(isInaturalistPhoto(photo?.url)).toBe(true);
+			expect(photo?.attribution).toMatch(
+				/\(CC BY(-SA)?\)|no rights reserved|public domain/i,
+			);
+		}
 	});
 
 	it("finds no care data for a plant outside the list", () => {
