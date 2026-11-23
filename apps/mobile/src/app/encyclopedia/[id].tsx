@@ -57,7 +57,6 @@ export default function EncyclopediaResultScreen() {
 	}
 
 	const curated = curatedPlant(taxon.id);
-	const type = curated ? curated.type : taxon.guessedType;
 	const showHelp = (content: typeof help) => {
 		setHelp(content);
 		helpSheetRef.current?.present();
@@ -111,7 +110,7 @@ export default function EncyclopediaResultScreen() {
 					rows={[
 						{
 							label: t("plant.info.type"),
-							value: type && plantTypeLabel(type),
+							value: taxon.guessedType && plantTypeLabel(taxon.guessedType),
 						},
 						{ label: t("plant.info.name"), value: taxon.name },
 						{

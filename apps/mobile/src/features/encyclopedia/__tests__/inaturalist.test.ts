@@ -1,9 +1,11 @@
+import i18next from "i18next";
 import { pickedPhoto } from "@/features/encyclopedia/curatedPlants";
 import {
 	countPlants,
 	fetchTaxa,
 	fetchTaxon,
 	guessPlantType,
+	searchFirstPage,
 	searchTaxa,
 } from "@/features/encyclopedia/inaturalist";
 
@@ -290,5 +292,93 @@ describe("guessPlantType", () => {
 
 	it("guesses nothing for other plants", () => {
 		expect(guessPlantType([47126, 50998])).toBeNull();
+	});
+});
+
+describe("usage names", () => {
+	afterEach(() => i18next.changeLanguage("fr"));
+
+	const snakePlant = {
+		...rubberPlant,
+		id: 67710,
+		name: "Sansevieria trifasciata",
+		preferred_common_name: "sansevière",
+	};
+
+	it("names a curated plant as it is known, in the app language", async () => {
+		respond({ total_results: 1, results: [snakePlant] });
+		expect((await searchTaxa("sansevieria", 1)).taxa[0].name).toBe(
+			"Langue de belle-mère",
+		);
+
+		await i18next.changeLanguage("en");
+		respond({ total_results: 1, results: [snakePlant] });
+		expect((await searchTaxa("sansevieria", 1)).taxa[0].name).toBe(
+			"Snake plant",
+		);
+	});
+
+	it("gives a curated plant its curated type, however it is reached", async () => {
+		respond({ total_results: 1, results: [{ ...rubberPlant, id: 69223 }] });
+		expect((await searchTaxa("pothos", 1)).taxa[0].guessedType).toBe("climber");
+	});
+
+	it("keeps the iNaturalist name of another plant", async () => {
+		respond({ total_results: 1, results: [rubberPlant] });
+		expect((await searchTaxa("hevea", 1)).taxa[0].name).toBe("Caoutchouc");
+	});
+});
+
+describe("searchFirstPage", () => {
+	const pothosId = 69223;
+
+	it("shows the curated plants known by that name before iNaturalist's", async () => {
+		respond({ total_results: 1, results: [rubberPlant] });
+
+		const { taxa } = await searchFirstPage("pothos");
+
+		expect(taxa.map((taxon) => taxon.id)).toEqual([pothosId, rubberPlant.id]);
+		expect(taxa[0]).toMatchObject({
+			name: "Pothos",
+			scientificName: "Epipremnum aureum",
+			guessedType: "climber",
+		});
+		expect(taxa[0].photo).not.toBeNull();
+	});
+
+	it("drops the iNaturalist copy of a curated plant shown first", async () => {
+		respond({
+			total_results: 2,
+			results: [{ ...rubberPlant, id: pothosId }, rubberPlant],
+		});
+
+		const page = await searchFirstPage("pothos");
+
+		expect(page.taxa.map((taxon) => taxon.id)).toEqual([
+			pothosId,
+			rubberPlant.id,
+		]);
+		expect(page.total).toBe(2);
+	});
+
+	it("still shows the curated plants when iNaturalist cannot be reached", async () => {
+		respond({}, false);
+
+		const page = await searchFirstPage("pothos");
+
+		expect(page.taxa.map((taxon) => taxon.id)).toEqual([pothosId]);
+		expect(page.total).toBe(1);
+	});
+
+	it("fails like iNaturalist when no curated plant is known by that name", async () => {
+		respond({}, false);
+
+		await expect(searchFirstPage("baobab")).rejects.toThrow();
+	});
+
+	it("counts the curated plants missing from the iNaturalist results", async () => {
+		respond({ total_results: 1, results: [rubberPlant] });
+
+		expect((await searchFirstPage("pothos")).total).toBe(2);
 	});
 });
