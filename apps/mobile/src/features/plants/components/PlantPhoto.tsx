@@ -8,19 +8,23 @@ import { photoUri } from "@/features/plants/plantPhoto";
 const StyledImage = withUniwind(Image);
 
 type PlantPhotoProps = {
-	photo: string | null;
+	photo?: string | null;
+	url?: string | null;
 	className?: string;
 	iconSize?: number;
 };
 
 export function PlantPhoto({
 	photo,
+	url,
 	className,
 	iconSize = 24,
 }: PlantPhotoProps) {
 	const frameClassName = twMerge("overflow-hidden rounded-xl", className);
 
-	if (!photo) {
+	const uri = url ?? (photo ? photoUri(photo) : null);
+
+	if (!uri) {
 		return (
 			<View
 				className={twMerge(
@@ -39,7 +43,7 @@ export function PlantPhoto({
 
 	return (
 		<StyledImage
-			source={{ uri: photoUri(photo) }}
+			source={{ uri }}
 			contentFit="cover"
 			transition={150}
 			className={frameClassName}

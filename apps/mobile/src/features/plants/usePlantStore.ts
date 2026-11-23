@@ -4,16 +4,18 @@ import { useShallow } from "zustand/react/shallow";
 import { useCareStore } from "@/features/care/useCareStore";
 import { useHistoryStore } from "@/features/history/useHistoryStore";
 import { deletePhoto } from "@/features/plants/plantPhoto";
-import type {
-	ArchiveReason,
-	Plant,
-	PlantData,
+import {
+	type ArchiveReason,
+	type Plant,
+	type PlantData,
+	parsePhotoCredit,
 } from "@/features/plants/plantSchema";
 import { database } from "@/utils/database";
 
 type PlantRow = {
 	id: string;
 	photo: string | null;
+	photo_credit: string | null;
 	nickname: string | null;
 	name: string;
 	type: Plant["type"];
@@ -41,6 +43,7 @@ type PlantRow = {
 const toPlant = (row: PlantRow): Plant => ({
 	id: row.id,
 	photo: row.photo,
+	photoCredit: parsePhotoCredit(row.photo_credit),
 	nickname: row.nickname,
 	name: row.name,
 	type: row.type,
@@ -67,6 +70,7 @@ const toPlant = (row: PlantRow): Plant => ({
 
 const DATA_COLUMNS = [
 	"photo",
+	"photo_credit",
 	"nickname",
 	"name",
 	"type",
@@ -90,6 +94,7 @@ const DATA_COLUMNS = [
 // Same order as DATA_COLUMNS
 const toParams = (data: PlantData) => [
 	data.photo,
+	data.photoCredit && JSON.stringify(data.photoCredit),
 	data.nickname,
 	data.name,
 	data.type,

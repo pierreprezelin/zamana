@@ -79,6 +79,43 @@ describe("plantForm", () => {
 	});
 });
 
+describe("initialFormState with a prefill", () => {
+	it("starts a new plant from the encyclopedia data", () => {
+		const state = initialFormState(undefined, now, {
+			name: "Cactus",
+			type: "cactus",
+			watering: 1,
+			photoUri: "https://static.inaturalist.org/photos/1/large.jpg",
+		});
+
+		expect(state).toMatchObject({
+			name: "Cactus",
+			type: "cactus",
+			watering: 1,
+			light: 2,
+			nickname: "",
+			photoUri: "https://static.inaturalist.org/photos/1/large.jpg",
+		});
+	});
+});
+
+describe("photo credit", () => {
+	it("keeps the credit of a plant photo through the form", () => {
+		const photoCredit = {
+			attribution: "(c) Jane",
+			url: "https://www.inaturalist.org/photos/1",
+		};
+		const state = initialFormState(undefined, now, {
+			name: "Cactus",
+			photoUri: "https://static.inaturalist.org/photos/1/large.jpg",
+			photoCredit,
+		});
+
+		expect(toFormValues(state).photoCredit).toEqual(photoCredit);
+		expect(initialFormState(undefined, now).photoCredit).toBeNull();
+	});
+});
+
 describe("isFormSection", () => {
 	it("only opens a known section from a route parameter", () => {
 		expect(isFormSection("needs")).toBe(true);

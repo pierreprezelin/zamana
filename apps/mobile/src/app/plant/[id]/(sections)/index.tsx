@@ -5,6 +5,7 @@ import { ScrollView, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Toast from "react-native-toast-message";
 import Button from "@/components/Button";
+import CreditLink from "@/components/CreditLink";
 import Text from "@/components/Text";
 import WarningBanner from "@/components/WarningBanner";
 import { formatAge } from "@/features/plants/age";
@@ -129,6 +130,14 @@ export default function PlantInformationScreen() {
 							{plant.notes}
 						</Text>
 					</View>
+				)}
+				{plant.photoCredit && (
+					<CreditLink
+						label={t("plant.info.photoCredit", {
+							attribution: plant.photoCredit.attribution,
+						})}
+						url={plant.photoCredit.url}
+					/>
 				)}
 				<View className="mt-auto gap-2">
 					<Link href={`/plant/${plant.id}/edit`} asChild>

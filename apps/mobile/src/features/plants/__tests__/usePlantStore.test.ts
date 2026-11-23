@@ -17,7 +17,10 @@ jest.mock("@/utils/database", () => ({
 		getAllSync: () => [],
 		runAsync: async (sql: string, ...params: unknown[]) => {
 			if (sql.startsWith("INSERT")) {
-				mockRows.set(params[0] as string, { name: params[3] });
+				mockRows.set(params[0] as string, {
+					photoCredit: params[2],
+					name: params[4],
+				});
 			}
 			if (sql.startsWith("DELETE")) mockRows.delete(params[0] as string);
 		},
@@ -38,6 +41,7 @@ const caresOf = (plantId: string) =>
 
 const data: PlantData = {
 	photo: "photo.jpg",
+	photoCredit: null,
 	nickname: null,
 	name: "Monstera",
 	type: null,
@@ -71,8 +75,22 @@ describe("usePlantStore", () => {
 	it("creates a plant in the database", async () => {
 		const id = await usePlantStore.getState().createPlant(data);
 
-		expect(mockRows.get(id)).toEqual({ name: "Monstera" });
+		expect(mockRows.get(id)).toEqual({ photoCredit: null, name: "Monstera" });
 		expect(plantOf(id)).toMatchObject({ name: "Monstera", archivedAt: null });
+	});
+
+	it("stores the credit of a photo from the encyclopedia", async () => {
+		const photoCredit = {
+			attribution: "(c) Jane",
+			url: "https://www.inaturalist.org/photos/1",
+		};
+
+		const id = await usePlantStore
+			.getState()
+			.createPlant({ ...data, photoCredit });
+
+		expect(mockRows.get(id)?.photoCredit).toBe(JSON.stringify(photoCredit));
+		expect(plantOf(id)?.photoCredit).toEqual(photoCredit);
 	});
 
 	it("lists the newest plant first", async () => {

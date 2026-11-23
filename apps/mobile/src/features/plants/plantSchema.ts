@@ -21,6 +21,7 @@ export const PLANT_TYPES = [
 	"herb",
 	"carnivorous",
 	"fruitTree",
+	"foliage",
 ] as const;
 export const PLANT_ORIGINS = [
 	"gift",
@@ -61,6 +62,29 @@ const optionalText = (max: number, tooLongMessage: string) =>
 
 const level = z.int().min(1).max(3);
 
+export const PHOTO_CREDIT_MAX_LENGTH = 200;
+
+export const isInaturalistPhotoPage = (url: string | undefined) =>
+	!!url && /^https:\/\/www\.inaturalist\.org\/photos\/\d+$/.test(url);
+
+// The author of a photo from the encyclopedia, as its licence asks
+const photoCreditSchema = z.object({
+	attribution: z.string().trim().min(1).max(PHOTO_CREDIT_MAX_LENGTH),
+	url: z.string().refine(isInaturalistPhotoPage),
+});
+
+// A credit the user cannot see nor fix in the form must not block saving: dropped instead
+const optionalPhotoCredit = photoCreditSchema.nullable().catch(null);
+
+export const parsePhotoCredit = (stored: string | null) => {
+	if (!stored) return null;
+	try {
+		return optionalPhotoCredit.parse(JSON.parse(stored));
+	} catch {
+		return null;
+	}
+};
+
 export const ageSchema = z.object({
 	amount: z
 		.number()
@@ -73,6 +97,7 @@ export const ageSchema = z.object({
 export const plantInputSchema = z
 	.object({
 		photo: z.string().nullable(),
+		photoCredit: optionalPhotoCredit,
 		nickname: optionalText(
 			NICKNAME_MAX_LENGTH,
 			t("plant.errors.nicknameTooLong", { max: NICKNAME_MAX_LENGTH }),
@@ -116,12 +141,17 @@ export const plantInputSchema = z
 			t("plant.errors.notesTooLong", { max: NOTES_MAX_LENGTH }),
 		),
 	})
-	// An outdoor plant has no room
-	.transform((plant) => (plant.outdoor ? { ...plant, location: null } : plant));
+	// An outdoor plant has no room, and a removed photo no credit
+	.transform((plant) => ({
+		...plant,
+		location: plant.outdoor ? null : plant.location,
+		photoCredit: plant.photo ? plant.photoCredit : null,
+	}));
 
 export type PlantFormValues = z.input<typeof plantInputSchema>;
 export type PlantInput = z.output<typeof plantInputSchema>;
 export type Age = z.output<typeof ageSchema>;
+export type PhotoCredit = z.output<typeof photoCreditSchema>;
 export type AgeUnit = (typeof AGE_UNITS)[number];
 export type PlantType = (typeof PLANT_TYPES)[number];
 export type PlantOrigin = (typeof PLANT_ORIGINS)[number];

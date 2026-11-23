@@ -44,17 +44,48 @@ export const pickPhoto = async (
 	return asset.uri;
 };
 
+// A photo prefilled from the encyclopedia is still on the web
+export const isRemotePhoto = (uri: string) => uri.startsWith("https://");
+
+// The save button waits on it: a stalled network must give up rather than spin forever
+const DOWNLOAD_TIMEOUT_MS = 20_000;
+
+// Bounded like a picked photo, and never left half-written
+const download = async (url: string, photo: File) => {
+	const controller = new AbortController();
+	const timer = setTimeout(() => controller.abort(), DOWNLOAD_TIMEOUT_MS);
+	try {
+		await File.downloadFileAsync(url, photo, {
+			signal: controller.signal,
+			onProgress: ({ bytesWritten }) => {
+				if (bytesWritten > MAX_PHOTO_SIZE) controller.abort();
+			},
+		});
+	} catch (error) {
+		deleteFile(photo);
+		throw error;
+	} finally {
+		clearTimeout(timer);
+	}
+};
+
 export const savePhoto = async (uri: string) => {
 	photosDirectory.create({ intermediates: true, idempotent: true });
 	const photo = new File(photosDirectory, `${randomUUID()}.jpg`);
-	await new File(uri).copy(photo);
+	if (isRemotePhoto(uri)) {
+		await download(uri, photo);
+	} else {
+		await new File(uri).copy(photo);
+	}
 	return photo.name;
 };
 
 // Best effort: a leftover file beats failing an action already saved in the database
-export const deletePhoto = (filename: string) => {
+const deleteFile = (file: File) => {
 	try {
-		const photo = new File(photosDirectory, filename);
-		if (photo.exists) photo.delete();
+		if (file.exists) file.delete();
 	} catch {}
 };
+
+export const deletePhoto = (filename: string) =>
+	deleteFile(new File(photosDirectory, filename));

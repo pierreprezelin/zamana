@@ -16,6 +16,8 @@ import SegmentedControl from "@/components/SegmentedControl";
 import SelectField from "@/components/SelectField";
 import Text from "@/components/Text";
 import ToggleRow from "@/components/ToggleRow";
+import { LimitedInfoNote } from "@/features/encyclopedia/components/LimitedInfoNote";
+import type { PlantPrefill } from "@/features/encyclopedia/plantPrefill";
 import { resolveBornAt } from "@/features/plants/age";
 import { DeletePlantSheet } from "@/features/plants/components/DeletePlantSheet";
 import { HelpSheet } from "@/features/plants/components/HelpSheet";
@@ -44,7 +46,11 @@ import {
 	plantTypeOptions,
 	seasonOptions,
 } from "@/features/plants/plantOptions";
-import { savePhoto } from "@/features/plants/plantPhoto";
+import {
+	deletePhoto,
+	isRemotePhoto,
+	savePhoto,
+} from "@/features/plants/plantPhoto";
 import {
 	NAME_MAX_LENGTH,
 	NICKNAME_MAX_LENGTH,
@@ -115,14 +121,17 @@ type PlantFormProps = {
 	plant?: Plant;
 	// Opened from a shortcut to one setting, like the outdoor toggle of a weather alert
 	openSection?: FormSection;
+	prefill?: PlantPrefill | null;
 };
 
-export function PlantForm({ plant, openSection }: PlantFormProps) {
+export function PlantForm({ plant, openSection, prefill }: PlantFormProps) {
 	const createPlant = usePlantStore((state) => state.createPlant);
 	const updatePlant = usePlantStore((state) => state.updatePlant);
 	const headerHeight = useHeaderHeight();
 	const { bottom } = useSafeAreaInsets();
-	const [initialState] = useState(() => initialFormState(plant, new Date()));
+	const [initialState] = useState(() =>
+		initialFormState(plant, new Date(), prefill?.values),
+	);
 	const [form, setForm] = useState(initialState);
 	const [errors, setErrors] = useState<FormErrors>({});
 	const [saving, setSaving] = useState(false);
@@ -190,25 +199,51 @@ export function PlantForm({ plant, openSection }: PlantFormProps) {
 		}
 
 		setSaving(true);
+		// Written before the database: removed again if the plant fails to save
+		let unsavedPhoto: string | null = null;
 		try {
 			const { age, ...input } = result.data;
-			const photo =
-				form.photoUri === initialState.photoUri
-					? (plant?.photo ?? null)
-					: form.photoUri && (await savePhoto(form.photoUri));
+			let photoFailed = false;
+			const storePhoto = async (uri: string) => {
+				if (!isRemotePhoto(uri)) return savePhoto(uri);
+				// A photo the encyclopedia could not download must not block the plant
+				try {
+					return await savePhoto(uri);
+				} catch {
+					photoFailed = true;
+					return null;
+				}
+			};
+			const photoChanged = !plant || form.photoUri !== initialState.photoUri;
+			const photo = photoChanged
+				? form.photoUri && (await storePhoto(form.photoUri))
+				: plant.photo;
+			if (photoChanged) unsavedPhoto = photo;
 			const data = {
 				...input,
 				photo,
+				photoCredit: photo ? input.photoCredit : null,
 				bornAt: resolveBornAt(age, plant?.bornAt ?? null, new Date()),
 			};
 
 			if (plant) {
 				await updatePlant(plant.id, data);
+				unsavedPhoto = null;
+				router.back();
 			} else {
-				await createPlant(data);
+				const id = await createPlant(data);
+				unsavedPhoto = null;
 				successFeedback();
+				// The screens left behind, like an encyclopedia result, are done with
+				if (router.canDismiss()) router.dismissAll();
+				router.push(`/plant/${id}`);
 			}
-			router.back();
+			if (photoFailed) {
+				showErrorToast(
+					t("plant.form.addedWithoutPhoto", { name: displayName(data) }),
+				);
+				return;
+			}
 			Toast.show({
 				type: "success",
 				text1: plant
@@ -216,6 +251,7 @@ export function PlantForm({ plant, openSection }: PlantFormProps) {
 					: t("plant.form.added", { name: displayName(data) }),
 			});
 		} catch {
+			if (unsavedPhoto) deletePhoto(unsavedPhoto);
 			showErrorToast(t("common.saveFailed"));
 		} finally {
 			setSaving(false);
@@ -235,13 +271,18 @@ export function PlantForm({ plant, openSection }: PlantFormProps) {
 				contentContainerClassName="px-4 pb-5.5"
 			>
 				<View ref={contentRef} className="gap-8">
+					{prefill?.isPartial && <LimitedInfoNote />}
 					<View className="gap-4">
 						<Text className="font-recoleta text-xl text-foreground">
 							{t("plant.form.photo")}
 						</Text>
 						<PhotoPicker
 							uri={form.photoUri}
-							onChange={(uri) => update("photoUri", uri)}
+							onChange={(uri) => {
+								update("photoUri", uri);
+								// The credit belongs to the encyclopedia photo, not to the user's own
+								update("photoCredit", null);
+							}}
 						/>
 					</View>
 

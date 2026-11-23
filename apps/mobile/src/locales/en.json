@@ -24,9 +24,28 @@
 		"notifications": "Notifications",
 		"settings": "Settings"
 	},
-	"placeholder": {
-		"result": "Result #{{id}}",
-		"addToGarden": "Add to my garden"
+	"encyclopedia": {
+		"searchPlaceholder": "Search for a plant...",
+		"counting": "Counting the plants…",
+		"results": "Results",
+		"categories": {
+			"popular": "Popular",
+			"nonToxic": "Non-toxic",
+			"lowLight": "Low light",
+			"lowWatering": "Little watering",
+			"flowering": "Flowering",
+			"succulents": "Succulents"
+		},
+		"noResult": "No plant found for “{{query}}”",
+		"loadFailed": "The plants could not be loaded. Check your connection.",
+		"notFound": "This plant could not be found.",
+		"retry": "Try again",
+		"addNamed": "Add {{name}} to my garden",
+		"addToGarden": "Add to my garden",
+		"family": "{{name}} family",
+		"noFreePhoto": "No freely licensed photo for this plant: the photo won’t be prefilled.",
+		"limitedInfo": "Limited information is available for this plant: check its type, needs and life cycle.",
+		"source": "Botanical data: iNaturalist"
 	},
 	"articles": {
 		"count": {
@@ -123,6 +142,7 @@
 		"outdoor": "Outdoor",
 		"indoor": "Indoor",
 		"info": {
+			"photoCredit": "Photo: {{attribution}}",
 			"sections": {
 				"information": "Details",
 				"care": "Care",
@@ -192,7 +212,8 @@
 			"add": "Add the plant",
 			"delete": "Delete the plant",
 			"saved": "Your changes have been saved! 🎉",
-			"added": "{{name}} joined your garden! 🌱"
+			"added": "{{name}} joined your garden! 🌱",
+			"addedWithoutPhoto": "{{name}} joined your garden, but its photo could not be downloaded"
 		},
 		"photo": {
 			"change": "Change the photo",
@@ -233,6 +254,7 @@
 		"type": {
 			"citrus": "Citrus",
 			"fruitTree": "Fruit tree",
+			"foliage": "Foliage plant",
 			"shrub": "Shrub",
 			"herb": "Herb",
 			"bonsai": "Bonsai",

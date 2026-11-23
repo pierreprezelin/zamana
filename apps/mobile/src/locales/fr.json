@@ -24,9 +24,28 @@
 		"notifications": "Notifications",
 		"settings": "Paramètres"
 	},
-	"placeholder": {
-		"result": "Résultat n° {{id}}",
-		"addToGarden": "Ajouter à mon jardin"
+	"encyclopedia": {
+		"searchPlaceholder": "Rechercher une plante...",
+		"counting": "Calcul du nombre de plantes…",
+		"results": "Résultats",
+		"categories": {
+			"popular": "Populaires",
+			"nonToxic": "Non toxiques",
+			"lowLight": "Peu de lumière",
+			"lowWatering": "Peu d’arrosage",
+			"flowering": "Fleuries",
+			"succulents": "Succulentes"
+		},
+		"noResult": "Aucune plante trouvée pour « {{query}} »",
+		"loadFailed": "Les plantes n’ont pas pu être chargées. Vérifiez votre connexion.",
+		"notFound": "Cette plante est introuvable.",
+		"retry": "Réessayer",
+		"addNamed": "Ajouter {{name}} à mon jardin",
+		"addToGarden": "Ajouter à mon jardin",
+		"family": "Famille {{name}}",
+		"noFreePhoto": "Pas de photo libre de droits pour cette plante : la photo ne sera pas préremplie.",
+		"limitedInfo": "Les informations disponibles pour cette plante sont limitées : vérifiez le type, les besoins et le cycle de vie.",
+		"source": "Données botaniques : iNaturalist"
 	},
 	"articles": {
 		"count": {
@@ -123,6 +142,7 @@
 		"outdoor": "Extérieur",
 		"indoor": "Intérieur",
 		"info": {
+			"photoCredit": "Photo : {{attribution}}",
 			"sections": {
 				"information": "Informations",
 				"care": "Entretien",
@@ -192,7 +212,8 @@
 			"add": "Ajouter la plante",
 			"delete": "Supprimer la plante",
 			"saved": "Les informations ont bien été enregistrées ! 🎉",
-			"added": "{{name}} a rejoint votre jardin ! 🌱"
+			"added": "{{name}} a rejoint votre jardin ! 🌱",
+			"addedWithoutPhoto": "{{name}} a rejoint votre jardin, mais sa photo n’a pas pu être récupérée"
 		},
 		"photo": {
 			"change": "Changer la photo",
@@ -233,6 +254,7 @@
 		"type": {
 			"citrus": "Agrume",
 			"fruitTree": "Arbre fruitier",
+			"foliage": "Plante verte",
 			"shrub": "Arbuste",
 			"herb": "Aromatique",
 			"bonsai": "Bonsaï",
