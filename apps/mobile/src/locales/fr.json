@@ -63,11 +63,11 @@
 			"propagation": "Multiplication",
 			"health": "Santé"
 		},
-		"noSearchResult": "Aucun article ne correspond à votre recherche",
-		"emptyCategory": "Aucun article dans cette catégorie pour l’instant",
+		"noSearchResult": "Aucun article ne correspond à votre recherche.",
+		"emptyCategory": "Aucun article dans cette catégorie pour l’instant.",
 		"empty": "Aucun article pour l’instant.",
-		"categoryNotFound": "Cette catégorie n’existe pas",
-		"notFound": "Cet article n’est plus disponible",
+		"categoryNotFound": "Cette catégorie n’existe pas.",
+		"notFound": "Cet article n’est plus disponible.",
 		"loadFailed": "Les articles n’ont pas pu être chargés. Vérifiez votre connexion.",
 		"retry": "Réessayer"
 	},

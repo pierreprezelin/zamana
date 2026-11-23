@@ -30,7 +30,6 @@ export const useArticles = () => {
 	return {
 		articles,
 		availability: articlesAvailability(articles, status, fetched),
-		refreshing: status === "loading",
 		retry: () => refresh(language),
 	};
 };

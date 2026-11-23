@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { FlatList, RefreshControl, ScrollView, View } from "react-native";
+import { FlatList, ScrollView, View } from "react-native";
 import { ScreenPlaceholder } from "@/components/ScreenPlaceholder";
 import SearchField from "@/components/SearchField";
 import { useTabBarOffset } from "@/components/TabBar";
@@ -23,10 +23,7 @@ const categoryRows = Array.from(
 );
 
 export default function TipsScreen() {
-	const { articles, availability, refreshing, retry } = useArticles();
-	const refreshControl = (
-		<RefreshControl refreshing={refreshing} onRefresh={retry} />
-	);
+	const { articles, availability, retry } = useArticles();
 	const [query, setQuery] = useState("");
 	const tabBarOffset = useTabBarOffset();
 	const counts = useMemo(() => countByCategory(articles), [articles]);
@@ -60,7 +57,6 @@ export default function TipsScreen() {
 							// Scrolls under the tab bar down to the screen edge, its scroll bar along the screen side
 							className="-mx-4 -mb-4"
 							data={results}
-							refreshControl={refreshControl}
 							keyExtractor={(article) => article.slug}
 							renderItem={({ item }) => (
 								<ArticleRow article={item} showCategory />
@@ -77,7 +73,6 @@ export default function TipsScreen() {
 						/>
 					) : (
 						<ScrollView
-							refreshControl={refreshControl}
 							className="-mx-4 -mb-4"
 							contentContainerClassName="gap-4 px-4"
 							contentContainerStyle={{ paddingBottom: tabBarOffset + 16 }}

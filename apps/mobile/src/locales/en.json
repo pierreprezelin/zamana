@@ -63,11 +63,11 @@
 			"propagation": "Propagation",
 			"health": "Plant health"
 		},
-		"noSearchResult": "No article matches your search",
-		"emptyCategory": "No article in this category yet",
+		"noSearchResult": "No article matches your search.",
+		"emptyCategory": "No article in this category yet.",
 		"empty": "No articles yet.",
-		"categoryNotFound": "This category doesn’t exist",
-		"notFound": "This article is no longer available",
+		"categoryNotFound": "This category doesn’t exist.",
+		"notFound": "This article is no longer available.",
 		"loadFailed": "The articles couldn’t be loaded. Check your connection.",
 		"retry": "Try again"
 	},
