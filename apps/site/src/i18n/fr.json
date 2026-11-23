@@ -53,14 +53,14 @@
 	"more": {
 		"title": "Et ce n’est pas tout !",
 		"items": {
-			"timeline": "Une frise de photos pour suivre la croissance",
-			"seasons": "Un arrosage au rythme des saisons et du climat",
-			"dailyTip": "Une astuce ou une anecdote chaque jour",
-			"species": "Une recherche par espèce",
-			"platforms": "Une app pour Android et iOS",
-			"darkTheme": "Un thème sombre",
-			"languages": "Une version française et anglaise",
-			"openSource": "Un code source ouvert"
+			"timeline": "Frise de photos pour suivre la croissance",
+			"seasons": "Arrosage au rythme des saisons et du climat",
+			"dailyTip": "Astuce ou anecdote du jour",
+			"species": "Recherche par espèce",
+			"platforms": "App Android et iOS",
+			"darkTheme": "Thème sombre",
+			"languages": "Français et anglais",
+			"openSource": "Code source ouvert"
 		}
 	},
 	"showcases": {

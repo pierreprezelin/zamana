@@ -53,14 +53,14 @@
 	"more": {
 		"title": "And that’s not all!",
 		"items": {
-			"timeline": "A photo timeline to follow growth",
-			"seasons": "Watering paced by the seasons and climate",
-			"dailyTip": "A tip or fun fact every day",
-			"species": "A species search",
-			"platforms": "An app for Android and iOS",
-			"darkTheme": "A dark theme",
-			"languages": "French and English versions",
-			"openSource": "Open source code"
+			"timeline": "Photo timeline to follow growth",
+			"seasons": "Watering paced by seasons and climate",
+			"dailyTip": "Daily tip or fun fact",
+			"species": "Species search",
+			"platforms": "Android and iOS app",
+			"darkTheme": "Dark theme",
+			"languages": "French and English",
+			"openSource": "Open source"
 		}
 	},
 	"showcases": {
