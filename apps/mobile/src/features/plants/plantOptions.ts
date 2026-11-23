@@ -123,3 +123,12 @@ export const lifespanHelp: Help = {
 		text: t(`plant.help.${lifespan}`),
 	})),
 };
+
+export type PlantNeeds = Record<NeedKey, number> & { outdoor: boolean };
+
+// The detailed wording when there is one, the temperature saying where it applies
+export const needValue = (need: Need, plant: PlantNeeds) => {
+	const value = (need.details ?? need.levels)[plant[need.key] - 1];
+	if (need.key !== "temperature") return value;
+	return `${value} · ${plant.outdoor ? t("plant.outdoor") : t("plant.indoor")}`;
+};

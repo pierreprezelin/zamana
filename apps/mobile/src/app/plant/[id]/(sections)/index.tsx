@@ -11,7 +11,7 @@ import { formatAge } from "@/features/plants/age";
 import { ArchiveSheet } from "@/features/plants/components/ArchiveSheet";
 import { HelpSheet } from "@/features/plants/components/HelpSheet";
 import { InfoCard } from "@/features/plants/components/InfoCard";
-import { NeedTile } from "@/features/plants/components/NeedTile";
+import { NeedsSection } from "@/features/plants/components/NeedsSection";
 import { displayName } from "@/features/plants/plantLabels";
 import {
 	floweringTypeHelp,
@@ -19,7 +19,6 @@ import {
 	lifespanHelp,
 	lifespanLabel,
 	locationLabel,
-	needs,
 	originLabel,
 	plantTypeLabel,
 	seasonLabel,
@@ -62,13 +61,6 @@ export default function PlantInformationScreen() {
 		}
 	};
 
-	const needValue = (need: (typeof needs)[number]) => {
-		const level = plant[need.key];
-		const value = (need.details ?? need.levels)[level - 1];
-		if (need.key !== "temperature") return value;
-		return `${value} · ${plant.outdoor ? t("plant.outdoor") : t("plant.indoor")}`;
-	};
-
 	return (
 		<>
 			<ScrollView
@@ -79,26 +71,7 @@ export default function PlantInformationScreen() {
 				{plant.toxic && (
 					<WarningBanner icon="paw-outline" message={t("plant.info.toxic")} />
 				)}
-				<View className="gap-3">
-					<Text className="font-recoleta text-xl text-foreground">
-						{t("plant.info.needs")}
-					</Text>
-					<View className="gap-2">
-						{[needs.slice(0, 2), needs.slice(2)].map((row) => (
-							<View key={row[0].key} className="flex-row gap-2">
-								{row.map((need) => (
-									<NeedTile
-										key={need.key}
-										icon={need.icon}
-										label={need.label}
-										value={needValue(need)}
-										level={plant[need.key]}
-									/>
-								))}
-							</View>
-						))}
-					</View>
-				</View>
+				<NeedsSection plant={plant} />
 				<InfoCard
 					title={t("plant.info.identity")}
 					rows={[
