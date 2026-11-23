@@ -5,7 +5,11 @@ import type { PlantType } from "@/features/plants/plantSchema";
 import { getJson } from "@/utils/getJson";
 import { locale } from "@/utils/i18n";
 
-const TAXA_URL = "https://api.inaturalist.org/v1/taxa";
+const TAXA_URL = "https://api.inaturalist.org/v2/taxa";
+const PHOTO_FIELDS = "(license_code:!t,medium_url:!t,attribution:!t)";
+// Only what the app reads: a full plant weighs about 50 KB, these fields 3 KB.
+// The search ignores taxon_photos and ancestors, sent by the full plant only
+const FIELDS = `(id:!t,name:!t,preferred_common_name:!t,ancestor_ids:!t,default_photo:${PHOTO_FIELDS},taxon_photos:(photo:${PHOTO_FIELDS}),ancestors:(rank:!t,name:!t))`;
 const PLANTAE_ID = "47126";
 // What a gardener adds, without the genera and families
 const RANKS = "species,hybrid,variety,form";
@@ -147,7 +151,7 @@ const toTaxon = (result: unknown): Taxon[] => {
 const getTaxa = async (url: string, params: Record<string, string> = {}) => {
 	const response = (await getJson(
 		url,
-		{ ...params, locale: locale() },
+		{ ...params, locale: locale(), fields: FIELDS },
 		HEADERS,
 	)) as { total_results?: unknown; results?: unknown };
 	const results = Array.isArray(response?.results) ? response.results : [];

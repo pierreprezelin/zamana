@@ -50,6 +50,7 @@ describe("searchTaxa", () => {
 		expect(params.get("rank")).toBe("species,hybrid,variety,form");
 		expect(params.get("page")).toBe("2");
 		expect(params.get("per_page")).toBe("20");
+		expect(params.get("fields")).toContain("default_photo");
 	});
 
 	it("names each plant by its common name, capitalized, with its free photo", async () => {
@@ -215,8 +216,9 @@ describe("fetchTaxa", () => {
 
 		const taxa = await fetchTaxa([1, 2]);
 
-		expect(requestedUrl().pathname).toBe("/v1/taxa/1,2");
+		expect(requestedUrl().pathname).toBe("/v2/taxa/1,2");
 		expect(requestedUrl().searchParams.get("locale")).toBe("fr");
+		expect(requestedUrl().searchParams.get("fields")).toContain("taxon_photos");
 		expect(taxa.map((taxon) => taxon.id)).toEqual([1, 2]);
 	});
 
@@ -251,7 +253,7 @@ describe("fetchTaxon", () => {
 
 		const taxon = await fetchTaxon(53940);
 
-		expect(requestedUrl().pathname).toBe("/v1/taxa/53940");
+		expect(requestedUrl().pathname).toBe("/v2/taxa/53940");
 		expect(taxon?.family).toBe("Moraceae");
 		expect(taxon?.photo?.attribution).toBe(
 			"© Jane, some rights reserved (CC BY)",
