@@ -7,6 +7,7 @@ import Button from "@/components/Button";
 import Text from "@/components/Text";
 import { isUpdateRequired } from "@/features/appVersion/updateRequired";
 import { t } from "@/utils/i18n";
+import { showErrorToast } from "@/utils/toast";
 
 // TODO: replace with the App Store ID once the app is published
 const STORE_URL = Platform.select({
@@ -32,7 +33,11 @@ export function ForceUpdateSheet() {
 			actions={
 				<Button
 					title={t("appVersion.update")}
-					onPress={() => Linking.openURL(STORE_URL)}
+					onPress={() =>
+						Linking.openURL(STORE_URL).catch(() =>
+							showErrorToast(t("appVersion.openFailed")),
+						)
+					}
 				/>
 			}
 		>

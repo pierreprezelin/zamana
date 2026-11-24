@@ -1,9 +1,10 @@
 import type { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { router, useIsFocused, useLocalSearchParams } from "expo-router";
-import { useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { FlatList, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Button from "@/components/Button";
+import { ConfirmSheet } from "@/components/ConfirmSheet";
 import Text from "@/components/Text";
 import Toggle from "@/components/Toggle";
 import { undoableLogIds } from "@/features/care/careHistory";
@@ -11,7 +12,6 @@ import { careActionLabel } from "@/features/care/careLabels";
 import type { CareLog } from "@/features/care/careTypes";
 import { useCareActions } from "@/features/care/useCareActions";
 import { usePlantCares } from "@/features/care/useCareStore";
-import { ConfirmSheet } from "@/features/history/components/ConfirmSheet";
 import { TimelineRow } from "@/features/history/components/TimelineRow";
 import {
 	buildTimeline,
@@ -46,18 +46,27 @@ export default function PlantHistoryScreen() {
 	const undoSheetRef = useRef<BottomSheetModal>(null);
 	// Re-renders on focus, so a screen left open overnight catches up with the date
 	useIsFocused();
+	const today = toISODate(new Date());
+	const addedAt = plant?.createdAt;
+	const timeline = useMemo(
+		() =>
+			addedAt &&
+			buildTimeline({
+				addedAt,
+				entries,
+				logs: logs ?? [],
+				showCares,
+				today,
+			}),
+		[addedAt, entries, logs, showCares, today],
+	);
 
-	if (!plant) return null;
+	if (!plant || !timeline) return null;
 
+	const { items, summary } = timeline;
 	const readOnly = Boolean(plant.archivedAt);
-	const { items, summary } = buildTimeline({
-		addedAt: plant.createdAt,
-		entries,
-		logs,
-		showCares,
-		today: toISODate(new Date()),
-	});
-	const undoable = readOnly ? new Set<string>() : undoableLogIds(logs, cares);
+	const undoable =
+		readOnly || !logs ? new Set<string>() : undoableLogIds(logs, cares);
 
 	const actionOf = (item: TimelineItem) => {
 		if (readOnly) return undefined;
@@ -94,7 +103,7 @@ export default function PlantHistoryScreen() {
 				ListHeaderComponent={
 					<View className="mb-6 flex-row items-center justify-between gap-4">
 						<Text className="flex-1 font-outfit-semibold text-foreground">
-							{summaryLabel(summary)}
+							{logs && summaryLabel(summary)}
 						</Text>
 						<View className="flex-row items-center gap-2">
 							<Text className="text-muted">{t("history.showCares")}</Text>
@@ -134,6 +143,7 @@ export default function PlantHistoryScreen() {
 				description={t("history.undoCareSheet.description")}
 				confirmLabel={t("history.undoCareSheet.confirm")}
 				onConfirm={() => {
+					undoSheetRef.current?.dismiss();
 					if (undoneLog) undo(undoneLog);
 				}}
 			/>

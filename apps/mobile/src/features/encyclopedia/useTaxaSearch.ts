@@ -71,7 +71,7 @@ const useCompletedPhotos = (taxa: Taxon[]) => {
 
 	const photoOf = (id: number) => {
 		const photo = photos[id];
-		return photo === LOADING || photo === FAILED ? null : photo;
+		return photo === LOADING || photo === FAILED ? null : (photo ?? null);
 	};
 
 	const withoutPhoto = new Set(

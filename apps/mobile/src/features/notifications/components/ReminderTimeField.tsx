@@ -14,6 +14,7 @@ import {
 import { locale, t } from "@/utils/i18n";
 
 type ReminderTimeFieldProps = {
+	title: string;
 	value: ReminderTime;
 	defaultValue: ReminderTime;
 	onChange: (value: ReminderTime) => void;
@@ -21,6 +22,7 @@ type ReminderTimeFieldProps = {
 };
 
 export function ReminderTimeField({
+	title,
 	value,
 	defaultValue,
 	onChange,
@@ -28,7 +30,6 @@ export function ReminderTimeField({
 }: ReminderTimeFieldProps) {
 	const sheetRef = useRef<BottomSheetModal>(null);
 	const [androidDialogOpen, setAndroidDialogOpen] = useState(false);
-	const title = t("notifications.time");
 	const pickerProps = {
 		mode: "time" as const,
 		value: atReminderTime(value, new Date()),

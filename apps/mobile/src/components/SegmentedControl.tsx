@@ -44,6 +44,7 @@ function Segment({
 		<Pressable
 			onPress={onPress}
 			accessibilityRole="radio"
+			accessibilityLabel={label}
 			accessibilityState={{ checked: selected }}
 			hitSlop={{ top: 6, bottom: 6 }}
 			className="flex-1 items-center justify-center px-1"
@@ -52,7 +53,11 @@ function Segment({
 				<Text numberOfLines={1} className="text-foreground">
 					{label}
 				</Text>
-				<Animated.View style={[StyleSheet.absoluteFill, onIndicatorStyle]}>
+				<Animated.View
+					style={[StyleSheet.absoluteFill, onIndicatorStyle]}
+					importantForAccessibility="no-hide-descendants"
+					accessibilityElementsHidden
+				>
 					<Text numberOfLines={1} className="text-on-primary">
 						{label}
 					</Text>

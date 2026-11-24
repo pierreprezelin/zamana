@@ -1,4 +1,10 @@
-import { Link, Stack, useLocalSearchParams, usePathname } from "expo-router";
+import {
+	Link,
+	router,
+	Stack,
+	useLocalSearchParams,
+	usePathname,
+} from "expo-router";
 import {
 	TabList,
 	TabSlot,
@@ -6,10 +12,12 @@ import {
 	TabTrigger,
 	type TabTriggerSlotProps,
 } from "expo-router/ui";
+import { useRef } from "react";
 import { View } from "react-native";
 import Chip from "@/components/Chip";
 import { HeaderIconButton } from "@/components/HeaderIconButton";
 import type { IoniconsIconName } from "@/components/ionicons";
+import { MessageScreen } from "@/components/MessageScreen";
 import Text from "@/components/Text";
 import { PlantPhoto } from "@/features/plants/components/PlantPhoto";
 import { displayName } from "@/features/plants/plantLabels";
@@ -70,9 +78,24 @@ export default function PlantSectionsLayout() {
 	const { id } = useLocalSearchParams<{ id: string }>();
 	const plant = usePlant(id);
 	const pathname = usePathname();
+	const wasShown = useRef(false);
+	if (plant) wasShown.current = true;
 
-	// The plant was just deleted, the screen is being dismissed
-	if (!plant) return null;
+	if (!plant) {
+		// Just deleted, the screen is being dismissed
+		if (wasShown.current) return null;
+		return (
+			<MessageScreen
+				title={t("common.pageNotFound")}
+				text={t("plant.notFound")}
+				action={{
+					title: t("plant.backToGarden"),
+					icon: "leaf-outline",
+					onPress: () => router.replace("/garden"),
+				}}
+			/>
+		);
+	}
 
 	const section = sections.find(
 		(section) => pathname === `/plant/${id}${section.path}`,

@@ -12,7 +12,13 @@
 		"save": "Save",
 		"saveFailed": "Saving failed, please try again",
 		"settings": "Settings",
-		"validate": "Done"
+		"validate": "Done",
+		"retry": "Try again",
+		"unexpectedError": "Oops, something went wrong",
+		"unexpectedErrorText": "Zamana ran into an unexpected problem. Your plants are safe.",
+		"pageNotFound": "Page not found",
+		"pageNotFoundText": "This page doesn’t exist, or no longer does.",
+		"backHome": "Back to home"
 	},
 	"screens": {
 		"editPlant": "Edit details",
@@ -229,13 +235,11 @@
 			"importAnother": "Import another photo",
 			"delete": "Delete the photo",
 			"add": "Take or import a photo",
-			"maxSize": "2 MB max.",
 			"sheetTitle": "Plant photo",
 			"takePhoto": "Take a photo",
 			"chooseFromLibrary": "Choose from library",
 			"importFailed": "Importing the photo failed",
-			"cameraDenied": "Camera access was denied.",
-			"tooLarge": "The photo must not exceed 2 MB."
+			"cameraDenied": "Camera access was denied."
 		},
 		"archive": {
 			"title": "I no longer have this plant",
@@ -350,7 +354,9 @@
 			"annual": "Completes its whole life cycle in a single season.",
 			"biennial": "Lives two years: leaves the first year, flowers the second.",
 			"perennial": "Lives for several years. If it’s also monocarpic, it may flower only once after 10, 20 or 30 years, then die."
-		}
+		},
+		"notFound": "This plant is no longer in your garden.",
+		"backToGarden": "See my garden"
 	},
 	"settings": {
 		"appearance": "Appearance",
@@ -389,7 +395,8 @@
 	"appVersion": {
 		"title": "The app needs an update",
 		"description": "A new version fixes an important issue. Update Zamana to keep looking after your plants! 🌱",
-		"update": "Update now"
+		"update": "Update now",
+		"openFailed": "The store couldn’t be opened"
 	},
 	"notifications": {
 		"digest": {
@@ -412,7 +419,6 @@
 		"resetTime": "Reset to {{time}}",
 		"time": "Reminder time",
 		"timeHelper": "Reminders are scheduled 30 days ahead: open Zamana at least once a month to keep them.",
-		"permissionMissing": "Allow notifications to get your reminders.",
 		"enable": "Turn on reminders",
 		"openSettings": "Open settings",
 		"banner": {
@@ -421,8 +427,7 @@
 			"dismiss": "Hide"
 		},
 		"disabledInSettings": "Reminders are turned off in the settings.",
-		"notAllowed": "Notifications aren’t allowed.",
-		"settingsLink": "Settings"
+		"notAllowed": "Notifications aren’t allowed."
 	},
 	"care": {
 		"types": {
@@ -716,7 +721,9 @@
 			"denied": "Without location, Zamana can’t warn you for where you are. Choose a city or allow location in your phone settings.",
 			"allow": "Allow location",
 			"openSettings": "Open settings",
-			"noResult": "No city found."
+			"noResult": "No city found.",
+			"positionFailed": "Your location couldn’t be found. Check that location is turned on.",
+			"searchFailed": "The search failed. Check your connection."
 		}
 	},
 	"tips": {

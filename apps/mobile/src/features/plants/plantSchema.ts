@@ -6,7 +6,7 @@ export const NICKNAME_MAX_LENGTH = 20;
 export const NAME_MAX_LENGTH = 50;
 export const SCIENTIFIC_NAME_MAX_LENGTH = 50;
 export const NOTES_MAX_LENGTH = 500;
-export const AGE_MAX = 100;
+const AGE_MAX = 100;
 
 export const PLANT_TYPES = [
 	"bonsai",
@@ -85,7 +85,17 @@ export const parsePhotoCredit = (stored: string | null) => {
 	}
 };
 
-export const ageSchema = z.object({
+const storedSeasons = z.array(z.enum(SEASONS)).catch([]);
+
+export const parseSeasons = (stored: string) => {
+	try {
+		return storedSeasons.parse(JSON.parse(stored));
+	} catch {
+		return [];
+	}
+};
+
+const ageSchema = z.object({
 	amount: z
 		.number()
 		.int(t("plant.errors.ageNotInteger"))
@@ -149,9 +159,8 @@ export const plantInputSchema = z
 	}));
 
 export type PlantFormValues = z.input<typeof plantInputSchema>;
-export type PlantInput = z.output<typeof plantInputSchema>;
+type PlantInput = z.output<typeof plantInputSchema>;
 export type Age = z.output<typeof ageSchema>;
-export type PhotoCredit = z.output<typeof photoCreditSchema>;
 export type AgeUnit = (typeof AGE_UNITS)[number];
 export type PlantType = (typeof PLANT_TYPES)[number];
 export type PlantOrigin = (typeof PLANT_ORIGINS)[number];

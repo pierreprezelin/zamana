@@ -20,8 +20,13 @@ export const useLocationPermissionStore = create<LocationPermissionState>()(
 		return {
 			status: null,
 			canAskAgain: true,
-			refresh: async () =>
-				apply(await Location.getForegroundPermissionsAsync()),
+			refresh: async () => {
+				try {
+					apply(await Location.getForegroundPermissionsAsync());
+				} catch (error) {
+					console.warn("Location permission not read", error);
+				}
+			},
 			request: async () => {
 				try {
 					if (!get().canAskAgain) return await Linking.openSettings();

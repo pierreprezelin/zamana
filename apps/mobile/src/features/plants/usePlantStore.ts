@@ -9,6 +9,7 @@ import {
 	type Plant,
 	type PlantData,
 	parsePhotoCredit,
+	parseSeasons,
 } from "@/features/plants/plantSchema";
 import { database } from "@/utils/database";
 
@@ -58,7 +59,7 @@ const toPlant = (row: PlantRow): Plant => ({
 	humidity: row.humidity,
 	outdoor: Boolean(row.outdoor),
 	toxic: Boolean(row.toxic),
-	floweringSeasons: JSON.parse(row.flowering_seasons),
+	floweringSeasons: parseSeasons(row.flowering_seasons),
 	floweringType: row.flowering_type,
 	lifespan: row.lifespan,
 	notes: row.notes,

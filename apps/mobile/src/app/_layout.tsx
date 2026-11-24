@@ -5,8 +5,8 @@ import {
 	DEFAULT_ACTION_IDENTIFIER,
 	useLastNotificationResponse,
 } from "expo-notifications";
-import { ObserveRoot, useObserve } from "expo-observe";
-import { router, Stack } from "expo-router";
+import { Observe, ObserveRoot, useObserve } from "expo-observe";
+import { type ErrorBoundaryProps, router, Stack } from "expo-router";
 import {
 	DarkTheme,
 	DefaultTheme,
@@ -20,9 +20,13 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Toast from "react-native-toast-message";
 import { HeaderBackButton } from "@/components/HeaderBackButton";
+import { MessageScreen } from "@/components/MessageScreen";
 import { toastConfig } from "@/components/toastConfig";
 import { ForceUpdateSheet } from "@/features/appVersion/components/ForceUpdateSheet";
-import { reloadIfLanguageChanged } from "@/features/language/useLanguageStore";
+import {
+	reloadIfLanguageChanged,
+	takeReturnToSettings,
+} from "@/features/language/useLanguageStore";
 import { startReminderScheduler } from "@/features/notifications/scheduleReminders";
 import { useOnboardingStore } from "@/features/onboarding/useOnboardingStore";
 import {
@@ -55,7 +59,7 @@ const useNavigationTheme = () => {
 		"--color-surface",
 		"--color-foreground",
 		"--color-line",
-	]) as string[];
+	]) as [string, string, string, string, string];
 	return {
 		...base,
 		colors: { ...base.colors, primary, background, card, text, border },
@@ -71,6 +75,10 @@ function RootLayout() {
 	useEffect(() => {
 		markInteractive();
 	}, [markInteractive]);
+
+	useEffect(() => {
+		if (takeReturnToSettings()) router.push("/settings");
+	}, []);
 
 	// The daily digest leads to the tasks of the day
 	const notificationResponse = useLastNotificationResponse();
@@ -151,12 +159,29 @@ function RootLayout() {
 						/>
 						<Stack.Screen name="tips/[id]" options={{ title: "" }} />
 						<Stack.Screen name="tips/category/[id]" />
+						<Stack.Screen name="+not-found" options={{ title: "" }} />
 					</Stack>
 					<ForceUpdateSheet />
 				</BottomSheetModalProvider>
 			</ThemeProvider>
 			<Toast config={toastConfig} topOffset={top + 8} />
 		</GestureHandlerRootView>
+	);
+}
+
+export function ErrorBoundary({ error, retry }: ErrorBoundaryProps) {
+	useEffect(() => Observe.reportError(error), [error]);
+
+	return (
+		<MessageScreen
+			title={t("common.unexpectedError")}
+			text={t("common.unexpectedErrorText")}
+			action={{
+				title: t("common.retry"),
+				icon: "refresh-outline",
+				onPress: retry,
+			}}
+		/>
 	);
 }
 

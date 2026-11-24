@@ -50,6 +50,7 @@ export default function NotificationsSettingsScreen() {
 				<View>
 					<FieldLabel>{t("notifications.time")}</FieldLabel>
 					<ReminderTimeField
+						title={t("notifications.time")}
 						value={reminderTime}
 						defaultValue={DEFAULT_REMINDER_TIME}
 						onChange={setReminderTime}
@@ -72,6 +73,7 @@ export default function NotificationsSettingsScreen() {
 				<View>
 					<FieldLabel>{t("weather.settings.time")}</FieldLabel>
 					<ReminderTimeField
+						title={t("weather.settings.time")}
 						value={alertTime}
 						defaultValue={DEFAULT_ALERT_TIME}
 						onChange={setAlertTime}
