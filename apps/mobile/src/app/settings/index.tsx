@@ -60,7 +60,7 @@ export default function SettingsScreen() {
 				/>
 			</View>
 			<Text className="mt-auto text-center text-xs text-foreground opacity-50">
-				v{nativeApplicationVersion}
+				v{nativeApplicationVersion}b
 			</Text>
 		</View>
 	);
