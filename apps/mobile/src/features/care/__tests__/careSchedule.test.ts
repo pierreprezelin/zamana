@@ -1,6 +1,7 @@
 import {
 	careProgress,
 	careStatus,
+	groupCaresByPlant,
 	nextCare,
 	nextDueDate,
 	snoozeUntil,
@@ -216,6 +217,94 @@ describe("nextDueDate", () => {
 	});
 });
 
+describe("calendar edge cases", () => {
+	const daily = (lastDoneAt: string) =>
+		care({ frequency: { amount: 1, unit: "day" }, lastDoneAt });
+	const dueAfter = (lastDoneAt: string) =>
+		nextDueDate(daily(lastDoneAt), context());
+
+	it.each([
+		["spring", "2026-03-27", ["2026-03-28", "2026-03-29", "2026-03-30"]],
+		["autumn", "2026-10-23", ["2026-10-24", "2026-10-25", "2026-10-26"]],
+	])(
+		"a daily care is neither skipped nor doubled over the %s time change",
+		(_, start, days) => {
+			const dueDates = days.map((_day, index, all) =>
+				dueAfter(all[index - 1] ?? start),
+			);
+
+			expect(dueDates).toEqual(days);
+		},
+	);
+
+	it.each([
+		["spring", "2026-03-28", "2026-03-30"],
+		["autumn", "2026-10-24", "2026-10-26"],
+	])("counts whole days over the %s time change", (_, from, to) => {
+		expect(careStatus(to, from)).toEqual({ kind: "upcoming", days: 2 });
+		expect(careStatus(from, to)).toEqual({ kind: "late", days: 2 });
+	});
+
+	it("keeps a weekly care on the same weekday over a time change", () => {
+		const weekly = care({
+			frequency: { amount: 1, unit: "week" },
+			lastDoneAt: "2026-03-25",
+		});
+
+		expect(nextDueDate(weekly, context())).toBe("2026-04-01");
+	});
+
+	it("goes over the new year", () => {
+		expect(dueAfter("2026-12-31")).toBe("2027-01-01");
+	});
+
+	it("pauses a late care outside a period over the new year", () => {
+		const winter = care({
+			frequency: { amount: 1, unit: "month" },
+			lastDoneAt: "2026-12-20",
+			period: { startMonth: 11, endMonth: 2 },
+		});
+
+		expect(nextDueDate(winter, context(), "2027-01-25")).toBe("2027-01-20");
+		expect(nextDueDate(winter, context(), "2027-03-10")).toBe("2027-11-01");
+	});
+
+	it.each([
+		[
+			"a month later",
+			{ amount: 1, unit: "month" as const },
+			"2028-02-29",
+			"2028-03-29",
+		],
+		[
+			"a year later",
+			{ amount: 1, unit: "year" as const },
+			"2028-02-29",
+			"2029-02-28",
+		],
+		[
+			"four years later",
+			{ amount: 4, unit: "year" as const },
+			"2024-02-29",
+			"2028-02-29",
+		],
+		[
+			"a month after January 31",
+			{ amount: 1, unit: "month" as const },
+			"2028-01-31",
+			"2028-02-29",
+		],
+		[
+			"a year before the leap day",
+			{ amount: 1, unit: "year" as const },
+			"2027-02-28",
+			"2028-02-28",
+		],
+	])("on a leap year, %s", (_, frequency, lastDoneAt, due) => {
+		expect(nextDueDate(care({ frequency, lastDoneAt }), context())).toBe(due);
+	});
+});
+
 describe("snoozeUntil", () => {
 	it.each([
 		[1, "2026-06-11"],
@@ -356,5 +445,21 @@ describe("nextCare", () => {
 			"2026-06-10",
 		);
 		expect(next?.care.id).toBe("dated");
+	});
+});
+
+describe("groupCaresByPlant", () => {
+	it("gathers the cares of each plant, in their order", () => {
+		const cares = [
+			care({ id: "a", plantId: "pilea" }),
+			care({ id: "b", plantId: "ficus" }),
+			care({ id: "c", plantId: "pilea" }),
+		];
+
+		const byPlant = groupCaresByPlant(cares);
+
+		expect(byPlant.get("pilea")?.map(({ id }) => id)).toEqual(["a", "c"]);
+		expect(byPlant.get("ficus")?.map(({ id }) => id)).toEqual(["b"]);
+		expect(byPlant.get("monstera")).toBeUndefined();
 	});
 });

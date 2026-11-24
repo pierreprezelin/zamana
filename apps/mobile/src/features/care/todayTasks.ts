@@ -2,12 +2,14 @@ import { undoableLogIds } from "@/features/care/careHistory";
 import {
 	type CareStatus,
 	careStatus,
+	groupCaresByPlant,
 	isDue,
 	scheduleCares,
 	wasDueWhenDone,
 } from "@/features/care/careSchedule";
 import type { Care, CareLog, Climate } from "@/features/care/careTypes";
 import type { Plant } from "@/features/plants/plantSchema";
+import { compareISO } from "@/utils/dates";
 
 export type TodayTask = {
 	care: Care;
@@ -61,15 +63,15 @@ export const todayTasks = ({
 	climate,
 }: TodayInput): TodayGroup[] => {
 	const undoable = undoableLogIds(logs, cares);
+	const caresByPlant = groupCaresByPlant(cares);
 	const groups = plants
 		.filter((plant) => !plant.archivedAt)
 		.map((plant) => {
 			const context = { wateringLevel: plant.watering, climate };
 			const pending: TodayTask[] = [];
 			const handled: HandledTask[] = [];
-			const plantCares = cares.filter((care) => care.plantId === plant.id);
 			for (const { care, dueDate } of scheduleCares(
-				plantCares,
+				caresByPlant.get(plant.id) ?? [],
 				context,
 				today,
 			)) {
@@ -100,7 +102,5 @@ export const todayTasks = ({
 			(oldest, task) => (task.dueDate < oldest ? task.dueDate : oldest),
 			today,
 		);
-	return groups.sort((a, b) =>
-		oldestDueDate(a).localeCompare(oldestDueDate(b)),
-	);
+	return groups.sort((a, b) => compareISO(oldestDueDate(a), oldestDueDate(b)));
 };

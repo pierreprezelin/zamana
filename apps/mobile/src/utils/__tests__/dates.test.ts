@@ -1,5 +1,6 @@
 import i18next from "i18next";
 import {
+	compareISO,
 	formatDate,
 	formatDateTime,
 	formatHour,
@@ -64,5 +65,17 @@ describe("formatHour", () => {
 
 		expect(formatHour(5)).toMatch(/^5\sAM$/);
 		expect(formatHour(15)).toMatch(/^3\sPM$/);
+	});
+});
+
+describe("compareISO", () => {
+	it("orders ISO dates and timestamps by time", () => {
+		expect(
+			["2026-03-01", "2025-12-31", "2026-03-01", "2026-01-15"].sort(compareISO),
+		).toEqual(["2025-12-31", "2026-01-15", "2026-03-01", "2026-03-01"]);
+		expect(
+			compareISO("2026-06-10T08:00:00.000Z", "2026-06-10T07:59:59.999Z"),
+		).toBeGreaterThan(0);
+		expect(compareISO("2026-06-10", "2026-06-10")).toBe(0);
 	});
 });

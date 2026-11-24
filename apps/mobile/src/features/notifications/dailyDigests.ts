@@ -1,5 +1,5 @@
 import { careName } from "@/features/care/careLabels";
-import { scheduleCares } from "@/features/care/careSchedule";
+import { groupCaresByPlant, scheduleCares } from "@/features/care/careSchedule";
 import {
 	CARE_TYPES,
 	type Care,
@@ -12,10 +12,10 @@ import {
 } from "@/features/notifications/reminderTime";
 import { displayName } from "@/features/plants/plantLabels";
 import type { Plant } from "@/features/plants/plantSchema";
-import { toISODate } from "@/utils/dates";
+import { compareISO, toISODate } from "@/utils/dates";
 import { pluralForm, t } from "@/utils/i18n";
 
-export const DIGEST_DAYS = 30;
+const DIGEST_DAYS = 30;
 
 export type Digest = { date: Date; title: string; body: string };
 
@@ -50,14 +50,7 @@ export const dailyDigests = ({
 	reminderTime,
 }: DigestInput): Digest[] => {
 	const today = toISODate(now);
-	const caresByPlant = new Map<string, Care[]>();
-	for (const care of cares) {
-		if (!care.reminder) continue;
-		caresByPlant.set(care.plantId, [
-			...(caresByPlant.get(care.plantId) ?? []),
-			care,
-		]);
-	}
+	const caresByPlant = groupCaresByPlant(cares.filter((care) => care.reminder));
 	const scheduled = plants
 		.filter((plant) => !plant.archivedAt)
 		.flatMap((plant) =>
@@ -69,7 +62,7 @@ export const dailyDigests = ({
 				dueDate ? [{ care, plant, dueDate }] : [],
 			),
 		)
-		.sort((a, b) => a.dueDate.localeCompare(b.dueDate));
+		.sort((a, b) => compareISO(a.dueDate, b.dueDate));
 	if (!scheduled.length) return [];
 
 	const names = Object.fromEntries(
@@ -83,11 +76,14 @@ export const dailyDigests = ({
 	for (let offset = firstDay; offset < firstDay + DIGEST_DAYS; offset++) {
 		const date = atReminderTime(reminderTime, now, offset);
 		const day = toISODate(date);
-		while (dueCount < scheduled.length && scheduled[dueCount].dueDate <= day) {
-			const { care, plant } = scheduled[dueCount++];
-			namesByPlant.set(plant, [
-				...(namesByPlant.get(plant) ?? []),
-				names[care.type],
+		for (
+			let next = scheduled[dueCount];
+			next && next.dueDate <= day;
+			next = scheduled[++dueCount]
+		) {
+			namesByPlant.set(next.plant, [
+				...(namesByPlant.get(next.plant) ?? []),
+				names[next.care.type],
 			]);
 		}
 		if (!dueCount) continue;

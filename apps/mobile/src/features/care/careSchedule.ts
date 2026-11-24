@@ -5,7 +5,7 @@ import type {
 	Frequency,
 	Period,
 } from "@/features/care/careTypes";
-import { parseISODate, toISODate } from "@/utils/dates";
+import { compareISO, parseISODate, toISODate } from "@/utils/dates";
 
 const DAY_IN_MS = 24 * 60 * 60 * 1000;
 
@@ -16,6 +16,9 @@ const WATERING_DAYS: Record<number, [growing: number, resting: number]> = {
 	3: [30, 45],
 };
 
+// An unknown level, from a newer version or a broken row, waters like a normal plant
+const DEFAULT_WATERING_DAYS = WATERING_DAYS[2] as [number, number];
+
 // April to September in the north
 const NORTH_GROWING_MONTHS = [4, 5, 6, 7, 8, 9];
 
@@ -25,6 +28,16 @@ export type CareStatus =
 	| { kind: "late"; days: number }
 	| { kind: "today" }
 	| { kind: "upcoming"; days: number };
+
+export const groupCaresByPlant = (cares: Care[]) => {
+	const byPlant = new Map<string, Care[]>();
+	for (const care of cares) {
+		const plantCares = byPlant.get(care.plantId);
+		if (plantCares) plantCares.push(care);
+		else byPlant.set(care.plantId, [care]);
+	}
+	return byPlant;
+};
 
 export const daysBetween = (from: string, to: string) =>
 	Math.round(
@@ -73,7 +86,7 @@ export const wateringIntervalDays = (
 	isoDate: string,
 	climate: Climate,
 ) => {
-	const [growing, resting] = WATERING_DAYS[level];
+	const [growing, resting] = WATERING_DAYS[level] ?? DEFAULT_WATERING_DAYS;
 	return isGrowingSeason(isoDate, climate) ? growing : resting;
 };
 
@@ -160,7 +173,7 @@ export const scheduleCares = (
 		.map((care) => ({ care, dueDate: nextDueDate(care, context, today) }))
 		.sort((a, b) =>
 			a.dueDate && b.dueDate
-				? a.dueDate.localeCompare(b.dueDate)
+				? compareISO(a.dueDate, b.dueDate)
 				: Number(!a.dueDate) - Number(!b.dueDate),
 		);
 

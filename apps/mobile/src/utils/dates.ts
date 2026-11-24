@@ -6,8 +6,12 @@ const pad = (value: number) => String(value).padStart(2, "0");
 export const toISODate = (date: Date) =>
 	`${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
 
+// ISO strings sort by time as plain text, without the cost of a locale comparison
+export const compareISO = (a: string, b: string) =>
+	a < b ? -1 : a > b ? 1 : 0;
+
 export const parseISODate = (isoDate: string) => {
-	const [year, month, day] = isoDate.split("-").map(Number);
+	const [year = 1970, month = 1, day = 1] = isoDate.split("-").map(Number);
 	return new Date(year, month - 1, day);
 };
 
