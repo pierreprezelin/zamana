@@ -26,7 +26,7 @@
 		"eyebrow": "Plantes d’intérieur et d’extérieur",
 		"title": "Le pense-bête de vos plantes",
 		"description": "N’oubliez plus d’arroser vos plantes ! Zamana vous dit quand vous occuper de chacune, et vous prévient quand il fait anormalement froid ou chaud.",
-		"screenAlt": "Écran « Aujourd’hui » de l’application : alerte météo, tâches du jour et aperçu du jardin."
+		"screenAlt": "Fiche de la plante « Raven » dans l’application : toxicité, besoins en lumière, arrosage, température et humidité."
 	},
 	"features": {
 		"title": "Tout pour prendre soin de vos plantes",
@@ -77,7 +77,12 @@
 		"encyclopedia": {
 			"title": "Des réponses à vos questions",
 			"description": "Comment savoir si ma plante a soif ? Faut-il la rempoter ? Des fiches et des conseils pour ne plus jamais être dans le doute.",
-			"screenAlt": "Écran « Encyclopédie » de l’application : recherche de plantes et fiches populaires."
+			"screenAlt": "Fiche « Caoutchouc » de l’encyclopédie : photo, toxicité et besoins de la plante."
+		},
+		"today": {
+			"title": "Prévenu avant le gel ou la canicule",
+			"description": "Zamana surveille la météo là où se trouvent vos plantes d’extérieur. Au moindre coup de froid ou de chaud, une alerte vous invite à les mettre à l’abri.",
+			"screenAlt": "Écran « Aujourd’hui » de l’application : une alerte météo et les soins du jour."
 		}
 	},
 	"download": {

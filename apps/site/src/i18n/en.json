@@ -26,7 +26,7 @@
 		"eyebrow": "Indoor and outdoor plants",
 		"title": "Your plants’ reminder",
 		"description": "Never forget to water your plants again! Zamana tells you when each one needs care, and warns you when it gets unusually cold or hot.",
-		"screenAlt": "The app’s “Today” screen: a weather alert, today’s tasks and a preview of the garden."
+		"screenAlt": "The “Raven” plant page in the app: toxicity and light, watering, temperature and humidity needs."
 	},
 	"features": {
 		"title": "Everything to look after your plants",
@@ -77,7 +77,12 @@
 		"encyclopedia": {
 			"title": "Answers to your questions",
 			"description": "How do I know if my plant is thirsty? Should I repot it? Plant profiles and tips so you’re never in doubt again.",
-			"screenAlt": "The app’s “Encyclopedia” screen: plant search and popular profiles."
+			"screenAlt": "The “Rubber plant” encyclopedia page: photo, toxicity and the plant’s needs."
+		},
+		"today": {
+			"title": "A heads-up before frost or heatwaves",
+			"description": "Zamana keeps an eye on the weather where your outdoor plants live. At the first cold snap or heatwave, an alert reminds you to bring them to shelter.",
+			"screenAlt": "The app’s “Today” screen: a weather alert and today’s care tasks."
 		}
 	},
 	"download": {

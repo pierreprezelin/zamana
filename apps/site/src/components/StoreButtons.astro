@@ -8,9 +8,10 @@ import type { Dictionary } from "@/i18n";
 interface Props {
 	t: Dictionary;
 	onPrimary?: boolean;
+	class?: string;
 }
 
-const { t, onPrimary = false } = Astro.props;
+const { t, onPrimary = false, class: className } = Astro.props;
 
 const stores = [
 	{ id: "appStore", icon: "ion:logo-apple" },
@@ -37,7 +38,7 @@ const unavailableClass = ButtonVariants.button({
 ---
 
 <div class="flex flex-col items-start gap-3">
-	<ul class="flex flex-wrap gap-3">
+	<ul class:list={["flex flex-wrap gap-3", className]}>
 		{
 			stores.map(({ id, icon }) => (
 				<li>

@@ -1,8 +1,6 @@
 ---
 import { Icon } from "astro-icon/components";
-import careScreen from "@/assets/screens/care.png";
-import encyclopediaScreen from "@/assets/screens/encyclopedia.png";
-import gardenScreen from "@/assets/screens/garden.png";
+import { screens } from "@/assets/screens";
 import Illustration from "@/components/Illustration.astro";
 import PhoneMockup from "@/components/PhoneMockup.astro";
 import {
@@ -11,13 +9,14 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/starwind/card";
-import type { Dictionary } from "@/i18n";
+import type { Dictionary, Locale } from "@/i18n";
 
 interface Props {
 	t: Dictionary;
+	locale: Locale;
 }
 
-const { t } = Astro.props;
+const { t, locale } = Astro.props;
 
 const features = [
 	{
@@ -54,24 +53,10 @@ const moreFeatures = [
 ] as const;
 
 const showcases = [
-	{
-		id: "care",
-		screen: careScreen,
-		illustration: "runner",
-		isFlipped: true,
-	},
-	{
-		id: "garden",
-		screen: gardenScreen,
-		illustration: "chaoticGood",
-		isFlipped: false,
-	},
-	{
-		id: "encyclopedia",
-		screen: encyclopediaScreen,
-		illustration: "growth",
-		isFlipped: false,
-	},
+	{ id: "garden", illustration: "chaoticGood", isFlipped: false },
+	{ id: "care", illustration: "runner", isFlipped: true },
+	{ id: "today", illustration: "feliz", isFlipped: false },
+	{ id: "encyclopedia", illustration: "growth", isFlipped: false },
 ] as const;
 ---
 
@@ -133,7 +118,7 @@ const showcases = [
 		</div>
 		{
 			showcases.map(
-				({ id, screen, illustration, isFlipped }, index) => (
+				({ id, illustration, isFlipped }, index) => (
 				<div class="grid items-center gap-12 lg:grid-cols-2">
 					<div
 						class:list={[
@@ -143,7 +128,7 @@ const showcases = [
 					>
 						<div class="-mx-6 flex shrink-0 items-end self-stretch overflow-hidden px-6">
 							<PhoneMockup
-								src={screen}
+								src={screens[locale][id]}
 								alt={t.showcases[id].screenAlt}
 								sizes="(min-width: 40rem) 240px, 160px"
 								class="-mb-24 w-44 sm:w-64"
