@@ -30,7 +30,8 @@
 		"home": "Home",
 		"location": "Location",
 		"notifications": "Notifications",
-		"settings": "Settings"
+		"settings": "Settings",
+		"about": "About"
 	},
 	"encyclopedia": {
 		"searchPlaceholder": "Search for a plant...",
@@ -360,12 +361,14 @@
 		"backToGarden": "See my garden"
 	},
 	"settings": {
+		"openSource": "Open source (GPLv3)",
 		"appearance": "Appearance",
 		"summaries": {
 			"location": "Weather, climate",
 			"home": "New plants, tips",
 			"ergonomics": "Swipe, haptics",
-			"notifications": "Reminders, weather alerts"
+			"notifications": "Reminders, weather alerts",
+			"about": "Story, license, credits"
 		},
 		"language": {
 			"title": "Language",
@@ -828,5 +831,22 @@
 				"body": "Young sunflowers follow the sun, then settle facing east once they bloom."
 			}
 		}
+	},
+	"about": {
+		"story": {
+			"title": "Why Zamana?",
+			"tree": "I lived on the island of Martinique for quite some time, and there is a gigantic, 300-year-old “Zamana” (Samanea saman) tree at L’Habitation Céron, a former sugar plantation from the 1700s. I thought it would be a nice tribute to this magnificent “rain tree”, whose branches cover more than 5,000 square meters and which was named France’s Tree of the Year in 2016.",
+			"tribute": "If you ever stop by, make sure to pay it a visit!"
+		},
+		"openSource": {
+			"title": "Open source",
+			"license": "Zamana is free software under the GPLv3 license, created by Pierre Prézelin. Report a bug or suggest an idea on GitHub.",
+			"repository": "Source code on GitHub"
+		},
+		"links": {
+			"site": "Zamana website",
+			"privacy": "Privacy policy"
+		},
+		"inaturalistCredit": "Plants by iNaturalist"
 	}
 }

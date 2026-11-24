@@ -50,9 +50,17 @@ export default function SettingsScreen() {
 					/>
 				</Link>
 				<LanguageSetting />
+				<Link href="/settings/about" asChild>
+					<SettingsRow
+						icon="information-circle-outline"
+						title={t("screens.about")}
+						value={t("settings.summaries.about")}
+					/>
+				</Link>
 				<SettingsRow
 					icon="refresh-outline"
 					title={t("settings.restartOnboarding")}
+					navigates={false}
 					onPress={() => {
 						useOnboardingStore.setState({ completed: false });
 						router.replace("/welcome");
@@ -60,7 +68,7 @@ export default function SettingsScreen() {
 				/>
 			</View>
 			<Text className="mt-auto text-center text-xs text-foreground opacity-50">
-				v{nativeApplicationVersion}b
+				v{nativeApplicationVersion}b · {t("settings.openSource")}
 			</Text>
 		</View>
 	);

@@ -30,7 +30,8 @@
 		"home": "Accueil",
 		"location": "Localisation",
 		"notifications": "Notifications",
-		"settings": "Paramètres"
+		"settings": "Paramètres",
+		"about": "À propos"
 	},
 	"encyclopedia": {
 		"searchPlaceholder": "Rechercher une plante...",
@@ -364,12 +365,14 @@
 		"backToGarden": "Voir mon jardin"
 	},
 	"settings": {
+		"openSource": "Open source (GPLv3)",
 		"appearance": "Apparence",
 		"summaries": {
 			"location": "Météo, climat",
 			"home": "Nouvelles plantes, conseils",
 			"ergonomics": "Glissement, vibrations",
-			"notifications": "Rappels, alertes météo"
+			"notifications": "Rappels, alertes météo",
+			"about": "Histoire, licence, crédits"
 		},
 		"language": {
 			"title": "Langue",
@@ -832,5 +835,22 @@
 				"body": "Les jeunes tournesols suivent le soleil, puis se fixent vers l’est une fois en fleur."
 			}
 		}
+	},
+	"about": {
+		"story": {
+			"title": "Pourquoi Zamana ?",
+			"tree": "J’ai vécu quelque temps sur l’île de la Martinique, où se dresse un gigantesque « Zamana » (Samanea saman) de 300 ans, à l’Habitation Céron, une ancienne plantation sucrière du XVIIIe siècle. J’ai trouvé que ce serait un bel hommage à ce magnifique « arbre à pluie », dont les branches couvrent plus de 5 000 mètres carrés et qui a été élu Arbre de l’année en France en 2016.",
+			"tribute": "Si vous passez par là, allez lui rendre visite !"
+		},
+		"openSource": {
+			"title": "Open source",
+			"license": "Zamana est un logiciel libre sous licence GPLv3, créé par Pierre Prézelin. Signalez un bug ou proposez une idée sur GitHub.",
+			"repository": "Code source sur GitHub"
+		},
+		"links": {
+			"site": "Site de Zamana",
+			"privacy": "Politique de confidentialité"
+		},
+		"inaturalistCredit": "Plantes par iNaturalist"
 	}
 }

@@ -131,6 +131,10 @@ function RootLayout() {
 							options={{ title: t("screens.ergonomics") }}
 						/>
 						<Stack.Screen
+							name="settings/about"
+							options={{ title: t("screens.about") }}
+						/>
+						<Stack.Screen
 							name="plant/new"
 							options={{ title: t("screens.newPlant") }}
 						/>
