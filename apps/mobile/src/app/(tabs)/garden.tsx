@@ -118,8 +118,8 @@ export default function GardenScreen() {
 					<FlatList
 						// Scrolls under the tab bar down to the screen edge, its scroll bar along the screen side
 						className="-mx-4 -mb-4"
-						// numColumns can't change on the fly
-						key={viewMode}
+						// numColumns can't change on the fly, and a new tab starts fresh (a background data swap left it blank)
+						key={`${viewMode}-${tab}`}
 						data={plants}
 						numColumns={viewMode === "grid" ? GRID_COLUMNS : 1}
 						keyExtractor={(plant) => plant.id}
