@@ -74,10 +74,10 @@
 			"description": "Retrouvez le surnom, l’emplacement et les besoins de chacune en un instant. Et gardez une trace de celles qui ne sont plus là.",
 			"screenAlt": "Écran « Jardin » de l’application : la liste des plantes et leur nom scientifique."
 		},
-		"encyclopedia": {
+		"knowledge": {
 			"title": "Des réponses à vos questions",
 			"description": "Comment savoir si ma plante a soif ? Faut-il la rempoter ? Des fiches et des conseils pour ne plus jamais être dans le doute.",
-			"screenAlt": "Fiche « Caoutchouc » de l’encyclopédie : photo, toxicité et besoins de la plante."
+			"screenAlt": "Écran « Conseils » de l’application : articles classés par catégorie, des bases à la santé des plantes."
 		},
 		"today": {
 			"title": "Prévenu avant le gel ou la canicule",

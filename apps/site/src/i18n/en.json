@@ -74,10 +74,10 @@
 			"description": "Find each one’s nickname, location and needs in an instant. And keep a record of those that are gone.",
 			"screenAlt": "The app’s “Garden” screen: the list of plants and their scientific names."
 		},
-		"encyclopedia": {
+		"knowledge": {
 			"title": "Answers to your questions",
 			"description": "How do I know if my plant is thirsty? Should I repot it? Plant profiles and tips so you’re never in doubt again.",
-			"screenAlt": "The “Rubber plant” encyclopedia page: photo, toxicity and the plant’s needs."
+			"screenAlt": "The app’s “Tips” screen: articles sorted by category, from the basics to plant health."
 		},
 		"today": {
 			"title": "A heads-up before frost or heatwaves",
