@@ -91,12 +91,12 @@
 		},
 		"reminders": {
 			"title": "Recevez des rappels",
-			"description": "Un rappel chaque matin à 9 h pour arroser et entretenir vos plantes, modifiable dans les paramètres.",
+			"description": "Un rappel chaque matin à 9 h pour arroser et entretenir vos plantes. Vous pouvez modifier l’heure dans les paramètres.",
 			"action": "Autoriser les notifications"
 		},
 		"weather": {
 			"title": "Recevez des alertes météo",
-			"description": "Rentrez vos plantes à l’intérieur si le temps est anormalement froid ou chaud.",
+			"description": "Une alerte à 18 h quand le temps s’annonce anormalement froid ou chaud, pour rentrer vos plantes. Vous pouvez modifier l’heure dans les paramètres.",
 			"action": "Autoriser la localisation"
 		},
 		"done": {

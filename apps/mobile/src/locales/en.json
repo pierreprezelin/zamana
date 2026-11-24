@@ -91,12 +91,12 @@
 		},
 		"reminders": {
 			"title": "Get reminders",
-			"description": "A reminder every morning at 9 AM to water and look after your plants. You can change it in the settings.",
+			"description": "A reminder every morning at 9 AM to water and look after your plants. You can change the time in the settings.",
 			"action": "Allow notifications"
 		},
 		"weather": {
 			"title": "Get weather alerts",
-			"description": "Bring your plants indoors when it gets unusually cold or hot.",
+			"description": "An alert at 6 PM when unusually cold or hot weather is coming, so you can bring your plants indoors. You can change the time in the settings.",
 			"action": "Allow location"
 		},
 		"done": {
