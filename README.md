@@ -46,4 +46,13 @@ I designed Zamana to cover my needs, but also to be useful to everyone. You'll f
 - [Bun](https://bun.com/) as package manager
 - [Vercel](https://vercel.com/) and [Cloudflare Pages](https://www.cloudflare.com/products/pages/) for hosting and deployments
 
-**Feel free to give suggestions for a better experience!**
+**Suggestions, fixes and new features are welcome!** See [CONTRIBUTING.md](CONTRIBUTING.md) to get started.
+
+## License
+
+Zamana is free software: you can redistribute it and/or modify it under the terms of the [GNU General Public License v3.0](LICENSE).
+
+Two additional terms, detailed at the top of the [LICENSE](LICENSE), apply under section 7 of the GPLv3:
+
+- a distributed fork must credit "Based on Zamana by Pierre Prézelin" with a link to this repository in its "About" or "Settings" screen;
+- the name "Zamana", its logo and the identifier `com.pierreprezelin.zamana` are not licensed: a published fork uses its own.
