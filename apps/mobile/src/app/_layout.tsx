@@ -23,10 +23,7 @@ import { HeaderBackButton } from "@/components/HeaderBackButton";
 import { MessageScreen } from "@/components/MessageScreen";
 import { toastConfig } from "@/components/toastConfig";
 import { ForceUpdateSheet } from "@/features/appVersion/components/ForceUpdateSheet";
-import {
-	reloadIfLanguageChanged,
-	takeReturnToSettings,
-} from "@/features/language/useLanguageStore";
+import { reloadIfLanguageChanged } from "@/features/language/useLanguageStore";
 import { startReminderScheduler } from "@/features/notifications/scheduleReminders";
 import { useOnboardingStore } from "@/features/onboarding/useOnboardingStore";
 import {
@@ -75,10 +72,6 @@ function RootLayout() {
 	useEffect(() => {
 		markInteractive();
 	}, [markInteractive]);
-
-	useEffect(() => {
-		if (takeReturnToSettings()) router.push("/settings");
-	}, []);
 
 	// The daily digest leads to the tasks of the day
 	const notificationResponse = useLastNotificationResponse();

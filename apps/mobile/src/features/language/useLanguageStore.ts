@@ -1,6 +1,5 @@
 import { reloadAppAsync } from "expo";
 import { getLocales } from "expo-localization";
-import { Storage } from "expo-sqlite/kv-store";
 import i18next from "i18next";
 import { z } from "zod";
 import { create } from "zustand";
@@ -36,9 +35,7 @@ export const useLanguageStore = create<LanguageState>()(
 			preference: "system",
 			setPreference: (preference) => {
 				set({ preference });
-				if (!languageChanged()) return;
-				Storage.setItemSync(RETURN_TO_SETTINGS_KEY, "true");
-				reloadAppAsync();
+				reloadIfLanguageChanged();
 			},
 		}),
 		{
@@ -56,18 +53,7 @@ export const useLanguageStore = create<LanguageState>()(
 export const appLanguage = () =>
 	resolveLanguage(useLanguageStore.getState().preference, getLocales());
 
-const languageChanged = () => appLanguage() !== i18next.language;
-
 // Texts translated when their module loaded only change with a fresh start
 export const reloadIfLanguageChanged = () => {
-	if (languageChanged()) reloadAppAsync();
-};
-
-// The language is chosen in the settings: the reload brings back there, once
-const RETURN_TO_SETTINGS_KEY = "language.returnToSettings";
-
-export const takeReturnToSettings = () => {
-	const pending = Storage.getItemSync(RETURN_TO_SETTINGS_KEY) !== null;
-	if (pending) Storage.removeItemSync(RETURN_TO_SETTINGS_KEY);
-	return pending;
+	if (appLanguage() !== i18next.language) reloadAppAsync();
 };
