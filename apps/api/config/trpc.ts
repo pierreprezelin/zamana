@@ -1,6 +1,7 @@
 import { initTRPC } from "@trpc/server";
 
-const t = initTRPC.create();
+// Never sends the stack, whatever NODE_ENV the server was started with
+const t = initTRPC.create({ isDev: false });
 
 export const router = t.router;
 export const publicProcedure = t.procedure;
