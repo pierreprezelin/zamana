@@ -1,6 +1,6 @@
 import { useWindowDimensions } from "react-native";
 
-const SCREEN_PADDING = 20;
+const SCREEN_PADDING = 16;
 const GRID_GAP = 8;
 export const GRID_COLUMNS = 3;
 
