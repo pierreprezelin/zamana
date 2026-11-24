@@ -1,4 +1,5 @@
-import type { PlantData } from "@/features/plants/plantSchema";
+import { renderHook } from "@testing-library/react-native";
+import type { Plant, PlantData } from "@/features/plants/plantSchema";
 
 const mockRows = new Map<string, Record<string, unknown>>();
 const mockDeletePhoto = jest.fn();
@@ -28,7 +29,7 @@ jest.mock("@/utils/database", () => ({
 	},
 }));
 
-const { usePlantStore } =
+const { useCurrentPlants, usePastPlants, usePlant, usePlantStore } =
 	require("@/features/plants/usePlantStore") as typeof import("@/features/plants/usePlantStore");
 const { useCareStore } =
 	require("@/features/care/useCareStore") as typeof import("@/features/care/useCareStore");
@@ -94,7 +95,7 @@ describe("usePlantStore", () => {
 			.getState()
 			.createPlant({ ...data, name: "Pothos" });
 
-		expect(usePlantStore.getState().plants[0].id).toBe(id);
+		expect(usePlantStore.getState().plants[0]?.id).toBe(id);
 	});
 
 	it("updates a plant and deletes its replaced photo", async () => {
@@ -160,5 +161,62 @@ describe("usePlantStore", () => {
 		await usePlantStore.getState().deletePlant(id);
 
 		expect(caresOf(id)).toEqual([]);
+	});
+});
+
+describe("plant selectors", () => {
+	const plantWith = (id: string, archivedAt: string | null = null): Plant => ({
+		...data,
+		id,
+		createdAt: "2026-06-01T08:00:00.000Z",
+		updatedAt: "2026-06-01T08:00:00.000Z",
+		archivedAt,
+		archiveReason: archivedAt ? "dead" : null,
+	});
+
+	beforeEach(() =>
+		usePlantStore.setState({
+			plants: [
+				plantWith("alive-1"),
+				plantWith("gone", "2026-07-01T08:00:00.000Z"),
+				plantWith("alive-2"),
+			],
+		}),
+	);
+
+	it("finds a plant by its id", async () => {
+		const { result } = await renderHook(() => usePlant("gone"));
+
+		expect(result.current?.id).toBe("gone");
+	});
+
+	it("finds no plant for an unknown id", async () => {
+		const { result } = await renderHook(() => usePlant("missing"));
+
+		expect(result.current).toBeUndefined();
+	});
+
+	it("lists the plants that are not archived", async () => {
+		const { result } = await renderHook(() => useCurrentPlants());
+
+		expect(result.current.map((plant) => plant.id)).toEqual([
+			"alive-1",
+			"alive-2",
+		]);
+	});
+
+	it("lists the archived plants", async () => {
+		const { result } = await renderHook(() => usePastPlants());
+
+		expect(result.current.map((plant) => plant.id)).toEqual(["gone"]);
+	});
+
+	it("keeps the same lists while the plants do not change", async () => {
+		const { result, rerender } = await renderHook(() => useCurrentPlants());
+		const first = result.current;
+
+		await rerender({});
+
+		expect(result.current).toBe(first);
 	});
 });

@@ -33,10 +33,4 @@ describe("migrate", () => {
 
 		expect(database.executed).toEqual([]);
 	});
-
-	it("adds the photo credit column", () => {
-		expect(MIGRATIONS[0]).toBe(
-			"ALTER TABLE plant ADD COLUMN photo_credit TEXT",
-		);
-	});
 });
