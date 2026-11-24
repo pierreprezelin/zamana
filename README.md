@@ -35,14 +35,15 @@ I designed Zamana to cover my needs, but also to be useful to everyone. You'll f
 ## Stack
 
 - [React Native](https://reactnative.dev) with [Expo](https://expo.dev) for cross-platform development
-- [Expo EAS](https://expo.dev/services) for Over-the-Air updates
 - [Node.js](https://nodejs.org) with [Express](https://expressjs.com) for the API
+- [Astro](https://astro.build/) for the public website
+- [Expo EAS](https://expo.dev/services) for Over-the-Air updates
 - [Zustand](https://zustand-demo.pmnd.rs/) for local stores
 - [TypeScript](https://www.typescriptlang.org/) with [tRPC](https://trpc.io/) for end-to-end type-safety
 - [SQLite](https://sqlite.org/) for the local database
 - [Open-Meteo](https://open-meteo.com) for weather forecasts and city search
 - [iNaturalist](https://www.inaturalist.org) for species search
 - [Bun](https://bun.com/) as package manager
-- [Vercel](https://vercel.com/) for hosting and deployments
+- [Vercel](https://vercel.com/) and [Cloudflare Pages](https://www.cloudflare.com/products/pages/) for hosting and deployments
 
 **Feel free to give suggestions for a better experience!**

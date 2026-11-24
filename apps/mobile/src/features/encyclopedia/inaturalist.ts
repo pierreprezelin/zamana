@@ -200,7 +200,7 @@ const curatedTaxon = (plant: CuratedPlant): Taxon => ({
 
 // The curated plants known by that name come first, then iNaturalist's; offline, they show alone.
 // ponytail: one found again on a later iNaturalist page is counted twice in the total, and the
-// list then only ends on an empty page: one request more
+// list then only ends on an empty page: one request more. Revisit if the shown count is reported wrong
 export const searchFirstPage = async (query: string): Promise<TaxaPage> => {
 	const curated = searchCuratedPlants(query).map(curatedTaxon);
 	const page = await searchTaxa(query, 1).catch((error: unknown) => {
