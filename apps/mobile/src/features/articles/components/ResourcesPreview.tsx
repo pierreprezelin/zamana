@@ -33,9 +33,9 @@ export function ResourcesPreview() {
 							accessibilityRole="button"
 							pressedClassName=""
 							pressedOpacity={0.75}
-							className="h-10 flex-row items-center gap-3 rounded-xl border border-line bg-surface px-3"
+							className="h-12 flex-row items-center gap-3 rounded-xl border border-line bg-surface px-4"
 						>
-							<Text className="text-sm text-foreground">
+							<Text className="text-base text-foreground">
 								{t(`articles.categories.${category}`)}
 							</Text>
 							<Ionicons
