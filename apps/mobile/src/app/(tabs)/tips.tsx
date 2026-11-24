@@ -31,14 +31,16 @@ export default function TipsScreen() {
 		() => searchArticles(articles, query),
 		[articles, query],
 	);
-	const total = articles.length;
+	const shownCount = query.trim() ? results.length : articles.length;
 
 	return (
 		<ScreenPlaceholder
 			title={t("tabs.tips")}
 			subtitle={
-				total
-					? t(`articles.count.${pluralForm(total)}`, { amount: total })
+				availability === "ready"
+					? t(`articles.count.${pluralForm(shownCount)}`, {
+							amount: shownCount,
+						})
 					: undefined
 			}
 			showSettings
