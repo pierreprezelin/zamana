@@ -19,7 +19,9 @@
 			"ios": {
 				"simulator": false
 			},
-			"env": {}
+			"env": {
+				"NODE_ENV": "development"
+			}
 		},
 		"preview": {
 			"extends": "production",
@@ -28,6 +30,9 @@
 			"android": {
 				"withoutCredentials": true,
 				"buildType": "apk"
+			},
+			"env": {
+				"NODE_ENV": "preview"
 			}
 		},
 		"production": {
@@ -37,7 +42,9 @@
 			"android": {
 				"buildType": "app-bundle"
 			},
-			"env": {}
+			"env": {
+				"NODE_ENV": "production"
+			}
 		}
 	}
 }
