@@ -32,6 +32,7 @@ export function LanguageSetting() {
 			<SettingsRow
 				icon="language-outline"
 				title={t("settings.language.title")}
+				navigates={false}
 				value={languageLabel(preference)}
 				onPress={() => {
 					setChoice(preference);

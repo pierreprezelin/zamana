@@ -15,6 +15,7 @@ export function UserNameSetting() {
 			<SettingsRow
 				icon="chatbubble-ellipses-outline"
 				title={t("settings.userName.title")}
+				navigates={false}
 				value={name ?? t("settings.userName.empty")}
 				onPress={() => sheetRef.current?.present()}
 			/>
