@@ -23,7 +23,7 @@ import { SEARCH_MIN_LENGTH } from "@/utils/useDebouncedSearch";
 
 // Enough to fill the screen, then a hint of the next page at the bottom
 const LOADING_CARDS = 6;
-const NEXT_PAGE_LOADING_CARDS = 2;
+const NEXT_PAGE_LOADING_CARDS = 1;
 
 const plantCount = (amount: number) =>
 	t(`garden.plantCount.${pluralForm(amount)}`, {
@@ -191,9 +191,7 @@ function Encyclopedia() {
 						!searching ? undefined : search.moreFailed ? (
 							<LoadState failed onRetry={search.retryMore} />
 						) : search.loadingMore ? (
-							<View className="pt-2">
-								<TaxonListSkeleton count={NEXT_PAGE_LOADING_CARDS} />
-							</View>
+							<TaxonListSkeleton count={NEXT_PAGE_LOADING_CARDS} />
 						) : undefined
 					}
 				/>
