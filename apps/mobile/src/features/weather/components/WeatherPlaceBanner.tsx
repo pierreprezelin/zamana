@@ -8,14 +8,15 @@ import { useWeatherStore } from "@/features/weather/useWeatherStore";
 import { needsWeatherPlace } from "@/features/weather/weatherRisks";
 import { t } from "@/utils/i18n";
 
-// Outdoor plants with no place get no alert: says so until a place is chosen
-export function WeatherPlaceBanner() {
+// Outdoor plants with no place get no alert: the banner says so until a place is chosen
+export const useNeedsWeatherPlace = () => {
 	const plants = usePlantStore((state) => state.plants);
 	const alertsEnabled = useWeatherStore((state) => state.alertsEnabled);
 	const place = useWeatherStore((state) => state.place);
+	return needsWeatherPlace({ alertsEnabled, place, plants });
+};
 
-	if (!needsWeatherPlace({ alertsEnabled, place, plants })) return null;
-
+export function WeatherPlaceBanner() {
 	return (
 		<View className="gap-3 rounded-2xl border border-line bg-surface p-4">
 			<View className="flex-row items-start gap-3">
