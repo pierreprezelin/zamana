@@ -2,7 +2,7 @@
 node_modules/
 
 # Env
-.env.*
+.env*
 !.env.example
 
 # macOS
@@ -13,3 +13,6 @@ coverage/
 
 # VS Code
 .vscode
+
+# Vercel
+.vercel
