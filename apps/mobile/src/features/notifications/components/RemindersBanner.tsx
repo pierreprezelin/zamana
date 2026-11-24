@@ -8,18 +8,20 @@ import { useNotificationPreferencesStore } from "@/features/notifications/useNot
 import { useRemindersOff } from "@/features/notifications/useRemindersOff";
 import { t } from "@/utils/i18n";
 
-// Offers the reminders to whoever skipped or refused them, until dismissed
+// Offers the reminders to whoever skipped or refused them, until dismissed.
+// Turned off in the settings on purpose: nothing to offer
+export const useShowRemindersBanner = () => {
+	const bannerDismissed = useNotificationPreferencesStore(
+		(state) => state.bannerDismissed,
+	);
+	return useRemindersOff().reason === "notAllowed" && !bannerDismissed;
+};
+
 export function RemindersBanner() {
 	const reminderTime = useNotificationPreferencesStore(
 		(state) => state.reminderTime,
 	);
-	const bannerDismissed = useNotificationPreferencesStore(
-		(state) => state.bannerDismissed,
-	);
-	const { reason, enableTitle, enable } = useRemindersOff();
-
-	// Turned off in the settings on purpose: nothing to offer
-	if (reason !== "notAllowed" || bannerDismissed) return null;
+	const { enableTitle, enable } = useRemindersOff();
 
 	return (
 		<View className="gap-3 rounded-2xl border border-line bg-surface p-4">

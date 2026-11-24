@@ -8,7 +8,10 @@ import { TodayTasks } from "@/features/care/components/TodayTasks";
 import { todayTasks } from "@/features/care/todayTasks";
 import { useCarePreferencesStore } from "@/features/care/useCarePreferencesStore";
 import { useCareStore } from "@/features/care/useCareStore";
-import { RemindersBanner } from "@/features/notifications/components/RemindersBanner";
+import {
+	RemindersBanner,
+	useShowRemindersBanner,
+} from "@/features/notifications/components/RemindersBanner";
 import { GardenPreview } from "@/features/plants/components/GardenPreview";
 import { NewPlantCard } from "@/features/plants/components/NewPlantCard";
 import { useNewPlantToFeature } from "@/features/plants/useNewPlantToFeature";
@@ -36,6 +39,7 @@ export default function TodayScreen() {
 	const today = toISODate(new Date());
 	const weatherAlert = useWeatherAlert();
 	const needsPlace = useNeedsWeatherPlace();
+	const showReminders = useShowRemindersBanner() && plants.length > 0;
 	const tip = useTodayTip(today, climate);
 	const newPlant = useNewPlantToFeature();
 	// Re-renders on focus so the greeting and the tasks follow the time of day
@@ -58,15 +62,15 @@ export default function TodayScreen() {
 			showSettings
 			scrollBottomInset={tabBarOffset + 16}
 		>
-			{(needsPlace || weatherAlert || tip || newPlant) && (
+			{(weatherAlert || tip || needsPlace || showReminders || newPlant) && (
 				<View className="gap-2">
-					{needsPlace && <WeatherPlaceBanner />}
 					{weatherAlert && <WeatherAlertBanner alert={weatherAlert} />}
 					{tip && <TipCard tip={tip} today={today} />}
+					{needsPlace && <WeatherPlaceBanner />}
+					{showReminders && <RemindersBanner />}
 					{newPlant && <NewPlantCard plant={newPlant} />}
 				</View>
 			)}
-			{plants.length > 0 && <RemindersBanner />}
 			{plants.length > 0 && <TodayTasks groups={groups} today={today} />}
 			<GardenPreview />
 			<ResourcesPreview />
