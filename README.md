@@ -22,11 +22,11 @@ I designed Zamana to cover my needs, but also to be useful to everyone. You'll f
 
 - 🗒️ Fully customizable info about your plant (name, temp, watering, lifespan...)
 - ⚠️ A daily reminder, at the time of your choice, of the care your plants need
-- 💧 Watering reminders that follow the growing and rest seasons, wherever you live: northern or southern hemisphere, or the tropics
-- 🌡️ Notifications about incoming storms, strong winds, abnormally hot or cold temperatures, to bring your plants indoors
+- 💧 Watering reminders that follow the growing and rest seasons, wherever you live
+- 🌡️ Notifications about incoming storms, strong winds, abnormally hot or cold temperatures
 - 🖼️ A timeline with the photos you've taken of your plant to watch its evolution
 - 📚 Help articles about how to take care of your plants
-- 🎓 A pro-tip or fun fact about flora every day!
+- 🎓 A pro-tip or fun fact about flora every day
 - 📍 No account: your plants and photos stay on your phone
 - 💎 No subscription, no paid tier, no ads
 - 🌍 Translated in English and French
