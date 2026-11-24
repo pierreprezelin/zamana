@@ -1,5 +1,6 @@
 ---
 import { getRelativeLocaleUrl } from "astro:i18n";
+import { GITHUB_URL } from "@/constants/stores";
 import { type Dictionary, type Locale, privacyPaths } from "@/i18n";
 
 interface Props {
@@ -15,7 +16,14 @@ const year = new Date().getFullYear();
 	<div
 		class="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 px-4 py-8 text-sm text-muted-foreground"
 	>
-		<p>© {year} Zamana. {t.footer.rights}</p>
+		<p>© {year} Pierre Prézelin</p>
+		<span aria-hidden="true">·</span>
+		<a
+			href={`${GITHUB_URL}/blob/main/LICENSE`}
+			class="underline-offset-4 hover:text-foreground hover:underline"
+		>
+			{t.footer.license}
+		</a>
 		<span aria-hidden="true">·</span>
 		<a
 			href={getRelativeLocaleUrl(locale, privacyPaths[locale])}

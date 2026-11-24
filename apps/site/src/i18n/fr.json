@@ -60,7 +60,7 @@
 			"platforms": "App Android et iOS",
 			"darkTheme": "Thème sombre",
 			"languages": "Français et anglais",
-			"openSource": "Code source ouvert"
+			"openSource": "Open source"
 		}
 	},
 	"showcases": {
@@ -95,7 +95,7 @@
 		"comingSoon": "Bientôt disponible"
 	},
 	"footer": {
-		"rights": "Tous droits réservés.",
+		"license": "Open source (GPLv3)",
 		"privacy": "Confidentialité",
 		"contact": "Contact"
 	},
