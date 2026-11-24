@@ -6,6 +6,8 @@ import { PlantCard } from "@/features/plants/components/PlantCard";
 import { useCurrentPlants } from "@/features/plants/usePlantStore";
 import { t } from "@/utils/i18n";
 
+const GARDEN_PREVIEW_LIMIT = 10;
+
 export function GardenPreview() {
 	const plants = useCurrentPlants();
 
@@ -26,7 +28,7 @@ export function GardenPreview() {
 			{plants.length > 0 ? (
 				<FlatList
 					horizontal
-					data={plants}
+					data={plants.slice(0, GARDEN_PREVIEW_LIMIT)}
 					keyExtractor={(plant) => plant.id}
 					renderItem={({ item }) => <PlantCard plant={item} className="w-32" />}
 					showsHorizontalScrollIndicator={false}
