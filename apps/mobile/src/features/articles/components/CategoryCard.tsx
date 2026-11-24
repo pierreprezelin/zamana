@@ -31,7 +31,7 @@ export function CategoryCard({ category, count }: CategoryCardProps) {
 					/>
 				</View>
 				<View className="flex-1">
-					<Text className="font-outfit-semibold text-foreground">
+					<Text className="font-outfit-semibold text-base text-foreground">
 						{t(`articles.categories.${category}`)}
 					</Text>
 					<Text className="text-sm text-muted">
