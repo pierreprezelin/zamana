@@ -1,5 +1,7 @@
 {
-	"NSCameraUsageDescription": "Zamana needs the camera to take photos of your plants.",
-	"NSPhotoLibraryUsageDescription": "Zamana needs access to your photos to show your plants.",
-	"NSLocationWhenInUseUsageDescription": "Zamana uses your approximate location to warn you when the weather threatens your outdoor plants."
+	"ios": {
+		"NSCameraUsageDescription": "Zamana needs the camera to take photos of your plants.",
+		"NSPhotoLibraryUsageDescription": "Zamana needs access to your photos to show your plants.",
+		"NSLocationWhenInUseUsageDescription": "Zamana uses your approximate location to warn you when the weather threatens your outdoor plants."
+	}
 }
