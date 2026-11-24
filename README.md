@@ -18,18 +18,19 @@ If you ever stop by, make sure to pay it a visit!
 
 ## Features
 
-I designed Zamana to cover my needs, but also to be useful to everyone. You'll find:
+Zamana started as an app for my own plants, but it's meant to be useful to everyone:
 
 - 🗒️ Fully customizable info about your plant (name, temp, watering, lifespan...)
 - ⚠️ A daily reminder, at the time of your choice, of the care your plants need
 - 💧 Watering reminders that follow the growing and rest seasons, wherever you live
 - 🌡️ Notifications about incoming storms, strong winds, abnormally hot or cold temperatures
 - 🖼️ A timeline with the photos you've taken of your plant to watch its evolution
-- 📚 Help articles about how to take care of your plants
+- 📚 Look up 300,000+ species to find your plant's exact name and a photo
+- ❓ Help articles about how to take care of your plants
 - 🎓 A pro-tip or fun fact about flora every day
 - 📍 No account: your plants and photos stay on your phone
 - 💎 No subscription, no paid tier, no ads
-- 🌍 Translated in English and French
+- 🌍 Translated into English and French
 - 🍎 Available on Android and iOS
 
 ## Stack
@@ -44,7 +45,7 @@ I designed Zamana to cover my needs, but also to be useful to everyone. You'll f
 - [Open-Meteo](https://open-meteo.com) for weather forecasts and city search
 - [iNaturalist](https://www.inaturalist.org) for species search
 - [Bun](https://bun.com/) as package manager
-- [Vercel](https://vercel.com/) and [Cloudflare Pages](https://www.cloudflare.com/products/pages/) for hosting and deployments
+- [Vercel](https://vercel.com/) and [Cloudflare](https://www.cloudflare.com/products/pages/) for hosting and deployments
 
 **Suggestions, fixes and new features are welcome!** See [CONTRIBUTING.md](CONTRIBUTING.md) to get started.
 
