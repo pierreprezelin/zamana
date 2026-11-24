@@ -21,21 +21,26 @@ export function CategoryCard({ category, count }: CategoryCardProps) {
 				accessibilityRole="button"
 				pressedClassName=""
 				pressedOpacity={0.75}
-				className="flex-1 flex-row items-center gap-3 rounded-2xl border border-line bg-surface p-4"
+				className="flex-1 gap-4 rounded-2xl border border-line bg-surface p-4"
 			>
-				<View className="size-10 items-center justify-center rounded-xl bg-primary-tint">
-					<Ionicons
-						name={categoryIcons[category]}
-						size={20}
-						className="text-primary"
-					/>
+				<View className="flex-row items-start justify-between gap-2">
+					<View className="size-10 items-center justify-center rounded-xl bg-primary-tint">
+						<Ionicons
+							name={categoryIcons[category]}
+							size={20}
+							className="text-primary"
+						/>
+					</View>
+					<Text className="text-sm text-muted">
+						{t(`articles.count.${pluralForm(count)}`, { amount: count })}
+					</Text>
 				</View>
-				<View className="flex-1">
+				<View>
 					<Text className="font-outfit-semibold text-base text-foreground">
 						{t(`articles.categories.${category}`)}
 					</Text>
-					<Text className="text-sm text-muted">
-						{t(`articles.count.${pluralForm(count)}`, { amount: count })}
+					<Text numberOfLines={2} className="text-sm text-muted">
+						{t(`articles.categoryDescriptions.${category}`)}
 					</Text>
 				</View>
 			</Pressable>

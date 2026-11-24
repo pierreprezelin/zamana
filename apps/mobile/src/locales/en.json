@@ -63,6 +63,14 @@
 			"propagation": "Propagation",
 			"health": "Plant health"
 		},
+		"categoryDescriptions": {
+			"basics": "Getting started",
+			"watering": "When and how much",
+			"light": "Finding the right spot",
+			"seasons": "Through the year",
+			"propagation": "Cuttings and seeds",
+			"health": "Pests and diseases"
+		},
 		"noSearchResult": "No article matches your search.",
 		"emptyCategory": "No article in this category yet.",
 		"empty": "No articles yet.",

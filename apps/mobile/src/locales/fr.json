@@ -63,6 +63,14 @@
 			"propagation": "Multiplication",
 			"health": "Santé"
 		},
+		"categoryDescriptions": {
+			"basics": "Bien démarrer",
+			"watering": "Quand et combien",
+			"light": "Trouver la bonne place",
+			"seasons": "Au fil de l’année",
+			"propagation": "Boutures et semis",
+			"health": "Maladies et parasites"
+		},
 		"noSearchResult": "Aucun article ne correspond à votre recherche.",
 		"emptyCategory": "Aucun article dans cette catégorie pour l’instant.",
 		"empty": "Aucun article pour l’instant.",
