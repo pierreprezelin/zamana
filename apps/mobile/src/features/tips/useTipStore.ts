@@ -57,12 +57,6 @@ export const useTipStore = create<TipState>()(
 		{
 			name: "tips",
 			storage: syncStorage,
-			partialize: ({ enabled, seenIds, todayTip, dismissedOn }) => ({
-				enabled,
-				seenIds,
-				todayTip,
-				dismissedOn,
-			}),
 			// An unreadable history would crash the home screen on every launch
 			merge: (persisted, current) => {
 				const saved = persisted as Partial<TipState>;

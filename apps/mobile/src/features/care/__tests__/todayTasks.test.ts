@@ -136,7 +136,12 @@ describe("todayTasks", () => {
 		const groups = run(
 			[plant("monstera")],
 			[skipped],
-			[careLog("monstera", "watering", "2026-06-09", "skipped")],
+			[
+				{
+					...careLog("monstera", "watering", "2026-06-09", "skipped"),
+					previousLastDoneAt: "2026-06-03",
+				},
+			],
 		);
 		expect(groups).toEqual([]);
 	});

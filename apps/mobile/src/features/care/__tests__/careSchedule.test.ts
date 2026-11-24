@@ -53,9 +53,13 @@ describe("wateringIntervalDays", () => {
 		expect(wateringIntervalDays(2, date, "north")).toBe(days);
 	});
 
-	it("shifts the seasons by six months in the south", () => {
-		expect(wateringIntervalDays(2, "2026-06-15", "south")).toBe(14);
-		expect(wateringIntervalDays(2, "2026-11-15", "south")).toBe(7);
+	it.each([
+		["2026-03-31", 7],
+		["2026-04-01", 14],
+		["2026-09-30", 14],
+		["2026-10-01", 7],
+	])("in the south, %s is %i days apart", (date, days) => {
+		expect(wateringIntervalDays(2, date, "south")).toBe(days);
 	});
 
 	it("keeps the growing interval all year in the tropics", () => {
@@ -343,5 +347,14 @@ describe("nextCare", () => {
 			nextCare([care({ frequency: null })], context(), "2026-06-10"),
 		).toBeNull();
 		expect(nextCare([], context(), "2026-06-10")).toBeNull();
+	});
+
+	it("picks a dated care over one without a due date", () => {
+		const next = nextCare(
+			[care({ id: "undated", frequency: null }), weekly("dated", "2026-06-08")],
+			context(),
+			"2026-06-10",
+		);
+		expect(next?.care.id).toBe("dated");
 	});
 });

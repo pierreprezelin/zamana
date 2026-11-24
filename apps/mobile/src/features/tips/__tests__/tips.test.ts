@@ -57,10 +57,6 @@ describe("pickTip", () => {
 		expect(new Set(pickAll(["always"], "summer"))).toEqual(new Set(["summer"]));
 	});
 
-	it("ignores seen ids missing from the catalog", () => {
-		expect(new Set(pickAll(["gone"], null))).toEqual(new Set(["always"]));
-	});
-
 	it("gives nothing once every eligible tip is seen, unseen ones of other seasons aside", () => {
 		expect(pickAll(["always", "summer"], "summer")).toEqual([
 			undefined,

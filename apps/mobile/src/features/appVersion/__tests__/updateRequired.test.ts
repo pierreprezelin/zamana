@@ -19,7 +19,7 @@ describe("isOlderVersion", () => {
 		["1.2.3", "2.0.0", true],
 		["2.0.0", "1.99.99", false],
 		["1.2", "1.2.1", true],
-		["1.2.1", "1.2", false],
+		["1.2.5", "1.2", false],
 		["1.0.0", "latest", false],
 	])("%s older than %s: %s", (current, minimum, expected) => {
 		expect(isOlderVersion(current, minimum)).toBe(expected);

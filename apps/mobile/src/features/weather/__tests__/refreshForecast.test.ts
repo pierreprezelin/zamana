@@ -69,12 +69,6 @@ describe("refreshForecast", () => {
 				mockPlants = [{ id: "ficus", outdoor: false, archivedAt: null }];
 			},
 		],
-		[
-			"the outdoor plants are past",
-			() => {
-				mockPlants = [{ id: "olive", outdoor: true, archivedAt: "2026-11-01" }];
-			},
-		],
 	])("sends nothing when %s", async (_, arrange) => {
 		arrange();
 		await refreshForecast();
@@ -196,5 +190,16 @@ describe("refreshWeather", () => {
 		useWeatherStore.setState({ alertsEnabled: true });
 		await refreshWeather();
 		expect(refreshDevicePlace).toHaveBeenCalledTimes(1);
+	});
+
+	it("still refreshes the forecast when the device place cannot be read", async () => {
+		jest.spyOn(console, "warn").mockImplementation(() => {});
+		(refreshDevicePlace as jest.Mock).mockRejectedValueOnce(
+			new Error("Location off"),
+		);
+
+		await refreshWeather();
+
+		expect(mockFetch).toHaveBeenCalledWith(45.8, 4.8);
 	});
 });

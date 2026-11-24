@@ -1,4 +1,7 @@
-import { useWeatherStore } from "@/features/weather/useWeatherStore";
+import {
+	DEFAULT_ALERT_TIME,
+	useWeatherStore,
+} from "@/features/weather/useWeatherStore";
 import type { Forecast } from "@/features/weather/weatherTypes";
 
 jest.mock("@/utils/syncStorage", () => {
@@ -49,6 +52,32 @@ describe("useWeatherStore", () => {
 			expect(state.failedAt).toBeNull();
 		},
 	);
+
+	it("keeps the city picked by the user when the device moves", () => {
+		useWeatherStore.getState().setCity(annecy);
+		useWeatherStore.setState({ forecast });
+
+		useWeatherStore.getState().setDevicePlace(lyon);
+
+		const state = useWeatherStore.getState();
+		expect(state.place).toBe(annecy);
+		expect(state.forecast).toBe(forecast);
+	});
+
+	it.each([
+		["07:00", "07:00"],
+		["25:00", DEFAULT_ALERT_TIME],
+	])("restores the saved alert time %s as %s", async (saved, restored) => {
+		useWeatherStore.setState({ alertTime: DEFAULT_ALERT_TIME });
+		useWeatherStore.persist.getOptions().storage?.setItem("weather", {
+			state: { alertTime: saved },
+			version: 0,
+		} as never);
+
+		await useWeatherStore.persist.rehydrate();
+
+		expect(useWeatherStore.getState().alertTime).toBe(restored);
+	});
 
 	it("keeps the forecast and the failure when the device stays in place", () => {
 		useWeatherStore.getState().setDevicePlace({ ...lyon });

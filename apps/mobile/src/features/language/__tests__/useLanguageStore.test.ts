@@ -1,16 +1,6 @@
 import { reloadAppAsync } from "expo";
 import { getLocales } from "expo-localization";
-
-const mockStoredItems = new Map<string, string>();
-
-jest.mock("expo-sqlite/kv-store", () => ({
-	Storage: {
-		getItemSync: (key: string) => mockStoredItems.get(key) ?? null,
-		setItemSync: (key: string, value: string) =>
-			mockStoredItems.set(key, value),
-		removeItemSync: (key: string) => mockStoredItems.delete(key),
-	},
-}));
+import { Storage } from "expo-sqlite/kv-store";
 
 jest.mock("expo", () => ({ reloadAppAsync: jest.fn() }));
 
@@ -55,13 +45,13 @@ describe("resolveLanguage", () => {
 
 describe("useLanguageStore", () => {
 	it("follows the phone language by default", () => {
-		expect(useLanguageStore.getState().preference).toBe("system");
+		expect(useLanguageStore.getInitialState().preference).toBe("system");
 	});
 
 	it("saves the chosen language and reloads the app in it", () => {
 		useLanguageStore.getState().setPreference("en");
 
-		expect(mockStoredItems.get("language")).toContain('"preference":"en"');
+		expect(Storage.getItemSync("language")).toContain('"preference":"en"');
 		expect(reloadAppAsync).toHaveBeenCalledTimes(1);
 	});
 
@@ -72,7 +62,7 @@ describe("useLanguageStore", () => {
 	});
 
 	it("restores the saved language on launch", () => {
-		mockStoredItems.set(
+		Storage.setItemSync(
 			"language",
 			JSON.stringify({ state: { preference: "en" }, version: 0 }),
 		);
@@ -85,7 +75,7 @@ describe("useLanguageStore", () => {
 	it.each(["de", null])(
 		"falls back to the phone language from an unreadable saved %p",
 		(saved) => {
-			mockStoredItems.set(
+			Storage.setItemSync(
 				"language",
 				JSON.stringify({ state: { preference: saved }, version: 0 }),
 			);

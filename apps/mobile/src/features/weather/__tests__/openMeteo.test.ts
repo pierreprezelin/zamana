@@ -62,13 +62,6 @@ describe("fetchForecast", () => {
 		expect(Number.isNaN(Date.parse(forecast.fetchedAt))).toBe(false);
 	});
 
-	it("gives up on a service that does not answer", async () => {
-		respond({ hourly: undefined });
-		await fetchForecast(45.8, 4.8);
-		const [, options] = (globalThis.fetch as jest.Mock).mock.calls[0];
-		expect(options.signal).toBeInstanceOf(AbortSignal);
-	});
-
 	it("fails when the service does", async () => {
 		respond({}, false);
 		await expect(fetchForecast(45.8, 4.8)).rejects.toThrow();

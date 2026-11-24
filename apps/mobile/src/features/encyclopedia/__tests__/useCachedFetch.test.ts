@@ -43,4 +43,24 @@ describe("useCachedFetch", () => {
 
 		expect(result.current.data).toBe("b");
 	});
+
+	it("keeps the failure of the new key when the old one answers late", async () => {
+		let answerOld = (_: string) => {};
+		const fetchers: Record<string, () => Promise<string>> = {
+			old: () =>
+				new Promise((resolve) => {
+					answerOld = resolve;
+				}),
+			new: () => Promise.reject(new Error("offline")),
+		};
+		const { result, rerender } = await renderHook(
+			({ key }: { key: string }) => useCachedFetch(key, fetchers[key]),
+			{ initialProps: { key: "old" } },
+		);
+
+		await rerender({ key: "new" });
+		await act(async () => answerOld("late"));
+
+		expect(result.current.status).toBe("error");
+	});
 });

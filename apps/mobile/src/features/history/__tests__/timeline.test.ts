@@ -32,14 +32,14 @@ const log = (
 
 const timeline = (showCares = true) =>
 	buildTimeline({
-		addedAt: "2026-09-15T06:47:00.000Z",
+		addedAt: new Date(2026, 8, 15, 6, 47).toISOString(),
 		entries: [
-			entry("note", "2026-09-23T15:16:00.000Z"),
 			entry("photo", "2026-09-22T12:20:00.000Z", "a.jpg"),
+			entry("note", "2026-09-23T15:16:00.000Z"),
 		],
 		logs: [
-			log("skipped", "2026-09-20T07:00:00.000Z", "skipped"),
 			log("done", "2026-09-15T07:04:00.000Z"),
+			log("skipped", "2026-09-20T07:00:00.000Z", "skipped"),
 		],
 		showCares,
 		today: "2026-09-24",

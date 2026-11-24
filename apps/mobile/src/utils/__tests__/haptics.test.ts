@@ -1,3 +1,5 @@
+import { Storage } from "expo-sqlite/kv-store";
+
 const mockHaptics = {
 	selectionAsync: jest.fn(() => Promise.resolve()),
 	notificationAsync: jest.fn(() => Promise.resolve()),
@@ -15,17 +17,6 @@ jest.mock("expo-haptics", () => ({
 	NotificationFeedbackType: { Success: "success", Error: "error" },
 }));
 
-const mockStoredItems = new Map<string, string>();
-
-jest.mock("expo-sqlite/kv-store", () => ({
-	Storage: {
-		getItemSync: (key: string) => mockStoredItems.get(key) ?? null,
-		setItemSync: (key: string, value: string) =>
-			mockStoredItems.set(key, value),
-		removeItemSync: (key: string) => mockStoredItems.delete(key),
-	},
-}));
-
 const loadOn = (OS: "ios" | "android", Version: number) => {
 	jest.resetModules();
 	jest.doMock("react-native", () => ({ Platform: { OS, Version } }));
@@ -34,7 +25,7 @@ const loadOn = (OS: "ios" | "android", Version: number) => {
 
 beforeEach(() => {
 	jest.clearAllMocks();
-	mockStoredItems.clear();
+	Storage.clearSync();
 });
 
 describe("selectionFeedback", () => {
@@ -113,13 +104,13 @@ describe("useHapticsStore", () => {
 
 	it("saves the choice", () => {
 		loadOn("ios", 26).useHapticsStore.getState().setEnabled(false);
-		expect(JSON.parse(mockStoredItems.get("haptics") ?? "{}").state).toEqual({
+		expect(JSON.parse(Storage.getItemSync("haptics") ?? "{}").state).toEqual({
 			enabled: false,
 		});
 	});
 
 	it("plays the haptics again from an unreadable save", () => {
-		mockStoredItems.set(
+		Storage.setItemSync(
 			"haptics",
 			JSON.stringify({ state: { enabled: "false" }, version: 0 }),
 		);

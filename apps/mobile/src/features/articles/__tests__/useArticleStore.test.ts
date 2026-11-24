@@ -1,16 +1,6 @@
+import { Storage } from "expo-sqlite/kv-store";
 import type { Article } from "@/features/articles/articles";
 import { fetchArticles } from "@/features/articles/fetchArticles";
-
-const mockStoredItems = new Map<string, string>();
-
-jest.mock("expo-sqlite/kv-store", () => ({
-	Storage: {
-		getItemSync: (key: string) => mockStoredItems.get(key) ?? null,
-		setItemSync: (key: string, value: string) =>
-			mockStoredItems.set(key, value),
-		removeItemSync: (key: string) => mockStoredItems.delete(key),
-	},
-}));
 
 jest.mock("@/features/articles/fetchArticles", () => ({
 	fetchArticles: jest.fn(),
@@ -46,7 +36,7 @@ describe("useArticleStore", () => {
 		expect(state.articles.fr).toEqual([article]);
 		expect(state.fetchedAt.fr).toBe(now.toISOString());
 		expect(state.status.fr).toBe("idle");
-		expect(mockStoredItems.get("articles")).toContain("thirsty-plant");
+		expect(Storage.getItemSync("articles")).toContain("thirsty-plant");
 	});
 
 	it("keeps the saved articles when the site can't be reached", async () => {
@@ -103,7 +93,7 @@ describe("useArticleStore", () => {
 	});
 
 	it("keeps the readable saved articles of a language", () => {
-		mockStoredItems.set(
+		Storage.setItemSync(
 			"articles",
 			JSON.stringify({
 				state: {
@@ -120,7 +110,7 @@ describe("useArticleStore", () => {
 	});
 
 	it("drops unreadable saved articles on launch", () => {
-		mockStoredItems.set(
+		Storage.setItemSync(
 			"articles",
 			JSON.stringify({
 				state: {
@@ -153,6 +143,7 @@ describe("articlesAvailability", () => {
 		["nothing saved and a fetch running", [], "loading", false, "loading"],
 		["nothing saved and the fetch failed", [], "error", false, "error"],
 		["a fetch that brought no article", [], "idle", true, "empty"],
+		["an empty list being refreshed", [], "loading", true, "loading"],
 	] as const)("is %s", (_, articles, status, fetched, expected) => {
 		expect(articlesAvailability([...articles], status, fetched)).toBe(expected);
 	});

@@ -48,7 +48,7 @@ export const riskParts = (risk: WeatherRisk, today: string) => ({
 });
 
 // One line per risk, for a notification
-export const riskLines = (risks: WeatherRisk[], today: string) =>
+const riskLines = (risks: WeatherRisk[], today: string) =>
 	risks.map((risk) => {
 		const { summary, advice } = riskParts(risk, today);
 		return `${summary} ${advice}`;

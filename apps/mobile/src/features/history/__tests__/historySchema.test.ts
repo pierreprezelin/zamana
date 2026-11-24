@@ -17,13 +17,7 @@ describe("historyEntrySchema", () => {
 		).toEqual({ photo: null, note: "New leaf" });
 	});
 
-	it("rejects an entry without photo nor note", () => {
-		expect(
-			historyEntrySchema.safeParse({ photo: null, note: "" }).success,
-		).toBe(false);
-	});
-
-	it("rejects a blank note without photo", () => {
+	it("rejects an entry without photo nor note, blank notes included", () => {
 		expect(
 			historyEntrySchema.safeParse({ photo: null, note: "   " }).success,
 		).toBe(false);

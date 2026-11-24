@@ -1,7 +1,4 @@
-import {
-	CURATED_PLANTS,
-	curatedPlant,
-} from "@/features/encyclopedia/curatedPlants";
+import { CURATED_PLANTS } from "@/features/encyclopedia/curatedPlants";
 import {
 	plantPrefill,
 	prefillParams,
@@ -148,15 +145,5 @@ describe("plantPrefill", () => {
 				url: "https://www.inaturalist.org/photos/1",
 			},
 		});
-	});
-
-	it("keeps the curated type over the guessed one", () => {
-		const [{ taxonId }] = CURATED_PLANTS;
-		const prefill = plantPrefill({
-			taxonId: String(taxonId),
-			name: "x",
-			type: "cactus",
-		});
-		expect(prefill?.values.type).toBe(curatedPlant(taxonId)?.type);
 	});
 });

@@ -34,7 +34,10 @@ describe("plant options", () => {
 
 describe("needValue", () => {
 	const plant = { light: 2, watering: 1, temperature: 2, humidity: 2 };
-	const [, watering, temperature] = needs;
+	const need = (key: string) =>
+		needs.find((need) => need.key === key) as (typeof needs)[number];
+	const watering = need("watering");
+	const temperature = need("temperature");
 
 	it("details the watering frequency", () => {
 		expect(needValue(watering, { ...plant, outdoor: false })).toBe(

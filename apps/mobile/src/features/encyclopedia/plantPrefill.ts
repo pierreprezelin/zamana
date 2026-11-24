@@ -58,8 +58,7 @@ export const plantPrefill = (params: PrefillParams): PlantPrefill | null => {
 	const name = text(params.name)?.slice(0, NAME_MAX_LENGTH);
 	if (!name) return null;
 
-	const taxonId = Number(text(params.taxonId));
-	const curated = Number.isInteger(taxonId) ? curatedPlant(taxonId) : undefined;
+	const curated = curatedPlant(Number(text(params.taxonId)));
 	const type = text(params.type);
 	const photoUrl = isInaturalistPhoto(text(params.photoUrl))
 		? text(params.photoUrl)

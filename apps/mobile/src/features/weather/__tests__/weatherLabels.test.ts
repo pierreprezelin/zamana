@@ -5,7 +5,6 @@ import {
 	placeShortName,
 	riskAdvice,
 	riskLine,
-	riskLines,
 	riskParts,
 	weatherAlert,
 } from "@/features/weather/weatherLabels";
@@ -29,17 +28,19 @@ afterEach(() => i18next.changeLanguage("fr"));
 
 describe("riskLine", () => {
 	it.each([
-		[risk({ kind: "cold" }), "Froid : -2 °C demain vers 5 h"],
+		["cold", risk({ kind: "cold" }), "Froid : -2 °C demain vers 5 h"],
 		[
+			"heat",
 			risk({ kind: "heat", value: 37.6, at: "2026-11-20T15:00" }),
 			"Chaleur : 38 °C aujourd'hui vers 15 h",
 		],
-		[risk({ kind: "storm", value: 95 }), "Orage demain vers 5 h"],
+		["storm", risk({ kind: "storm", value: 95 }), "Orage demain vers 5 h"],
 		[
+			"wind",
 			risk({ kind: "wind", value: 72.3 }),
 			"Vent : rafales à 72 km/h demain vers 5 h",
 		],
-	])("describes the risk", (input, line) => {
+	])("describes the %s risk", (_, input, line) => {
 		expect(riskLine(input, today)).toBe(line);
 	});
 
@@ -122,16 +123,6 @@ describe("placeShortName", () => {
 	it("keeps the town only", () => {
 		expect(placeShortName("Lyon, Auvergne-Rhône-Alpes, France")).toBe("Lyon");
 		expect(placeShortName("45.8, 4.8")).toBe("45.8, 4.8");
-	});
-});
-
-describe("riskLines", () => {
-	it("gives one line per risk, without the season hint the banner links to", () => {
-		expect(
-			riskLines([risk({ plants: [plant("Basilic")], shelter: true })], today),
-		).toEqual([
-			"Froid : -2 °C demain vers 5 h · Basilic. À rentrer à l'abri du gel (maison, garage, véranda).",
-		]);
 	});
 });
 

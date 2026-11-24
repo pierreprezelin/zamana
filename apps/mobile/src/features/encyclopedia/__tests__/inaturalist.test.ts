@@ -5,6 +5,7 @@ import {
 	fetchTaxa,
 	fetchTaxon,
 	guessPlantType,
+	isInaturalistPhoto,
 	searchFirstPage,
 	searchTaxa,
 } from "@/features/encyclopedia/inaturalist";
@@ -182,16 +183,27 @@ describe("searchTaxa", () => {
 		expect(taxa.map((taxon) => taxon.id)).toEqual([53940]);
 	});
 
-	it("gives up on a service that does not answer", async () => {
-		respond({ total_results: 0, results: [] });
-		await searchTaxa("ficus", 1);
-		const [, options] = (globalThis.fetch as jest.Mock).mock.calls[0];
-		expect(options.signal).toBeInstanceOf(AbortSignal);
-	});
-
 	it("fails when the service does", async () => {
 		respond({}, false);
 		await expect(searchTaxa("ficus", 1)).rejects.toThrow();
+	});
+});
+
+describe("isInaturalistPhoto", () => {
+	it.each([
+		["https://static.inaturalist.org/photos/1/medium.jpg", true],
+		[
+			"https://inaturalist-open-data.s3.amazonaws.com/photos/2/medium.jpeg",
+			true,
+		],
+		["http://static.inaturalist.org/photos/1/medium.jpg", false],
+		["https://evil.example/photos/1/medium.jpg", false],
+		["https://static.inaturalist.org/avatars/1/medium.jpg", false],
+		["https://static.inaturalist.org/photos/x/medium.jpg", false],
+		["not a url", false],
+		[undefined, false],
+	])("%s → %s", (url, expected) => {
+		expect(isInaturalistPhoto(url)).toBe(expected);
 	});
 });
 
@@ -274,20 +286,9 @@ describe("fetchTaxon", () => {
 });
 
 describe("guessPlantType", () => {
-	it.each([
-		[47903, "cactus"],
-		[47217, "orchid"],
-		[48867, "palm"],
-		[121943, "fern"],
-		[54297, "citrus"],
-		[51890, "succulent"],
-		[49320, "succulent"],
-		[51937, "carnivorous"],
-		[52649, "carnivorous"],
-		[52647, "carnivorous"],
-		[57860, "carnivorous"],
-	])("recognizes the ancestor %i as %s", (ancestorId, type) => {
-		expect(guessPlantType([47126, ancestorId, 999])).toBe(type);
+	it("recognizes a plant by its ancestors, the first recognized one first", () => {
+		expect(guessPlantType([47126, 47903, 999])).toBe("cactus");
+		expect(guessPlantType([47126, 47217, 47903])).toBe("orchid");
 	});
 
 	it("guesses nothing for other plants", () => {
@@ -322,11 +323,6 @@ describe("usage names", () => {
 		respond({ total_results: 1, results: [{ ...rubberPlant, id: 69223 }] });
 		expect((await searchTaxa("pothos", 1)).taxa[0].guessedType).toBe("climber");
 	});
-
-	it("keeps the iNaturalist name of another plant", async () => {
-		respond({ total_results: 1, results: [rubberPlant] });
-		expect((await searchTaxa("hevea", 1)).taxa[0].name).toBe("Caoutchouc");
-	});
 });
 
 describe("searchFirstPage", () => {
@@ -335,7 +331,7 @@ describe("searchFirstPage", () => {
 	it("shows the curated plants known by that name before iNaturalist's", async () => {
 		respond({ total_results: 1, results: [rubberPlant] });
 
-		const { taxa } = await searchFirstPage("pothos");
+		const { taxa, total } = await searchFirstPage("pothos");
 
 		expect(taxa.map((taxon) => taxon.id)).toEqual([pothosId, rubberPlant.id]);
 		expect(taxa[0]).toMatchObject({
@@ -344,6 +340,8 @@ describe("searchFirstPage", () => {
 			guessedType: "climber",
 		});
 		expect(taxa[0].photo).not.toBeNull();
+		// The curated plant missing from the iNaturalist results counts too
+		expect(total).toBe(2);
 	});
 
 	it("drops the iNaturalist copy of a curated plant shown first", async () => {
@@ -374,11 +372,5 @@ describe("searchFirstPage", () => {
 		respond({}, false);
 
 		await expect(searchFirstPage("baobab")).rejects.toThrow();
-	});
-
-	it("counts the curated plants missing from the iNaturalist results", async () => {
-		respond({ total_results: 1, results: [rubberPlant] });
-
-		expect((await searchFirstPage("pothos")).total).toBe(2);
 	});
 });

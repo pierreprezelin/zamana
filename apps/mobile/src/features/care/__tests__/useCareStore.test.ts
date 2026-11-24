@@ -59,8 +59,15 @@ describe("useCareStore", () => {
 			startedAt: "2026-06-10",
 		});
 
-		await state().updateCare(id, { ...fertilizing, reminder: false });
-		expect(careOf(id)?.reminder).toBe(false);
+		const edited = {
+			...fertilizing,
+			frequency: { amount: 2, unit: "month" as const },
+			period: { startMonth: 3, endMonth: 10 },
+			lastDoneAt: "2026-06-05",
+			reminder: false,
+		};
+		await state().updateCare(id, edited);
+		expect(careOf(id)).toMatchObject(edited);
 	});
 
 	it("switches reminders on and off", async () => {

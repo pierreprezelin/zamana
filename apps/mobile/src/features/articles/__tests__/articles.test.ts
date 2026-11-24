@@ -90,7 +90,11 @@ describe("searchArticles", () => {
 	it("puts title matches before body matches", () => {
 		const both = [
 			article({ slug: "body", body: "Arrosez au terreau sec." }),
-			article({ slug: "title", title: "Arroser en hiver", body: "Moins." }),
+			article({
+				slug: "title",
+				title: "Arroser en hiver",
+				body: "Arrosez moins.",
+			}),
 		];
 
 		expect(searchArticles(both, "arros").map(({ slug }) => slug)).toEqual([

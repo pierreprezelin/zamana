@@ -1,13 +1,28 @@
 import { File } from "expo-file-system";
-import { savePhoto } from "@/features/plants/plantPhoto";
+import {
+	launchCameraAsync,
+	launchImageLibraryAsync,
+	requestCameraPermissionsAsync,
+} from "expo-image-picker";
+import { pickPhoto, savePhoto } from "@/features/plants/plantPhoto";
+
+const mockCopy = jest.fn();
 
 jest.mock("expo-crypto", () => ({ randomUUID: () => "uuid" }));
+
+jest.mock("expo-image-picker", () => ({
+	launchCameraAsync: jest.fn(),
+	launchImageLibraryAsync: jest.fn(),
+	requestCameraPermissionsAsync: jest.fn(),
+}));
 
 jest.mock("expo-file-system", () => {
 	class MockFile {
 		static downloadFileAsync = jest.fn();
 		name: string;
-		copy = jest.fn();
+		copy(destination: MockFile) {
+			return mockCopy(this.name, destination.name);
+		}
 		exists = true;
 		delete = jest.fn();
 		constructor(...parts: unknown[]) {
@@ -22,7 +37,10 @@ jest.mock("expo-file-system", () => {
 
 const download = File.downloadFileAsync as jest.Mock;
 
-beforeEach(() => download.mockReset());
+beforeEach(() => {
+	download.mockReset();
+	mockCopy.mockReset();
+});
 
 describe("savePhoto", () => {
 	it("downloads a photo prefilled from the web", async () => {
@@ -38,6 +56,10 @@ describe("savePhoto", () => {
 
 	it("copies a photo picked on the phone", async () => {
 		expect(await savePhoto("file:///cache/picked.jpg")).toBe("uuid.jpg");
+		expect(mockCopy).toHaveBeenCalledWith(
+			"file:///cache/picked.jpg",
+			"uuid.jpg",
+		);
 		expect(download).not.toHaveBeenCalled();
 	});
 
@@ -84,5 +106,37 @@ describe("savePhoto", () => {
 
 		await expect(saving).rejects.toThrow();
 		jest.useRealTimers();
+	});
+});
+
+describe("pickPhoto", () => {
+	const picked = (fileSize: number) => ({
+		canceled: false,
+		assets: [{ uri: "file:///cache/picked.jpg", fileSize }],
+	});
+
+	it("fails when the camera access is denied", async () => {
+		jest.mocked(requestCameraPermissionsAsync).mockResolvedValueOnce({
+			granted: false,
+		} as Awaited<ReturnType<typeof requestCameraPermissionsAsync>>);
+
+		await expect(pickPhoto("camera", [1, 1])).rejects.toThrow(
+			"L’accès à l’appareil photo a été refusé.",
+		);
+		expect(launchCameraAsync).not.toHaveBeenCalled();
+	});
+
+	it("refuses a photo heavier than 2 MB", async () => {
+		jest
+			.mocked(launchImageLibraryAsync)
+			.mockResolvedValueOnce(
+				picked(3 * 1024 * 1024) as Awaited<
+					ReturnType<typeof launchImageLibraryAsync>
+				>,
+			);
+
+		await expect(pickPhoto("library", [1, 1])).rejects.toThrow(
+			"La photo ne doit pas dépasser 2 Mo.",
+		);
 	});
 });

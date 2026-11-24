@@ -1,36 +1,29 @@
-const mockStoredItems = new Map<string, string>();
-
-jest.mock("expo-sqlite/kv-store", () => ({
-	Storage: {
-		getItemSync: (key: string) => mockStoredItems.get(key) ?? null,
-		setItemSync: (key: string, value: string) =>
-			mockStoredItems.set(key, value),
-		removeItemSync: (key: string) => mockStoredItems.delete(key),
-	},
-}));
+import { Storage } from "expo-sqlite/kv-store";
 
 const { useNotificationPreferencesStore } =
 	require("@/features/notifications/useNotificationPreferencesStore") as typeof import("@/features/notifications/useNotificationPreferencesStore");
 
 const state = () => useNotificationPreferencesStore.getState();
 const restore = (saved: unknown) => {
-	mockStoredItems.set(
+	Storage.setItemSync(
 		"notificationPreferences",
 		JSON.stringify({ state: saved, version: 0 }),
 	);
 	useNotificationPreferencesStore.persist.rehydrate();
 };
-const defaults = {
-	remindersEnabled: true,
-	reminderTime: "09:00" as const,
-	bannerDismissed: false,
-};
-
 describe("useNotificationPreferencesStore", () => {
-	beforeEach(() => useNotificationPreferencesStore.setState(defaults));
+	beforeEach(() =>
+		useNotificationPreferencesStore.setState(
+			useNotificationPreferencesStore.getInitialState(),
+		),
+	);
 
 	it("reminds at 9:00 by default", () => {
-		expect(state()).toMatchObject(defaults);
+		expect(useNotificationPreferencesStore.getInitialState()).toMatchObject({
+			remindersEnabled: true,
+			reminderTime: "09:00",
+			bannerDismissed: false,
+		});
 	});
 
 	it("saves the reminder preferences", () => {
@@ -39,7 +32,7 @@ describe("useNotificationPreferencesStore", () => {
 		state().dismissBanner();
 
 		expect(
-			JSON.parse(mockStoredItems.get("notificationPreferences") ?? "{}").state,
+			JSON.parse(Storage.getItemSync("notificationPreferences") ?? "{}").state,
 		).toEqual({
 			remindersEnabled: false,
 			reminderTime: "18:30",
@@ -66,6 +59,10 @@ describe("useNotificationPreferencesStore", () => {
 			reminderTime: "25:00",
 			bannerDismissed: 1,
 		});
-		expect(state()).toMatchObject(defaults);
+		expect(state()).toMatchObject({
+			remindersEnabled: true,
+			reminderTime: "09:00",
+			bannerDismissed: false,
+		});
 	});
 });

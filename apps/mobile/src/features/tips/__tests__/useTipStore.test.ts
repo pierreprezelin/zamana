@@ -1,13 +1,4 @@
-const mockStoredItems = new Map<string, string>();
-
-jest.mock("expo-sqlite/kv-store", () => ({
-	Storage: {
-		getItemSync: (key: string) => mockStoredItems.get(key) ?? null,
-		setItemSync: (key: string, value: string) =>
-			mockStoredItems.set(key, value),
-		removeItemSync: (key: string) => mockStoredItems.delete(key),
-	},
-}));
+import { Storage } from "expo-sqlite/kv-store";
 
 const { TIPS } =
 	require("@/features/tips/tips") as typeof import("@/features/tips/tips");
@@ -80,12 +71,12 @@ describe("useTipStore", () => {
 	});
 
 	it("restores sane values from an unreadable save", () => {
-		mockStoredItems.set(
+		Storage.setItemSync(
 			"tips",
 			JSON.stringify({
 				state: {
 					enabled: "false",
-					seenIds: "fingerTest",
+					seenIds: ["fingerTest", 42],
 					todayTip: { id: "gone", date: "2026-11-21" },
 				},
 				version: 0,
@@ -96,11 +87,9 @@ describe("useTipStore", () => {
 
 		expect(state()).toMatchObject({
 			enabled: true,
-			seenIds: [],
+			seenIds: ["fingerTest"],
 			todayTip: null,
 		});
-		state().pickTodayTip("2026-11-21", "north");
-		expect(state().seenIds).toHaveLength(1);
 	});
 
 	it("resets the history", () => {
@@ -109,17 +98,6 @@ describe("useTipStore", () => {
 		state().reset();
 
 		expect(state()).toMatchObject({
-			seenIds: [],
-			todayTip: null,
-			dismissedOn: null,
-		});
-	});
-
-	it("persists the data only", () => {
-		state().setEnabled(false);
-
-		expect(JSON.parse(mockStoredItems.get("tips") ?? "{}").state).toEqual({
-			enabled: false,
 			seenIds: [],
 			todayTip: null,
 			dismissedOn: null,

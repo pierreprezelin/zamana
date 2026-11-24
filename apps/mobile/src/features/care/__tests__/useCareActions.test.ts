@@ -34,11 +34,16 @@ const care = {
 const plant = { id: "plant-1", watering: 2 } as unknown as Plant;
 const log = { id: "log-1", type: "watering" } as unknown as CareLog;
 
-beforeEach(() => jest.clearAllMocks());
+beforeEach(() => {
+	jest.clearAllMocks();
+	jest.useFakeTimers({ now: new Date(2026, 5, 10, 12, 0) });
+});
+afterEach(() => jest.useRealTimers());
 
 describe("useCareActions", () => {
 	it("confirms a care done with the success feedback", async () => {
 		await useCareActions().done(care);
+		expect(mockStore.markDone).toHaveBeenCalledWith("care-1");
 		expect(successFeedback).toHaveBeenCalled();
 		expect(errorFeedback).not.toHaveBeenCalled();
 	});
@@ -53,11 +58,25 @@ describe("useCareActions", () => {
 		expect(successFeedback).not.toHaveBeenCalled();
 	});
 
-	it("keeps skip and undo silent", async () => {
-		const actions = useCareActions();
-		await actions.skip(care, plant);
-		await actions.undo(log);
+	it("asks a skipped care again after a quarter of the plant's watering interval", async () => {
+		await useCareActions().skip(care, plant);
+
+		// Level 2 in a northern June: watered every 7 days, asked again in 2
+		expect(mockStore.skipCare).toHaveBeenCalledWith("care-1", "2026-06-12");
 		expect(successFeedback).not.toHaveBeenCalled();
-		expect(errorFeedback).not.toHaveBeenCalled();
+	});
+
+	it("confirms an undo with a toast only once it went through", async () => {
+		await useCareActions().undo(log);
+		expect(Toast.show).toHaveBeenCalledWith(
+			expect.objectContaining({ type: "success" }),
+		);
+
+		jest.mocked(Toast.show).mockClear();
+		mockStore.undo.mockRejectedValueOnce(new Error("db"));
+		await useCareActions().undo(log);
+		expect(Toast.show).not.toHaveBeenCalledWith(
+			expect.objectContaining({ type: "success" }),
+		);
 	});
 });

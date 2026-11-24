@@ -1,9 +1,15 @@
 import * as BackgroundTask from "expo-background-task";
 import * as TaskManager from "expo-task-manager";
 import { enqueueReschedule } from "@/features/notifications/scheduleReminders";
-import { weatherAlertsNeeded } from "@/features/weather/refreshForecast";
+import { usePlantStore } from "@/features/plants/usePlantStore";
+import {
+	refreshForecast,
+	weatherAlertsNeeded,
+} from "@/features/weather/refreshForecast";
+import { useWeatherStore } from "@/features/weather/useWeatherStore";
 import {
 	defineWeatherTask,
+	startWeatherTaskSync,
 	syncWeatherTask,
 } from "@/features/weather/weatherTask";
 
@@ -30,7 +36,9 @@ jest.mock("@/features/weather/useWeatherStore", () => ({
 jest.mock("@/features/notifications/scheduleReminders", () => ({
 	enqueueReschedule: jest.fn(() => Promise.resolve()),
 }));
-const mockRefreshPermission = jest.fn(() => Promise.resolve());
+const mockRefreshPermission = jest.fn<Promise<void>, []>(() =>
+	Promise.resolve(),
+);
 jest.mock("@/features/notifications/useNotificationPermissionStore", () => ({
 	useNotificationPermissionStore: {
 		getState: () => ({ refresh: mockRefreshPermission }),
@@ -74,15 +82,59 @@ describe("syncWeatherTask", () => {
 });
 
 describe("the weather task", () => {
-	it("reads the notification permission before rescheduling, the app may have been woken for it alone", async () => {
+	const runTask = () => {
 		defineWeatherTask();
 		const task = (TaskManager.defineTask as jest.Mock).mock.calls[0][1];
+		return task();
+	};
 
-		await task();
+	it("refreshes the forecast even when it is fresh, then reschedules", async () => {
+		expect(await runTask()).toBe(BackgroundTask.BackgroundTaskResult.Success);
+		expect(refreshForecast).toHaveBeenCalledWith({ force: true });
+		expect(enqueueReschedule).toHaveBeenCalledTimes(1);
+	});
 
-		expect(mockRefreshPermission).toHaveBeenCalled();
-		expect(mockRefreshPermission.mock.invocationCallOrder[0]).toBeLessThan(
-			(enqueueReschedule as jest.Mock).mock.invocationCallOrder[0],
+	it("waits for the notification permission before rescheduling, the app may have been woken for it alone", async () => {
+		let permissionRead = () => {};
+		mockRefreshPermission.mockReturnValueOnce(
+			new Promise<void>((resolve) => {
+				permissionRead = resolve;
+			}),
 		);
+
+		const running = runTask();
+		await Promise.resolve();
+		expect(enqueueReschedule).not.toHaveBeenCalled();
+
+		permissionRead();
+		await running;
+		expect(enqueueReschedule).toHaveBeenCalledTimes(1);
+	});
+
+	it("reports a failure to the system", async () => {
+		(refreshForecast as jest.Mock).mockRejectedValueOnce(new Error("offline"));
+
+		expect(await runTask()).toBe(BackgroundTask.BackgroundTaskResult.Failed);
+	});
+});
+
+describe("startWeatherTaskSync", () => {
+	it("syncs the task on launch, then when the plants or the alerts setting change", async () => {
+		needed.mockReturnValue(false);
+		registered.mockResolvedValue(false);
+
+		startWeatherTaskSync();
+		startWeatherTaskSync();
+		const [onPlants] = (usePlantStore.subscribe as jest.Mock).mock.calls[0];
+		const [onWeather] = (useWeatherStore.subscribe as jest.Mock).mock.calls[0];
+		const plants: unknown[] = [];
+		onPlants({ plants }, { plants });
+		onWeather({ alertsEnabled: true }, { alertsEnabled: true });
+		expect(registered).toHaveBeenCalledTimes(1);
+
+		onPlants({ plants: [] }, { plants: [{}] });
+		onWeather({ alertsEnabled: false }, { alertsEnabled: true });
+		expect(registered).toHaveBeenCalledTimes(3);
+		expect(usePlantStore.subscribe).toHaveBeenCalledTimes(1);
 	});
 });

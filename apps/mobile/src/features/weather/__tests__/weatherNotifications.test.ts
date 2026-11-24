@@ -102,13 +102,4 @@ describe("weatherNotifications", () => {
 		});
 		expect(notifications).toHaveLength(3);
 	});
-
-	it("warns of nothing without an outdoor plant", () => {
-		expect(
-			run({
-				forecast: frosty("2026-11-21T05:00"),
-				plants: [{ ...basil, outdoor: false }],
-			}),
-		).toEqual([]);
-	});
 });

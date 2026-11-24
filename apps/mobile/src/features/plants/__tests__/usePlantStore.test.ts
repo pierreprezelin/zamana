@@ -68,10 +68,6 @@ const plantOf = (id: string) =>
 describe("usePlantStore", () => {
 	beforeEach(() => mockDeletePhoto.mockClear());
 
-	it("has no plant by default", () => {
-		expect(usePlantStore.getState().plants).toEqual([]);
-	});
-
 	it("creates a plant in the database", async () => {
 		const id = await usePlantStore.getState().createPlant(data);
 

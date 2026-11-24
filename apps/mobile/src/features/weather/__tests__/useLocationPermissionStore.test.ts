@@ -21,6 +21,7 @@ describe("useLocationPermissionStore", () => {
 		await expect(
 			useLocationPermissionStore.getState().request(),
 		).resolves.toBeUndefined();
+		expect(mocked.requestForegroundPermissionsAsync).toHaveBeenCalled();
 		expect(useLocationPermissionStore.getState().status).toBeNull();
 	});
 });

@@ -51,6 +51,21 @@ describe("undoableLogIds", () => {
 		).toEqual(["latest", "feeding"]);
 	});
 
+	it("tracks the latest action of each plant on its own", () => {
+		expect(
+			undoable(
+				[
+					log("pilea", "2026-06-05"),
+					log("ficus", "2026-06-06", { plantId: "plant-2" }),
+				],
+				[
+					care(),
+					care({ id: "care-2", plantId: "plant-2", lastDoneAt: "2026-06-06" }),
+				],
+			),
+		).toEqual(["pilea", "ficus"]);
+	});
+
 	it("locks a done care once it has been skipped since", () => {
 		expect(
 			undoable([
@@ -61,10 +76,6 @@ describe("undoableLogIds", () => {
 				}),
 			]),
 		).toEqual(["skipped"]);
-	});
-
-	it("unlocks the previous action once the latest one is gone", () => {
-		expect(undoable([log("previous", "2026-06-05")])).toEqual(["previous"]);
 	});
 
 	it("locks an action whose last done date was edited since", () => {

@@ -1,20 +1,11 @@
-const mockStoredItems = new Map<string, string>();
-
-jest.mock("expo-sqlite/kv-store", () => ({
-	Storage: {
-		getItemSync: (key: string) => mockStoredItems.get(key) ?? null,
-		setItemSync: (key: string, value: string) =>
-			mockStoredItems.set(key, value),
-		removeItemSync: (key: string) => mockStoredItems.delete(key),
-	},
-}));
+import { Storage } from "expo-sqlite/kv-store";
 
 const { useCarePreferencesStore } =
 	require("@/features/care/useCarePreferencesStore") as typeof import("@/features/care/useCarePreferencesStore");
 
 const state = () => useCarePreferencesStore.getState();
 const restore = (saved: unknown) => {
-	mockStoredItems.set(
+	Storage.setItemSync(
 		"carePreferences",
 		JSON.stringify({ state: saved, version: 0 }),
 	);
@@ -23,11 +14,14 @@ const restore = (saved: unknown) => {
 
 describe("useCarePreferencesStore", () => {
 	beforeEach(() =>
-		useCarePreferencesStore.setState({ climate: "north", swipeLeft: "done" }),
+		useCarePreferencesStore.setState(useCarePreferencesStore.getInitialState()),
 	);
 
 	it("starts in the north, swiping left to mark a task done", () => {
-		expect(state()).toMatchObject({ climate: "north", swipeLeft: "done" });
+		expect(useCarePreferencesStore.getInitialState()).toMatchObject({
+			climate: "north",
+			swipeLeft: "done",
+		});
 	});
 
 	it("saves the chosen climate and swipe action", () => {
@@ -35,7 +29,7 @@ describe("useCarePreferencesStore", () => {
 		state().setSwipeLeft("skip");
 
 		expect(
-			JSON.parse(mockStoredItems.get("carePreferences") ?? "{}").state,
+			JSON.parse(Storage.getItemSync("carePreferences") ?? "{}").state,
 		).toEqual({ climate: "tropics", swipeLeft: "skip" });
 	});
 

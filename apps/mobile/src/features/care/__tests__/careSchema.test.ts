@@ -1,5 +1,4 @@
 import { careInputSchema } from "@/features/care/careSchema";
-import { toISODate } from "@/utils/dates";
 
 const input = (overrides = {}) => ({
 	type: "fertilizing",
@@ -50,11 +49,20 @@ describe("careInputSchema", () => {
 		).toBe(false);
 	});
 
-	it("refuses a last time in the future", () => {
-		const tomorrow = new Date();
-		tomorrow.setDate(tomorrow.getDate() + 1);
-		expect(errorOf(input({ lastDoneAt: toISODate(tomorrow) }))).toBe(
-			"La date ne peut pas être dans le futur.",
+	describe("the last time", () => {
+		beforeEach(() =>
+			jest.useFakeTimers({ now: new Date(2026, 5, 10, 23, 59) }),
 		);
+		afterEach(() => jest.useRealTimers());
+
+		it("can be today", () => {
+			expect(errorOf(input({ lastDoneAt: "2026-06-10" }))).toBeUndefined();
+		});
+
+		it("cannot be in the future", () => {
+			expect(errorOf(input({ lastDoneAt: "2026-06-11" }))).toBe(
+				"La date ne peut pas être dans le futur.",
+			);
+		});
 	});
 });

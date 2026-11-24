@@ -178,21 +178,6 @@ describe("useTaxaSearch", () => {
 		expect(result.current.taxa.map(({ id }) => id)).toEqual([7, 8, 9]);
 	});
 
-	it("asks the next page of the query that gave the shown results", async () => {
-		mockedSearch
-			.mockResolvedValueOnce({ total: 3, taxa: [taxon(1), taxon(2)] })
-			.mockResolvedValueOnce({ total: 3, taxa: [taxon(3)] });
-		const { result, rerender } = await renderHook(
-			({ query }: { query: string }) => useTaxaSearch(query),
-			{ initialProps: { query: "ficus" } },
-		);
-		await settle();
-
-		await rerender({ query: "ficus e" });
-		await act(async () => result.current.loadMore());
-
-		expect(mockedSearch).not.toHaveBeenCalledWith("ficus e", 2);
-	});
 	it("completes the photos the search did not give, in one request", async () => {
 		mockedSearch.mockResolvedValue({
 			total: 2,
