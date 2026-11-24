@@ -1,4 +1,4 @@
-import { type Href, Link } from "expo-router";
+import { Link } from "expo-router";
 import type { ReactNode } from "react";
 import { ScrollView, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -6,24 +6,22 @@ import { HeaderIconButton } from "@/components/HeaderIconButton";
 import Text from "@/components/Text";
 import { t } from "@/utils/i18n";
 
-type ScreenPlaceholderProps = {
+type TabScreenProps = {
 	title: string;
 	subtitle?: string;
-	links?: { label: string; href: Href }[];
 	showSettings?: boolean;
 	// Scrolls the content, clearing this bottom space (the floating tab bar)
 	scrollBottomInset?: number;
 	children?: ReactNode;
 };
 
-export function ScreenPlaceholder({
+export function TabScreen({
 	title,
 	subtitle,
-	links = [],
 	showSettings = false,
 	scrollBottomInset,
 	children,
-}: ScreenPlaceholderProps) {
+}: TabScreenProps) {
 	const { top } = useSafeAreaInsets();
 	const content = (
 		<>
@@ -44,11 +42,6 @@ export function ScreenPlaceholder({
 					</Link>
 				)}
 			</View>
-			{links.map(({ label, href }) => (
-				<Link key={label} href={href} asChild>
-					<Text className="text-primary">→ {label}</Text>
-				</Link>
-			))}
 			{children}
 		</>
 	);

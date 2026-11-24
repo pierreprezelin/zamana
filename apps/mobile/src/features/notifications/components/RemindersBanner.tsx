@@ -44,7 +44,6 @@ export function RemindersBanner() {
 				<Pressable
 					accessibilityRole="button"
 					accessibilityLabel={t("notifications.banner.dismiss")}
-					pressedClassName=""
 					pressedOpacity={0.5}
 					hitSlop={12}
 					onPress={useNotificationPreferencesStore.getState().dismissBanner}

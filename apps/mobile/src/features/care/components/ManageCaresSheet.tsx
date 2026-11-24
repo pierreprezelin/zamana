@@ -71,7 +71,6 @@ export function ManageCaresSheet({
 										accessibilityLabel={t("care.manageSheet.edit", {
 											care: name,
 										})}
-										pressedClassName=""
 										pressedOpacity={0.5}
 										hitSlop={12}
 										onPress={() => onEdit(type)}

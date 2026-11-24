@@ -19,7 +19,6 @@ export default function Chip({
 		<Pressable
 			accessibilityRole="tab"
 			accessibilityState={{ selected }}
-			pressedClassName=""
 			pressedOpacity={0.75}
 			hitSlop={{ top: 4, bottom: 4 }}
 			className={twMerge(

@@ -10,14 +10,14 @@ import type { Forecast } from "@/features/weather/weatherTypes";
 import { toISODate } from "@/utils/dates";
 
 // Rescheduled on each forecast: further ahead, it would only grow less reliable
-export const WEATHER_DAYS_AHEAD = 3;
-export const WEATHER_WINDOW_HOURS = 24;
+const WEATHER_DAYS_AHEAD = 3;
+const WEATHER_WINDOW_HOURS = 24;
 const HOUR_MS = 60 * 60 * 1000;
 
 const pad = (value: number) => String(value).padStart(2, "0");
 
 // The forecast hours are local times: "2026-11-20T18:00"
-export const toLocalTime = (date: Date) =>
+const toLocalTime = (date: Date) =>
 	`${toISODate(date)}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
 
 export const weatherWindow = (start: Date) => ({

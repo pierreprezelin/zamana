@@ -2,9 +2,9 @@ import { useNavigation } from "expo-router";
 import { type ComponentRef, useEffect, useRef, useState } from "react";
 import { FlatList, ScrollView, useWindowDimensions, View } from "react-native";
 import Chip from "@/components/Chip";
-import { ScreenPlaceholder } from "@/components/ScreenPlaceholder";
 import SearchField from "@/components/SearchField";
 import { useTabBarOffset } from "@/components/TabBar";
+import { TabScreen } from "@/components/TabScreen";
 import Text from "@/components/Text";
 import { LoadState } from "@/features/encyclopedia/components/LoadState";
 import { TaxonCard } from "@/features/encyclopedia/components/TaxonCard";
@@ -111,11 +111,7 @@ function Encyclopedia() {
 				: t("encyclopedia.counting");
 
 	return (
-		<ScreenPlaceholder
-			title={t("tabs.encyclopedia")}
-			subtitle={subtitle}
-			showSettings
-		>
+		<TabScreen title={t("tabs.encyclopedia")} subtitle={subtitle} showSettings>
 			<View className="flex-1 gap-4">
 				<SearchField
 					value={query}
@@ -196,6 +192,6 @@ function Encyclopedia() {
 					}
 				/>
 			</View>
-		</ScreenPlaceholder>
+		</TabScreen>
 	);
 }

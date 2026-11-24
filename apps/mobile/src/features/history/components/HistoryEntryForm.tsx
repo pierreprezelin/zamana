@@ -6,9 +6,9 @@ import { KeyboardAvoidingView, ScrollView, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Toast from "react-native-toast-message";
 import Button from "@/components/Button";
+import { ConfirmSheet } from "@/components/ConfirmSheet";
 import FieldInput from "@/components/FieldInput";
 import Text from "@/components/Text";
-import { ConfirmSheet } from "@/features/history/components/ConfirmSheet";
 import {
 	historyEntrySchema,
 	NOTE_MAX_LENGTH,
@@ -150,7 +150,10 @@ export function HistoryEntryForm({ plantId, entry }: HistoryEntryFormProps) {
 					title={t("history.deleteEntrySheet.title")}
 					description={t("history.deleteEntrySheet.description")}
 					confirmLabel={t("history.deleteEntrySheet.confirm")}
-					onConfirm={remove}
+					onConfirm={() => {
+						deleteSheetRef.current?.dismiss();
+						remove();
+					}}
 				/>
 			)}
 		</KeyboardAvoidingView>

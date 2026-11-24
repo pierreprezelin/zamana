@@ -19,7 +19,6 @@ export function PlantCard({ plant, className, style }: PlantCardProps) {
 		<Link href={`/plant/${plant.id}`} asChild>
 			<Pressable
 				accessibilityRole="button"
-				pressedClassName=""
 				pressedOpacity={0.75}
 				className={twMerge("gap-2", className)}
 				style={style}

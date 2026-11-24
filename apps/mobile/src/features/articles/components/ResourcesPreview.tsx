@@ -31,7 +31,6 @@ export function ResourcesPreview() {
 					<Link key={category} href={`/tips/category/${category}`} asChild>
 						<Pressable
 							accessibilityRole="button"
-							pressedClassName=""
 							pressedOpacity={0.75}
 							className="h-12 flex-row items-center gap-3 rounded-xl border border-line bg-surface px-4"
 						>

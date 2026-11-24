@@ -24,7 +24,6 @@ export default function AccordionSection({
 			<Pressable
 				accessibilityRole="button"
 				accessibilityState={{ expanded }}
-				pressedClassName=""
 				pressedOpacity={0.75}
 				onPress={onToggle}
 				className="flex-row items-center gap-3 px-4 py-3.5"

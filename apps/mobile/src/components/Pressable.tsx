@@ -24,7 +24,7 @@ export interface PressableProps extends Omit<RNPressableProps, "children"> {
 
 export default function Pressable({
 	className,
-	pressedClassName = "bg-white/10",
+	pressedClassName = "",
 	pressedOpacity = 1,
 	disabled,
 	style,

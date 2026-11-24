@@ -18,7 +18,6 @@ export default function CreditLink({
 	return (
 		<Pressable
 			accessibilityRole="link"
-			pressedClassName=""
 			pressedOpacity={0.5}
 			hitSlop={{ top: 12, bottom: 12, left: 8, right: 8 }}
 			onPress={() => Linking.openURL(url)}

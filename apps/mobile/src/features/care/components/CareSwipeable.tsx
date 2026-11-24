@@ -49,7 +49,6 @@ export function CareIconButton({
 		<Pressable
 			accessibilityRole="button"
 			accessibilityLabel={label}
-			pressedClassName=""
 			pressedOpacity={0.6}
 			// 32 + 2 × 6 reaches the 44 points touch target
 			hitSlop={6}

@@ -1,8 +1,8 @@
 import { useIsFocused } from "expo-router";
 import { useMemo } from "react";
 import { View } from "react-native";
-import { ScreenPlaceholder } from "@/components/ScreenPlaceholder";
 import { useTabBarOffset } from "@/components/TabBar";
+import { TabScreen } from "@/components/TabScreen";
 import { ResourcesPreview } from "@/features/articles/components/ResourcesPreview";
 import { TodayTasks } from "@/features/care/components/TodayTasks";
 import { todayTasks } from "@/features/care/todayTasks";
@@ -48,7 +48,7 @@ export default function TodayScreen() {
 		: t(dueDone ? "care.tasks.allDoneSubtitle" : "care.tasks.none");
 
 	return (
-		<ScreenPlaceholder
+		<TabScreen
 			title={greeting(new Date().getHours(), name)}
 			subtitle={subtitle}
 			showSettings
@@ -66,6 +66,6 @@ export default function TodayScreen() {
 			{plants.length > 0 && <TodayTasks groups={groups} today={today} />}
 			<GardenPreview />
 			<ResourcesPreview />
-		</ScreenPlaceholder>
+		</TabScreen>
 	);
 }

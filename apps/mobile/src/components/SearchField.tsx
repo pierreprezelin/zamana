@@ -31,7 +31,6 @@ export default function SearchField({
 					<Pressable
 						accessibilityRole="button"
 						accessibilityLabel={t("common.clearSearch")}
-						pressedClassName=""
 						pressedOpacity={0.5}
 						hitSlop={13}
 						onPress={() => onChangeText("")}

@@ -2,7 +2,7 @@ import {
 	type BottomSheetModal,
 	useBottomSheetModal,
 } from "@gorhom/bottom-sheet";
-import type { Ref } from "react";
+import { type Ref, useState } from "react";
 import BottomSheet from "@/components/BottomSheet";
 import Button from "@/components/Button";
 import Text from "@/components/Text";
@@ -13,8 +13,9 @@ type ConfirmSheetProps = {
 	title: string;
 	description: string;
 	confirmLabel: string;
-	// Handles its own errors: the sheet is already closed, its screen may be leaving
-	onConfirm: () => void;
+	// Closes the sheet and handles its own errors: the confirm button spins while it runs
+	onConfirm: () => void | Promise<void>;
+	onCancel?: () => void;
 };
 
 export function ConfirmSheet({
@@ -23,12 +24,18 @@ export function ConfirmSheet({
 	description,
 	confirmLabel,
 	onConfirm,
+	onCancel,
 }: ConfirmSheetProps) {
 	const { dismiss } = useBottomSheetModal();
+	const [confirming, setConfirming] = useState(false);
 
-	const confirm = () => {
-		dismiss();
-		onConfirm();
+	const confirm = async () => {
+		setConfirming(true);
+		try {
+			await onConfirm();
+		} finally {
+			setConfirming(false);
+		}
 	};
 
 	return (
@@ -37,11 +44,16 @@ export function ConfirmSheet({
 			title={title}
 			actions={
 				<>
-					<Button variant="danger" title={confirmLabel} onPress={confirm} />
+					<Button
+						variant="danger"
+						title={confirmLabel}
+						loading={confirming}
+						onPress={confirm}
+					/>
 					<Button
 						variant="ghost"
 						title={t("common.cancel")}
-						onPress={() => dismiss()}
+						onPress={onCancel ?? (() => dismiss())}
 					/>
 				</>
 			}

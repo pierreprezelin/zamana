@@ -38,7 +38,6 @@ export default function FieldButton({
 				accessibilityRole="button"
 				accessibilityLabel={accessibilityLabel}
 				accessibilityValue={{ text: value ?? placeholder }}
-				pressedClassName=""
 				pressedOpacity={0.75}
 				disabled={disabled}
 				onPress={onPress}
@@ -63,7 +62,6 @@ export default function FieldButton({
 						accessibilityLabel={
 							clearLabel ?? t("common.clear", { label: accessibilityLabel })
 						}
-						pressedClassName=""
 						pressedOpacity={0.5}
 						hitSlop={13}
 						onPress={onClear}

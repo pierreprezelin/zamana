@@ -29,7 +29,6 @@ export function TodayTasks({ groups, today }: TodayTasksProps) {
 							<Link href={`/plant/${plant.id}/care`} asChild>
 								<Pressable
 									accessibilityRole="button"
-									pressedClassName=""
 									pressedOpacity={0.75}
 									className="flex-row items-center gap-3 p-2"
 								>
