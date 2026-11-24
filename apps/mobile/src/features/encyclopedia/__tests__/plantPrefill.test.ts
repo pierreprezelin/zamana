@@ -13,7 +13,9 @@ const photoUrl =
 
 describe("plantPrefill", () => {
 	it("prefills everything known about a curated plant", () => {
-		const [{ taxonId, ...care }] = CURATED_PLANTS;
+		const [curated] = CURATED_PLANTS;
+		if (!curated) throw new Error("No curated plant");
+		const { taxonId, ...care } = curated;
 
 		const prefill = plantPrefill({
 			taxonId: String(taxonId),

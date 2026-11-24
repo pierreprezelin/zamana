@@ -6,6 +6,7 @@ import type {
 	Plant,
 	PlantFormValues,
 } from "@/features/plants/plantSchema";
+import { isOneOf } from "@/utils/isOneOf";
 
 export type PlantFormState = Omit<PlantFormValues, "age" | "photo"> & {
 	photoUri: string | null;
@@ -19,7 +20,7 @@ export type FormField = keyof PlantFormState;
 export type FormErrors = Partial<Record<FormField, string>>;
 
 // Top to bottom, to scroll to the first field in error
-export const FIELD_ORDER: FormField[] = [
+const FIELD_ORDER: FormField[] = [
 	"nickname",
 	"name",
 	"type",
@@ -89,17 +90,12 @@ export const formErrors = (error: z.ZodError): FormErrors => {
 export const firstErrorField = (errors: FormErrors) =>
 	FIELD_ORDER.find((field) => errors[field]);
 
-export const FORM_SECTIONS = [
-	"details",
-	"needs",
-	"lifecycle",
-	"notes",
-] as const;
+const FORM_SECTIONS = ["details", "needs", "lifecycle", "notes"] as const;
 export type FormSection = (typeof FORM_SECTIONS)[number];
 
 // A route parameter is any string: only a known section opens
 export const isFormSection = (value: unknown): value is FormSection =>
-	FORM_SECTIONS.includes(value as FormSection);
+	isOneOf(FORM_SECTIONS, value);
 
 export const SECTION_FIELDS: Record<FormSection, FormField[]> = {
 	details: ["scientificName", "origin", "acquiredAt", "location", "ageAmount"],

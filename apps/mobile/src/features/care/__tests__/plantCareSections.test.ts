@@ -51,7 +51,7 @@ describe("plantCareSections", () => {
 
 		expect(types(sections.handledToday)).toEqual(["watering"]);
 		expect(types(sections.upcoming)).toEqual(["watering"]);
-		expect(sections.upcoming[0].dueDate).toBe("2026-06-17");
+		expect(sections.upcoming[0]?.dueDate).toBe("2026-06-17");
 		expect(sections.next?.care.type).toBe("watering");
 	});
 

@@ -16,7 +16,7 @@ export function NeedsSection({ plant }: { plant: PlantNeeds }) {
 			</Text>
 			<View className="gap-2">
 				{[needs.slice(0, 2), needs.slice(2)].map((row) => (
-					<View key={row[0].key} className="flex-row gap-2">
+					<View key={row[0]?.key} className="flex-row gap-2">
 						{row.map((need) => (
 							<NeedTile
 								key={need.key}

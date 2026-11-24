@@ -1,3 +1,4 @@
+import { z } from "zod";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import {
@@ -5,6 +6,7 @@ import {
 	isReminderTime,
 	type ReminderTime,
 } from "@/features/notifications/reminderTime";
+import { mergePersisted } from "@/utils/mergePersisted";
 import { syncStorage } from "@/utils/syncStorage";
 
 type NotificationPreferences = {
@@ -39,23 +41,11 @@ export const useNotificationPreferencesStore =
 					bannerDismissed,
 				}),
 				// An unreadable time would silently stop every reminder
-				merge: (persisted, current) => {
-					const saved = persisted as Partial<NotificationPreferences>;
-					return {
-						...current,
-						remindersEnabled:
-							typeof saved?.remindersEnabled === "boolean"
-								? saved.remindersEnabled
-								: current.remindersEnabled,
-						reminderTime: isReminderTime(saved?.reminderTime)
-							? saved.reminderTime
-							: current.reminderTime,
-						bannerDismissed:
-							typeof saved?.bannerDismissed === "boolean"
-								? saved.bannerDismissed
-								: current.bannerDismissed,
-					};
-				},
+				merge: mergePersisted<NotificationPreferencesState>({
+					remindersEnabled: z.boolean(),
+					reminderTime: z.custom<ReminderTime>(isReminderTime),
+					bannerDismissed: z.boolean(),
+				}),
 			},
 		),
 	);

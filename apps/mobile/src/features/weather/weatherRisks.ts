@@ -4,7 +4,7 @@ import type { ForecastHour, Place } from "@/features/weather/weatherTypes";
 // Below the range of each temperature need, so a warm plant left out does not ring every evening
 export const COLD_THRESHOLDS: Record<number, number> = { 1: 0, 2: 5, 3: 12 };
 export const HEAT_THRESHOLD = 35;
-export const GUSTS_THRESHOLD = 60;
+const GUSTS_THRESHOLD = 60;
 const STORM_CODES = new Set([95, 96, 97, 99]);
 // A fleece only gains a few degrees: below this, or for a warm plant, only a shelter will do
 const FLEECE_LIMIT = -3;
@@ -70,7 +70,8 @@ export const weatherRisks = ({
 		(a, b) => a < b,
 	);
 	const cold = alerted.filter(
-		(plant) => coldest.temperature < COLD_THRESHOLDS[plant.temperature],
+		(plant) =>
+			coldest.temperature < (COLD_THRESHOLDS[plant.temperature] ?? -Infinity),
 	);
 	if (cold.length) {
 		risks.push({

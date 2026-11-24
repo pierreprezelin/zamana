@@ -1,3 +1,4 @@
+import { z } from "zod";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import {
@@ -5,6 +6,7 @@ import {
 	type ReminderTime,
 } from "@/features/notifications/reminderTime";
 import type { Forecast, Place } from "@/features/weather/weatherTypes";
+import { mergePersisted } from "@/utils/mergePersisted";
 import { syncStorage } from "@/utils/syncStorage";
 
 // The evening before, to bring the pots in before the night
@@ -18,6 +20,23 @@ export const samePlace = (a: Coordinates | null, b: Coordinates) =>
 	a?.latitude === b.latitude && a?.longitude === b.longitude;
 
 // A new place makes the forecast of the old one, and its failure, wrong
+const placeSchema = z.object({
+	name: z.string(),
+	latitude: z.number(),
+	longitude: z.number(),
+});
+const forecastSchema = z.object({
+	fetchedAt: z.string(),
+	hours: z.array(
+		z.object({
+			time: z.string(),
+			temperature: z.number(),
+			gusts: z.number(),
+			code: z.number(),
+		}),
+	),
+});
+
 const noWeatherYet = { forecast: null, failedAt: null };
 
 type WeatherPreferences = {
@@ -75,16 +94,14 @@ export const useWeatherStore = create<WeatherState>()(
 				failedAt,
 			}) => ({ alertsEnabled, alertTime, source, place, forecast, failedAt }),
 			// An unreadable time would silently stop every alert
-			merge: (persisted, current) => {
-				const saved = persisted as Partial<WeatherPreferences>;
-				return {
-					...current,
-					...saved,
-					alertTime: isReminderTime(saved?.alertTime)
-						? saved.alertTime
-						: current.alertTime,
-				};
-			},
+			merge: mergePersisted<WeatherState>({
+				alertsEnabled: z.boolean(),
+				alertTime: z.custom<ReminderTime>(isReminderTime),
+				source: z.enum(["device", "city"]),
+				place: placeSchema.nullable(),
+				forecast: forecastSchema.nullable(),
+				failedAt: z.string().nullable(),
+			}),
 		},
 	),
 );

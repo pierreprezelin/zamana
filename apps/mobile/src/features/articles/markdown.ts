@@ -11,7 +11,7 @@ const NUMBER = /^\d+\. /;
 const HEADING = /^#{2,3} /;
 
 const toBlock = (lines: string[]): Block => {
-	const [first] = lines;
+	const [first = ""] = lines;
 	if (HEADING.test(first))
 		return { type: "heading", text: first.replace(HEADING, "") };
 	const ordered = NUMBER.test(first);

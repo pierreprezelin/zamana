@@ -11,9 +11,10 @@ import { ArticleRow } from "@/features/articles/components/ArticleRow";
 import { ArticlesUnavailable } from "@/features/articles/components/ArticlesUnavailable";
 import { useArticles } from "@/features/articles/useArticles";
 import { t } from "@/utils/i18n";
+import { isOneOf } from "@/utils/isOneOf";
 
 const isCategory = (id: string | undefined): id is ArticleCategory =>
-	ARTICLE_CATEGORIES.includes(id as ArticleCategory);
+	isOneOf(ARTICLE_CATEGORIES, id);
 
 export default function ArticleCategoryScreen() {
 	const { id } = useLocalSearchParams<{ id: string }>();

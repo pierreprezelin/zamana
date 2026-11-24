@@ -12,6 +12,7 @@ import {
 	type PlantType,
 	SCIENTIFIC_NAME_MAX_LENGTH,
 } from "@/features/plants/plantSchema";
+import { isOneOf } from "@/utils/isOneOf";
 
 type RouteParam = string | string[] | undefined;
 
@@ -34,7 +35,7 @@ const text = (param: RouteParam) =>
 	typeof param === "string" && param.trim() ? param.trim() : undefined;
 
 const isPlantType = (value: string | undefined): value is PlantType =>
-	PLANT_TYPES.includes(value as PlantType);
+	isOneOf(PLANT_TYPES, value);
 
 const withoutUndefined = <T extends object>(values: T) =>
 	Object.fromEntries(

@@ -13,7 +13,7 @@ export const atReminderTime = (
 	day: Date,
 	dayOffset = 0,
 ) => {
-	const [hours, minutes] = time.split(":").map(Number);
+	const [hours = 0, minutes = 0] = time.split(":").map(Number);
 	return new Date(
 		day.getFullYear(),
 		day.getMonth(),
@@ -29,6 +29,6 @@ export const toReminderTime = (date: Date) =>
 		.join(":") as ReminderTime;
 
 export const formatReminderTime = (time: ReminderTime) => {
-	const [hours, minutes] = time.split(":").map(Number);
+	const [hours = 0, minutes = 0] = time.split(":").map(Number);
 	return formatTime(hours, minutes);
 };

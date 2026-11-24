@@ -6,8 +6,10 @@ import {
 	selectionAsync,
 } from "expo-haptics";
 import { Platform } from "react-native";
+import { z } from "zod";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { mergePersisted } from "@/utils/mergePersisted";
 import { syncStorage } from "@/utils/syncStorage";
 
 const ANDROID_14 = 34;
@@ -28,12 +30,7 @@ export const useHapticsStore = create<HapticsState>()(
 			name: "haptics",
 			storage: syncStorage,
 			partialize: ({ enabled }) => ({ enabled }),
-			merge: (persisted, current) => {
-				const saved = persisted as Partial<HapticsState>;
-				return typeof saved?.enabled === "boolean"
-					? { ...current, enabled: saved.enabled }
-					: current;
-			},
+			merge: mergePersisted<HapticsState>({ enabled: z.boolean() }),
 		},
 	),
 );

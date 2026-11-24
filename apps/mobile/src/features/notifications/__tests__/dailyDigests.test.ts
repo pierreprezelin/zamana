@@ -41,8 +41,8 @@ const run = (
 	reminderTime: ReminderTime = "09:00",
 ) => dailyDigests({ plants, cares, climate: "north", now, reminderTime });
 
-const day = (digest: { date: Date }) =>
-	`${digest.date.getMonth() + 1}/${digest.date.getDate()}`;
+const day = (digest?: { date: Date }) =>
+	digest && `${digest.date.getMonth() + 1}/${digest.date.getDate()}`;
 
 describe("dailyDigests", () => {
 	it("starts today when the reminder time is still ahead", () => {
@@ -50,7 +50,7 @@ describe("dailyDigests", () => {
 			[plant("pilea")],
 			[care("pilea", "fertilizing", "2026-06-03")],
 		);
-		expect(digests[0].date).toEqual(new Date(2026, 5, 10, 9, 0));
+		expect(digests[0]?.date).toEqual(new Date(2026, 5, 10, 9, 0));
 	});
 
 	it("starts tomorrow once the reminder time has passed", () => {
@@ -72,7 +72,7 @@ describe("dailyDigests", () => {
 		expect(day(reminders[29])).toBe("7/9");
 		const pause = digests[30];
 		expect(day(pause)).toBe("7/10");
-		expect(pause.title).toBe("Vos rappels sont en pause");
+		expect(pause?.title).toBe("Vos rappels sont en pause");
 	});
 
 	it("starts listing an upcoming care on its due date", () => {
@@ -118,8 +118,8 @@ describe("dailyDigests", () => {
 				care("monstera", "fertilizing", "2026-06-02"),
 			],
 		);
-		expect(digest.title).toBe("3 soins à faire");
-		expect(digest.body).toBe(
+		expect(digest?.title).toBe("3 soins à faire");
+		expect(digest?.body).toBe(
 			"“Pili” · Engrais, monstera · Engrais, Brumisation",
 		);
 	});
@@ -130,8 +130,8 @@ describe("dailyDigests", () => {
 			names.map((name) => plant(name)),
 			names.map((name) => care(name, "fertilizing", "2026-06-03")),
 		);
-		expect(digest.title).toBe("5 soins à faire");
-		expect(digest.body).toBe(
+		expect(digest?.title).toBe("5 soins à faire");
+		expect(digest?.body).toBe(
 			"a · Engrais, b · Engrais, c · Engrais et 2 autres plantes",
 		);
 	});
@@ -141,6 +141,6 @@ describe("dailyDigests", () => {
 			[plant("pilea")],
 			[care("pilea", "fertilizing", "2026-06-03")],
 		);
-		expect(digest.title).toBe("1 soin à faire");
+		expect(digest?.title).toBe("1 soin à faire");
 	});
 });

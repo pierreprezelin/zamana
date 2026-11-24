@@ -95,7 +95,6 @@ function LabeledField({
 					<Pressable
 						accessibilityRole="button"
 						accessibilityLabel={t("common.learnMore", { label })}
-						pressedClassName=""
 						pressedOpacity={0.5}
 						hitSlop={13}
 						onPress={onInfoPress}
@@ -450,9 +449,9 @@ export function PlantForm({ plant, openSection, prefill }: PlantFormProps) {
 									<SegmentedControl
 										options={LEVEL_VALUES.map((value, index) => ({
 											value,
-											label: need.levels[index],
+											label: need.levels[index] ?? value,
 										}))}
-										value={LEVEL_VALUES[form[need.key] - 1]}
+										value={LEVEL_VALUES[form[need.key] - 1] ?? "2"}
 										onChange={(value) => update(need.key, Number(value))}
 									/>
 								</LabeledField>

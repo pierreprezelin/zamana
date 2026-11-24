@@ -71,8 +71,9 @@ const alertLine = (risk: WeatherRisk, today: string) => {
 };
 
 const alertTitle = (risks: WeatherRisk[]) => {
-	if (risks.length > 1) return `⚠️ ${t("weather.alertTitle.several")}`;
-	const kind = alertKind(risks[0]);
+	const [risk] = risks;
+	if (!risk || risks.length > 1) return `⚠️ ${t("weather.alertTitle.several")}`;
+	const kind = alertKind(risk);
 	return `${alertEmojis[kind]} ${t(`weather.alertTitle.${kind}`)}`;
 };
 
