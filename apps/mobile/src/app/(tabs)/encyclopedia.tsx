@@ -3,6 +3,7 @@ import { type ComponentRef, useEffect, useRef, useState } from "react";
 import { FlatList, ScrollView, useWindowDimensions, View } from "react-native";
 import Chip from "@/components/Chip";
 import SearchField from "@/components/SearchField";
+import StatusCard from "@/components/StatusCard";
 import { useTabBarOffset } from "@/components/TabBar";
 import { TabScreen } from "@/components/TabScreen";
 import Text from "@/components/Text";
@@ -172,11 +173,19 @@ function Encyclopedia() {
 					}
 					ListEmptyComponent={
 						shown.status === "success" ? (
-							<Text className="py-8 text-center text-muted">
-								{searching
-									? t("encyclopedia.noResult", { query: query.trim() })
-									: t("encyclopedia.loadFailed")}
-							</Text>
+							searching ? (
+								<StatusCard
+									icon="search-outline"
+									title={t("common.noResult")}
+									description={t("encyclopedia.noResult", {
+										query: query.trim(),
+									})}
+								/>
+							) : (
+								<Text className="py-8 text-center text-muted">
+									{t("encyclopedia.loadFailed")}
+								</Text>
+							)
 						) : shown.status === "error" ? (
 							<LoadState failed onRetry={shown.retry} />
 						) : (

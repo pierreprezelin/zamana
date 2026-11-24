@@ -4,6 +4,7 @@ import { FlatList, View } from "react-native";
 import Button from "@/components/Button";
 import Chip from "@/components/Chip";
 import SearchField from "@/components/SearchField";
+import StatusCard from "@/components/StatusCard";
 import { useTabBarOffset } from "@/components/TabBar";
 import { TabScreen } from "@/components/TabScreen";
 import Text from "@/components/Text";
@@ -131,14 +132,24 @@ export default function GardenScreen() {
 						keyboardDismissMode="on-drag"
 						keyboardShouldPersistTaps="handled"
 						contentContainerClassName={
-							viewMode === "grid" ? "gap-4 px-4" : "gap-2 px-4"
+							viewMode === "grid" || !plants.length
+								? "gap-4 px-4"
+								: "gap-2 px-4"
 						}
 						contentContainerStyle={{ paddingBottom: tabBarOffset + 16 }}
 						columnWrapperClassName={viewMode === "grid" ? "gap-2" : undefined}
 						ListEmptyComponent={
-							<Text className="py-8 text-center text-muted">
-								{query ? t("garden.noSearchResult") : emptyMessages[tab]}
-							</Text>
+							query ? (
+								<StatusCard
+									icon="search-outline"
+									title={t("common.noResult")}
+									description={t("garden.noSearchResult")}
+								/>
+							) : (
+								<Text className="py-8 text-center text-muted">
+									{emptyMessages[tab]}
+								</Text>
+							)
 						}
 						ListFooterComponent={
 							tab === "current" ? (

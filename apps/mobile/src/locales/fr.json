@@ -18,7 +18,8 @@
 		"unexpectedErrorText": "Zamana a rencontré un problème inattendu. Vos plantes sont en sécurité.",
 		"pageNotFound": "Page introuvable",
 		"pageNotFoundText": "Cette page n’existe pas ou plus.",
-		"backHome": "Retour à l’accueil"
+		"backHome": "Retour à l’accueil",
+		"noResult": "Aucun résultat"
 	},
 	"screens": {
 		"editPlant": "Modifier les informations",
@@ -140,7 +141,7 @@
 		"past": "Passées",
 		"noCurrentPlant": "Aucune plante actuelle",
 		"noPastPlant": "Aucune plante passée",
-		"noSearchResult": "Aucune plante ne correspond à votre recherche",
+		"noSearchResult": "Aucune plante ne correspond à votre recherche.",
 		"addPlant": "Ajouter une plante",
 		"empty": "Votre jardin est vide",
 		"addFirstPlant": "Ajouter ma première plante",

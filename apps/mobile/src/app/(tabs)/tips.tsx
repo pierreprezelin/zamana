@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { FlatList, ScrollView, View } from "react-native";
 import SearchField from "@/components/SearchField";
+import StatusCard from "@/components/StatusCard";
 import { useTabBarOffset } from "@/components/TabBar";
 import { TabScreen } from "@/components/TabScreen";
 import Text from "@/components/Text";
@@ -68,9 +69,11 @@ export default function TipsScreen() {
 							contentContainerClassName="gap-2 px-4"
 							contentContainerStyle={{ paddingBottom: tabBarOffset + 16 }}
 							ListEmptyComponent={
-								<Text className="py-8 text-center text-muted">
-									{t("articles.noSearchResult")}
-								</Text>
+								<StatusCard
+									icon="search-outline"
+									title={t("common.noResult")}
+									description={t("articles.noSearchResult")}
+								/>
 							}
 						/>
 					) : (

@@ -18,7 +18,8 @@
 		"unexpectedErrorText": "Zamana ran into an unexpected problem. Your plants are safe.",
 		"pageNotFound": "Page not found",
 		"pageNotFoundText": "This page doesn’t exist, or no longer does.",
-		"backHome": "Back to home"
+		"backHome": "Back to home",
+		"noResult": "No results"
 	},
 	"screens": {
 		"editPlant": "Edit details",
@@ -140,7 +141,7 @@
 		"past": "Past",
 		"noCurrentPlant": "No current plants",
 		"noPastPlant": "No past plants",
-		"noSearchResult": "No plant matches your search",
+		"noSearchResult": "No plant matches your search.",
 		"addPlant": "Add a plant",
 		"empty": "Your garden is empty",
 		"addFirstPlant": "Add my first plant",
