@@ -1,8 +1,8 @@
 {
 	"name": "@zamana/mobile",
-	"main": "expo-router/entry",
 	"version": "1.0.0",
 	"private": true,
+	"main": "expo-router/entry",
 	"scripts": {
 		"start": "expo start",
 		"eas-build-pre-install": "test -f assets/fonts/Recoleta-SemiBold.otf || curl -fsSL \"$RECOLETA_OTF_URL\" -o assets/fonts/Recoleta-SemiBold.otf",
