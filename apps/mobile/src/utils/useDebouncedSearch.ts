@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 export const SEARCH_DELAY_MS = 400;
 export const SEARCH_MIN_LENGTH = 2;
 
-export type SearchStatus = "idle" | "loading" | "success" | "error";
+type SearchStatus = "idle" | "loading" | "success" | "error";
 
 type SearchState<T> = {
 	status: SearchStatus;

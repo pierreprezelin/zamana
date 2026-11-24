@@ -16,7 +16,10 @@
 				"monochromeImage": "./assets/images/android-icon-monochrome.png"
 			},
 			"predictiveBackGestureEnabled": false,
-			"blockedPermissions": ["android.permission.ACCESS_FINE_LOCATION"]
+			"blockedPermissions": [
+				"android.permission.ACCESS_FINE_LOCATION",
+				"android.permission.SYSTEM_ALERT_WINDOW"
+			]
 		},
 		"ios": {
 			"bundleIdentifier": "com.pierreprezelin.zamana",
@@ -89,7 +92,6 @@
 			],
 			"expo-sqlite",
 			"expo-status-bar",
-			"expo-web-browser",
 			"@react-native-vector-icons/ionicons"
 		],
 		"experiments": {

@@ -29,7 +29,6 @@ export function NewPlantCard({ plant }: { plant: Plant }) {
 			<Pressable
 				accessibilityRole="button"
 				accessibilityLabel={t("common.close")}
-				pressedClassName=""
 				pressedOpacity={0.5}
 				hitSlop={12}
 				className="self-start"

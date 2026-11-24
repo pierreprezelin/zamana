@@ -135,11 +135,29 @@ describe("switchToDevicePlace", () => {
 		mocked.getLastKnownPositionAsync.mockResolvedValue(null);
 		mocked.getCurrentPositionAsync.mockRejectedValue(new Error("No fix"));
 
-		await switchToDevicePlace();
+		expect(await switchToDevicePlace()).toBe(false);
 
 		expect(useWeatherStore.getState()).toMatchObject({
 			source: "city",
 			place: annecy,
 		});
+	});
+
+	it("tells the position was found", async () => {
+		expect(await switchToDevicePlace()).toBe(true);
+	});
+
+	it("gives up on a position that never comes", async () => {
+		jest.useFakeTimers();
+		useWeatherStore.setState({ source: "city", place: annecy });
+		mocked.getLastKnownPositionAsync.mockResolvedValue(null);
+		mocked.getCurrentPositionAsync.mockReturnValue(new Promise(() => {}));
+
+		const switching = switchToDevicePlace();
+		await jest.advanceTimersByTimeAsync(10_000);
+
+		expect(await switching).toBe(false);
+		expect(useWeatherStore.getState().source).toBe("city");
+		jest.useRealTimers();
 	});
 });

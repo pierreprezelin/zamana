@@ -1,8 +1,8 @@
 import { useMemo, useState } from "react";
 import { FlatList, ScrollView, View } from "react-native";
-import { ScreenPlaceholder } from "@/components/ScreenPlaceholder";
 import SearchField from "@/components/SearchField";
 import { useTabBarOffset } from "@/components/TabBar";
+import { TabScreen } from "@/components/TabScreen";
 import Text from "@/components/Text";
 import {
 	ARTICLE_CATEGORIES,
@@ -34,7 +34,7 @@ export default function TipsScreen() {
 	const shownCount = query.trim() ? results.length : articles.length;
 
 	return (
-		<ScreenPlaceholder
+		<TabScreen
 			title={t("tabs.tips")}
 			subtitle={
 				availability === "ready"
@@ -99,6 +99,6 @@ export default function TipsScreen() {
 					)}
 				</>
 			)}
-		</ScreenPlaceholder>
+		</TabScreen>
 	);
 }

@@ -7,6 +7,7 @@ const { useTipStore, visibleTip } =
 
 const state = () => useTipStore.getState();
 const allIds = TIPS.map((tip) => tip.id);
+const firstId = allIds[0] ?? "";
 
 describe("useTipStore", () => {
 	beforeEach(() =>
@@ -35,7 +36,7 @@ describe("useTipStore", () => {
 	it("shows no tip once all are seen, until they are reset", () => {
 		useTipStore.setState({
 			seenIds: allIds,
-			todayTip: { id: allIds[0], date: "2026-11-20" },
+			todayTip: { id: firstId, date: "2026-11-20" },
 		});
 		state().pickTodayTip("2026-11-21", "north");
 		expect(state().todayTip?.date).toBe("2026-11-20");
@@ -46,16 +47,16 @@ describe("useTipStore", () => {
 	});
 
 	it("shows today's tip only", () => {
-		useTipStore.setState({ todayTip: { id: allIds[0], date: "2026-11-21" } });
+		useTipStore.setState({ todayTip: { id: firstId, date: "2026-11-21" } });
 
-		expect(visibleTip(state(), "2026-11-21")?.id).toBe(allIds[0]);
+		expect(visibleTip(state(), "2026-11-21")?.id).toBe(firstId);
 		expect(visibleTip(state(), "2026-11-22")).toBeNull();
 	});
 
 	it("hides the card when disabled", () => {
 		useTipStore.setState({
 			enabled: false,
-			todayTip: { id: allIds[0], date: "2026-11-21" },
+			todayTip: { id: firstId, date: "2026-11-21" },
 		});
 
 		expect(visibleTip(state(), "2026-11-21")).toBeNull();

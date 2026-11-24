@@ -59,7 +59,6 @@ export const PlantListRow = memo(function PlantListRow({
 		<Link href={`/plant/${plant.id}`} asChild>
 			<Pressable
 				accessibilityRole="button"
-				pressedClassName=""
 				pressedOpacity={0.75}
 				className="flex-row items-center gap-3 rounded-2xl border border-line bg-surface p-4"
 			>

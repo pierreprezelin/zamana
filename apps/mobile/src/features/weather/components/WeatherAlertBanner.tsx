@@ -35,7 +35,7 @@ export function WeatherAlertBanner({
 			<View className="flex-row items-start gap-4 rounded-2xl bg-danger-strong p-4">
 				<View className="size-12 items-center justify-center rounded-3xl bg-on-primary/25">
 					<Ionicons
-						name={RISK_ICONS[risks[0].kind]}
+						name={RISK_ICONS[risks[0]?.kind ?? "cold"]}
 						size={24}
 						className="text-on-primary"
 					/>
@@ -73,7 +73,6 @@ export function WeatherAlertBanner({
 					<Pressable
 						key={plant.id}
 						accessibilityRole="link"
-						pressedClassName=""
 						pressedOpacity={0.5}
 						hitSlop={8}
 						onPress={() => router.push(`/plant/${plant.id}/edit?section=needs`)}

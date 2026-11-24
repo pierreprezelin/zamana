@@ -21,7 +21,6 @@ export const TaxonCard = memo(function TaxonCard({
 			<Link href={`/encyclopedia/${taxon.id}`} asChild>
 				<Pressable
 					accessibilityRole="button"
-					pressedClassName=""
 					pressedOpacity={0.75}
 					className="flex-1 flex-row items-center gap-3 py-4 pl-4"
 				>
@@ -50,7 +49,6 @@ export const TaxonCard = memo(function TaxonCard({
 				<Pressable
 					accessibilityRole="button"
 					accessibilityLabel={t("encyclopedia.addNamed", { name: taxon.name })}
-					pressedClassName=""
 					pressedOpacity={0.5}
 					className="self-stretch justify-center px-4"
 				>

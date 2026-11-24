@@ -22,11 +22,21 @@ export const useNotificationPermissionStore =
 		return {
 			granted: null,
 			canAskAgain: true,
-			refresh: async () => apply(await Notifications.getPermissionsAsync()),
+			refresh: async () => {
+				try {
+					apply(await Notifications.getPermissionsAsync());
+				} catch (error) {
+					console.warn("Notification permission not read", error);
+				}
+			},
 			request: async () => {
-				if (!get().canAskAgain) return Linking.openSettings();
-				await ensureChannel();
-				apply(await Notifications.requestPermissionsAsync());
+				try {
+					if (!get().canAskAgain) return await Linking.openSettings();
+					await ensureChannel();
+					apply(await Notifications.requestPermissionsAsync());
+				} catch (error) {
+					console.warn("Notification permission not asked", error);
+				}
 			},
 		};
 	});

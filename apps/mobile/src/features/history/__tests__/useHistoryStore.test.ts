@@ -1,3 +1,5 @@
+import { renderHook } from "@testing-library/react-native";
+
 const mockQueries: string[] = [];
 const mockDeletePhoto = jest.fn();
 let mockUuid = 0;
@@ -17,7 +19,7 @@ jest.mock("@/utils/database", () => ({
 	},
 }));
 
-const { useHistoryStore } =
+const { useEntry, useHistoryStore, usePlantEntries } =
 	require("@/features/history/useHistoryStore") as typeof import("@/features/history/useHistoryStore");
 
 const state = () => useHistoryStore.getState();
@@ -94,5 +96,64 @@ describe("useHistoryStore", () => {
 
 		expect(state().entries.map((entry) => entry.plantId)).toEqual(["plant-2"]);
 		expect(mockDeletePhoto).toHaveBeenCalledWith("a.jpg");
+	});
+});
+
+describe("history selectors", () => {
+	const entryWith = (id: string, plantId: string) => ({
+		id,
+		plantId,
+		photo: null,
+		note: null,
+		createdAt: "2026-09-23T15:16:00.000Z",
+		updatedAt: "2026-09-23T15:16:00.000Z",
+	});
+
+	beforeEach(() =>
+		useHistoryStore.setState({
+			entries: [
+				entryWith("a", "pilea"),
+				entryWith("b", "ficus"),
+				entryWith("c", "pilea"),
+			],
+		}),
+	);
+
+	it("lists the entries of a plant, and no other", async () => {
+		const { result } = await renderHook(() => usePlantEntries("pilea"));
+
+		expect(result.current.map((entry) => entry.id)).toEqual(["a", "c"]);
+	});
+
+	it("lists nothing for a plant without history", async () => {
+		const { result } = await renderHook(() => usePlantEntries("monstera"));
+
+		expect(result.current).toEqual([]);
+	});
+
+	it("keeps the same list while the entries do not change", async () => {
+		const { result, rerender } = await renderHook(() =>
+			usePlantEntries("pilea"),
+		);
+		const first = result.current;
+
+		await rerender({});
+
+		expect(result.current).toBe(first);
+	});
+
+	it("finds an entry by its id", async () => {
+		const { result } = await renderHook(() => useEntry("b"));
+
+		expect(result.current?.plantId).toBe("ficus");
+	});
+
+	it.each([
+		["an unknown id", "missing"],
+		["no id", undefined],
+	])("finds no entry for %s", async (_, id) => {
+		const { result } = await renderHook(() => useEntry(id));
+
+		expect(result.current).toBeUndefined();
 	});
 });

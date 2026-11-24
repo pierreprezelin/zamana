@@ -4,7 +4,7 @@ layout: ../layouts/LegalLayout.astro
 locale: fr
 title: Politique de confidentialité
 description: Ce que l’application Zamana fait de vos données, ce qu’elle envoie et à qui.
-updatedAt: 2026-11-23
+updatedAt: 2026-11-24
 ---
 
 Zamana est une application gratuite, sans publicité et **sans compte**. Vous n’avez rien à créer ni à renseigner pour l’utiliser, et aucune donnée n’est vendue ni utilisée à des fins publicitaires.
@@ -36,7 +36,7 @@ L’application ne demande une autorisation qu’au moment où elle en a besoin,
 
 - **Notifications** : pour vos rappels de soins et les alertes météo.
 - **Position approximative** : pour les alertes météo à l’endroit où vous êtes. Vous pouvez choisir une ville à la place.
-- **Appareil photo et photos** : pour illustrer vos plantes. Les photos choisies sont copiées dans l’application et restent sur votre téléphone.
+- **Appareil photo et photos** : pour illustrer vos plantes. Les photos choisies sont copiées dans l’application, réduites et débarrassées de leurs métadonnées (comme le lieu de la prise de vue), et restent sur votre téléphone.
 
 ## Durée de conservation et vos droits
 

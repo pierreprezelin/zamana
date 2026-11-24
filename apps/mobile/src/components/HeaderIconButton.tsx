@@ -23,6 +23,7 @@ export function HeaderIconButton({
 			accessibilityRole="button"
 			pressedOpacity={0.5}
 			hitSlop={8}
+			pressedClassName="bg-white/10"
 			className={twMerge(
 				"size-10 items-center justify-center rounded-full",
 				className,

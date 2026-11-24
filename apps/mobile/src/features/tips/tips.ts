@@ -40,7 +40,7 @@ const NORTH_SEASONS: Season[] = ["winter", "spring", "summer", "autumn"];
 export const currentSeason = (month: number, climate: Climate) => {
 	if (climate === "tropics") return null;
 	const northMonth = climate === "south" ? ((month + 5) % 12) + 1 : month;
-	return NORTH_SEASONS[Math.floor((northMonth % 12) / 3)];
+	return NORTH_SEASONS[Math.floor((northMonth % 12) / 3)] ?? null;
 };
 
 type PickTipOptions<T> = {

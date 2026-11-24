@@ -1,8 +1,11 @@
 import { reloadAppAsync } from "expo";
 import { getLocales } from "expo-localization";
+import { Storage } from "expo-sqlite/kv-store";
 import i18next from "i18next";
+import { z } from "zod";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { mergePersisted } from "@/utils/mergePersisted";
 import { syncStorage } from "@/utils/syncStorage";
 
 export type Language = "fr" | "en";
@@ -33,7 +36,9 @@ export const useLanguageStore = create<LanguageState>()(
 			preference: "system",
 			setPreference: (preference) => {
 				set({ preference });
-				reloadIfLanguageChanged();
+				if (!languageChanged()) return;
+				Storage.setItemSync(RETURN_TO_SETTINGS_KEY, "true");
+				reloadAppAsync();
 			},
 		}),
 		{
@@ -41,16 +46,9 @@ export const useLanguageStore = create<LanguageState>()(
 			storage: syncStorage,
 			partialize: ({ preference }) => ({ preference }),
 			// An unknown language would show raw keys, or reload the app on each return
-			merge: (persisted, current) => {
-				const saved = (persisted as Partial<LanguageState>)?.preference;
-				return {
-					...current,
-					preference:
-						saved === "system" || isSupported(saved ?? null)
-							? (saved as LanguagePreference)
-							: current.preference,
-				};
-			},
+			merge: mergePersisted<LanguageState>({
+				preference: z.enum(["system", "fr", "en"]),
+			}),
 		},
 	),
 );
@@ -58,7 +56,18 @@ export const useLanguageStore = create<LanguageState>()(
 export const appLanguage = () =>
 	resolveLanguage(useLanguageStore.getState().preference, getLocales());
 
+const languageChanged = () => appLanguage() !== i18next.language;
+
 // Texts translated when their module loaded only change with a fresh start
 export const reloadIfLanguageChanged = () => {
-	if (appLanguage() !== i18next.language) reloadAppAsync();
+	if (languageChanged()) reloadAppAsync();
+};
+
+// The language is chosen in the settings: the reload brings back there, once
+const RETURN_TO_SETTINGS_KEY = "language.returnToSettings";
+
+export const takeReturnToSettings = () => {
+	const pending = Storage.getItemSync(RETURN_TO_SETTINGS_KEY) !== null;
+	if (pending) Storage.removeItemSync(RETURN_TO_SETTINGS_KEY);
+	return pending;
 };

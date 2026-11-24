@@ -13,11 +13,14 @@ const GEOCODING_URL = "https://geocoding-api.open-meteo.com/v1/search";
 const FORECAST_DAYS = 4;
 const CITY_RESULTS = 5;
 
-const values = z.array(z.number().nullable());
+// Bounds far above real values, so a broken service can't bloat the memory
+const MAX_HOURS = 500;
+const text = z.string().max(200);
+const values = z.array(z.number().nullable()).max(MAX_HOURS);
 const forecastSchema = z.object({
 	hourly: z
 		.object({
-			time: z.array(z.string()),
+			time: z.array(text).max(MAX_HOURS),
 			temperature_2m: values,
 			wind_gusts_10m: values,
 			weather_code: values,
@@ -25,9 +28,9 @@ const forecastSchema = z.object({
 		.optional(),
 });
 const citySchema = z.object({
-	name: z.string(),
-	admin1: z.string().optional(),
-	country: z.string().optional(),
+	name: text,
+	admin1: text.optional(),
+	country: text.optional(),
 	latitude: z.number().min(-90).max(90),
 	longitude: z.number().min(-180).max(180),
 });

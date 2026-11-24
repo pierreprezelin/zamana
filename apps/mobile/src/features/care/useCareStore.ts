@@ -1,5 +1,6 @@
 import { randomUUID } from "expo-crypto";
 import { create } from "zustand";
+import { useShallow } from "zustand/react/shallow";
 import type { CareInput } from "@/features/care/careSchema";
 import type {
 	Care,
@@ -312,6 +313,8 @@ export const useCareStore = create<CareState>()((set, get) => {
 });
 
 export const usePlantCares = (plantId: string) =>
-	useCareStore((state) => state.cares).filter(
-		(care) => care.plantId === plantId,
+	useCareStore(
+		useShallow((state) =>
+			state.cares.filter((care) => care.plantId === plantId),
+		),
 	);

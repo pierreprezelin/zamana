@@ -95,8 +95,8 @@ describe("searchTaxa", () => {
 
 		const { taxa } = await searchTaxa("ficus", 1);
 
-		expect(taxa[0].name).toBe("Ficus elastica");
-		expect(taxa[0].photo).toBeNull();
+		expect(taxa[0]?.name).toBe("Ficus elastica");
+		expect(taxa[0]?.photo).toBeNull();
 	});
 
 	it.each(["cc-by-nc", "cc-by-nd", "cc-by-nc-sa", "cc-by-nc-nd"])(
@@ -111,7 +111,7 @@ describe("searchTaxa", () => {
 
 			const { taxa } = await searchTaxa("ficus", 1);
 
-			expect(taxa[0].photo).toBeNull();
+			expect(taxa[0]?.photo).toBeNull();
 		},
 	);
 
@@ -127,7 +127,7 @@ describe("searchTaxa", () => {
 
 			const { taxa } = await searchTaxa("ficus", 1);
 
-			expect(taxa[0].photo).not.toBeNull();
+			expect(taxa[0]?.photo).toBeTruthy();
 		},
 	);
 
@@ -140,7 +140,7 @@ describe("searchTaxa", () => {
 
 		const { taxa } = await searchTaxa("sansevieria", 1);
 
-		expect(taxa[0].photo?.largeUrl).toBe(
+		expect(taxa[0]?.photo?.largeUrl).toBe(
 			pickedPhoto(sansevieria)?.url.replace("/medium.", "/large."),
 		);
 	});
@@ -161,7 +161,7 @@ describe("searchTaxa", () => {
 
 		const { taxa } = await searchTaxa("ficus", 1);
 
-		expect(taxa[0].photo).toBeNull();
+		expect(taxa[0]?.photo).toBeNull();
 	});
 
 	it("guesses the type of a cactus from its ancestors", async () => {
@@ -172,7 +172,7 @@ describe("searchTaxa", () => {
 
 		const { taxa } = await searchTaxa("cactus", 1);
 
-		expect(taxa[0].guessedType).toBe("cactus");
+		expect(taxa[0]?.guessedType).toBe("cactus");
 	});
 
 	it("skips a malformed result", async () => {
@@ -185,6 +185,11 @@ describe("searchTaxa", () => {
 
 	it("fails when the service does", async () => {
 		respond({}, false);
+		await expect(searchTaxa("ficus", 1)).rejects.toThrow();
+	});
+
+	it("fails on a malformed answer, rather than caching an empty page", async () => {
+		respond({ total_results: 3 });
 		await expect(searchTaxa("ficus", 1)).rejects.toThrow();
 	});
 });
@@ -308,20 +313,22 @@ describe("usage names", () => {
 
 	it("names a curated plant as it is known, in the app language", async () => {
 		respond({ total_results: 1, results: [snakePlant] });
-		expect((await searchTaxa("sansevieria", 1)).taxa[0].name).toBe(
+		expect((await searchTaxa("sansevieria", 1)).taxa[0]?.name).toBe(
 			"Langue de belle-mère",
 		);
 
 		await i18next.changeLanguage("en");
 		respond({ total_results: 1, results: [snakePlant] });
-		expect((await searchTaxa("sansevieria", 1)).taxa[0].name).toBe(
+		expect((await searchTaxa("sansevieria", 1)).taxa[0]?.name).toBe(
 			"Snake plant",
 		);
 	});
 
 	it("gives a curated plant its curated type, however it is reached", async () => {
 		respond({ total_results: 1, results: [{ ...rubberPlant, id: 69223 }] });
-		expect((await searchTaxa("pothos", 1)).taxa[0].guessedType).toBe("climber");
+		expect((await searchTaxa("pothos", 1)).taxa[0]?.guessedType).toBe(
+			"climber",
+		);
 	});
 });
 
@@ -339,7 +346,7 @@ describe("searchFirstPage", () => {
 			scientificName: "Epipremnum aureum",
 			guessedType: "climber",
 		});
-		expect(taxa[0].photo).not.toBeNull();
+		expect(taxa[0]?.photo).toBeTruthy();
 		// The curated plant missing from the iNaturalist results counts too
 		expect(total).toBe(2);
 	});

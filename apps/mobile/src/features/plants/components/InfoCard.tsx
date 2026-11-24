@@ -3,7 +3,7 @@ import { Ionicons } from "@/components/ionicons";
 import Pressable from "@/components/Pressable";
 import Text from "@/components/Text";
 
-export type InfoRow = {
+type InfoRow = {
 	label: string;
 	value: string | null;
 	onInfoPress?: () => void;
@@ -37,7 +37,6 @@ export function InfoCard({ title, rows }: InfoCardProps) {
 								<Pressable
 									accessibilityRole="button"
 									accessibilityLabel={`En savoir plus : ${row.label}`}
-									pressedClassName=""
 									pressedOpacity={0.5}
 									hitSlop={13}
 									onPress={row.onInfoPress}

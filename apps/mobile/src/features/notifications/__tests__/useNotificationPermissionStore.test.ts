@@ -40,6 +40,29 @@ describe("useNotificationPermissionStore", () => {
 	});
 });
 
+describe("a failing system", () => {
+	beforeEach(() => jest.spyOn(console, "warn").mockImplementation());
+
+	it("leaves the permission unknown when it cannot be read", async () => {
+		jest
+			.mocked(Notifications.getPermissionsAsync)
+			.mockRejectedValueOnce(new Error("boom"));
+		await expect(
+			useNotificationPermissionStore.getState().refresh(),
+		).resolves.toBeUndefined();
+		expect(useNotificationPermissionStore.getState().granted).toBeNull();
+	});
+
+	it("does not break the screen that asks", async () => {
+		jest
+			.mocked(Notifications.requestPermissionsAsync)
+			.mockRejectedValueOnce(new Error("boom"));
+		await expect(
+			useNotificationPermissionStore.getState().request(),
+		).resolves.toBeUndefined();
+	});
+});
+
 describe("remindersOffReason", () => {
 	it("tells why no reminder will be sent", () => {
 		expect(remindersOffReason(false, true)).toBe("disabledInSettings");

@@ -19,7 +19,7 @@ const FIELDS = `(id:!t,name:!t,preferred_common_name:!t,ancestor_ids:!t,default_
 const PLANTAE_ID = "47126";
 // What a gardener adds, without the genera and families
 const RANKS = "species,hybrid,variety,form";
-export const SEARCH_PAGE_SIZE = 20;
+const SEARCH_PAGE_SIZE = 20;
 export const MAX_IDS_PER_REQUEST = 30;
 
 const HEADERS = { "User-Agent": `Zamana/${nativeApplicationVersion ?? "dev"}` };
@@ -42,22 +42,29 @@ const TYPE_BY_ANCESTOR: Record<number, PlantType> = {
 export const guessPlantType = (ancestorIds: number[]) =>
 	ancestorIds.map((id) => TYPE_BY_ANCESTOR[id]).find(Boolean) ?? null;
 
+// Bounds far above real values, so a broken service can't bloat the memory
+const text = z.string().max(500);
+
 const photoSchema = z.object({
-	license_code: z.string().nullish(),
-	medium_url: z.string(),
-	attribution: z.string(),
+	license_code: text.nullish(),
+	medium_url: text,
+	attribution: text,
 });
 
 const taxonSchema = z.object({
 	id: z.number(),
-	name: z.string(),
-	preferred_common_name: z.string().nullish(),
-	ancestor_ids: z.array(z.number()).default([]),
+	name: text,
+	preferred_common_name: text.nullish(),
+	ancestor_ids: z.array(z.number()).max(100).default([]),
 	ancestors: z
-		.array(z.object({ rank: z.string(), name: z.string() }))
+		.array(z.object({ rank: text, name: text }))
+		.max(100)
 		.optional(),
 	default_photo: photoSchema.nullish(),
-	taxon_photos: z.array(z.object({ photo: photoSchema })).optional(),
+	taxon_photos: z
+		.array(z.object({ photo: photoSchema }))
+		.max(100)
+		.optional(),
 });
 
 export type TaxonPhoto = {
@@ -166,7 +173,10 @@ const getTaxa = async (url: string, params: Record<string, string> = {}) => {
 		{ ...params, locale: locale(), fields: FIELDS },
 		HEADERS,
 	)) as { total_results?: unknown; results?: unknown };
-	const results = Array.isArray(response?.results) ? response.results : [];
+	if (!Array.isArray(response?.results)) {
+		throw new Error("Malformed iNaturalist answer");
+	}
+	const results = response.results;
 	return {
 		total:
 			typeof response?.total_results === "number" ? response.total_results : 0,

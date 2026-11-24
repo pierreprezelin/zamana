@@ -19,6 +19,7 @@ import {
 import { alertedPlants } from "@/features/weather/weatherRisks";
 import { formatTime } from "@/utils/dates";
 import { t } from "@/utils/i18n";
+import { showErrorToast } from "@/utils/toast";
 import { useDebouncedSearch } from "@/utils/useDebouncedSearch";
 
 const sourceOptions: { value: PlaceSource; label: string }[] = [
@@ -71,8 +72,7 @@ function ForecastStatus({ switching }: { switching: boolean }) {
 function CitySearch() {
 	const [query, setQuery] = useState("");
 	const search = useDebouncedSearch(query, searchCities);
-	// A failed search reads as no city found, like a wrong spelling
-	const results = search.status === "error" ? [] : search.result;
+	const results = search.status === "error" ? null : search.result;
 	const setCity = useWeatherStore((state) => state.setCity);
 
 	return (
@@ -82,6 +82,11 @@ function CitySearch() {
 				onChangeText={setQuery}
 				placeholder={t("weather.settings.searchPlaceholder")}
 			/>
+			{search.status === "error" && (
+				<Text className="text-xs text-muted">
+					{t("weather.settings.searchFailed")}
+				</Text>
+			)}
 			{results?.length === 0 && (
 				<Text className="text-xs text-muted">
 					{t("weather.settings.noResult")}
@@ -95,7 +100,8 @@ function CitySearch() {
 					}))}
 					selected={[]}
 					onPress={(index) => {
-						setCity(results[Number(index)]);
+						const city = results[Number(index)];
+						if (city) setCity(city);
 						setQuery("");
 					}}
 				/>
@@ -122,7 +128,14 @@ export function WeatherPlaceSettings() {
 			await permission.request();
 		}
 		setSwitching(true);
-		await switchToDevicePlace().finally(() => setSwitching(false));
+		const found = await switchToDevicePlace().finally(() =>
+			setSwitching(false),
+		);
+		// A refused permission already has its own banner
+		const granted = useLocationPermissionStore.getState().status === "granted";
+		if (!found && granted) {
+			showErrorToast(t("weather.settings.positionFailed"));
+		}
 	};
 
 	// Never asked yet or refused: the position can only come from this button

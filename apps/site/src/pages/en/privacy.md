@@ -4,7 +4,7 @@ layout: ../../layouts/LegalLayout.astro
 locale: en
 title: Privacy policy
 description: What the Zamana app does with your data, what it sends and to whom.
-updatedAt: 2026-11-23
+updatedAt: 2026-11-24
 ---
 
 Zamana is a free app, with no ads and **no account**. There's nothing to sign up for or fill in to use it, and no data is sold or used for advertising.
@@ -36,7 +36,7 @@ The app only asks for a permission when it needs it, and you can revoke it at an
 
 - **Notifications**: for your care reminders and weather alerts.
 - **Approximate location**: for weather alerts where you are. You can choose a city instead.
-- **Camera and photos**: to show your plants. The photos you pick are copied into the app and stay on your phone.
+- **Camera and photos**: to show your plants. The photos you pick are copied into the app, downsized and stripped of their metadata (like where they were taken), and stay on your phone.
 
 ## Retention and your rights
 

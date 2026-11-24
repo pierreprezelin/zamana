@@ -18,6 +18,9 @@
 	"lint-staged": {
 		"*": "biome check --write --no-errors-on-unmatched --files-ignore-unknown=true"
 	},
+	"overrides": {
+		"node-forge": "^1.4.3"
+	},
 	"devDependencies": {
 		"@biomejs/biome": "^2.6.8",
 		"lint-staged": "^17.6.1",

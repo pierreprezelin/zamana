@@ -18,7 +18,6 @@ export default function SettingsRow({
 	return (
 		<Pressable
 			accessibilityRole="button"
-			pressedClassName=""
 			pressedOpacity={0.5}
 			className="flex-row items-center gap-4 py-3"
 			{...props}

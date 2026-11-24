@@ -2,7 +2,7 @@ import {
 	BottomSheetBackdrop,
 	type BottomSheetBackdropProps,
 	BottomSheetModal,
-	BottomSheetView,
+	BottomSheetScrollView,
 	useBottomSheetModal,
 } from "@gorhom/bottom-sheet";
 import type { ComponentProps, ReactNode, Ref } from "react";
@@ -68,7 +68,11 @@ export default function BottomSheet({
 			keyboardBehavior="interactive"
 			keyboardBlurBehavior="restore"
 		>
-			<BottomSheetView style={{ paddingBottom: bottom }}>
+			{/* Scrolls once the keyboard leaves too little room, so the actions stay reachable */}
+			<BottomSheetScrollView
+				contentContainerStyle={{ paddingBottom: bottom }}
+				keyboardShouldPersistTaps="handled"
+			>
 				<View className={`gap-4 p-4 ${closable ? "pt-0" : ""}`}>
 					<View className="flex-row items-center justify-between gap-4">
 						<Text className="flex-1 font-recoleta text-2xl leading-[1.25] text-foreground mt-1.5">
@@ -79,7 +83,6 @@ export default function BottomSheet({
 								accessibilityRole="button"
 								accessibilityLabel={t("common.close")}
 								pressedOpacity={0.5}
-								pressedClassName=""
 								hitSlop={10}
 								onPress={() => dismiss()}
 							>
@@ -90,7 +93,7 @@ export default function BottomSheet({
 					{children}
 				</View>
 				{actions && <View className="gap-2 px-4">{actions}</View>}
-			</BottomSheetView>
+			</BottomSheetScrollView>
 		</BottomSheetModal>
 	);
 }

@@ -19,7 +19,7 @@ import { weatherNotifications } from "@/features/weather/weatherNotifications";
 import { toISODate } from "@/utils/dates";
 
 // Groups the changes of a burst of actions, like several swipes on Today
-const RESCHEDULE_DELAY_MS = 500;
+const RESCHEDULE_DELAY_MS = 2000;
 
 // Cancels everything, so the care reminders and the weather alerts are scheduled together
 export const rescheduleReminders = async () => {

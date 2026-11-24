@@ -1,8 +1,10 @@
+import { z } from "zod";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import type { Climate } from "@/features/care/careTypes";
 import { currentSeason, pickTip, TIPS } from "@/features/tips/tips";
 import { parseISODate } from "@/utils/dates";
+import { mergePersisted } from "@/utils/mergePersisted";
 import { syncStorage } from "@/utils/syncStorage";
 
 type TipState = {
@@ -58,25 +60,19 @@ export const useTipStore = create<TipState>()(
 			name: "tips",
 			storage: syncStorage,
 			// An unreadable history would crash the home screen on every launch
-			merge: (persisted, current) => {
-				const saved = persisted as Partial<TipState>;
-				return {
-					...current,
-					...saved,
-					enabled:
-						typeof saved?.enabled === "boolean"
-							? saved.enabled
-							: current.enabled,
-					seenIds: Array.isArray(saved?.seenIds)
-						? saved.seenIds.filter((id) => typeof id === "string")
-						: current.seenIds,
-					// An update may remove today's tip from the catalog
-					todayTip:
-						saved?.todayTip && isInCatalog(saved.todayTip.id)
-							? saved.todayTip
-							: null,
-				};
-			},
+			merge: mergePersisted<TipState>({
+				enabled: z.boolean(),
+				seenIds: z
+					.array(z.unknown())
+					.transform((ids) =>
+						ids.filter((id): id is string => typeof id === "string"),
+					),
+				// An update may remove today's tip from the catalog
+				todayTip: z
+					.object({ id: z.string().refine(isInCatalog), date: z.string() })
+					.nullable(),
+				dismissedOn: z.string().nullable(),
+			}),
 		},
 	),
 );

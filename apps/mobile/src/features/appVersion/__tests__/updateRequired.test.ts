@@ -24,6 +24,34 @@ describe("isOlderVersion", () => {
 	])("%s older than %s: %s", (current, minimum, expected) => {
 		expect(isOlderVersion(current, minimum)).toBe(expected);
 	});
+
+	it("compares the parts as numbers, not as text", () => {
+		expect(isOlderVersion("1.9.0", "1.10.0")).toBe(true);
+		expect(isOlderVersion("1.10.0", "1.9.0")).toBe(false);
+	});
+
+	it("treats a missing part as zero", () => {
+		expect(isOlderVersion("1.2", "1.2.0")).toBe(false);
+		expect(isOlderVersion("1.2.0", "1.2")).toBe(false);
+	});
+
+	it.each([
+		["abc", "1.0.0"],
+		["1.0.0", "abc"],
+		["", "1.0.0"],
+		["1.0.0", ""],
+		["1..2", "1.0.0"],
+	])(
+		"never requires an update for the unreadable version in %s, %s",
+		(current, minimum) => {
+			expect(isOlderVersion(current, minimum)).toBe(false);
+		},
+	);
+
+	it("compares a pre-release by its version number", () => {
+		expect(isOlderVersion("1.2.3-beta", "1.2.4")).toBe(true);
+		expect(isOlderVersion("1.2.3-beta", "1.2.3")).toBe(false);
+	});
 });
 
 describe("isUpdateRequired", () => {

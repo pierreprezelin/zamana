@@ -30,7 +30,6 @@ export function ViewModeToggle({ value, onChange }: ViewModeToggleProps) {
 						accessibilityRole="radio"
 						accessibilityLabel={mode.label}
 						accessibilityState={{ checked: selected }}
-						pressedClassName=""
 						pressedOpacity={0.75}
 						hitSlop={{ top: 6, bottom: 6 }}
 						onPress={() => {

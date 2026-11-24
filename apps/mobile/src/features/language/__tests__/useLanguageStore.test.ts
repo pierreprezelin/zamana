@@ -4,7 +4,12 @@ import { Storage } from "expo-sqlite/kv-store";
 
 jest.mock("expo", () => ({ reloadAppAsync: jest.fn() }));
 
-const { reloadIfLanguageChanged, resolveLanguage, useLanguageStore } =
+const {
+	reloadIfLanguageChanged,
+	resolveLanguage,
+	takeReturnToSettings,
+	useLanguageStore,
+} =
 	require("@/features/language/useLanguageStore") as typeof import("@/features/language/useLanguageStore");
 // Initializes i18next in French, like the app launched on a French phone
 require("@/utils/i18n");
@@ -85,6 +90,30 @@ describe("useLanguageStore", () => {
 			expect(useLanguageStore.getState().preference).toBe("system");
 		},
 	);
+});
+
+describe("takeReturnToSettings", () => {
+	beforeEach(() => takeReturnToSettings());
+
+	it("brings back to the settings once after choosing another language", () => {
+		useLanguageStore.getState().setPreference("en");
+
+		expect(takeReturnToSettings()).toBe(true);
+		expect(takeReturnToSettings()).toBe(false);
+	});
+
+	it("stays on the launch screen when the phone language changed", () => {
+		setDeviceLocales("en");
+		reloadIfLanguageChanged();
+
+		expect(takeReturnToSettings()).toBe(false);
+	});
+
+	it("stays put when the language did not change", () => {
+		useLanguageStore.getState().setPreference("fr");
+
+		expect(takeReturnToSettings()).toBe(false);
+	});
 });
 
 describe("reloadIfLanguageChanged", () => {

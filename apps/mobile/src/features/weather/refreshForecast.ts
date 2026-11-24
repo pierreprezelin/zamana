@@ -6,9 +6,9 @@ import { alertedPlants } from "@/features/weather/weatherRisks";
 import type { Place } from "@/features/weather/weatherTypes";
 
 // Opening the app several times an hour should not call the service each time
-export const FORECAST_MAX_AGE_MS = 60 * 60 * 1000;
+const FORECAST_MAX_AGE_MS = 60 * 60 * 1000;
 // Offline, each swipe on Today would otherwise call the service again
-export const RETRY_DELAY_MS = 5 * 60 * 1000;
+const RETRY_DELAY_MS = 5 * 60 * 1000;
 
 const ageOf = (iso: string | null | undefined) =>
 	iso ? Date.now() - Date.parse(iso) : Infinity;

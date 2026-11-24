@@ -31,7 +31,6 @@ export default function OptionList<T extends string>({
 						key={option.value}
 						accessibilityRole={multiple ? "checkbox" : "radio"}
 						accessibilityState={{ checked }}
-						pressedClassName=""
 						pressedOpacity={0.5}
 						onPress={() => onPress(option.value)}
 						className={`h-11 flex-row items-center justify-between rounded-xl px-2 ${checked ? "bg-primary-tint" : ""}`}

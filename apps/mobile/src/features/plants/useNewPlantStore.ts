@@ -1,5 +1,7 @@
+import { z } from "zod";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { mergePersisted } from "@/utils/mergePersisted";
 import { syncStorage } from "@/utils/syncStorage";
 
 type NewPlantState = {
@@ -21,20 +23,10 @@ export const useNewPlantStore = create<NewPlantState>()(
 			name: "newPlant",
 			storage: syncStorage,
 			partialize: ({ enabled, dismissedUpTo }) => ({ enabled, dismissedUpTo }),
-			merge: (persisted, current) => {
-				const saved = persisted as Partial<NewPlantState>;
-				return {
-					...current,
-					enabled:
-						typeof saved?.enabled === "boolean"
-							? saved.enabled
-							: current.enabled,
-					dismissedUpTo:
-						typeof saved?.dismissedUpTo === "string"
-							? saved.dismissedUpTo
-							: null,
-				};
-			},
+			merge: mergePersisted<NewPlantState>({
+				enabled: z.boolean(),
+				dismissedUpTo: z.string().nullable(),
+			}),
 		},
 	),
 );

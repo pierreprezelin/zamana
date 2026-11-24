@@ -46,7 +46,7 @@ describe("useCachedFetch", () => {
 
 	it("keeps the failure of the new key when the old one answers late", async () => {
 		let answerOld = (_: string) => {};
-		const fetchers: Record<string, () => Promise<string>> = {
+		const fetchers: Record<"old" | "new", () => Promise<string>> = {
 			old: () =>
 				new Promise((resolve) => {
 					answerOld = resolve;
@@ -54,8 +54,8 @@ describe("useCachedFetch", () => {
 			new: () => Promise.reject(new Error("offline")),
 		};
 		const { result, rerender } = await renderHook(
-			({ key }: { key: string }) => useCachedFetch(key, fetchers[key]),
-			{ initialProps: { key: "old" } },
+			({ key }: { key: "old" | "new" }) => useCachedFetch(key, fetchers[key]),
+			{ initialProps: { key: "old" as "old" | "new" } },
 		);
 
 		await rerender({ key: "new" });

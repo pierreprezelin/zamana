@@ -210,6 +210,7 @@ export function TabBarAddButton() {
 				<PressFeedback
 					accessibilityRole="button"
 					accessibilityLabel={t("garden.addPlant")}
+					pressedClassName="bg-white/10"
 					className="flex-1 items-center justify-center rounded-full bg-primary"
 				>
 					<Ionicons name="add" size={28} className="text-on-primary" />

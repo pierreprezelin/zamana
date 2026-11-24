@@ -3,7 +3,7 @@ import { CARE_TYPES, FREQUENCY_UNITS } from "@/features/care/careTypes";
 import { toISODate } from "@/utils/dates";
 import { t } from "@/utils/i18n";
 
-export const FREQUENCY_MAX = 99;
+const FREQUENCY_MAX = 99;
 
 const month = z.int().min(1).max(12);
 

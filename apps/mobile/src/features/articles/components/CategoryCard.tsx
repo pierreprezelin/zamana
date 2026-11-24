@@ -19,7 +19,6 @@ export function CategoryCard({ category, count }: CategoryCardProps) {
 		<Link href={`/tips/category/${category}`} asChild>
 			<Pressable
 				accessibilityRole="button"
-				pressedClassName=""
 				pressedOpacity={0.75}
 				className="flex-1 gap-4 rounded-2xl border border-line bg-surface p-4"
 			>

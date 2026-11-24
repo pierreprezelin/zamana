@@ -44,7 +44,7 @@ const wateringLevels =
 	needs.find((need) => need.key === "watering")?.levels ?? [];
 const levelOptions = LEVELS.map((value, index) => ({
 	value,
-	label: wateringLevels[index],
+	label: wateringLevels[index] ?? value,
 }));
 const unitOptions = FREQUENCY_UNITS.map((value) => ({
 	value,

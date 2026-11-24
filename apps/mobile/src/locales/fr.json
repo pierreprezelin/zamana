@@ -12,7 +12,13 @@
 		"save": "Enregistrer",
 		"saveFailed": "L'enregistrement a échoué, réessayez",
 		"settings": "Paramètres",
-		"validate": "Valider"
+		"validate": "Valider",
+		"retry": "Réessayer",
+		"unexpectedError": "Oups, quelque chose s’est mal passé",
+		"unexpectedErrorText": "Zamana a rencontré un problème inattendu. Vos plantes sont en sécurité.",
+		"pageNotFound": "Page introuvable",
+		"pageNotFoundText": "Cette page n’existe pas ou plus.",
+		"backHome": "Retour à l’accueil"
 	},
 	"screens": {
 		"editPlant": "Modifier les informations",
@@ -229,13 +235,11 @@
 			"importAnother": "Importer une autre photo",
 			"delete": "Supprimer la photo",
 			"add": "Prendre ou importer une photo",
-			"maxSize": "2Mo max.",
 			"sheetTitle": "Photo de la plante",
 			"takePhoto": "Prendre une photo",
 			"chooseFromLibrary": "Choisir dans la galerie",
 			"importFailed": "L’import de la photo a échoué",
-			"cameraDenied": "L’accès à l’appareil photo a été refusé.",
-			"tooLarge": "La photo ne doit pas dépasser 2 Mo."
+			"cameraDenied": "L’accès à l’appareil photo a été refusé."
 		},
 		"archive": {
 			"title": "Je n’ai plus cette plante",
@@ -354,7 +358,9 @@
 			"annual": "Accomplit tout son cycle en une seule saison.",
 			"biennial": "Vit deux ans : des feuilles la première année, des fleurs la seconde.",
 			"perennial": "Vit plusieurs années. Si elle est aussi monocarpique, elle peut ne fleurir qu’une fois au bout de 10, 20 ou 30 ans avant de mourir."
-		}
+		},
+		"notFound": "Cette plante n’est plus dans votre jardin.",
+		"backToGarden": "Voir mon jardin"
 	},
 	"settings": {
 		"appearance": "Apparence",
@@ -393,7 +399,8 @@
 	"appVersion": {
 		"title": "L'application a besoin d’une mise à jour",
 		"description": "Une nouvelle version corrige un problème important. Mettez Zamana à jour pour continuer à prendre soin de vos plantes ! 🌱",
-		"update": "Mettre à jour maintenant"
+		"update": "Mettre à jour maintenant",
+		"openFailed": "Le store n’a pas pu être ouvert"
 	},
 	"notifications": {
 		"digest": {
@@ -416,7 +423,6 @@
 		"resetTime": "Rétablir {{time}}",
 		"time": "Heure du rappel",
 		"timeHelper": "Les rappels sont prévus 30 jours à l’avance : ouvrez Zamana au moins une fois par mois pour les garder.",
-		"permissionMissing": "Autorisez les notifications pour recevoir vos rappels.",
 		"enable": "Activer les rappels",
 		"openSettings": "Ouvrir les réglages",
 		"banner": {
@@ -425,8 +431,7 @@
 			"dismiss": "Masquer"
 		},
 		"disabledInSettings": "Les rappels sont désactivés dans les paramètres.",
-		"notAllowed": "Les notifications ne sont pas autorisées.",
-		"settingsLink": "Paramètres"
+		"notAllowed": "Les notifications ne sont pas autorisées."
 	},
 	"care": {
 		"types": {
@@ -522,9 +527,9 @@
 		"upcoming": "Prochains soins",
 		"manage": "Gérer",
 		"skip": "Reporter",
-		"markDone": "Marquer {{care}} comme fait",
-		"skipCare": "Reporter {{care}}",
-		"undo": "Annuler {{care}}",
+		"markDone": "Marquer le soin {{care}} comme fait",
+		"skipCare": "Reporter le soin {{care}}",
+		"undo": "Annuler le soin {{care}}",
 		"reminderOn": "Rappels activés",
 		"reminderOff": "Rappels coupés",
 		"actionFailed": "L'action a échoué, réessayez",
@@ -550,8 +555,8 @@
 			"description": "Choisissez les soins à suivre pour cette plante, puis ajustez leur fréquence et leurs rappels.",
 			"notTracked": "Non suivi",
 			"configure": "Configurer",
-			"edit": "Modifier {{care}}",
-			"reminders": "Rappels de {{care}}"
+			"edit": "Modifier le soin {{care}}",
+			"reminders": "Rappels du soin {{care}}"
 		},
 		"form": {
 			"configureTitle": "Configurer le soin",
@@ -720,7 +725,9 @@
 			"denied": "Sans localisation, Zamana ne peut pas vous prévenir pour votre position. Choisissez une ville ou autorisez la localisation dans les réglages du téléphone.",
 			"allow": "Autoriser la localisation",
 			"openSettings": "Ouvrir les réglages",
-			"noResult": "Aucune ville trouvée."
+			"noResult": "Aucune ville trouvée.",
+			"positionFailed": "Votre position n’a pas pu être trouvée. Vérifiez que la localisation est activée.",
+			"searchFailed": "La recherche a échoué. Vérifiez votre connexion."
 		}
 	},
 	"tips": {

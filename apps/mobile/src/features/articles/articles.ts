@@ -17,7 +17,7 @@ export const categoryIcons: Record<ArticleCategory, IoniconsIconName> = {
 	basics: "book-outline",
 	watering: "water-outline",
 	light: "sunny-outline",
-	seasons: "calendar-outline",
+	seasons: "partly-sunny-outline",
 	propagation: "cut-outline",
 	health: "medkit-outline",
 };

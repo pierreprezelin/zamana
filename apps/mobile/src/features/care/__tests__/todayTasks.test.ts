@@ -52,9 +52,9 @@ describe("todayTasks", () => {
 		);
 
 		expect(groups).toHaveLength(1);
-		expect(groups[0].plant.id).toBe("raven");
+		expect(groups[0]?.plant.id).toBe("raven");
 		expect(
-			groups[0].tasks.map((task) => [task.care.type, task.status]),
+			groups[0]?.tasks.map((task) => [task.care.type, task.status]),
 		).toEqual([
 			["watering", { kind: "late", days: 2 }],
 			["pruning", { kind: "today" }],
@@ -83,14 +83,14 @@ describe("todayTasks", () => {
 		);
 
 		expect(
-			groups[0].tasks.map((task) => [task.care.type, task.handledLog?.id]),
+			groups[0]?.tasks.map((task) => [task.care.type, task.handledLog?.id]),
 		).toEqual([
 			["watering", undefined],
 			["leafCleaning", "log-monstera-leafCleaning"],
 		]);
-		expect(groups[0].pendingCount).toBe(1);
-		expect(groups[0].doneCount).toBe(1);
-		expect(groups[0].dueDoneCount).toBe(1);
+		expect(groups[0]?.pendingCount).toBe(1);
+		expect(groups[0]?.doneCount).toBe(1);
+		expect(groups[0]?.dueDoneCount).toBe(1);
 	});
 
 	it("keeps the cares skipped today, with their log, so they can be undone", () => {
@@ -110,12 +110,12 @@ describe("todayTasks", () => {
 		);
 
 		expect(
-			groups[0].tasks.map((task) => [task.care.type, task.handledLog?.id]),
+			groups[0]?.tasks.map((task) => [task.care.type, task.handledLog?.id]),
 		).toEqual([["watering", "log-monstera-watering"]]);
-		expect(groups[0].pendingCount).toBe(0);
-		expect(groups[0].doneCount).toBe(0);
-		expect(groups[0].skippedCount).toBe(1);
-		expect(groups[0].dueDoneCount).toBe(0);
+		expect(groups[0]?.pendingCount).toBe(0);
+		expect(groups[0]?.doneCount).toBe(0);
+		expect(groups[0]?.skippedCount).toBe(1);
+		expect(groups[0]?.dueDoneCount).toBe(0);
 	});
 
 	it("leaves out an action of today that the care was edited since", () => {

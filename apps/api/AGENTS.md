@@ -5,7 +5,7 @@ Express 5 + tRPC API for the Zamana app. The app lives in `../mobile`; check it 
 ## Stack
 
 - TypeScript (ESM), run by Node with `nodemon` in dev
-- Express 5 with `helmet`, `cors` and `morgan`; tRPC mounted on `/v1`
+- Express 5 with `helmet` and `morgan`, no CORS (the only client is the native app); tRPC mounted on `/v1`
 - Vitest for unit tests
 - Bun as package manager
 

@@ -93,6 +93,7 @@ export function TimelineRow({ item, isLast, action }: TimelineRowProps) {
 						<Pressable
 							accessibilityRole="button"
 							accessibilityLabel={action.label}
+							pressedClassName="bg-white/10"
 							pressedOpacity={0.5}
 							hitSlop={8}
 							className="-my-1 -mr-2 size-8 items-center justify-center"

@@ -3,12 +3,11 @@ import { useMemo, useState } from "react";
 import { FlatList, View } from "react-native";
 import Button from "@/components/Button";
 import Chip from "@/components/Chip";
-import { ScreenPlaceholder } from "@/components/ScreenPlaceholder";
 import SearchField from "@/components/SearchField";
 import { useTabBarOffset } from "@/components/TabBar";
+import { TabScreen } from "@/components/TabScreen";
 import Text from "@/components/Text";
-import { nextCare } from "@/features/care/careSchedule";
-import type { Care } from "@/features/care/careTypes";
+import { groupCaresByPlant, nextCare } from "@/features/care/careSchedule";
 import { useCarePreferencesStore } from "@/features/care/useCarePreferencesStore";
 import { useCareStore } from "@/features/care/useCareStore";
 import { EmptyGarden } from "@/features/plants/components/EmptyGarden";
@@ -41,7 +40,8 @@ export default function GardenScreen() {
 	const currentPlants = useCurrentPlants();
 	const pastPlants = usePastPlants();
 	// In the URL so archiving a plant can open the garden on its new tab
-	const { tab = "current" } = useLocalSearchParams<{ tab?: Tab }>();
+	const params = useLocalSearchParams<{ tab?: string }>();
+	const tab: Tab = params.tab === "past" ? "past" : "current";
 	const [viewMode, setViewMode] = useState<ViewMode>("list");
 	const [query, setQuery] = useState("");
 	const tabBarOffset = useTabBarOffset();
@@ -52,13 +52,7 @@ export default function GardenScreen() {
 	const today = toISODate(new Date());
 	// Once for the whole list, not in every row
 	const nextCares = useMemo(() => {
-		const caresByPlant = new Map<string, Care[]>();
-		for (const care of cares) {
-			caresByPlant.set(care.plantId, [
-				...(caresByPlant.get(care.plantId) ?? []),
-				care,
-			]);
-		}
+		const caresByPlant = groupCaresByPlant(cares);
 		return new Map(
 			currentPlants.map((plant) => [
 				plant.id,
@@ -71,16 +65,14 @@ export default function GardenScreen() {
 		);
 	}, [cares, currentPlants, climate, today]);
 
-	const plantCount = currentPlants.length;
-	const hasPlants = plantCount + pastPlants.length > 0;
-	const plants = searchPlants(
-		tab === "current" ? currentPlants : pastPlants,
-		query,
-	);
+	const tabPlants = tab === "current" ? currentPlants : pastPlants;
+	const plantCount = tabPlants.length;
+	const hasPlants = currentPlants.length + pastPlants.length > 0;
+	const plants = searchPlants(tabPlants, query);
 	const tileWidth = useGridTileWidth();
 
 	return (
-		<ScreenPlaceholder
+		<TabScreen
 			title={t("garden.title")}
 			subtitle={
 				plantCount
@@ -121,6 +113,8 @@ export default function GardenScreen() {
 						// numColumns can't change on the fly, and a new tab starts fresh (a background data swap left it blank)
 						key={`${viewMode}-${tab}`}
 						data={plants}
+						initialNumToRender={10}
+						windowSize={7}
 						numColumns={viewMode === "grid" ? GRID_COLUMNS : 1}
 						keyExtractor={(plant) => plant.id}
 						renderItem={({ item }) =>
@@ -167,6 +161,6 @@ export default function GardenScreen() {
 					<EmptyGarden />
 				</View>
 			)}
-		</ScreenPlaceholder>
+		</TabScreen>
 	);
 }

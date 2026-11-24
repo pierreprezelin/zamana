@@ -69,7 +69,7 @@ describe("weatherRisks", () => {
 				[hour("05:00", { temperature })],
 				[plant("lemon", { temperature: need })],
 			);
-			expect(risk.shelter).toBe(shelter);
+			expect(risk?.shelter).toBe(shelter);
 		},
 	);
 

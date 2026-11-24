@@ -1,4 +1,4 @@
-import { View } from "react-native";
+import { ActivityIndicator, View } from "react-native";
 import Button from "@/components/Button";
 import Text from "@/components/Text";
 import type { ArticlesAvailability } from "@/features/articles/useArticleStore";
@@ -13,8 +13,13 @@ export function ArticlesUnavailable({
 	availability,
 	onRetry,
 }: ArticlesUnavailableProps) {
-	// Articles come from the device or arrive within moments, a spinner would only flash
-	if (availability === "loading") return null;
+	if (availability === "loading") {
+		return (
+			<View className="flex-1 items-center justify-center p-4">
+				<ActivityIndicator className="accent-primary" />
+			</View>
+		);
+	}
 
 	return (
 		<View className="flex-1 items-center justify-center gap-4 p-4">

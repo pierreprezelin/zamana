@@ -9,7 +9,7 @@ export const CARE_TYPES = [
 ] as const;
 export const FREQUENCY_UNITS = ["day", "week", "month", "year"] as const;
 export const CLIMATES = ["north", "south", "tropics"] as const;
-export const CARE_OUTCOMES = ["done", "skipped"] as const;
+const CARE_OUTCOMES = ["done", "skipped"] as const;
 
 export type CareType = (typeof CARE_TYPES)[number];
 export type FrequencyUnit = (typeof FREQUENCY_UNITS)[number];

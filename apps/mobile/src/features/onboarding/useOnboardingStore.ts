@@ -1,5 +1,7 @@
+import { z } from "zod";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { mergePersisted } from "@/utils/mergePersisted";
 import { syncStorage } from "@/utils/syncStorage";
 
 type OnboardingState = {
@@ -17,6 +19,7 @@ export const useOnboardingStore = create<OnboardingState>()(
 			name: "onboarding",
 			storage: syncStorage,
 			partialize: ({ completed }) => ({ completed }),
+			merge: mergePersisted<OnboardingState>({ completed: z.boolean() }),
 		},
 	),
 );

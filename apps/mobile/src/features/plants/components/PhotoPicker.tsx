@@ -1,19 +1,20 @@
 import type { BottomSheetModal } from "@gorhom/bottom-sheet";
-import { Image } from "expo-image";
 import { useRef } from "react";
 import { View } from "react-native";
-import { withUniwind } from "uniwind";
 import BottomSheet from "@/components/BottomSheet";
 import Button from "@/components/Button";
 import { Ionicons } from "@/components/ionicons";
 import Pressable from "@/components/Pressable";
 import Text from "@/components/Text";
-import { type PhotoSource, pickPhoto } from "@/features/plants/plantPhoto";
+import { PlantPhoto } from "@/features/plants/components/PlantPhoto";
+import {
+	PhotoError,
+	type PhotoSource,
+	pickPhoto,
+} from "@/features/plants/plantPhoto";
 import { useGridTileWidth } from "@/features/plants/useGridTileWidth";
 import { t } from "@/utils/i18n";
 import { showErrorToast } from "@/utils/toast";
-
-const StyledImage = withUniwind(Image);
 
 type PhotoPickerProps = {
 	uri: string | null;
@@ -37,7 +38,9 @@ export function PhotoPicker({
 			if (picked) onChange(picked);
 		} catch (error) {
 			showErrorToast(
-				error instanceof Error ? error.message : t("plant.photo.importFailed"),
+				error instanceof PhotoError
+					? error.message
+					: t("plant.photo.importFailed"),
 			);
 		}
 	};
@@ -50,17 +53,12 @@ export function PhotoPicker({
 					<Pressable
 						accessibilityRole="button"
 						accessibilityLabel={t("plant.photo.change")}
-						pressedClassName=""
 						pressedOpacity={0.75}
 						onPress={() => sheetRef.current?.present()}
 						className="rounded-2xl"
 						style={{ width: tileWidth, aspectRatio: aspect[0] / aspect[1] }}
 					>
-						<StyledImage
-							source={{ uri }}
-							contentFit="cover"
-							className="size-full"
-						/>
+						<PlantPhoto url={uri} className="size-full rounded-2xl" />
 					</Pressable>
 					<View className="items-start gap-3">
 						<Button
@@ -85,7 +83,6 @@ export function PhotoPicker({
 				<Pressable
 					accessibilityRole="button"
 					accessibilityLabel={t("plant.photo.add")}
-					pressedClassName=""
 					pressedOpacity={0.75}
 					onPress={() => sheetRef.current?.present()}
 					className="items-center justify-center rounded-2xl border border-dashed border-primary bg-primary-tint"
@@ -98,7 +95,6 @@ export function PhotoPicker({
 						className="mb-2 text-primary"
 					/>
 					<Text className="text-foreground">{t("plant.photo.add")}</Text>
-					<Text className="text-xs text-muted">{t("plant.photo.maxSize")}</Text>
 				</Pressable>
 			)}
 			<BottomSheet

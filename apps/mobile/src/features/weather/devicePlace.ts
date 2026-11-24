@@ -13,15 +13,26 @@ const placeName = async (latitude: number, longitude: number) => {
 	return name || `${latitude}, ${longitude}`;
 };
 
+const POSITION_TIMEOUT_MS = 10_000;
+
+// Without a fix, the system can wait for one forever
+const currentPosition = () =>
+	new Promise<Location.LocationObject>((resolve, reject) => {
+		const timer = setTimeout(
+			() => reject(new Error("No position in time")),
+			POSITION_TIMEOUT_MS,
+		);
+		Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.Low })
+			.then(resolve, reject)
+			.finally(() => clearTimeout(timer));
+	});
+
 // Rounded like what is sent to the weather service, or null without the permission
 const readPosition = async () => {
 	await useLocationPermissionStore.getState().refresh();
 	if (useLocationPermissionStore.getState().status !== "granted") return null;
 	const position =
-		(await Location.getLastKnownPositionAsync()) ??
-		(await Location.getCurrentPositionAsync({
-			accuracy: Location.Accuracy.Low,
-		}));
+		(await Location.getLastKnownPositionAsync()) ?? (await currentPosition());
 	return {
 		latitude: roundCoordinate(position.coords.latitude),
 		longitude: roundCoordinate(position.coords.longitude),
@@ -46,9 +57,10 @@ export const refreshDevicePlace = async () => {
 	useWeatherStore.getState().setDevicePlace(await withName(position));
 };
 
-// The chosen city stays until the position can replace it
+// The chosen city stays until the position can replace it. False when none was found
 export const switchToDevicePlace = async () => {
 	const position = await readPosition().catch(() => null);
-	if (!position) return;
+	if (!position) return false;
 	useWeatherStore.getState().chooseDevice(await withName(position));
+	return true;
 };

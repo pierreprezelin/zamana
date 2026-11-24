@@ -1,7 +1,7 @@
 import { daysBetween } from "@/features/care/careSchedule";
 import type { CareLog } from "@/features/care/careTypes";
 import type { HistoryEntry } from "@/features/history/historyTypes";
-import { toISODate } from "@/utils/dates";
+import { compareISO, toISODate } from "@/utils/dates";
 
 export type TimelineItem =
 	| { kind: "entry"; id: string; entry: HistoryEntry }
@@ -39,7 +39,7 @@ export const buildTimeline = ({
 			createdAt: log.createdAt,
 			item: { kind: "care", id: log.id, log } as const,
 		})),
-	].sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+	].sort((a, b) => compareISO(b.createdAt, a.createdAt));
 
 	const items: TimelineItem[] = [
 		...dated.map(({ item }) => item),

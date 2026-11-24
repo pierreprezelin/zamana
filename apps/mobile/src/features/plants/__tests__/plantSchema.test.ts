@@ -1,6 +1,7 @@
 import {
 	type PlantFormValues,
 	parsePhotoCredit,
+	parseSeasons,
 	plantInputSchema,
 } from "@/features/plants/plantSchema";
 
@@ -152,6 +153,19 @@ describe("parsePhotoCredit", () => {
 		"reads %p as no credit, rather than breaking the garden",
 		(stored) => {
 			expect(parsePhotoCredit(stored)).toBeNull();
+		},
+	);
+});
+
+describe("parseSeasons", () => {
+	it("reads stored seasons", () => {
+		expect(parseSeasons('["spring","winter"]')).toEqual(["spring", "winter"]);
+	});
+
+	it.each(["", "oops", "[1]", '{"a":1}', '["monsoon"]'])(
+		"reads %p as no season, rather than breaking the garden",
+		(stored) => {
+			expect(parseSeasons(stored)).toEqual([]);
 		},
 	);
 });

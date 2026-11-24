@@ -33,7 +33,6 @@ export function TipCard({ tip, today }: { tip: Tip; today: string }) {
 			<Pressable
 				accessibilityRole="button"
 				accessibilityLabel={t("common.close")}
-				pressedClassName=""
 				pressedOpacity={0.5}
 				hitSlop={12}
 				onPress={() => dismiss(today)}
