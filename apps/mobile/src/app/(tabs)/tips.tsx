@@ -79,7 +79,7 @@ export default function TipsScreen() {
 					) : (
 						<ScrollView
 							className="-mx-4 -mb-4"
-							contentContainerClassName="gap-4 px-4"
+							contentContainerClassName="gap-3 px-4"
 							contentContainerStyle={{ paddingBottom: tabBarOffset + 16 }}
 						>
 							<Text className="font-recoleta text-xl text-foreground">
