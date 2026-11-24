@@ -76,24 +76,42 @@ describe("riskAdvice", () => {
 });
 
 describe("weatherAlert", () => {
-	it("leads with the first risk and lists each one with its plants and advice", () => {
-		const alert = weatherAlert(
+	it.each([
+		[risk({ kind: "cold", value: -2 }), "❄️ Gel"],
+		[risk({ kind: "cold", value: 0 }), "🥶 Froid"],
+		// Shown as 0 °C, it does not read as frost
+		[risk({ kind: "cold", value: -0.3 }), "🥶 Froid"],
+		[risk({ kind: "heat", value: 37 }), "🔥 Chaleur"],
+		[risk({ kind: "storm" }), "⛈️ Orage"],
+		[risk({ kind: "wind" }), "💨 Vent fort"],
+	])("titles a single risk with its kind", (input, title) => {
+		expect(weatherAlert([input], today).title).toBe(title);
+	});
+
+	it("titles several risks as a weather alert", () => {
+		const { title } = weatherAlert([risk({}), risk({ kind: "wind" })], today);
+		expect(title).toBe("⚠️ Alerte météo");
+	});
+
+	it("lists each risk with its emoji, plants and advice, then how to stop the alerts", () => {
+		const { body } = weatherAlert(
 			[
 				risk({
 					plants: [plant("Basilic"), plant("Citrus", "Citronnier")],
 					shelter: true,
 				}),
 				risk({ kind: "wind", value: 65, plants: [plant("Basilic")] }),
+				risk({ kind: "storm", plants: [plant("Basilic")] }),
 			],
 			today,
 		);
 
-		expect(alert.title).toBe("Froid : -2 °C demain vers 5 h");
-		expect(alert.body).toBe(
+		expect(body).toBe(
 			[
-				"Froid : -2 °C demain vers 5 h · Basilic et “Citronnier”. À rentrer à l'abri du gel (maison, garage, véranda).",
-				"Vent : rafales à 65 km/h demain vers 5 h · Basilic. À abriter ou à attacher.",
-				"Rentrée pour la saison ? Décochez « Plante d'extérieur » dans sa fiche.",
+				"❄️ -2 °C demain vers 5 h · Basilic et “Citronnier”. À rentrer à l'abri du gel (maison, garage, véranda).",
+				"💨 Rafales à 65 km/h demain vers 5 h · Basilic. À abriter ou à attacher.",
+				"⛈️ Orage demain vers 5 h · Basilic. À abriter ou à attacher.",
+				"Plante rentrée ? Décochez « Plante d'extérieur » dans sa fiche.",
 			].join("\n"),
 		);
 	});

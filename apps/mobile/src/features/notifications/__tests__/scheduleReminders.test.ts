@@ -166,7 +166,7 @@ describe("rescheduleReminders", () => {
 		expect(Notifications.scheduleNotificationAsync).toHaveBeenCalledWith(
 			expect.objectContaining({
 				content: expect.objectContaining({
-					title: "Froid : -2 °C demain vers 5 h",
+					title: "❄️ Gel",
 				}),
 				trigger: expect.objectContaining({
 					date: new Date(2026, 5, 10, 18, 0),

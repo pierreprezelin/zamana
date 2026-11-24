@@ -667,7 +667,21 @@
 		},
 		"riskSummary": "{{line}} · {{plants}}.",
 		"and": " et ",
-		"seasonHint": "Rentrée pour la saison ? Décochez « Plante d'extérieur » dans sa fiche.",
+		"seasonHint": "Plante rentrée ? Décochez « Plante d'extérieur » dans sa fiche.",
+		"alertTitle": {
+			"frost": "Gel",
+			"cold": "Froid",
+			"heat": "Chaleur",
+			"storm": "Orage",
+			"wind": "Vent fort",
+			"several": "Alerte météo"
+		},
+		"alertDetail": {
+			"cold": "{{value}} °C {{day}} vers {{hour}}",
+			"heat": "{{value}} °C {{day}} vers {{hour}}",
+			"storm": "Orage {{day}} vers {{hour}}",
+			"wind": "Rafales à {{value}} km/h {{day}} vers {{hour}}"
+		},
 		"outdoorHelper": "Une alerte en cas de froid (sous {{cold}} °C), de chaleur (plus de {{heat}} °C), d'orage ou de vent fort.",
 		"banner": {
 			"title": "Alerte météo · {{place}}",

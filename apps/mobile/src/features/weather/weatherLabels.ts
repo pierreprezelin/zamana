@@ -12,20 +12,36 @@ import { t } from "@/utils/i18n";
 const dateOf = (time: string) => time.slice(0, 10);
 const hourOf = (time: string) => Number(time.slice(11, 13));
 
+const riskValues = (risk: WeatherRisk, today: string) => ({
+	value: Math.round(risk.value),
+	day: t(
+		dateOf(risk.at) === today ? "weather.day.today" : "weather.day.tomorrow",
+	),
+	hour: formatHour(hourOf(risk.at)),
+});
+
 export const riskLine = (risk: WeatherRisk, today: string) =>
-	t(`weather.risk.${risk.kind}`, {
-		value: Math.round(risk.value),
-		day: t(
-			dateOf(risk.at) === today ? "weather.day.today" : "weather.day.tomorrow",
-		),
-		hour: formatHour(hourOf(risk.at)),
-	});
+	t(`weather.risk.${risk.kind}`, riskValues(risk, today));
+
+// On the rounded value, as shown: -0.3 °C reads 0 °C
+const isFrost = (risk: WeatherRisk) => Math.round(risk.value) < 0;
+
+const alertKind = (risk: WeatherRisk) =>
+	risk.kind === "cold" && isFrost(risk) ? "frost" : risk.kind;
+
+const alertEmojis = {
+	frost: "❄️",
+	cold: "🥶",
+	heat: "🔥",
+	storm: "⛈️",
+	wind: "💨",
+};
 
 export const riskAdvice = (risk: WeatherRisk) => {
 	if (risk.kind === "cold") {
 		if (!risk.shelter) return t("weather.advice.fleece");
 		// A warm plant needs a shelter well above freezing
-		return t(risk.value < 0 ? "weather.advice.frost" : "weather.advice.cold");
+		return t(isFrost(risk) ? "weather.advice.frost" : "weather.advice.cold");
 	}
 	return t(`weather.advice.${risk.kind}`);
 };
@@ -39,25 +55,34 @@ const plantList = (plants: Plant[]) => {
 		: (last ?? "");
 };
 
+const riskSummary = (risk: WeatherRisk, line: string) =>
+	t("weather.riskSummary", { line, plants: plantList(risk.plants) });
+
 export const riskParts = (risk: WeatherRisk, today: string) => ({
-	summary: t("weather.riskSummary", {
-		line: riskLine(risk, today),
-		plants: plantList(risk.plants),
-	}),
+	summary: riskSummary(risk, riskLine(risk, today)),
 	advice: riskAdvice(risk),
 });
 
-// One line per risk, for a notification
-const riskLines = (risks: WeatherRisk[], today: string) =>
-	risks.map((risk) => {
-		const { summary, advice } = riskParts(risk, today);
-		return `${summary} ${advice}`;
-	});
+// The title already tells the kind of a single risk: each line leads with its emoji
+const alertLine = (risk: WeatherRisk, today: string) => {
+	const detail = t(`weather.alertDetail.${risk.kind}`, riskValues(risk, today));
+	const line = `${alertEmojis[alertKind(risk)]} ${detail}`;
+	return `${riskSummary(risk, line)} ${riskAdvice(risk)}`;
+};
+
+const alertTitle = (risks: WeatherRisk[]) => {
+	if (risks.length > 1) return `⚠️ ${t("weather.alertTitle.several")}`;
+	const kind = alertKind(risks[0]);
+	return `${alertEmojis[kind]} ${t(`weather.alertTitle.${kind}`)}`;
+};
 
 // A notification cannot link to the plant: it says how to stop the alerts
 export const weatherAlert = (risks: WeatherRisk[], today: string) => ({
-	title: riskLine(risks[0], today),
-	body: [...riskLines(risks, today), t("weather.seasonHint")].join("\n"),
+	title: alertTitle(risks),
+	body: [
+		...risks.map((risk) => alertLine(risk, today)),
+		t("weather.seasonHint"),
+	].join("\n"),
 });
 
 export const outdoorHelper = (temperature: number) =>

@@ -663,7 +663,21 @@
 		},
 		"riskSummary": "{{line}} · {{plants}}.",
 		"and": " and ",
-		"seasonHint": "Brought in for the season? Uncheck “Outdoor plant” in its details.",
+		"seasonHint": "Brought it in? Uncheck “Outdoor plant” in its details.",
+		"alertTitle": {
+			"frost": "Frost",
+			"cold": "Cold",
+			"heat": "Heat",
+			"storm": "Storm",
+			"wind": "Strong wind",
+			"several": "Weather alert"
+		},
+		"alertDetail": {
+			"cold": "{{value}} °C {{day}} around {{hour}}",
+			"heat": "{{value}} °C {{day}} around {{hour}}",
+			"storm": "Storm {{day}} around {{hour}}",
+			"wind": "Gusts up to {{value}} km/h {{day}} around {{hour}}"
+		},
 		"outdoorHelper": "An alert for cold (below {{cold}} °C), heat (above {{heat}} °C), storms or strong wind.",
 		"banner": {
 			"title": "Weather alert · {{place}}",
