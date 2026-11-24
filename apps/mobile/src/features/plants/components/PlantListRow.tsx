@@ -24,7 +24,7 @@ function NextCareLine({ next, today }: { next: NextCare; today: string }) {
 	const { icon, text } = careAppearance[next.care.type];
 	const late = careStatus(next.dueDate, today).kind === "late";
 	return (
-		<View className="mt-1 flex-row items-center gap-1.5">
+		<View className="mt-0.5 flex-row items-center gap-1">
 			<Ionicons name={icon} size={14} className={text} />
 			<Text
 				numberOfLines={1}

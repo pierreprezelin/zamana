@@ -136,7 +136,9 @@ export default function GardenScreen() {
 						}
 						keyboardDismissMode="on-drag"
 						keyboardShouldPersistTaps="handled"
-						contentContainerClassName="gap-2 px-4"
+						contentContainerClassName={
+							viewMode === "grid" ? "gap-4 px-4" : "gap-2 px-4"
+						}
 						contentContainerStyle={{ paddingBottom: tabBarOffset + 16 }}
 						columnWrapperClassName={viewMode === "grid" ? "gap-2" : undefined}
 						ListEmptyComponent={
