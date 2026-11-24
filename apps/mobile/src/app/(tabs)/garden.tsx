@@ -150,7 +150,7 @@ export default function GardenScreen() {
 							tab === "current" ? (
 								<Link href="/plant/new" asChild>
 									<Button
-										variant="ghost"
+										variant="outline"
 										title={t("garden.addPlant")}
 										icon="add-outline"
 									/>

@@ -19,6 +19,13 @@ const variants = {
 		textClassName: "text-foreground",
 		indicatorClassName: "accent-foreground",
 	},
+	outline: {
+		className: "rounded-2xl border border-line bg-surface",
+		pressedClassName: "",
+		pressedOpacity: 0.75,
+		textClassName: "text-foreground",
+		indicatorClassName: "accent-foreground",
+	},
 	ghostDanger: {
 		className: "",
 		pressedClassName: "",

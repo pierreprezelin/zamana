@@ -20,7 +20,7 @@ export function TipsPreferences() {
 			/>
 			<Button
 				title={t("tips.preferences.reset")}
-				variant="ghost"
+				variant="outline"
 				icon="refresh-outline"
 				onPress={() => {
 					reset();
