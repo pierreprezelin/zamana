@@ -449,7 +449,7 @@
 			},
 			"fertilizing": {
 				"name": "Engrais",
-				"verb": "Mettre de l'engrais",
+				"verb": "Fertiliser",
 				"done": "Engrais apporté",
 				"skipped": "Engrais reporté"
 			},
