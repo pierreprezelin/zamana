@@ -36,7 +36,7 @@ export function PlantCard({ plant, className, style }: PlantCardProps) {
 						{displayName(plant)}
 					</Text>
 					{plant.scientificName && (
-						<Text numberOfLines={1} className="text-muted">
+						<Text numberOfLines={1} className="text-xs text-muted">
 							{plant.scientificName}
 						</Text>
 					)}

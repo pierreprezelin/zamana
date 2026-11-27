@@ -24,7 +24,7 @@ export function RemindersBanner() {
 	const { enableTitle, enable } = useRemindersOff();
 
 	return (
-		<View className="gap-3 rounded-2xl border border-line bg-surface p-4">
+		<View className="gap-3 rounded-2xl border border-primary bg-surface p-4">
 			<View className="flex-row items-start gap-3">
 				<View className="size-9 items-center justify-center rounded-xl bg-primary-tint">
 					<Ionicons
