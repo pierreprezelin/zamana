@@ -51,9 +51,7 @@ Zamana started as an app for my own plants, but it's meant to be useful to every
 
 ## License
 
-Zamana is free software: you can redistribute it and/or modify it under the terms of the [GNU General Public License v3.0](LICENSE).
-
-Two additional terms, detailed at the top of the [LICENSE](LICENSE), apply under section 7 of the GPLv3:
+Zamana is free software: you can redistribute it and/or modify it under the terms of the [GNU General Public License v3.0](LICENSE). Two additional terms, detailed at the top of the [LICENSE](LICENSE), apply under section 7 of the GPLv3:
 
 - a distributed fork must credit "Based on Zamana by Pierre Prézelin" with a link to this repository in its "About" or "Settings" screen;
 - the name "Zamana", its logo and the identifier `com.pierreprezelin.zamana` are not licensed: a published fork uses its own.
