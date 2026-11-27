@@ -272,7 +272,6 @@ export function PlantForm({ plant, openSection, prefill }: PlantFormProps) {
 				contentContainerClassName="px-4 pb-5.5"
 			>
 				<View ref={contentRef} className="gap-8">
-					{prefill?.isPartial && <LimitedInfoNote />}
 					<View className="gap-4">
 						<Text className="font-recoleta text-card-title text-foreground">
 							{t("plant.form.photo")}
@@ -342,6 +341,7 @@ export function PlantForm({ plant, openSection, prefill }: PlantFormProps) {
 						<Text className="pb-1 font-recoleta text-card-title text-foreground">
 							{t("plant.form.information")}
 						</Text>
+						{prefill?.isPartial && <LimitedInfoNote />}
 
 						<AccordionSection
 							title={t("plant.form.details")}
