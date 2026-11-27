@@ -703,7 +703,10 @@
 		"banner": {
 			"title": "Alerte météo · {{place}}",
 			"seasonQuestion": "Plante rentrée pour la saison ?",
-			"editPlant": "Modifier la fiche de {{name}}"
+			"editPlants": {
+				"one": "Modifier la fiche",
+				"other": "Modifier les fiches"
+			}
 		},
 		"placeMissing": {
 			"title": "Où sont vos plantes d’extérieur ?",

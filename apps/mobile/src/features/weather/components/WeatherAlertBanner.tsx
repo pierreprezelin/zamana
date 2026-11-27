@@ -3,13 +3,12 @@ import { View } from "react-native";
 import { Ionicons, type IoniconsIconName } from "@/components/ionicons";
 import Pressable from "@/components/Pressable";
 import Text from "@/components/Text";
-import { displayName } from "@/features/plants/plantLabels";
 import { OpenMeteoCredit } from "@/features/weather/components/OpenMeteoCredit";
 import type { WeatherAlert } from "@/features/weather/useWeatherAlert";
 import { placeShortName, riskParts } from "@/features/weather/weatherLabels";
 import type { WeatherRiskKind } from "@/features/weather/weatherRisks";
 import { toISODate } from "@/utils/dates";
-import { t } from "@/utils/i18n";
+import { pluralForm, t } from "@/utils/i18n";
 
 const RISK_ICONS: Record<WeatherRiskKind, IoniconsIconName> = {
 	cold: "snow-outline",
@@ -29,6 +28,7 @@ export function WeatherAlertBanner({
 			risks.flatMap((risk) => risk.plants).map((plant) => [plant.id, plant]),
 		).values(),
 	];
+	const onlyPlant = alertedPlants.length === 1 ? alertedPlants[0] : undefined;
 
 	return (
 		<View className="gap-2">
@@ -60,7 +60,7 @@ export function WeatherAlertBanner({
 				</View>
 			</View>
 			{/* Brought in for the season, a plant is no longer outdoors: its sheet stops the alerts */}
-			<View className="flex-row flex-wrap items-center gap-x-1.5 gap-y-1">
+			<View className="flex-row flex-wrap items-center gap-x-1 gap-y-1">
 				<Ionicons
 					name="information-circle-outline"
 					size={14}
@@ -69,19 +69,22 @@ export function WeatherAlertBanner({
 				<Text className="text-xs text-muted">
 					{t("weather.banner.seasonQuestion")}
 				</Text>
-				{alertedPlants.map((plant) => (
-					<Pressable
-						key={plant.id}
-						accessibilityRole="link"
-						pressedOpacity={0.5}
-						hitSlop={8}
-						onPress={() => router.push(`/plant/${plant.id}/edit?section=needs`)}
-					>
-						<Text className="font-outfit-semibold text-xs text-foreground underline">
-							{t("weather.banner.editPlant", { name: displayName(plant) })}
-						</Text>
-					</Pressable>
-				))}
+				<Pressable
+					accessibilityRole="link"
+					pressedOpacity={0.5}
+					hitSlop={8}
+					onPress={() =>
+						router.push(
+							onlyPlant
+								? `/plant/${onlyPlant.id}/edit?section=needs`
+								: "/garden",
+						)
+					}
+				>
+					<Text className="font-outfit-semibold text-xs text-foreground underline">
+						{t(`weather.banner.editPlants.${pluralForm(alertedPlants.length)}`)}
+					</Text>
+				</Pressable>
 			</View>
 		</View>
 	);

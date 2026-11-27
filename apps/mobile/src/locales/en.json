@@ -699,7 +699,10 @@
 		"banner": {
 			"title": "Weather alert · {{place}}",
 			"seasonQuestion": "Plant brought in for the season?",
-			"editPlant": "Edit the details of {{name}}"
+			"editPlants": {
+				"one": "Edit plant",
+				"other": "Edit plants"
+			}
 		},
 		"placeMissing": {
 			"title": "Where are your outdoor plants?",
