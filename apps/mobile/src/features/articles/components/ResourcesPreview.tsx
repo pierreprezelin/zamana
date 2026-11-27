@@ -17,7 +17,9 @@ export function ResourcesPreview() {
 					{t("resources.title")}
 				</Text>
 				<Link href="/tips">
-					<Text className="text-muted">{t("resources.seeMore")}</Text>
+					<Text className="font-outfit-semibold text-muted">
+						{t("resources.seeMore")}
+					</Text>
 				</Link>
 			</View>
 			<ScrollView
