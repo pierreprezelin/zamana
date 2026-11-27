@@ -6,7 +6,7 @@ import {
 	useBottomSheetModal,
 } from "@gorhom/bottom-sheet";
 import type { ComponentProps, ReactNode, Ref } from "react";
-import { View } from "react-native";
+import { Keyboard, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useCSSVariable } from "uniwind";
 import { Ionicons } from "@/components/ionicons";
@@ -67,6 +67,10 @@ export default function BottomSheet({
 			}}
 			keyboardBehavior="interactive"
 			keyboardBlurBehavior="restore"
+			// A keyboard left open by a field of the screen would hide the sheet
+			onAnimate={(fromIndex, toIndex) => {
+				if (fromIndex === -1 && toIndex >= 0) Keyboard.dismiss();
+			}}
 		>
 			{/* Scrolls once the keyboard leaves too little room, so the actions stay reachable */}
 			<BottomSheetScrollView
