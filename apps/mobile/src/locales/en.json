@@ -52,6 +52,7 @@
 		"notFound": "This plant could not be found.",
 		"retry": "Try again",
 		"addNamed": "Add {{name}} to my garden",
+		"otherName": "aka “{{name}}”",
 		"addToGarden": "Add to my garden",
 		"family": "{{name}} family",
 		"noFreePhoto": "No freely licensed photo for this plant: the photo won’t be prefilled.",

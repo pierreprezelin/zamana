@@ -1723,17 +1723,32 @@ const language = () => (locale() === "en" ? "en" : "fr");
 
 export const usageName = (plant: CuratedPlant) => plant.names[language()];
 
+const toNeedle = (query: string) => normalizeForSearch(query.trim());
+
+const nameMatches = (name: string, needle: string) =>
+	normalizeForSearch(name).includes(needle);
+
+// From a word start only, or "ia" would list dozens of Latin names
+const shownNamesMatch = (plant: CuratedPlant, needle: string) =>
+	` ${normalizeForSearch(plant.scientificName)}`.includes(` ${needle}`) ||
+	nameMatches(usageName(plant), needle);
+
+const foundAlias = (plant: CuratedPlant, needle: string) =>
+	plant.aliases[language()].find((alias) => nameMatches(alias, needle));
+
 // The names people use, like "Pothos", that iNaturalist may not know
 export const searchCuratedPlants = (query: string) => {
-	const needle = normalizeForSearch(query.trim());
-	// From a word start only, or "ia" would list dozens of Latin names
-	const matchesScientificName = (plant: CuratedPlant) =>
-		` ${normalizeForSearch(plant.scientificName)}`.includes(` ${needle}`);
+	const needle = toNeedle(query);
 	return CURATED_PLANTS.filter(
 		(plant) =>
-			matchesScientificName(plant) ||
-			[usageName(plant), ...plant.aliases[language()]].some((name) =>
-				normalizeForSearch(name).includes(needle),
-			),
+			shownNamesMatch(plant, needle) || foundAlias(plant, needle) !== undefined,
 	);
+};
+
+// A plant found by a nickname, like "fleur de lune", would otherwise show up unexplained
+export const matchedAlias = (plant: CuratedPlant, query: string) => {
+	const needle = toNeedle(query);
+	return shownNamesMatch(plant, needle)
+		? null
+		: (foundAlias(plant, needle) ?? null);
 };

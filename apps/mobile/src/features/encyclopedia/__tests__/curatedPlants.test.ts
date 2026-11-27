@@ -3,6 +3,7 @@ import {
 	CATEGORIES,
 	CURATED_PLANTS,
 	categoryTaxonIds,
+	matchedAlias,
 	pickedPhoto,
 	searchCuratedPlants,
 } from "@/features/encyclopedia/curatedPlants";
@@ -88,6 +89,37 @@ describe("curatedPlants", () => {
 				}
 			}
 		}
+	});
+});
+
+describe("matchedAlias", () => {
+	afterEach(() => i18next.changeLanguage("fr"));
+
+	const curatedNamed = (scientificName: string) => {
+		const plant = CURATED_PLANTS.find(
+			(candidate) => candidate.scientificName === scientificName,
+		);
+		if (!plant) throw new Error(`${scientificName} is not curated`);
+		return plant;
+	};
+	const peaceLily = () => curatedNamed("Spathiphyllum wallisii");
+
+	it("gives the nickname a search found the plant by", () => {
+		expect(matchedAlias(peaceLily(), "fleur de")).toBe("fleur de lune");
+		expect(matchedAlias(peaceLily(), " FLEUR DE LUNE ")).toBe("fleur de lune");
+	});
+
+	it("gives none when the shown names already match", () => {
+		expect(matchedAlias(peaceLily(), "spathi")).toBeNull();
+		expect(matchedAlias(peaceLily(), "wallisii")).toBeNull();
+	});
+
+	it("looks in the nicknames of the app language", async () => {
+		await i18next.changeLanguage("en");
+		expect(matchedAlias(peaceLily(), "fleur de")).toBeNull();
+		expect(matchedAlias(curatedNamed("Epipremnum aureum"), "devil")).toBe(
+			"devil's ivy",
+		);
 	});
 });
 

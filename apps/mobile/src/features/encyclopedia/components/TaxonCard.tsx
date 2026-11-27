@@ -39,6 +39,11 @@ export const TaxonCard = memo(function TaxonCard({
 						<Text numberOfLines={1} className="text-sm text-muted">
 							{taxon.scientificName}
 						</Text>
+						{taxon.matchedAlias && (
+							<Text numberOfLines={1} className="text-xs text-muted">
+								{t("encyclopedia.otherName", { name: taxon.matchedAlias })}
+							</Text>
+						)}
 					</View>
 				</Pressable>
 			</Link>

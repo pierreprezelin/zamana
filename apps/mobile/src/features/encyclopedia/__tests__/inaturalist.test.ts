@@ -351,6 +351,25 @@ describe("searchFirstPage", () => {
 		expect(total).toBe(2);
 	});
 
+	it("tells the nickname a curated plant was found by", async () => {
+		respond({ total_results: 0, results: [] });
+
+		const { taxa } = await searchFirstPage("fleur de");
+
+		expect(taxa[0]).toMatchObject({
+			name: "Spathiphyllum",
+			matchedAlias: "fleur de lune",
+		});
+	});
+
+	it("tells no nickname when the shown names match", async () => {
+		respond({ total_results: 0, results: [] });
+
+		const { taxa } = await searchFirstPage("epipremnum");
+
+		expect(taxa[0]?.matchedAlias).toBeUndefined();
+	});
+
 	it("drops the iNaturalist copy of a curated plant shown first", async () => {
 		respond({
 			total_results: 2,

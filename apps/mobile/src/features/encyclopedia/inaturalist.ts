@@ -3,6 +3,7 @@ import { z } from "zod";
 import {
 	type CuratedPlant,
 	curatedPlant,
+	matchedAlias,
 	pickedPhoto,
 	searchCuratedPlants,
 	usageName,
@@ -100,6 +101,7 @@ export type Taxon = {
 	family: string | null;
 	photo: TaxonPhoto | null;
 	guessedType: PlantType | null;
+	matchedAlias?: string;
 };
 
 export type TaxaPage = { total: number; taxa: Taxon[] };
@@ -212,7 +214,10 @@ const curatedTaxon = (plant: CuratedPlant): Taxon => ({
 // ponytail: one found again on a later iNaturalist page is counted twice in the total, and the
 // list then only ends on an empty page: one request more. Revisit if the shown count is reported wrong
 export const searchFirstPage = async (query: string): Promise<TaxaPage> => {
-	const curated = searchCuratedPlants(query).map(curatedTaxon);
+	const curated = searchCuratedPlants(query).map((plant) => ({
+		...curatedTaxon(plant),
+		matchedAlias: matchedAlias(plant, query) ?? undefined,
+	}));
 	const page = await searchTaxa(query, 1).catch((error: unknown) => {
 		if (curated.length === 0) throw error;
 		return { total: 0, taxa: [] };

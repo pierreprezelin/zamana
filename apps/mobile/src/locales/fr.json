@@ -52,6 +52,7 @@
 		"notFound": "Cette plante est introuvable.",
 		"retry": "Réessayer",
 		"addNamed": "Ajouter {{name}} à mon jardin",
+		"otherName": "Aussi : « {{name}} »",
 		"addToGarden": "Ajouter à mon jardin",
 		"family": "Famille {{name}}",
 		"noFreePhoto": "Pas de photo libre de droits pour cette plante : la photo ne sera pas préremplie.",
