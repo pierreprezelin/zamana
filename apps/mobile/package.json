@@ -92,6 +92,7 @@
 		"@zamana/api": "workspace:*",
 		"babel-plugin-transform-remove-console": "^6.9.4",
 		"babel-preset-expo": "~58.0.26",
+		"expo-mcp": "~0.2.1",
 		"jest": "~30.5.2",
 		"jest-expo": "~58.0.15",
 		"tailwind-merge": "^3.7.1",
