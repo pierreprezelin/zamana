@@ -338,7 +338,7 @@ describe("searchFirstPage", () => {
 	it("shows the curated plants known by that name before iNaturalist's", async () => {
 		respond({ total_results: 1, results: [rubberPlant] });
 
-		const { taxa, total } = await searchFirstPage("pothos");
+		const { taxa, total } = await searchFirstPage("epipremnum");
 
 		expect(taxa.map((taxon) => taxon.id)).toEqual([pothosId, rubberPlant.id]);
 		expect(taxa[0]).toMatchObject({
@@ -357,7 +357,7 @@ describe("searchFirstPage", () => {
 			results: [{ ...rubberPlant, id: pothosId }, rubberPlant],
 		});
 
-		const page = await searchFirstPage("pothos");
+		const page = await searchFirstPage("epipremnum");
 
 		expect(page.taxa.map((taxon) => taxon.id)).toEqual([
 			pothosId,
@@ -369,7 +369,7 @@ describe("searchFirstPage", () => {
 	it("still shows the curated plants when iNaturalist cannot be reached", async () => {
 		respond({}, false);
 
-		const page = await searchFirstPage("pothos");
+		const page = await searchFirstPage("epipremnum");
 
 		expect(page.taxa.map((taxon) => taxon.id)).toEqual([pothosId]);
 		expect(page.total).toBe(1);

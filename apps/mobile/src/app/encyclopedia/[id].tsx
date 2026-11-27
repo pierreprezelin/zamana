@@ -1,5 +1,5 @@
 import type { BottomSheetModal } from "@gorhom/bottom-sheet";
-import { Link, Stack, useLocalSearchParams } from "expo-router";
+import { Link, useLocalSearchParams } from "expo-router";
 import { useRef, useState } from "react";
 import { ScrollView, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -68,7 +68,6 @@ export default function EncyclopediaResultScreen() {
 
 	return (
 		<>
-			<Stack.Screen options={{ title: taxon.name }} />
 			<ScrollView contentContainerClassName="gap-6 px-4 pt-2.5 pb-3.5">
 				<View className="gap-4">
 					<View className="gap-1">
