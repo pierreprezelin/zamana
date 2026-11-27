@@ -167,6 +167,7 @@ export function WeatherPlaceSettings() {
 					)}
 					action={
 						<Button
+							variant="warning"
 							title={t(
 								permission.canAskAgain
 									? "weather.settings.allow"
