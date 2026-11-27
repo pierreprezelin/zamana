@@ -61,7 +61,7 @@ describe("plantInputSchema", () => {
 	});
 
 	it.each([
-		["nickname", 20, "Le surnom ne peut pas dépasser 20 caractères."],
+		["nickname", 25, "Le surnom ne peut pas dépasser 25 caractères."],
 		["name", 50, "Le nom ne peut pas dépasser 50 caractères."],
 		[
 			"scientificName",

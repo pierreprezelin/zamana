@@ -2,7 +2,7 @@ import { z } from "zod";
 import { toISODate } from "@/utils/dates";
 import { t } from "@/utils/i18n";
 
-export const NICKNAME_MAX_LENGTH = 20;
+export const NICKNAME_MAX_LENGTH = 25;
 export const NAME_MAX_LENGTH = 50;
 export const SCIENTIFIC_NAME_MAX_LENGTH = 50;
 export const NOTES_MAX_LENGTH = 500;

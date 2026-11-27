@@ -140,7 +140,9 @@ export default function PlantSectionsLayout() {
 					<PlantPhoto photo={plant.photo} className="size-16 rounded-2xl" />
 					<View className="flex-1">
 						<Text
-							numberOfLines={2}
+							numberOfLines={1}
+							adjustsFontSizeToFit
+							minimumFontScale={0.7}
 							className="font-recoleta text-[28px] leading-[1.25] text-foreground"
 						>
 							{displayName(plant)}
