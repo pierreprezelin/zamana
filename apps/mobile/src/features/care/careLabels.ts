@@ -59,6 +59,18 @@ export const lastDoneLabel = (lastDoneAt: string | null, now: Date) => {
 	return t("care.lastDone.ago", { age: formatAge(lastDoneAt, now) });
 };
 
+export const upcomingLabel = (
+	care: Care,
+	dueDate: string | null,
+	today: string,
+) => {
+	if (!dueDate) return lastDoneLabel(care.lastDoneAt, parseISODate(today));
+	const due = dueLabel(dueDate, today);
+	return care.lastDoneAt === today
+		? `${t("care.lastDone.today")} · ${lowerFirst(due)}`
+		: due;
+};
+
 export const careSubtitle = (care: Care, wateringLevel: number, now: Date) => {
 	const frequency = frequencyLabel(care, wateringLevel);
 	return `${lastDoneLabel(care.lastDoneAt, now)} · ${lowerFirst(frequency)}`;

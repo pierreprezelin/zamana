@@ -164,6 +164,14 @@ export const wasDueWhenDone = (
 export type ScheduledCare = { care: Care; dueDate: string | null };
 
 // Soonest first, the cares without a due date last
+export const bySoonestDueDate = (
+	a: { dueDate: string | null },
+	b: { dueDate: string | null },
+) =>
+	a.dueDate && b.dueDate
+		? compareISO(a.dueDate, b.dueDate)
+		: Number(!a.dueDate) - Number(!b.dueDate);
+
 export const scheduleCares = (
 	cares: Care[],
 	context: ScheduleContext,
@@ -171,11 +179,7 @@ export const scheduleCares = (
 ): ScheduledCare[] =>
 	cares
 		.map((care) => ({ care, dueDate: nextDueDate(care, context, today) }))
-		.sort((a, b) =>
-			a.dueDate && b.dueDate
-				? compareISO(a.dueDate, b.dueDate)
-				: Number(!a.dueDate) - Number(!b.dueDate),
-		);
+		.sort(bySoonestDueDate);
 
 export const isDue = (dueDate: string | null, today: string) =>
 	dueDate !== null && dueDate <= today;

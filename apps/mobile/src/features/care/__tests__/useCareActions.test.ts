@@ -58,6 +58,25 @@ describe("useCareActions", () => {
 		expect(successFeedback).not.toHaveBeenCalled();
 	});
 
+	it("tells when a care done ahead of time is next due, once it went through", async () => {
+		await useCareActions().doneEarly(care, plant, "2026-06-10");
+		expect(mockStore.markDone).toHaveBeenCalledWith("care-1");
+		// Level 2 in a northern June: watered every 7 days
+		expect(Toast.show).toHaveBeenCalledWith(
+			expect.objectContaining({
+				type: "success",
+				text1: "Arrosage noté, prochain soin dans 7 jours",
+			}),
+		);
+
+		jest.mocked(Toast.show).mockClear();
+		mockStore.markDone.mockRejectedValueOnce(new Error("db"));
+		await useCareActions().doneEarly(care, plant, "2026-06-10");
+		expect(Toast.show).not.toHaveBeenCalledWith(
+			expect.objectContaining({ type: "success" }),
+		);
+	});
+
 	it("asks a skipped care again after a quarter of the plant's watering interval", async () => {
 		await useCareActions().skip(care, plant);
 
