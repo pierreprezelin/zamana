@@ -22,7 +22,7 @@
 		"node-forge": "^1.4.3"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "^2.6.8",
+		"@biomejs/biome": "^2.6.9",
 		"lint-staged": "^17.6.2",
 		"simple-git-hooks": "^2.14.0"
 	}

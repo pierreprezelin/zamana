@@ -16,7 +16,7 @@
 		"ts": "tsc"
 	},
 	"dependencies": {
-		"@trpc/server": "^11.29.7",
+		"@trpc/server": "^11.31.3",
 		"dotenv": "^18.0.10",
 		"express": "^5.3.0",
 		"helmet": "^8.3.0",
@@ -25,11 +25,11 @@
 	"devDependencies": {
 		"@types/express": "^5.0.6",
 		"@types/morgan": "^1.9.10",
-		"@types/node": "^26.6.6",
-		"@vitest/coverage-v8": "^5.1.1",
+		"@types/node": "^26.6.11",
+		"@vitest/coverage-v8": "^5.1.2",
 		"nodemon": "^3.1.14",
 		"typescript": "~6.0.3",
-		"vitest": "^5.1.1"
+		"vitest": "^5.1.2"
 	},
 	"nodemonConfig": {
 		"execMap": {
