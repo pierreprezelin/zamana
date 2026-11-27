@@ -1,20 +1,14 @@
 import type { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { useRef } from "react";
 import { View } from "react-native";
-import BottomSheet from "@/components/BottomSheet";
 import Button from "@/components/Button";
 import { Ionicons } from "@/components/ionicons";
 import Pressable from "@/components/Pressable";
 import Text from "@/components/Text";
+import { PhotoSourceSheet } from "@/features/plants/components/PhotoSourceSheet";
 import { PlantPhoto } from "@/features/plants/components/PlantPhoto";
-import {
-	PhotoError,
-	type PhotoSource,
-	pickPhoto,
-} from "@/features/plants/plantPhoto";
 import { useGridTileWidth } from "@/features/plants/useGridTileWidth";
 import { t } from "@/utils/i18n";
-import { showErrorToast } from "@/utils/toast";
 
 type PhotoPickerProps = {
 	uri: string | null;
@@ -30,20 +24,6 @@ export function PhotoPicker({
 }: PhotoPickerProps) {
 	const sheetRef = useRef<BottomSheetModal>(null);
 	const tileWidth = useGridTileWidth();
-
-	const pick = async (source: PhotoSource) => {
-		sheetRef.current?.dismiss();
-		try {
-			const picked = await pickPhoto(source, aspect);
-			if (picked) onChange(picked);
-		} catch (error) {
-			showErrorToast(
-				error instanceof PhotoError
-					? error.message
-					: t("plant.photo.importFailed"),
-			);
-		}
-	};
 
 	return (
 		<View>
@@ -97,24 +77,10 @@ export function PhotoPicker({
 					<Text className="text-foreground">{t("plant.photo.add")}</Text>
 				</Pressable>
 			)}
-			<BottomSheet
-				ref={sheetRef}
-				title={t("plant.photo.sheetTitle")}
-				actions={
-					<>
-						<Button
-							title={t("plant.photo.takePhoto")}
-							icon="camera-outline"
-							onPress={() => pick("camera")}
-						/>
-						<Button
-							variant="ghost"
-							title={t("plant.photo.chooseFromLibrary")}
-							icon="images-outline"
-							onPress={() => pick("library")}
-						/>
-					</>
-				}
+			<PhotoSourceSheet
+				sheetRef={sheetRef}
+				aspect={aspect}
+				onPicked={onChange}
 			/>
 		</View>
 	);

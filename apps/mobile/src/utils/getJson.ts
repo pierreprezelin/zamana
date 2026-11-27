@@ -4,9 +4,10 @@ const TIMEOUT_MS = 10_000;
 export const fetchWithTimeout = async (
 	input: string | URL | Request,
 	init: RequestInit = {},
+	timeoutMs = TIMEOUT_MS,
 ) => {
 	const controller = new AbortController();
-	const timer = setTimeout(() => controller.abort(), TIMEOUT_MS);
+	const timer = setTimeout(() => controller.abort(), timeoutMs);
 	try {
 		return await fetch(input, { ...init, signal: controller.signal });
 	} finally {

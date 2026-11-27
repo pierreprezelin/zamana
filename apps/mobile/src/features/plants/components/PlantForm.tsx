@@ -3,7 +3,6 @@ import { router } from "expo-router";
 import { useHeaderHeight } from "expo-router/react-navigation";
 import { type ComponentRef, type ReactNode, useRef, useState } from "react";
 import { KeyboardAvoidingView, ScrollView, View } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Toast from "react-native-toast-message";
 import AccordionSection from "@/components/AccordionSection";
 import Button from "@/components/Button";
@@ -15,6 +14,7 @@ import { Ionicons } from "@/components/ionicons";
 import Pressable from "@/components/Pressable";
 import SegmentedControl from "@/components/SegmentedControl";
 import SelectField from "@/components/SelectField";
+import StickyActionBar from "@/components/StickyActionBar";
 import Text from "@/components/Text";
 import ToggleRow from "@/components/ToggleRow";
 import { LimitedInfoNote } from "@/features/encyclopedia/components/LimitedInfoNote";
@@ -131,7 +131,6 @@ export function PlantForm({ plant, openSection, prefill }: PlantFormProps) {
 	const createPlant = usePlantStore((state) => state.createPlant);
 	const updatePlant = usePlantStore((state) => state.updatePlant);
 	const headerHeight = useHeaderHeight();
-	const { bottom } = useSafeAreaInsets();
 	const [initialState] = useState(() =>
 		initialFormState(plant, new Date(), prefill?.values),
 	);
@@ -550,10 +549,7 @@ export function PlantForm({ plant, openSection, prefill }: PlantFormProps) {
 				</View>
 			</ScrollView>
 
-			<View
-				className="gap-2 bg-background px-4 pt-2.5"
-				style={{ paddingBottom: bottom }}
-			>
+			<StickyActionBar>
 				<Button
 					title={plant ? t("common.save") : t("plant.form.add")}
 					loading={saving}
@@ -566,7 +562,7 @@ export function PlantForm({ plant, openSection, prefill }: PlantFormProps) {
 						onPress={() => deleteSheetRef.current?.present()}
 					/>
 				)}
-			</View>
+			</StickyActionBar>
 
 			<HelpSheet ref={helpSheetRef} help={help} />
 			{plant && (

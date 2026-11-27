@@ -78,20 +78,21 @@ const download = async (url: string, photo: File) => {
 	}
 };
 
-// Re-encoding also drops the metadata, like the GPS position of the shot
-const saveShrunk = async (uri: string, photo: File) => {
+// A temporary file, to delete once used. Re-encoding also drops the metadata, like the GPS position of the shot
+export const shrinkPhoto = async (uri: string) => {
 	const image = await ImageManipulator.manipulate(uri, {
 		maxWidth: MAX_PHOTO_SIDE,
 		maxHeight: MAX_PHOTO_SIDE,
 	}).renderAsync();
-	const shrunk = new File(
-		(
-			await image.saveAsync({
-				compress: PHOTO_QUALITY,
-				format: SaveFormat.JPEG,
-			})
-		).uri,
-	);
+	const { uri: shrunkUri } = await image.saveAsync({
+		compress: PHOTO_QUALITY,
+		format: SaveFormat.JPEG,
+	});
+	return new File(shrunkUri);
+};
+
+const saveShrunk = async (uri: string, photo: File) => {
+	const shrunk = await shrinkPhoto(uri);
 	try {
 		await shrunk.copy(photo);
 	} finally {
@@ -111,7 +112,7 @@ export const savePhoto = async (uri: string) => {
 };
 
 // Best effort: a leftover file beats failing an action already saved in the database
-const deleteFile = (file: File) => {
+export const deleteFile = (file: File) => {
 	try {
 		if (file.exists) file.delete();
 	} catch {}
