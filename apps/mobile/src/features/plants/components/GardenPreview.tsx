@@ -20,11 +20,19 @@ export function GardenPreview() {
 					{t("garden.title")}
 				</Text>
 				{plants.length > 0 && (
-					<Link href="/garden">
-						<Text className="font-outfit-semibold text-muted">
-							{t("garden.seeAll")}
-						</Text>
-					</Link>
+					<View className="flex-row items-center gap-2">
+						<Link href="/plant/new">
+							<Text className="font-outfit-semibold text-muted">
+								{t("tabs.add")}
+							</Text>
+						</Link>
+						<Text className="text-muted">·</Text>
+						<Link href="/garden">
+							<Text className="font-outfit-semibold text-muted">
+								{t("garden.seeAll")}
+							</Text>
+						</Link>
+					</View>
 				)}
 			</View>
 			{plants.length > 0 ? (
