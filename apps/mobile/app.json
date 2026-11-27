@@ -93,7 +93,8 @@
 			],
 			"expo-sqlite",
 			"expo-status-bar",
-			"@react-native-vector-icons/ionicons"
+			"@react-native-vector-icons/ionicons",
+			["expo-secure-store", { "faceIDPermission": false }]
 		],
 		"experiments": {
 			"typedRoutes": true,
