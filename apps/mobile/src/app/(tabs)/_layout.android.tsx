@@ -23,6 +23,11 @@ export default function TabsLayout() {
 					className="absolute inset-x-5 flex-row rounded-full bg-surface p-1"
 					style={{ bottom, boxShadow: TAB_BAR_SHADOW }}
 				>
+					{/* An overlay, not a border on the bar, so the indicator offsets stay unchanged */}
+					<View
+						pointerEvents="none"
+						className="absolute inset-0 rounded-full dark:border dark:border-line"
+					/>
 					<TabBarIndicator style={indicatorStyle} />
 					{tabs.map(({ name, href, label, icon }) => (
 						<TabTrigger key={name} name={name} href={href} asChild>
