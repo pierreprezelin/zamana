@@ -24,7 +24,6 @@
 	},
 	"screens": {
 		"editPlant": "Modifier les informations",
-		"encyclopedia": "Encyclopédie",
 		"historyEntry": "Entrée d'historique",
 		"newPlant": "Ajouter une plante",
 		"duplicatePlant": "Dupliquer la plante",

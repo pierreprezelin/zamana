@@ -150,10 +150,7 @@ function RootLayout() {
 							name="plant/[id]/history-entry"
 							options={{ title: t("screens.historyEntry") }}
 						/>
-						<Stack.Screen
-							name="encyclopedia/[id]"
-							options={{ title: t("screens.encyclopedia") }}
-						/>
+						<Stack.Screen name="encyclopedia/[id]" options={{ title: "" }} />
 						<Stack.Screen name="tips/[id]" options={{ title: "" }} />
 						<Stack.Screen name="tips/category/[id]" />
 						<Stack.Screen name="+not-found" options={{ title: "" }} />
