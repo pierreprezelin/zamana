@@ -9,6 +9,7 @@ import { t } from "@/utils/i18n";
 type TabScreenProps = {
 	title: string;
 	subtitle?: string;
+	headerAction?: ReactNode;
 	showSettings?: boolean;
 	// Scrolls the content, clearing this bottom space (the floating tab bar)
 	scrollBottomInset?: number;
@@ -18,6 +19,7 @@ type TabScreenProps = {
 export function TabScreen({
 	title,
 	subtitle,
+	headerAction,
 	showSettings = false,
 	scrollBottomInset,
 	children,
@@ -32,15 +34,17 @@ export function TabScreen({
 					</Text>
 					{subtitle && <Text className="text-base text-muted">{subtitle}</Text>}
 				</View>
-				{showSettings && (
-					<Link href="/settings" asChild>
-						<HeaderIconButton
-							className="-mr-2"
-							icon="settings-outline"
-							accessibilityLabel={t("common.settings")}
-						/>
-					</Link>
-				)}
+				<View className="-mr-2 flex-row">
+					{headerAction}
+					{showSettings && (
+						<Link href="/settings" asChild>
+							<HeaderIconButton
+								icon="settings-outline"
+								accessibilityLabel={t("common.settings")}
+							/>
+						</Link>
+					)}
+				</View>
 			</View>
 			{children}
 		</>

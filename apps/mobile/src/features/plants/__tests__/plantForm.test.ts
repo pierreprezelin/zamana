@@ -1,4 +1,5 @@
 import {
+	duplicateFormState,
 	firstErrorField,
 	formErrors,
 	initialFormState,
@@ -55,6 +56,52 @@ describe("plantForm", () => {
 			photoUri: "file:///documents/plants/photo.jpg",
 			ageAmount: "5",
 			ageUnit: "month",
+		});
+	});
+
+	describe("duplicateFormState", () => {
+		const source = {
+			...plantInputSchema.parse(
+				toFormValues({
+					...initialFormState(undefined, now),
+					nickname: "Gérard",
+					name: "Monstera",
+					origin: "cutting",
+					acquiredAt: "2026-06-01",
+					location: "bedroom",
+					notes: "Près de la fenêtre",
+					watering: 3,
+				}),
+			),
+			id: "plant-1",
+			photo: "photo.jpg",
+			photoCredit: null,
+			bornAt: "2026-05-18",
+			createdAt: "",
+			updatedAt: "",
+			archivedAt: "2026-10-01T00:00:00.000Z",
+			archiveReason: "given" as const,
+		};
+
+		it("clears the nickname, the identity of the plant", () => {
+			expect(duplicateFormState(source, now).nickname).toBe("");
+		});
+
+		it("copies every other field, for the user to adjust", () => {
+			expect(duplicateFormState(source, now)).toEqual({
+				...initialFormState(source, now),
+				nickname: "",
+			});
+			expect(duplicateFormState(source, now)).toMatchObject({
+				name: "Monstera",
+				origin: "cutting",
+				acquiredAt: "2026-06-01",
+				location: "bedroom",
+				notes: "Près de la fenêtre",
+				watering: 3,
+				ageAmount: "5",
+				photoUri: "file:///documents/plants/photo.jpg",
+			});
 		});
 	});
 

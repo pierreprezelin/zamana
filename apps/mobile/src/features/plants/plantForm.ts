@@ -65,6 +65,15 @@ export const initialFormState = (
 	};
 };
 
+// The nickname names one plant: a duplicate is another one
+export const duplicateFormState = (
+	plant: Plant,
+	now: Date,
+): PlantFormState => ({
+	...initialFormState(plant, now),
+	nickname: "",
+});
+
 export const toFormValues = ({
 	photoUri,
 	ageAmount,

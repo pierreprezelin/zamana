@@ -130,7 +130,7 @@ export default function PlantHistoryScreen() {
 				>
 					<Button
 						title={t("history.add")}
-						icon="add-outline"
+						icon="document-text-outline"
 						onPress={() => router.push(`/plant/${id}/history-entry`)}
 					/>
 				</View>

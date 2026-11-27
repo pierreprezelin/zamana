@@ -1,8 +1,8 @@
 import { Link, router, useIsFocused, useLocalSearchParams } from "expo-router";
 import { useMemo, useState } from "react";
 import { FlatList, View } from "react-native";
-import Button from "@/components/Button";
 import Chip from "@/components/Chip";
+import { HeaderIconButton } from "@/components/HeaderIconButton";
 import SearchField from "@/components/SearchField";
 import StatusCard from "@/components/StatusCard";
 import { useTabBarOffset } from "@/components/TabBar";
@@ -82,6 +82,14 @@ export default function GardenScreen() {
 						})
 					: t("garden.noPlant")
 			}
+			headerAction={
+				<Link href="/plant/new" asChild>
+					<HeaderIconButton
+						icon="add-outline"
+						accessibilityLabel={t("garden.addPlant")}
+					/>
+				</Link>
+			}
 			showSettings
 		>
 			{hasPlants ? (
@@ -150,17 +158,6 @@ export default function GardenScreen() {
 									{emptyMessages[tab]}
 								</Text>
 							)
-						}
-						ListFooterComponent={
-							tab === "current" ? (
-								<Link href="/plant/new" asChild>
-									<Button
-										variant="outline"
-										title={t("garden.addPlant")}
-										icon="add-outline"
-									/>
-								</Link>
-							) : undefined
 						}
 					/>
 				</View>

@@ -56,8 +56,8 @@ const sections: Section[] = [
 		path: "/history",
 		label: t("plant.info.sections.history"),
 		headerAction: {
-			icon: "add-outline",
-			iconSize: 24,
+			icon: "document-text-outline",
+			iconSize: 22,
 			label: t("plant.info.addHistoryEntry"),
 			path: "/history-entry",
 		},
@@ -111,18 +111,29 @@ export default function PlantSectionsLayout() {
 		<Tabs style={{ flex: 1 }} options={{ backBehavior: "none" }}>
 			<Stack.Screen
 				options={{
-					headerRight: headerAction
-						? () => (
+					headerRight: () => (
+						<View className="-mr-3 flex-row">
+							{headerAction && (
 								<Link href={`/plant/${id}${headerAction.path}`} asChild>
 									<HeaderIconButton
-										className="-mr-3"
 										icon={headerAction.icon}
 										iconSize={headerAction.iconSize}
 										accessibilityLabel={headerAction.label}
 									/>
 								</Link>
-							)
-						: undefined,
+							)}
+							<Link
+								href={{ pathname: "/plant/new", params: { from: id } }}
+								asChild
+							>
+								<HeaderIconButton
+									icon="copy-outline"
+									iconSize={20}
+									accessibilityLabel={t("plant.info.duplicate")}
+								/>
+							</Link>
+						</View>
+					),
 				}}
 			/>
 			{/* Tabs only reads the triggers of a TabList it holds directly, so the chips below refer to them by name */}

@@ -47,11 +47,7 @@ import {
 	plantTypeOptions,
 	seasonOptions,
 } from "@/features/plants/plantOptions";
-import {
-	deletePhoto,
-	isRemotePhoto,
-	savePhoto,
-} from "@/features/plants/plantPhoto";
+import { deletePhoto, savePhoto } from "@/features/plants/plantPhoto";
 import {
 	NAME_MAX_LENGTH,
 	NICKNAME_MAX_LENGTH,
@@ -212,8 +208,8 @@ export function PlantForm({ plant, openSection, prefill }: PlantFormProps) {
 			const { age, ...input } = result.data;
 			let photoFailed = false;
 			const storePhoto = async (uri: string) => {
-				if (!isRemotePhoto(uri)) return savePhoto(uri);
-				// A photo the encyclopedia could not download must not block the plant
+				if (uri !== initialState.photoUri) return savePhoto(uri);
+				// A prefilled photo (the encyclopedia's, a duplicated plant's) must not block the plant
 				try {
 					return await savePhoto(uri);
 				} catch {
