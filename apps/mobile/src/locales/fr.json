@@ -32,7 +32,8 @@
 		"location": "Localisation",
 		"notifications": "Notifications",
 		"settings": "Paramètres",
-		"about": "À propos"
+		"about": "À propos",
+		"plantnet": "Identification par photo"
 	},
 	"encyclopedia": {
 		"searchPlaceholder": "Rechercher une plante...",
@@ -56,6 +57,44 @@
 		"noFreePhoto": "Pas de photo libre de droits pour cette plante : la photo ne sera pas préremplie.",
 		"limitedInfo": "Les informations disponibles pour cette plante sont limitées : vérifiez le type, les besoins et le cycle de vie.",
 		"source": "Données botaniques : iNaturalist"
+	},
+	"identification": {
+		"credit": "Identifié par Pl@ntNet",
+		"identifyByPhoto": "Identifier une plante par photo",
+		"identifyPhoto": "Identifier depuis la photo",
+		"hint": "Vous ne connaissez pas son nom ? Identifiez-la par photo",
+		"errors": {
+			"invalidKey": "Clé Pl@ntNet invalide : vérifiez-la dans les paramètres.",
+			"notFound": "Pl@ntNet n’a pas reconnu de plante sur cette photo.",
+			"quotaExceeded": "Quota Pl@ntNet du jour épuisé.",
+			"offline": "Pl@ntNet est injoignable. Vérifiez votre connexion.",
+			"unknown": "L’identification a échoué, réessayez."
+		},
+		"settings": {
+			"intro": "Prenez une plante en photo : Pl@ntNet la reconnaît et l’encyclopédie la cherche pour vous. Il vous faut un compte Pl@ntNet gratuit, avec 500 identifications par jour.",
+			"stepAccount": "Créez un compte sur my.plantnet.org : votre clé API est générée à l’inscription.",
+			"openAccount": "Ouvrir my.plantnet.org",
+			"stepPaste": "Copiez la clé depuis votre compte et collez-la ici.",
+			"keyLabel": "Clé API Pl@ntNet",
+			"keyHidden": "Cachée par sécurité. Retrouvez-la sur my.plantnet.org.",
+			"invalidFormat": "Cette clé n’a pas le bon format : vérifiez-la sur my.plantnet.org.",
+			"testKey": "Tester la clé",
+			"deleteFailed": "La clé n’a pas pu être supprimée, réessayez.",
+			"saveKey": "Enregistrer la clé",
+			"deleteKey": "Supprimer la clé",
+			"privacy": "Vos photos sont envoyées à Pl@ntNet pour être identifiées. La clé reste sur cet appareil.",
+			"quotaCount": "{{count}} / {{total}} identifications aujourd’hui",
+			"quotaRemaining": "{{remaining}} restantes",
+			"quotaExhausted": "Quota épuisé",
+			"quotaReset": "Remise à zéro à {{time}}",
+			"test": {
+				"testing": "Test de la clé…",
+				"valid": "Clé valide",
+				"invalidKey": "Clé refusée par Pl@ntNet",
+				"offline": "Pl@ntNet est injoignable. Vérifiez votre connexion.",
+				"unknown": "Le test a échoué, réessayez."
+			}
+		}
 	},
 	"articles": {
 		"count": {
@@ -374,7 +413,9 @@
 			"home": "Nouvelles plantes, conseils",
 			"ergonomics": "Glissement, vibrations",
 			"notifications": "Rappels, alertes météo",
-			"about": "Histoire, licence, crédits"
+			"about": "Histoire, licence, crédits",
+			"plantnetOn": "Activée",
+			"plantnetOff": "Désactivée"
 		},
 		"language": {
 			"title": "Langue",
@@ -874,6 +915,7 @@
 			"site": "Site de Zamana",
 			"privacy": "Politique de confidentialité"
 		},
-		"inaturalistCredit": "Plantes par iNaturalist"
+		"inaturalistCredit": "Plantes par iNaturalist",
+		"plantnetCredit": "Identification par Pl@ntNet"
 	}
 }

@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { View } from "react-native";
 import FieldInput from "@/components/FieldInput";
 import { Ionicons } from "@/components/ionicons";
@@ -12,6 +13,7 @@ type SearchFieldProps = {
 	onChangeText: (text: string) => void;
 	placeholder: string;
 	maxLength?: number;
+	searchIconReplacement?: ReactNode;
 };
 
 export default function SearchField({
@@ -19,6 +21,7 @@ export default function SearchField({
 	onChangeText,
 	placeholder,
 	maxLength,
+	searchIconReplacement,
 }: SearchFieldProps) {
 	return (
 		<View className="justify-center">
@@ -48,11 +51,13 @@ export default function SearchField({
 						/>
 					</Pressable>
 				) : (
-					<Ionicons
-						name="search-outline"
-						size={18}
-						className="text-foreground"
-					/>
+					(searchIconReplacement ?? (
+						<Ionicons
+							name="search-outline"
+							size={18}
+							className="text-foreground"
+						/>
+					))
 				)}
 			</View>
 		</View>

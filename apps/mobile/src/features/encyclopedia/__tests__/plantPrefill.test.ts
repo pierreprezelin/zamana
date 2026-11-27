@@ -2,6 +2,7 @@ import { CURATED_PLANTS } from "@/features/encyclopedia/curatedPlants";
 import {
 	plantPrefill,
 	prefillParams,
+	withIdentifiedPhoto,
 } from "@/features/encyclopedia/plantPrefill";
 import {
 	NAME_MAX_LENGTH,
@@ -147,5 +148,35 @@ describe("plantPrefill", () => {
 				url: "https://www.inaturalist.org/photos/1",
 			},
 		});
+	});
+});
+
+describe("withIdentifiedPhoto", () => {
+	const prefill = {
+		isPartial: true,
+		values: {
+			name: "Monstera",
+			photoUri: photoUrl,
+			photoCredit: {
+				attribution: "(c) Jane",
+				url: "https://www.inaturalist.org/photos/1",
+			},
+		},
+	};
+
+	it("puts the identified photo in place of the encyclopedia one, without its credit", () => {
+		expect(withIdentifiedPhoto(prefill, "file:///cache/mine.jpg")).toEqual({
+			isPartial: true,
+			values: {
+				name: "Monstera",
+				photoUri: "file:///cache/mine.jpg",
+				photoCredit: null,
+			},
+		});
+	});
+
+	it("keeps the prefill without an identified photo", () => {
+		expect(withIdentifiedPhoto(prefill, null)).toBe(prefill);
+		expect(withIdentifiedPhoto(null, "file:///cache/mine.jpg")).toBeNull();
 	});
 });

@@ -89,3 +89,15 @@ export const plantPrefill = (params: PrefillParams): PlantPrefill | null => {
 	const { taxonId: _, ...care } = curated;
 	return { isPartial: false, values: { ...known, ...care } };
 };
+
+// The user's own photo of the plant, identified by Pl@ntNet, beats the encyclopedia one
+export const withIdentifiedPhoto = (
+	prefill: PlantPrefill | null,
+	photoUri: string | null,
+): PlantPrefill | null =>
+	prefill && photoUri
+		? {
+				...prefill,
+				values: { ...prefill.values, photoUri, photoCredit: null },
+			}
+		: prefill;

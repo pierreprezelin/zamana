@@ -32,7 +32,8 @@
 		"location": "Location",
 		"notifications": "Notifications",
 		"settings": "Settings",
-		"about": "About"
+		"about": "About",
+		"plantnet": "Photo identification"
 	},
 	"encyclopedia": {
 		"searchPlaceholder": "Search for a plant...",
@@ -56,6 +57,44 @@
 		"noFreePhoto": "No freely licensed photo for this plant: the photo won’t be prefilled.",
 		"limitedInfo": "Limited information is available for this plant: check its type, needs and life cycle.",
 		"source": "Botanical data: iNaturalist"
+	},
+	"identification": {
+		"credit": "Identified by Pl@ntNet",
+		"identifyByPhoto": "Identify a plant from a photo",
+		"identifyPhoto": "Identify from the photo",
+		"hint": "Don’t know its name? Identify it from a photo",
+		"errors": {
+			"invalidKey": "Invalid Pl@ntNet key: check it in the settings.",
+			"notFound": "Pl@ntNet did not recognize a plant in this photo.",
+			"quotaExceeded": "Today’s Pl@ntNet quota is used up.",
+			"offline": "Pl@ntNet can’t be reached. Check your connection.",
+			"unknown": "The identification failed, try again."
+		},
+		"settings": {
+			"intro": "Take a photo of a plant: Pl@ntNet recognizes it and the encyclopedia looks it up for you. You need a free Pl@ntNet account, with 500 identifications a day.",
+			"stepAccount": "Create an account on my.plantnet.org: your API key is generated when you sign up.",
+			"openAccount": "Open my.plantnet.org",
+			"stepPaste": "Copy the key from your account and paste it here.",
+			"keyLabel": "Pl@ntNet API key",
+			"keyHidden": "Hidden for security. Find it on my.plantnet.org.",
+			"invalidFormat": "This key doesn’t have the right format: check it on my.plantnet.org.",
+			"testKey": "Test the key",
+			"deleteFailed": "The key could not be deleted, try again.",
+			"saveKey": "Save the key",
+			"deleteKey": "Delete the key",
+			"privacy": "Your photos are sent to Pl@ntNet to be identified. The key stays on this device.",
+			"quotaCount": "{{count}} / {{total}} identifications today",
+			"quotaRemaining": "{{remaining}} left",
+			"quotaExhausted": "Quota used up",
+			"quotaReset": "Resets at {{time}}",
+			"test": {
+				"testing": "Testing the key…",
+				"valid": "Valid key",
+				"invalidKey": "Key refused by Pl@ntNet",
+				"offline": "Pl@ntNet can’t be reached. Check your connection.",
+				"unknown": "The test failed, try again."
+			}
+		}
 	},
 	"articles": {
 		"count": {
@@ -370,7 +409,9 @@
 			"home": "New plants, tips",
 			"ergonomics": "Swipe, haptics",
 			"notifications": "Reminders, weather alerts",
-			"about": "Story, license, credits"
+			"about": "Story, license, credits",
+			"plantnetOn": "On",
+			"plantnetOff": "Off"
 		},
 		"language": {
 			"title": "Language",
@@ -867,6 +908,7 @@
 			"site": "Zamana website",
 			"privacy": "Privacy policy"
 		},
-		"inaturalistCredit": "Plants by iNaturalist"
+		"inaturalistCredit": "Plants by iNaturalist",
+		"plantnetCredit": "Identification by Pl@ntNet"
 	}
 }

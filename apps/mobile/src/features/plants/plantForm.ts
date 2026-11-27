@@ -1,10 +1,13 @@
 import type { z } from "zod";
+import type { Suggestion } from "@/features/identification/plantnet";
 import { bornAtToAge } from "@/features/plants/age";
 import { photoUri } from "@/features/plants/plantPhoto";
-import type {
-	AgeUnit,
-	Plant,
-	PlantFormValues,
+import {
+	type AgeUnit,
+	NAME_MAX_LENGTH,
+	type Plant,
+	type PlantFormValues,
+	SCIENTIFIC_NAME_MAX_LENGTH,
 } from "@/features/plants/plantSchema";
 import { isOneOf } from "@/utils/isOneOf";
 
@@ -111,4 +114,21 @@ export const SECTION_FIELDS: Record<FormSection, FormField[]> = {
 	needs: [],
 	lifecycle: [],
 	notes: ["notes"],
+};
+
+// The name the user typed stays: only an empty one, or one filled from another suggestion, takes Pl@ntNet's
+export const applySuggestion = (
+	form: Pick<PlantFormState, "name" | "scientificName">,
+	{ scientificName, commonName }: Suggestion,
+	formerSuggestions: Suggestion[] = [],
+) => {
+	const names = {
+		name: form.name,
+		scientificName: scientificName.slice(0, SCIENTIFIC_NAME_MAX_LENGTH),
+	};
+	const replaceable =
+		!form.name.trim() ||
+		formerSuggestions.some((former) => former.commonName === form.name);
+	if (!replaceable) return names;
+	return { ...names, name: commonName?.slice(0, NAME_MAX_LENGTH) ?? "" };
 };

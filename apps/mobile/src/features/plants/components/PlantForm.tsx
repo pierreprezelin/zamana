@@ -19,11 +19,13 @@ import Text from "@/components/Text";
 import ToggleRow from "@/components/ToggleRow";
 import { LimitedInfoNote } from "@/features/encyclopedia/components/LimitedInfoNote";
 import type { PlantPrefill } from "@/features/encyclopedia/plantPrefill";
+import { PhotoIdentification } from "@/features/identification/components/PhotoIdentification";
 import { resolveBornAt } from "@/features/plants/age";
 import { DeletePlantSheet } from "@/features/plants/components/DeletePlantSheet";
 import { HelpSheet } from "@/features/plants/components/HelpSheet";
 import { PhotoPicker } from "@/features/plants/components/PhotoPicker";
 import {
+	applySuggestion,
 	type FormErrors,
 	type FormField,
 	type FormSection,
@@ -289,6 +291,22 @@ export function PlantForm({ plant, openSection, prefill }: PlantFormProps) {
 						<Text className="font-recoleta text-card-title text-foreground">
 							{t("plant.form.identity")}
 						</Text>
+						<PhotoIdentification
+							key={form.photoUri}
+							photoUri={form.photoUri}
+							scientificName={form.scientificName}
+							onApply={(suggestion, formerSuggestions) => {
+								setForm((current) => ({
+									...current,
+									...applySuggestion(current, suggestion, formerSuggestions),
+								}));
+								setErrors((current) => ({
+									...current,
+									name: undefined,
+									scientificName: undefined,
+								}));
+							}}
+						/>
 						<LabeledField
 							label={t("plant.form.nickname")}
 							fieldRef={fieldRef("nickname")}

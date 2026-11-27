@@ -1,4 +1,5 @@
 import {
+	applySuggestion,
 	duplicateFormState,
 	firstErrorField,
 	formErrors,
@@ -6,7 +7,11 @@ import {
 	isFormSection,
 	toFormValues,
 } from "@/features/plants/plantForm";
-import { plantInputSchema } from "@/features/plants/plantSchema";
+import {
+	NAME_MAX_LENGTH,
+	plantInputSchema,
+	SCIENTIFIC_NAME_MAX_LENGTH,
+} from "@/features/plants/plantSchema";
 
 jest.mock("@/features/plants/plantPhoto", () => ({
 	photoUri: (filename: string) => `file:///documents/plants/${filename}`,
@@ -168,5 +173,68 @@ describe("isFormSection", () => {
 		expect(isFormSection("needs")).toBe(true);
 		expect(isFormSection("admin")).toBe(false);
 		expect(isFormSection(undefined)).toBe(false);
+	});
+});
+
+describe("applySuggestion", () => {
+	const suggestion = {
+		scientificName: "Monstera deliciosa",
+		commonName: "Faux philodendron",
+		score: 0.87,
+	};
+
+	it("fills the scientific name, and the common name while empty", () => {
+		expect(
+			applySuggestion({ name: "  ", scientificName: "" }, suggestion),
+		).toEqual({
+			name: "Faux philodendron",
+			scientificName: "Monstera deliciosa",
+		});
+	});
+
+	it("keeps the common name the user typed", () => {
+		expect(
+			applySuggestion(
+				{ name: "Ma monstera", scientificName: "Ficus" },
+				suggestion,
+			),
+		).toEqual({ name: "Ma monstera", scientificName: "Monstera deliciosa" });
+	});
+
+	it("keeps an empty name when Pl@ntNet knows no common name", () => {
+		expect(
+			applySuggestion(
+				{ name: "", scientificName: "" },
+				{ ...suggestion, commonName: null },
+			),
+		).toEqual({ name: "", scientificName: "Monstera deliciosa" });
+	});
+
+	it("cuts the names to the form limits", () => {
+		const long = {
+			scientificName: "a".repeat(80),
+			commonName: "b".repeat(80),
+			score: 1,
+		};
+
+		expect(applySuggestion({ name: "", scientificName: "" }, long)).toEqual({
+			name: "b".repeat(NAME_MAX_LENGTH),
+			scientificName: "a".repeat(SCIENTIFIC_NAME_MAX_LENGTH),
+		});
+	});
+
+	it("replaces a common name filled from a former suggestion", () => {
+		const former = { ...suggestion, commonName: "Philodendron", score: 0.1 };
+
+		expect(
+			applySuggestion(
+				{ name: "Philodendron", scientificName: "Philodendron" },
+				suggestion,
+				[former, suggestion],
+			),
+		).toEqual({
+			name: "Faux philodendron",
+			scientificName: "Monstera deliciosa",
+		});
 	});
 });

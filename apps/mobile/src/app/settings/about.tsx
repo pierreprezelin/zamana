@@ -3,6 +3,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import CreditLink from "@/components/CreditLink";
 import SettingsRow from "@/components/SettingsRow";
 import Text from "@/components/Text";
+import { PLANTNET_URL } from "@/features/identification/plantnet";
 import { WeatherCredits } from "@/features/weather/components/OpenMeteoCredit";
 import { locale, t } from "@/utils/i18n";
 
@@ -54,6 +55,7 @@ export default function AboutScreen() {
 					label={t("about.inaturalistCredit")}
 					url={INATURALIST_URL}
 				/>
+				<CreditLink label={t("about.plantnetCredit")} url={PLANTNET_URL} />
 				<WeatherCredits />
 			</View>
 		</ScrollView>

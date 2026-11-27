@@ -4,6 +4,7 @@ import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import SettingsRow from "@/components/SettingsRow";
 import Text from "@/components/Text";
+import { usePlantNetStore } from "@/features/identification/usePlantNetStore";
 import { LanguageSetting } from "@/features/language/components/LanguageSetting";
 import { useOnboardingStore } from "@/features/onboarding/useOnboardingStore";
 import { ThemeSelector } from "@/features/theme/components/ThemeSelector";
@@ -12,6 +13,7 @@ import { t } from "@/utils/i18n";
 
 export default function SettingsScreen() {
 	const insets = useSafeAreaInsets();
+	const plantNetEnabled = usePlantNetStore((state) => state.apiKey !== null);
 
 	return (
 		<View
@@ -40,6 +42,17 @@ export default function SettingsScreen() {
 						icon="home-outline"
 						title={t("screens.home")}
 						value={t("settings.summaries.home")}
+					/>
+				</Link>
+				<Link href="/settings/plantnet" asChild>
+					<SettingsRow
+						icon="scan-outline"
+						title={t("screens.plantnet")}
+						value={t(
+							plantNetEnabled
+								? "settings.summaries.plantnetOn"
+								: "settings.summaries.plantnetOff",
+						)}
 					/>
 				</Link>
 				<Link href="/settings/ergonomics" asChild>
