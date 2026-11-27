@@ -300,7 +300,6 @@ export function PlantForm({ plant, openSection, prefill }: PlantFormProps) {
 								onChangeText={(text) => update("nickname", text)}
 								error={errors.nickname}
 								maxLength={NICKNAME_MAX_LENGTH}
-								autoCapitalize="words"
 							/>
 						</LabeledField>
 						<LabeledField
