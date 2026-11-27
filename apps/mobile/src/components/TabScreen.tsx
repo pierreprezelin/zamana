@@ -26,7 +26,7 @@ export function TabScreen({
 	const content = (
 		<>
 			<View className="flex-row items-start justify-between gap-4">
-				<View>
+				<View className="flex-1">
 					<Text className="font-recoleta text-[28px] text-foreground">
 						{title}
 					</Text>

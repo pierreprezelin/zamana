@@ -11,10 +11,14 @@ describe("greeting", () => {
 		[0, "Belle soirée"],
 		[4, "Belle soirée"],
 	])("greets according to the time of day at %ih", (hour, expected) => {
-		expect(greeting(hour, null)).toBe(`${expected} 👋`);
+		expect(greeting(hour, null)).toBe(`${expected}\u00A0👋`);
 	});
 
 	it("addresses the user by name when there is one", () => {
-		expect(greeting(9, "John")).toBe("Belle matinée, John 👋");
+		expect(greeting(9, "John")).toBe("Belle matinée, John\u00A0👋");
+	});
+
+	it("keeps the emoji on the same line as the last word", () => {
+		expect(greeting(9, null)).toBe("Belle matinée\u00A0👋");
 	});
 });

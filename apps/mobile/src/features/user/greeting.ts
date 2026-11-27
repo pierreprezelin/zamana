@@ -8,4 +8,4 @@ const salutation = (hour: number) => {
 };
 
 export const greeting = (hour: number, name: string | null) =>
-	`${salutation(hour)}${name ? `, ${name}` : ""} 👋`;
+	`${salutation(hour)}${name ? `, ${name}` : ""}\u00A0👋`;
