@@ -73,6 +73,7 @@
 					"isAndroidBackgroundLocationEnabled": false
 				}
 			],
+			"expo-observe",
 			[
 				"expo-notifications",
 				{
