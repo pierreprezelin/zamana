@@ -1,10 +1,15 @@
 import type { BottomSheetModal } from "@gorhom/bottom-sheet";
-import { Link, useLocalSearchParams } from "expo-router";
+import { Link, Stack, useLocalSearchParams } from "expo-router";
 import { useRef, useState } from "react";
-import { ScrollView, View } from "react-native";
+import { type ScrollViewInstance, View } from "react-native";
+import Animated from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Button from "@/components/Button";
 import CreditLink from "@/components/CreditLink";
+import {
+	FadingHeaderTitle,
+	useFadingHeaderTitle,
+} from "@/components/FadingHeaderTitle";
 import Text from "@/components/Text";
 import WarningBanner from "@/components/WarningBanner";
 import { LimitedInfoNote } from "@/features/encyclopedia/components/LimitedInfoNote";
@@ -34,6 +39,7 @@ export default function EncyclopediaResultScreen() {
 	const { bottom } = useSafeAreaInsets();
 	const helpSheetRef = useRef<BottomSheetModal>(null);
 	const [help, setHelp] = useState(floweringTypeHelp);
+	const fadingTitle = useFadingHeaderTitle<ScrollViewInstance>();
 	const {
 		status,
 		data: taxon,
@@ -68,7 +74,24 @@ export default function EncyclopediaResultScreen() {
 
 	return (
 		<>
-			<ScrollView contentContainerClassName="gap-6 px-4 pt-2.5 pb-3.5">
+			<Stack.Screen
+				options={{
+					headerTitle: () => (
+						<FadingHeaderTitle
+							title={taxon.name}
+							scrollY={fadingTitle.scrollY}
+							titleTop={fadingTitle.titleTop}
+							titleBottom={fadingTitle.titleBottom}
+						/>
+					),
+				}}
+			/>
+			<Animated.ScrollView
+				ref={fadingTitle.containerRef}
+				onScroll={fadingTitle.onScroll}
+				scrollEventThrottle={16}
+				contentContainerClassName="gap-6 px-4 pt-2.5 pb-3.5"
+			>
 				<View className="gap-4">
 					<View className="gap-1">
 						<PlantPhoto
@@ -85,7 +108,12 @@ export default function EncyclopediaResultScreen() {
 						)}
 					</View>
 					<View>
-						<Text className="font-recoleta text-page-title text-foreground">
+						<Text
+							ref={fadingTitle.titleRef}
+							onLayout={fadingTitle.onTitleLayout}
+							accessibilityRole="header"
+							className="font-recoleta text-page-title text-foreground"
+						>
 							{taxon.name}
 						</Text>
 						<Text className="text-base text-muted">{taxon.scientificName}</Text>
@@ -149,7 +177,7 @@ export default function EncyclopediaResultScreen() {
 				<Text className="text-center text-xs text-muted">
 					{t("encyclopedia.source")}
 				</Text>
-			</ScrollView>
+			</Animated.ScrollView>
 			<View
 				className="gap-2 bg-background px-4 pt-2.5"
 				style={{ paddingBottom: bottom }}
