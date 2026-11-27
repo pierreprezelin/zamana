@@ -12,14 +12,23 @@ import {
 	TabTrigger,
 	type TabTriggerSlotProps,
 } from "expo-router/ui";
-import { useRef } from "react";
+import { useMemo, useRef, useState } from "react";
 import { View } from "react-native";
+import Animated, {
+	useAnimatedStyle,
+	useSharedValue,
+} from "react-native-reanimated";
 import Chip from "@/components/Chip";
+import {
+	FadingHeaderTitle,
+	useFadingHeaderTitle,
+} from "@/components/FadingHeaderTitle";
 import { HeaderIconButton } from "@/components/HeaderIconButton";
 import type { IoniconsIconName } from "@/components/ionicons";
 import { MessageScreen } from "@/components/MessageScreen";
 import Text from "@/components/Text";
 import { PlantPhoto } from "@/features/plants/components/PlantPhoto";
+import { PlantSheetScrollProvider } from "@/features/plants/components/PlantSheetScroll";
 import { displayName } from "@/features/plants/plantLabels";
 import { usePlant } from "@/features/plants/usePlantStore";
 import { t } from "@/utils/i18n";
@@ -80,6 +89,21 @@ export default function PlantSectionsLayout() {
 	const pathname = usePathname();
 	const wasShown = useRef(false);
 	if (plant) wasShown.current = true;
+	const fadingTitle = useFadingHeaderTitle();
+	const { scrollY, onScroll } = fadingTitle;
+	// Scrolls the photo and name away, the chips then stay under the navigation bar
+	const chipsTop = useSharedValue(0);
+	const [headerHeight, setHeaderHeight] = useState(0);
+	const headerStyle = useAnimatedStyle(() => ({
+		transform: [
+			{ translateY: -Math.min(Math.max(scrollY.get(), 0), chipsTop.get()) },
+		],
+	}));
+	const sheetScroll = useMemo(
+		// With the header bottom padding, 24px between the chips and the section, as between sections
+		() => ({ scrollY, onScroll, paddingTop: headerHeight + 16 }),
+		[scrollY, onScroll, headerHeight],
+	);
 
 	if (!plant) {
 		// Just deleted, the screen is being dismissed
@@ -111,6 +135,14 @@ export default function PlantSectionsLayout() {
 		<Tabs style={{ flex: 1 }} options={{ backBehavior: "none" }}>
 			<Stack.Screen
 				options={{
+					headerTitle: () => (
+						<FadingHeaderTitle
+							title={displayName(plant)}
+							scrollY={scrollY}
+							titleTop={fadingTitle.titleTop}
+							titleBottom={fadingTitle.titleBottom}
+						/>
+					),
 					headerRight: () => (
 						<View className="-mr-3 flex-row">
 							{headerAction && (
@@ -146,15 +178,26 @@ export default function PlantSectionsLayout() {
 					/>
 				))}
 			</TabList>
-			<View className="gap-4 px-4 pb-3">
-				<View className="flex-row items-center gap-4">
+			<Animated.View
+				ref={fadingTitle.containerRef}
+				onLayout={(event) => setHeaderHeight(event.nativeEvent.layout.height)}
+				style={headerStyle}
+				// A swipe on the photo or the name scrolls the section underneath
+				pointerEvents="box-none"
+				// Before the section, so screen readers read the name and the tabs first
+				className="absolute inset-x-0 top-0 z-10 gap-4 bg-background px-4 pb-2"
+			>
+				<View className="flex-row items-center gap-4" pointerEvents="none">
 					<PlantPhoto photo={plant.photo} className="size-16 rounded-2xl" />
 					<View className="flex-1">
 						<Text
+							ref={fadingTitle.titleRef}
+							onLayout={fadingTitle.onTitleLayout}
 							// The nickname and name length limits keep the shrink around 22px
 							numberOfLines={plant.nickname ? 1 : 2}
 							adjustsFontSizeToFit
 							minimumFontScale={0.78}
+							accessibilityRole="header"
 							className="font-recoleta text-page-title text-foreground"
 						>
 							{displayName(plant)}
@@ -166,7 +209,11 @@ export default function PlantSectionsLayout() {
 						)}
 					</View>
 				</View>
-				<View className="flex-row gap-2">
+				<View
+					className="flex-row gap-2"
+					pointerEvents="box-none"
+					onLayout={(event) => chipsTop.set(event.nativeEvent.layout.y)}
+				>
 					{sections.map((section) => (
 						<TabTrigger
 							key={section.name}
@@ -182,8 +229,11 @@ export default function PlantSectionsLayout() {
 						</TabTrigger>
 					))}
 				</View>
-			</View>
-			<TabSlot />
+			</Animated.View>
+			<PlantSheetScrollProvider value={sheetScroll}>
+				{/* Waits for the header height, or the section would show under it then jump */}
+				{headerHeight > 0 && <TabSlot />}
+			</PlantSheetScrollProvider>
 		</Tabs>
 	);
 }

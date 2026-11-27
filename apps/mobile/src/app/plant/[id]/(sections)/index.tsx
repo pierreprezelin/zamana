@@ -1,7 +1,8 @@
 import type { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { Link, router, useLocalSearchParams } from "expo-router";
 import { useRef, useState } from "react";
-import { ScrollView, View } from "react-native";
+import { View } from "react-native";
+import Animated from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Toast from "react-native-toast-message";
 import Button from "@/components/Button";
@@ -13,6 +14,7 @@ import { ArchiveSheet } from "@/features/plants/components/ArchiveSheet";
 import { HelpSheet } from "@/features/plants/components/HelpSheet";
 import { InfoCard } from "@/features/plants/components/InfoCard";
 import { NeedsSection } from "@/features/plants/components/NeedsSection";
+import { usePlantSheetScroll } from "@/features/plants/components/PlantSheetScroll";
 import { displayName } from "@/features/plants/plantLabels";
 import {
 	floweringTypeHelp,
@@ -34,6 +36,7 @@ export default function PlantInformationScreen() {
 	const plant = usePlant(id);
 	const restorePlant = usePlantStore((state) => state.restorePlant);
 	const { bottom } = useSafeAreaInsets();
+	const { onScroll, paddingTop } = usePlantSheetScroll();
 	const archiveSheetRef = useRef<BottomSheetModal>(null);
 	const helpSheetRef = useRef<BottomSheetModal>(null);
 	const [help, setHelp] = useState(floweringTypeHelp);
@@ -64,10 +67,12 @@ export default function PlantInformationScreen() {
 
 	return (
 		<>
-			<ScrollView
+			<Animated.ScrollView
+				onScroll={onScroll}
+				scrollEventThrottle={16}
 				// grow + mt-auto keep the actions at the bottom when few fields are filled
-				contentContainerClassName="grow gap-6 px-4 pt-2.5"
-				contentContainerStyle={{ paddingBottom: bottom }}
+				contentContainerClassName="grow gap-6 px-4"
+				contentContainerStyle={{ paddingTop, paddingBottom: bottom }}
 			>
 				{plant.toxic && (
 					<WarningBanner icon="paw-outline" message={t("plant.info.toxic")} />
@@ -158,7 +163,7 @@ export default function PlantInformationScreen() {
 						/>
 					)}
 				</View>
-			</ScrollView>
+			</Animated.ScrollView>
 			<ArchiveSheet
 				ref={archiveSheetRef}
 				plant={plant}

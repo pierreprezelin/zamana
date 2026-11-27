@@ -1,7 +1,8 @@
 import type { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { useIsFocused, useLocalSearchParams } from "expo-router";
 import { useRef, useState } from "react";
-import { ScrollView, View } from "react-native";
+import { View } from "react-native";
+import Animated from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Button from "@/components/Button";
 import StatusCard from "@/components/StatusCard";
@@ -23,6 +24,7 @@ import { UpcomingCareRow } from "@/features/care/components/UpcomingCareRow";
 import { plantCareSections } from "@/features/care/plantCareSections";
 import { useCarePreferencesStore } from "@/features/care/useCarePreferencesStore";
 import { useCareStore, usePlantCares } from "@/features/care/useCareStore";
+import { usePlantSheetScroll } from "@/features/plants/components/PlantSheetScroll";
 import { displayName } from "@/features/plants/plantLabels";
 import { usePlant } from "@/features/plants/usePlantStore";
 import { toISODate } from "@/utils/dates";
@@ -35,6 +37,7 @@ export default function PlantCareScreen() {
 	const climate = useCarePreferencesStore((state) => state.climate);
 	const logs = useCareStore((state) => state.logs);
 	const { bottom } = useSafeAreaInsets();
+	const { onScroll, paddingTop } = usePlantSheetScroll();
 	const manageSheetRef = useRef<BottomSheetModal>(null);
 	const formSheetRef = useRef<BottomSheetModal>(null);
 	const [editedType, setEditedType] = useState<CareType | null>(null);
@@ -46,7 +49,7 @@ export default function PlantCareScreen() {
 	// A past plant leaves Today and the reminders: its schedule would only keep running late
 	if (plant.archivedAt) {
 		return (
-			<View className="px-4 pt-3">
+			<View className="px-4" style={{ paddingTop }}>
 				<StatusCard
 					icon="pause-outline"
 					title={t("care.paused.title")}
@@ -91,9 +94,11 @@ export default function PlantCareScreen() {
 	return (
 		<>
 			{cares.length ? (
-				<ScrollView
-					contentContainerClassName="gap-6 px-4 pt-3"
-					contentContainerStyle={{ paddingBottom: bottom + 16 }}
+				<Animated.ScrollView
+					onScroll={onScroll}
+					scrollEventThrottle={16}
+					contentContainerClassName="gap-6 px-4"
+					contentContainerStyle={{ paddingTop, paddingBottom: bottom + 16 }}
 				>
 					<View className="gap-3">
 						<Text className="font-recoleta text-card-title text-foreground">
@@ -173,9 +178,9 @@ export default function PlantCareScreen() {
 							))}
 						</View>
 					</View>
-				</ScrollView>
+				</Animated.ScrollView>
 			) : (
-				<View className="px-4 pt-3">
+				<View className="px-4" style={{ paddingTop }}>
 					<StatusCard
 						icon="clipboard-outline"
 						title={t("care.noCare.title", { name: displayName(plant) })}

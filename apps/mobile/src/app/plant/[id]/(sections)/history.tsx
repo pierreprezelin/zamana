@@ -1,7 +1,8 @@
 import type { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { router, useIsFocused, useLocalSearchParams } from "expo-router";
 import { useMemo, useRef, useState } from "react";
-import { FlatList, View } from "react-native";
+import { View } from "react-native";
+import Animated from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Button from "@/components/Button";
 import { ConfirmSheet } from "@/components/ConfirmSheet";
@@ -20,6 +21,7 @@ import {
 } from "@/features/history/timeline";
 import { usePlantEntries } from "@/features/history/useHistoryStore";
 import { usePlantCareLogs } from "@/features/history/usePlantCareLogs";
+import { usePlantSheetScroll } from "@/features/plants/components/PlantSheetScroll";
 import { usePlant } from "@/features/plants/usePlantStore";
 import { toISODate } from "@/utils/dates";
 import { pluralForm, t } from "@/utils/i18n";
@@ -41,6 +43,7 @@ export default function PlantHistoryScreen() {
 	const cares = usePlantCares(id);
 	const { undo } = useCareActions();
 	const { bottom } = useSafeAreaInsets();
+	const { onScroll, paddingTop } = usePlantSheetScroll();
 	const [showCares, setShowCares] = useState(true);
 	const [undoneLog, setUndoneLog] = useState<CareLog | null>(null);
 	const undoSheetRef = useRef<BottomSheetModal>(null);
@@ -95,11 +98,16 @@ export default function PlantHistoryScreen() {
 
 	return (
 		<View className="flex-1">
-			<FlatList
+			<Animated.FlatList
+				onScroll={onScroll}
+				scrollEventThrottle={16}
 				data={items}
 				keyExtractor={(item) => item.id}
-				contentContainerClassName="px-4 pt-3"
-				contentContainerStyle={{ paddingBottom: readOnly ? bottom + 16 : 16 }}
+				contentContainerClassName="px-4"
+				contentContainerStyle={{
+					paddingTop,
+					paddingBottom: readOnly ? bottom + 16 : 16,
+				}}
 				ListHeaderComponent={
 					<View className="mb-6 flex-row items-center justify-between gap-4">
 						<Text className="flex-1 font-outfit-semibold text-foreground">
