@@ -23,21 +23,22 @@ type PlantListRowProps = {
 function NextCareLine({ next, today }: { next: NextCare; today: string }) {
 	const { icon, text } = careAppearance[next.care.type];
 	const late = careStatus(next.dueDate, today).kind === "late";
+	// Late, the whole line turns red: a single color says it is urgent
+	const textClassName = late
+		? "font-outfit-semibold text-danger"
+		: "text-muted";
 	return (
 		<View className="flex-row items-center gap-1">
-			<Ionicons name={icon} size={14} className={text} />
+			<Ionicons name={icon} size={14} className={late ? "text-danger" : text} />
 			<Text
 				numberOfLines={1}
-				className={twMerge(
-					"shrink text-xs",
-					late ? "text-danger" : "text-muted",
-				)}
+				className={twMerge("shrink text-xs", textClassName)}
 			>
 				{`${careName(next.care.type)} · ${lowerFirst(dueLabel(next.dueDate, today))}`}
 			</Text>
 			{next.otherDueCount > 0 && (
 				<Text
-					className="text-xs text-muted"
+					className={twMerge("text-xs", textClassName)}
 					accessibilityLabel={t(
 						`care.otherDue.${pluralForm(next.otherDueCount)}`,
 						{ amount: next.otherDueCount },
