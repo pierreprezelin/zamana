@@ -26,6 +26,7 @@ Zamana started as an app for my own plants, but it's meant to be useful to every
 - 🌡️ Notifications about incoming storms, strong winds, abnormally hot or cold temperatures
 - 🖼️ A timeline with the photos you've taken of your plant to watch its evolution
 - 📚 Look up 300,000+ species to find your plant's exact name and a photo
+- 📷 Identify a plant from a photo with your own free Pl@ntNet key (opt-in)
 - ❓ Help articles about how to take care of your plants
 - 🎓 A pro-tip or fun fact about flora every day
 - 📍 No account: your plants and photos stay on your phone
@@ -44,6 +45,7 @@ Zamana started as an app for my own plants, but it's meant to be useful to every
 - [SQLite](https://sqlite.org/) for the local database
 - [Open-Meteo](https://open-meteo.com) for weather forecasts and city search
 - [iNaturalist](https://www.inaturalist.org) for species search
+- [Pl@ntNet](https://my.plantnet.org) for plant identification from photos
 - [Bun](https://bun.com/) as package manager
 - [Vercel](https://vercel.com/) and [Cloudflare](https://www.cloudflare.com/products/pages/) for hosting and deployments
 

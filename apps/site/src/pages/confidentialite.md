@@ -4,7 +4,7 @@ layout: ../layouts/LegalLayout.astro
 locale: fr
 title: Politique de confidentialité
 description: Ce que l’application Zamana fait de vos données, ce qu’elle envoie et à qui.
-updatedAt: 2026-11-24
+updatedAt: 2026-11-27
 ---
 
 Zamana est une application gratuite, sans publicité et **sans compte**. Vous n’avez rien à créer ni à renseigner pour l’utiliser, et aucune donnée n’est vendue ni utilisée à des fins publicitaires.
@@ -23,6 +23,7 @@ Quelques données quittent votre téléphone pour faire fonctionner l’applicat
 
 - **Open-Meteo**, pour les alertes météo : la ville que vous recherchez dans les réglages et, seulement si vous avez des plantes d’extérieur, votre position arrondie à environ 10 km et votre fuseau horaire pour les prévisions. Voir la [politique de confidentialité d’Open-Meteo](https://open-meteo.com/en/terms#privacy).
 - **iNaturalist**, pour l’encyclopédie des plantes : le texte de vos recherches de plantes, la langue et la version de l’application. Les plantes populaires sont chargées dès l’ouverture de l’encyclopédie, et les photos des plantes affichées ou ajoutées depuis l’encyclopédie sont servies par Amazon Web Services pour iNaturalist. Aucun compte ni aucune position ne sont envoyés. Voir la [politique de confidentialité d’iNaturalist](https://www.inaturalist.org/pages/privacy).
+- **Pl@ntNet**, seulement si vous avez renseigné votre propre clé API Pl@ntNet dans les réglages : les photos que vous choisissez d’identifier, réduites et débarrassées de leurs métadonnées, avec votre clé et la langue de l’application. Votre clé est gardée dans le stockage sécurisé du téléphone (Trousseau sur iOS, Keystore sur Android) et n’est envoyée qu’à Pl@ntNet. Voir les [conditions d’utilisation de Pl@ntNet](https://my.plantnet.org/terms_of_use).
 - **Le service de localisation de votre téléphone** (Apple ou Google), si vous choisissez « Ma position » : votre position arrondie, pour afficher le nom de la ville correspondante.
 - **L’API de Zamana**, hébergée par Vercel, pour vérifier que votre version de l’application est à jour : votre adresse IP et les informations techniques de la connexion. L’application compare elle-même sa version au minimum requis. Vercel conserve ces journaux techniques une heure. Voir la [politique de confidentialité de Vercel](https://vercel.com/legal/privacy-policy).
 - **Le site zamana.garden**, hébergé par Cloudflare, pour télécharger les articles d’aide : votre adresse IP et la langue de l’application. Voir la [politique de confidentialité de Cloudflare](https://www.cloudflare.com/privacypolicy/).
@@ -36,7 +37,7 @@ L’application ne demande une autorisation qu’au moment où elle en a besoin,
 
 - **Notifications** : pour vos rappels de soins et les alertes météo.
 - **Position approximative** : pour les alertes météo à l’endroit où vous êtes. Vous pouvez choisir une ville à la place.
-- **Appareil photo et photos** : pour illustrer vos plantes. Les photos choisies sont copiées dans l’application, réduites et débarrassées de leurs métadonnées (comme le lieu de la prise de vue), et restent sur votre téléphone.
+- **Appareil photo et photos** : pour illustrer vos plantes et, si vous l’avez activée, pour les identifier avec Pl@ntNet. Les photos choisies sont copiées dans l’application, réduites et débarrassées de leurs métadonnées (comme le lieu de la prise de vue), et restent sur votre téléphone, sauf celles que vous envoyez à Pl@ntNet pour identification.
 
 ## Durée de conservation et vos droits
 
