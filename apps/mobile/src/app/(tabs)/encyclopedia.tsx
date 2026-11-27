@@ -15,7 +15,11 @@ import {
 	type Category,
 	categoryTaxonIds,
 } from "@/features/encyclopedia/curatedPlants";
-import { countPlants, fetchTaxa } from "@/features/encyclopedia/inaturalist";
+import {
+	countPlants,
+	fetchTaxa,
+	type Taxon,
+} from "@/features/encyclopedia/inaturalist";
 import { useCachedFetch } from "@/features/encyclopedia/useCachedFetch";
 import { useTaxaSearch } from "@/features/encyclopedia/useTaxaSearch";
 import { usePlantStore } from "@/features/plants/usePlantStore";
@@ -65,6 +69,7 @@ function Encyclopedia() {
 	const [category, setCategory] = useState<Category>("popular");
 	const tabBarOffset = useTabBarOffset();
 	const { width } = useWindowDimensions();
+	const listRef = useRef<FlatList<Taxon>>(null);
 	const chipsRef = useRef<ComponentRef<typeof ScrollView>>(null);
 	const chipLayouts = useRef<
 		Partial<Record<Category, { x: number; width: number }>>
@@ -88,6 +93,13 @@ function Encyclopedia() {
 		fetchTaxa(categoryTaxonIds(category)),
 	);
 	const allPlants = useCachedFetch("plantCount", countPlants);
+
+	// New results start from the top, while the next pages of the same ones keep the scroll
+	const shownList = searching ? search.resultQuery : category;
+	// biome-ignore lint/correctness/useExhaustiveDependencies: shownList is the trigger, not a value read
+	useEffect(() => {
+		listRef.current?.scrollToOffset({ offset: 0, animated: false });
+	}, [shownList]);
 
 	const shown = searching
 		? {
@@ -120,6 +132,7 @@ function Encyclopedia() {
 					placeholder={t("encyclopedia.searchPlaceholder")}
 				/>
 				<FlatList
+					ref={listRef}
 					// Scrolls under the tab bar down to the screen edge, its scroll bar along the screen side
 					className="-mx-4 -mb-4"
 					// The previous results stay while the next search loads, rather than flashing an empty list

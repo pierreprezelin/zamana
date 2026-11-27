@@ -132,6 +132,7 @@ export const useTaxaSearch = (query: string) => {
 
 	return {
 		status: search.status,
+		resultQuery: search.resultQuery,
 		retry: search.retry,
 		taxa: completedTaxa,
 		isPhotoLoading,
