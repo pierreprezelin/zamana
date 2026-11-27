@@ -504,6 +504,7 @@
 				"one": "{{amount}} day late",
 				"other": "{{amount}} days late"
 			},
+			"lateShort": "Late\u00a0·\u00a0{{amount}}d",
 			"today": "Today",
 			"tomorrow": "Tomorrow",
 			"inDays": "In {{amount}} days",

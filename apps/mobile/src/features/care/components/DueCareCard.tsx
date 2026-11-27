@@ -6,7 +6,6 @@ import {
 	careName,
 	careSubtitle,
 	careVerb,
-	dueLabel,
 	handledLabel,
 } from "@/features/care/careLabels";
 import type { CareStatus } from "@/features/care/careSchedule";
@@ -18,24 +17,16 @@ import {
 } from "@/features/care/components/CareSwipeable";
 import { useCareActions } from "@/features/care/useCareActions";
 import type { Plant } from "@/features/plants/plantSchema";
-import { t } from "@/utils/i18n";
+import { pluralForm, t } from "@/utils/i18n";
 import { twMerge } from "@/utils/twMerge";
 
 type DueCareCardProps = {
 	care: Care;
 	plant: Plant;
-	dueDate: string;
 	status: CareStatus;
-	today: string;
 };
 
-export function DueCareCard({
-	care,
-	plant,
-	dueDate,
-	status,
-	today,
-}: DueCareCardProps) {
+export function DueCareCard({ care, plant, status }: DueCareCardProps) {
 	const appearance = careAppearance[care.type];
 	const { done, skip } = useCareActions();
 
@@ -51,8 +42,15 @@ export function DueCareCard({
 						{status.kind === "late" && (
 							// iOS does not round a Text background, hence the View
 							<View className="rounded-full bg-danger px-2 py-0.5">
-								<Text className="font-outfit-semibold text-xs text-on-danger">
-									{dueLabel(dueDate, today)}
+								<Text
+									numberOfLines={1}
+									accessibilityLabel={t(
+										`care.due.late.${pluralForm(status.days)}`,
+										{ amount: status.days },
+									)}
+									className="font-outfit-semibold text-xs text-on-danger"
+								>
+									{t("care.due.lateShort", { amount: status.days })}
 								</Text>
 							</View>
 						)}

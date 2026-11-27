@@ -508,6 +508,7 @@
 				"one": "En retard de {{amount}} jour",
 				"other": "En retard de {{amount}} jours"
 			},
+			"lateShort": "En\u00a0retard\u00a0·\u00a0{{amount}}\u00a0j",
 			"today": "Aujourd'hui",
 			"tomorrow": "Demain",
 			"inDays": "Dans {{amount}} jours",

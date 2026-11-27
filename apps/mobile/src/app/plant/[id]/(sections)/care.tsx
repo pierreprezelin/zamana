@@ -110,9 +110,7 @@ export default function PlantCareScreen() {
 									key={care.id}
 									care={care}
 									plant={plant}
-									dueDate={dueDate}
 									status={careStatus(dueDate, today)}
-									today={today}
 								/>
 							))
 						) : (
