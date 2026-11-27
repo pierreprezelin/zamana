@@ -140,10 +140,11 @@ export default function PlantSectionsLayout() {
 					<PlantPhoto photo={plant.photo} className="size-16 rounded-2xl" />
 					<View className="flex-1">
 						<Text
-							numberOfLines={1}
+							// The nickname and name length limits keep the shrink around 22px
+							numberOfLines={plant.nickname ? 1 : 2}
 							adjustsFontSizeToFit
-							minimumFontScale={0.7}
-							className="font-recoleta text-[28px] leading-[1.25] text-foreground"
+							minimumFontScale={0.78}
+							className="font-recoleta text-page-title text-foreground"
 						>
 							{displayName(plant)}
 						</Text>
