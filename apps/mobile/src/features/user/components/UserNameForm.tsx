@@ -2,6 +2,7 @@ import { useBottomSheetModal } from "@gorhom/bottom-sheet";
 import { useState } from "react";
 import Toast from "react-native-toast-message";
 import Button from "@/components/Button";
+import CharacterCount, { isNearLimit } from "@/components/CharacterCount";
 import FieldInput from "@/components/FieldInput";
 import Text from "@/components/Text";
 import {
@@ -63,6 +64,13 @@ export function UserNameForm() {
 				returnKeyType="done"
 				onSubmitEditing={submit}
 			/>
+			{isNearLimit(name.length, USER_NAME_MAX_LENGTH) && (
+				<CharacterCount
+					length={name.length}
+					max={USER_NAME_MAX_LENGTH}
+					className="-mt-3 text-right"
+				/>
+			)}
 			<Button title={t("common.save")} loading={saving} onPress={submit} />
 		</>
 	);

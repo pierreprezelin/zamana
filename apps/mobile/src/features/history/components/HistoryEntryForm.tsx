@@ -6,6 +6,7 @@ import { KeyboardAvoidingView, ScrollView, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Toast from "react-native-toast-message";
 import Button from "@/components/Button";
+import CharacterCount from "@/components/CharacterCount";
 import { ConfirmSheet } from "@/components/ConfirmSheet";
 import FieldInput from "@/components/FieldInput";
 import Text from "@/components/Text";
@@ -113,14 +114,11 @@ export function HistoryEntryForm({ plantId, entry }: HistoryEntryFormProps) {
 						textAlignVertical="top"
 						className="h-50 py-3"
 					/>
-					<Text
-						className={`text-right text-xs ${note.length >= NOTE_MAX_LENGTH ? "text-danger" : "text-muted"}`}
-					>
-						{t("history.noteCount", {
-							count: note.length,
-							max: NOTE_MAX_LENGTH,
-						})}
-					</Text>
+					<CharacterCount
+						length={note.length}
+						max={NOTE_MAX_LENGTH}
+						className="text-right"
+					/>
 				</View>
 			</ScrollView>
 

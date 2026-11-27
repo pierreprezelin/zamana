@@ -1,5 +1,6 @@
 {
 	"common": {
+		"characterCount": "{{length}} / {{max}} characters",
 		"back": "Back",
 		"cancel": "Cancel",
 		"clear": "Clear {{label}}",
@@ -225,7 +226,6 @@
 			"notes": "Notes",
 			"notesSummary": "Anecdotes, tips, quirks",
 			"notesPlaceholder": "E.g. A birthday gift, turn it towards the window now and then.",
-			"notesLength": "{{length}} / {{max}} characters",
 			"add": "Add the plant",
 			"delete": "Delete the plant",
 			"saved": "Your changes have been saved! 🎉",
@@ -637,7 +637,6 @@
 		"newEntry": "New entry",
 		"editEntry": "Edit entry",
 		"note": "Note",
-		"noteCount": "{{count}} / {{max}} characters",
 		"save": "Save entry",
 		"saved": "Entry saved",
 		"delete": "Delete entry",

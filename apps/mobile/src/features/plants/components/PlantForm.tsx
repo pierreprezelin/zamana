@@ -7,6 +7,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Toast from "react-native-toast-message";
 import AccordionSection from "@/components/AccordionSection";
 import Button from "@/components/Button";
+import CharacterCount, { isNearLimit } from "@/components/CharacterCount";
 import DateField from "@/components/DateField";
 import FieldInput from "@/components/FieldInput";
 import FieldLabel from "@/components/FieldLabel";
@@ -76,6 +77,7 @@ type LabeledFieldProps = {
 	helperClassName?: string;
 	onInfoPress?: () => void;
 	fieldRef?: (view: ViewRef | null) => void;
+	counter?: { length: number; max: number };
 	children: ReactNode;
 };
 
@@ -85,27 +87,33 @@ function LabeledField({
 	helperClassName = "text-muted",
 	onInfoPress,
 	fieldRef,
+	counter,
 	children,
 }: LabeledFieldProps) {
 	return (
 		<View ref={fieldRef}>
-			<View className="flex-row items-center gap-1.5">
-				<FieldLabel>{label}</FieldLabel>
-				{onInfoPress && (
-					<Pressable
-						accessibilityRole="button"
-						accessibilityLabel={t("common.learnMore", { label })}
-						pressedOpacity={0.5}
-						hitSlop={13}
-						onPress={onInfoPress}
-						className="mb-2"
-					>
-						<Ionicons
-							name="information-circle-outline"
-							size={18}
-							className="text-foreground"
-						/>
-					</Pressable>
+			<View className="flex-row items-end justify-between gap-2">
+				<View className="flex-row items-center gap-1.5">
+					<FieldLabel>{label}</FieldLabel>
+					{onInfoPress && (
+						<Pressable
+							accessibilityRole="button"
+							accessibilityLabel={t("common.learnMore", { label })}
+							pressedOpacity={0.5}
+							hitSlop={13}
+							onPress={onInfoPress}
+							className="mb-2"
+						>
+							<Ionicons
+								name="information-circle-outline"
+								size={18}
+								className="text-foreground"
+							/>
+						</Pressable>
+					)}
+				</View>
+				{counter && isNearLimit(counter.length, counter.max) && (
+					<CharacterCount {...counter} className="mb-2" />
 				)}
 			</View>
 			{children}
@@ -230,12 +238,10 @@ export function PlantForm({ plant, openSection, prefill }: PlantFormProps) {
 				unsavedPhoto = null;
 				router.back();
 			} else {
-				const id = await createPlant(data);
+				await createPlant(data);
 				unsavedPhoto = null;
 				successFeedback();
-				// The screens left behind, like an encyclopedia result, are done with
-				if (router.canDismiss()) router.dismissAll();
-				router.push(`/plant/${id}`);
+				router.dismissTo({ pathname: "/garden", params: { tab: "current" } });
 			}
 			if (photoFailed) {
 				showErrorToast(
@@ -292,6 +298,10 @@ export function PlantForm({ plant, openSection, prefill }: PlantFormProps) {
 						<LabeledField
 							label={t("plant.form.nickname")}
 							fieldRef={fieldRef("nickname")}
+							counter={{
+								length: form.nickname.length,
+								max: NICKNAME_MAX_LENGTH,
+							}}
 						>
 							<FieldInput
 								accessibilityLabel={t("plant.form.nickname")}
@@ -305,6 +315,7 @@ export function PlantForm({ plant, openSection, prefill }: PlantFormProps) {
 						<LabeledField
 							label={t("plant.form.nameRequired")}
 							fieldRef={fieldRef("name")}
+							counter={{ length: form.name.length, max: NAME_MAX_LENGTH }}
 						>
 							<FieldInput
 								accessibilityLabel={t("plant.form.name")}
@@ -345,6 +356,10 @@ export function PlantForm({ plant, openSection, prefill }: PlantFormProps) {
 							<LabeledField
 								label={t("plant.form.scientificName")}
 								fieldRef={fieldRef("scientificName")}
+								counter={{
+									length: form.scientificName.length,
+									max: SCIENTIFIC_NAME_MAX_LENGTH,
+								}}
 							>
 								<FieldInput
 									accessibilityLabel={t("plant.form.scientificName")}
@@ -528,14 +543,11 @@ export function PlantForm({ plant, openSection, prefill }: PlantFormProps) {
 									textAlignVertical="top"
 									className="h-40 py-3"
 								/>
-								<Text
-									className={`mt-1 text-right text-xs ${form.notes.length >= NOTES_MAX_LENGTH ? "text-danger" : "text-muted"}`}
-								>
-									{t("plant.form.notesLength", {
-										length: form.notes.length,
-										max: NOTES_MAX_LENGTH,
-									})}
-								</Text>
+								<CharacterCount
+									length={form.notes.length}
+									max={NOTES_MAX_LENGTH}
+									className="mt-1 text-right"
+								/>
 							</View>
 						</AccordionSection>
 					</View>

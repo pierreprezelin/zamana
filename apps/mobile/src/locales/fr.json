@@ -1,5 +1,6 @@
 {
 	"common": {
+		"characterCount": "{{length}} / {{max}} caractères",
 		"back": "Retour",
 		"cancel": "Annuler",
 		"clear": "Effacer {{label}}",
@@ -225,7 +226,6 @@
 			"notes": "Notes",
 			"notesSummary": "Anecdotes, conseils, particularités",
 			"notesPlaceholder": "Ex : Offerte pour mon anniversaire, à tourner vers la fenêtre de temps en temps.",
-			"notesLength": "{{length}} / {{max}} caractères",
 			"add": "Ajouter la plante",
 			"delete": "Supprimer la plante",
 			"saved": "Les informations ont bien été enregistrées ! 🎉",
@@ -641,7 +641,6 @@
 		"newEntry": "Nouvelle entrée",
 		"editEntry": "Modifier l’entrée",
 		"note": "Note",
-		"noteCount": "{{count}} / {{max}} caractères",
 		"save": "Enregistrer l’entrée",
 		"saved": "Entrée enregistrée",
 		"delete": "Supprimer l’entrée",
