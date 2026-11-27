@@ -4,7 +4,9 @@ import Button from "@/components/Button";
 import FieldLabel from "@/components/FieldLabel";
 import { Ionicons } from "@/components/ionicons";
 import OptionList from "@/components/OptionList";
-import SearchField from "@/components/SearchField";
+import SearchField, {
+	REMOTE_SEARCH_MAX_LENGTH,
+} from "@/components/SearchField";
 import SegmentedControl from "@/components/SegmentedControl";
 import Text from "@/components/Text";
 import WarningBanner from "@/components/WarningBanner";
@@ -81,6 +83,7 @@ function CitySearch() {
 				value={query}
 				onChangeText={setQuery}
 				placeholder={t("weather.settings.searchPlaceholder")}
+				maxLength={REMOTE_SEARCH_MAX_LENGTH}
 			/>
 			{search.status === "error" && (
 				<Text className="text-xs text-muted">

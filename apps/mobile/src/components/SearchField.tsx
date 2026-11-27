@@ -4,16 +4,21 @@ import { Ionicons } from "@/components/ionicons";
 import Pressable from "@/components/Pressable";
 import { t } from "@/utils/i18n";
 
+// Caps queries sent to a third-party API, like a long text pasted by mistake
+export const REMOTE_SEARCH_MAX_LENGTH = 100;
+
 type SearchFieldProps = {
 	value: string;
 	onChangeText: (text: string) => void;
 	placeholder: string;
+	maxLength?: number;
 };
 
 export default function SearchField({
 	value,
 	onChangeText,
 	placeholder,
+	maxLength,
 }: SearchFieldProps) {
 	return (
 		<View className="justify-center">
@@ -21,6 +26,7 @@ export default function SearchField({
 				value={value}
 				onChangeText={onChangeText}
 				placeholder={placeholder}
+				maxLength={maxLength}
 				accessibilityLabel={placeholder}
 				autoCorrect={false}
 				returnKeyType="search"

@@ -2,7 +2,9 @@ import { useNavigation } from "expo-router";
 import { type ComponentRef, useEffect, useRef, useState } from "react";
 import { FlatList, ScrollView, useWindowDimensions, View } from "react-native";
 import Chip from "@/components/Chip";
-import SearchField from "@/components/SearchField";
+import SearchField, {
+	REMOTE_SEARCH_MAX_LENGTH,
+} from "@/components/SearchField";
 import StatusCard from "@/components/StatusCard";
 import { useTabBarOffset } from "@/components/TabBar";
 import { TabScreen } from "@/components/TabScreen";
@@ -130,6 +132,7 @@ function Encyclopedia() {
 					value={query}
 					onChangeText={setQuery}
 					placeholder={t("encyclopedia.searchPlaceholder")}
+					maxLength={REMOTE_SEARCH_MAX_LENGTH}
 				/>
 				<FlatList
 					ref={listRef}
