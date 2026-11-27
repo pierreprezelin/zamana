@@ -1,5 +1,4 @@
 import { View } from "react-native";
-import { twMerge } from "tailwind-merge";
 import Text from "@/components/Text";
 import { careAppearance } from "@/features/care/careAppearance";
 import { careName, dueLabel, handledLabel } from "@/features/care/careLabels";
@@ -14,6 +13,7 @@ import { useCareActions } from "@/features/care/useCareActions";
 import { useCarePreferencesStore } from "@/features/care/useCarePreferencesStore";
 import type { Plant } from "@/features/plants/plantSchema";
 import { t } from "@/utils/i18n";
+import { twMerge } from "@/utils/twMerge";
 
 type TaskRowProps = { task: TodayTask; plant: Plant; today: string };
 

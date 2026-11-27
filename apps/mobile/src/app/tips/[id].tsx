@@ -26,7 +26,7 @@ export default function ArticleScreen() {
 				<>
 					<Text
 						accessibilityRole="header"
-						className="font-recoleta text-[28px] leading-[1.25] text-foreground"
+						className="font-recoleta text-page-title text-foreground"
 					>
 						{article.title}
 					</Text>

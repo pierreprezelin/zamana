@@ -86,7 +86,7 @@ export default function EncyclopediaResultScreen() {
 						)}
 					</View>
 					<View>
-						<Text className="font-recoleta text-[28px] leading-[1.25] text-foreground">
+						<Text className="font-recoleta text-page-title text-foreground">
 							{taxon.name}
 						</Text>
 						<Text className="text-base text-muted">{taxon.scientificName}</Text>

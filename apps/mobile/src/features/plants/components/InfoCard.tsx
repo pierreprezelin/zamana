@@ -21,7 +21,9 @@ export function InfoCard({ title, rows }: InfoCardProps) {
 
 	return (
 		<View className="gap-3">
-			<Text className="font-recoleta text-xl text-foreground">{title}</Text>
+			<Text className="font-recoleta text-card-title text-foreground">
+				{title}
+			</Text>
 			<View className="rounded-2xl border border-line bg-surface px-4">
 				{filledRows.map((row, index) => (
 					<View

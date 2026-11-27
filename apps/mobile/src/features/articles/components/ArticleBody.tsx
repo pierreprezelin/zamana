@@ -41,7 +41,7 @@ export function ArticleBody({ markdown }: { markdown: string }) {
 						<Text
 							key={key}
 							accessibilityRole="header"
-							className="mt-2 font-recoleta text-xl text-foreground"
+							className="mt-2 font-recoleta text-card-title text-foreground"
 						>
 							{block.text}
 						</Text>

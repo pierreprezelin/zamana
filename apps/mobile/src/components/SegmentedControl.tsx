@@ -6,10 +6,10 @@ import Animated, {
 	useSharedValue,
 	withTiming,
 } from "react-native-reanimated";
-import { twMerge } from "tailwind-merge";
 import { INDICATOR_TIMING } from "@/components/TabBar";
 import Text from "@/components/Text";
 import { selectionFeedback } from "@/utils/haptics";
+import { twMerge } from "@/utils/twMerge";
 
 const CONTAINER_PADDING = 2;
 

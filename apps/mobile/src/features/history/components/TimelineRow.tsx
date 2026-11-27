@@ -1,5 +1,4 @@
 import { View } from "react-native";
-import { twMerge } from "tailwind-merge";
 import { Ionicons, type IoniconsIconName } from "@/components/ionicons";
 import Pressable from "@/components/Pressable";
 import Text from "@/components/Text";
@@ -9,6 +8,7 @@ import type { TimelineItem } from "@/features/history/timeline";
 import { PlantPhoto } from "@/features/plants/components/PlantPhoto";
 import { formatDateTime } from "@/utils/dates";
 import { t } from "@/utils/i18n";
+import { twMerge } from "@/utils/twMerge";
 
 type RowAction = {
 	icon: IoniconsIconName;

@@ -10,7 +10,7 @@ import Animated, {
 	withSequence,
 	withTiming,
 } from "react-native-reanimated";
-import { twMerge } from "tailwind-merge";
+import { twMerge } from "@/utils/twMerge";
 
 const AnimatedPressable = Animated.createAnimatedComponent(RNPressable);
 

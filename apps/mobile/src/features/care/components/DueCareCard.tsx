@@ -1,5 +1,4 @@
 import { View } from "react-native";
-import { twMerge } from "tailwind-merge";
 import Button from "@/components/Button";
 import Text from "@/components/Text";
 import { careAppearance } from "@/features/care/careAppearance";
@@ -20,6 +19,7 @@ import {
 import { useCareActions } from "@/features/care/useCareActions";
 import type { Plant } from "@/features/plants/plantSchema";
 import { t } from "@/utils/i18n";
+import { twMerge } from "@/utils/twMerge";
 
 type DueCareCardProps = {
 	care: Care;

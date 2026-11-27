@@ -1,12 +1,12 @@
 import { Link } from "expo-router";
 import { type StyleProp, View, type ViewStyle } from "react-native";
-import { twMerge } from "tailwind-merge";
 import Pressable from "@/components/Pressable";
 import Text from "@/components/Text";
 import { PlantPhoto } from "@/features/plants/components/PlantPhoto";
 import { displayName } from "@/features/plants/plantLabels";
 import { archiveReasonLabel } from "@/features/plants/plantOptions";
 import type { Plant } from "@/features/plants/plantSchema";
+import { twMerge } from "@/utils/twMerge";
 
 type PlantCardProps = {
 	plant: Plant;

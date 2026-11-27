@@ -20,14 +20,14 @@ export default function AboutScreen() {
 			contentContainerStyle={{ paddingBottom: bottom + 16 }}
 		>
 			<View className="gap-3">
-				<Text className="font-recoleta text-xl text-foreground">
+				<Text className="font-recoleta text-card-title text-foreground">
 					{t("about.story.title")}
 				</Text>
 				<Text className="text-muted">{t("about.story.tree")}</Text>
 				<Text className="text-muted">{t("about.story.tribute")}</Text>
 			</View>
 			<View className="gap-3">
-				<Text className="font-recoleta text-xl text-foreground">
+				<Text className="font-recoleta text-card-title text-foreground">
 					{t("about.openSource.title")}
 				</Text>
 				<Text className="text-muted">{t("about.openSource.license")}</Text>

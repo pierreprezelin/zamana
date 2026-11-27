@@ -96,6 +96,14 @@
 	--font-outfit: "Outfit-Regular";
 	--font-outfit-semibold: "Outfit-SemiBold";
 	--font-recoleta: "Recoleta-SemiBold";
+
+	/* Recoleta has a tall ascender: under ~1.2 accented capitals get clipped on Android */
+	--text-page-title: 28px;
+	--text-page-title--line-height: 34px;
+	--text-section-title: 24px;
+	--text-section-title--line-height: 30px;
+	--text-card-title: 20px;
+	--text-card-title--line-height: 26px;
 }
 
 @theme static {

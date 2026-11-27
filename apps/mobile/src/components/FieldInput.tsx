@@ -1,8 +1,8 @@
 import { BottomSheetTextInput } from "@gorhom/bottom-sheet";
 import { TextInput, type TextInputProps, View } from "react-native";
-import { twMerge } from "tailwind-merge";
 import { withUniwind } from "uniwind";
 import Text from "@/components/Text";
+import { twMerge } from "@/utils/twMerge";
 
 const StyledBottomSheetTextInput = withUniwind(BottomSheetTextInput);
 

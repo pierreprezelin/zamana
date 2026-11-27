@@ -1,11 +1,11 @@
 import { Image } from "expo-image";
 import { useState } from "react";
 import { View } from "react-native";
-import { twMerge } from "tailwind-merge";
 import { withUniwind } from "uniwind";
 import { Ionicons } from "@/components/ionicons";
 import Skeleton from "@/components/Skeleton";
 import { photoUri } from "@/features/plants/plantPhoto";
+import { twMerge } from "@/utils/twMerge";
 
 const StyledImage = withUniwind(Image);
 

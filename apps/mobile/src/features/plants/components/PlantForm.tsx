@@ -272,7 +272,7 @@ export function PlantForm({ plant, openSection, prefill }: PlantFormProps) {
 				<View ref={contentRef} className="gap-8">
 					{prefill?.isPartial && <LimitedInfoNote />}
 					<View className="gap-4">
-						<Text className="font-recoleta text-xl text-foreground">
+						<Text className="font-recoleta text-card-title text-foreground">
 							{t("plant.form.photo")}
 						</Text>
 						<PhotoPicker
@@ -286,7 +286,7 @@ export function PlantForm({ plant, openSection, prefill }: PlantFormProps) {
 					</View>
 
 					<View className="gap-4">
-						<Text className="font-recoleta text-xl text-foreground">
+						<Text className="font-recoleta text-card-title text-foreground">
 							{t("plant.form.identity")}
 						</Text>
 						<LabeledField
@@ -332,7 +332,7 @@ export function PlantForm({ plant, openSection, prefill }: PlantFormProps) {
 					</View>
 
 					<View className="gap-2">
-						<Text className="pb-1 font-recoleta text-xl text-foreground">
+						<Text className="pb-1 font-recoleta text-card-title text-foreground">
 							{t("plant.form.information")}
 						</Text>
 

@@ -1,6 +1,6 @@
 import type { ComponentRef, Ref } from "react";
 import { Text as RNText, type TextProps } from "react-native";
-import { twMerge } from "tailwind-merge";
+import { twMerge } from "@/utils/twMerge";
 
 export default function Text({
 	className,

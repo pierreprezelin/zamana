@@ -7,9 +7,9 @@ import Animated, {
 	withRepeat,
 	withTiming,
 } from "react-native-reanimated";
-import { twMerge } from "tailwind-merge";
 import { withUniwind } from "uniwind";
 import { t } from "@/utils/i18n";
+import { twMerge } from "@/utils/twMerge";
 
 const StyledAnimatedView = withUniwind(Animated.View);
 

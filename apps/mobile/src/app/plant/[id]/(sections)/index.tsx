@@ -123,7 +123,7 @@ export default function PlantInformationScreen() {
 				/>
 				{plant.notes && (
 					<View className="gap-3">
-						<Text className="font-recoleta text-xl text-foreground">
+						<Text className="font-recoleta text-card-title text-foreground">
 							{t("plant.info.notes")}
 						</Text>
 						<Text className="rounded-2xl border border-line bg-surface p-4 text-foreground">

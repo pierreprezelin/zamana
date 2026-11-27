@@ -1,7 +1,7 @@
-import { twMerge } from "tailwind-merge";
 import Pressable, { type PressableProps } from "@/components/Pressable";
 import Text from "@/components/Text";
 import { selectionFeedback } from "@/utils/haptics";
+import { twMerge } from "@/utils/twMerge";
 
 interface ChipProps extends PressableProps {
 	label: string;

@@ -3,10 +3,10 @@ import type {
 	ToastConfig,
 	ToastConfigParams,
 } from "react-native-toast-message";
-import { twMerge } from "tailwind-merge";
 import { Ionicons, type IoniconsIconName } from "@/components/ionicons";
 import { TAB_BAR_SHADOW } from "@/components/TabBar";
 import Text from "@/components/Text";
+import { twMerge } from "@/utils/twMerge";
 
 const variants: Record<
 	string,

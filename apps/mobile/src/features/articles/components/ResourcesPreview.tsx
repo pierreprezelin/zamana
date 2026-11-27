@@ -13,7 +13,7 @@ export function ResourcesPreview() {
 	return (
 		<View className="gap-3">
 			<View className="flex-row items-center justify-between">
-				<Text className="font-recoleta text-2xl text-foreground">
+				<Text className="font-recoleta text-section-title text-foreground">
 					{t("resources.title")}
 				</Text>
 				<Link href="/tips">

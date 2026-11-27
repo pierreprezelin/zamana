@@ -11,7 +11,6 @@ import Animated, {
 	useSharedValue,
 } from "react-native-reanimated";
 import { scheduleOnRN } from "react-native-worklets";
-import { twMerge } from "tailwind-merge";
 import { Ionicons, type IoniconsIconName } from "@/components/ionicons";
 import Pressable from "@/components/Pressable";
 import Text from "@/components/Text";
@@ -24,6 +23,7 @@ import {
 } from "@/features/care/swipeThreshold";
 import { selectionFeedback } from "@/utils/haptics";
 import { t } from "@/utils/i18n";
+import { twMerge } from "@/utils/twMerge";
 
 export type SwipeAction = "done" | "skip" | "undo";
 

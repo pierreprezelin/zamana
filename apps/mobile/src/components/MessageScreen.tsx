@@ -12,7 +12,7 @@ type MessageScreenProps = {
 export function MessageScreen({ title, text, action }: MessageScreenProps) {
 	return (
 		<View className="flex-1 items-center justify-center gap-4 bg-background p-6">
-			<Text className="text-center font-recoleta text-2xl text-foreground">
+			<Text className="text-center font-recoleta text-section-title text-foreground">
 				{title}
 			</Text>
 			<Text className="text-center text-muted">{text}</Text>

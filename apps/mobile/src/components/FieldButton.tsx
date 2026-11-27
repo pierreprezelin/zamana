@@ -1,9 +1,9 @@
 import { View } from "react-native";
-import { twMerge } from "tailwind-merge";
 import { Ionicons, type IoniconsIconName } from "@/components/ionicons";
 import Pressable from "@/components/Pressable";
 import Text from "@/components/Text";
 import { t } from "@/utils/i18n";
+import { twMerge } from "@/utils/twMerge";
 
 type FieldButtonProps = {
 	value: string | null;

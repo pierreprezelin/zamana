@@ -1,8 +1,8 @@
 import type { ComponentRef, Ref } from "react";
 import type { View } from "react-native";
-import { twMerge } from "tailwind-merge";
 import { Ionicons, type IoniconsIconName } from "@/components/ionicons";
 import Pressable, { type PressableProps } from "@/components/Pressable";
+import { twMerge } from "@/utils/twMerge";
 
 interface HeaderIconButtonProps extends PressableProps {
 	ref?: Ref<ComponentRef<typeof View>>;

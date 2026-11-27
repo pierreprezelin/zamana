@@ -1,8 +1,8 @@
 import { View } from "react-native";
-import { twMerge } from "tailwind-merge";
 import { Ionicons } from "@/components/ionicons";
 import { careAppearance } from "@/features/care/careAppearance";
 import type { CareType } from "@/features/care/careTypes";
+import { twMerge } from "@/utils/twMerge";
 
 // The badge matches the height of the buttons on its row
 const SIZES = {

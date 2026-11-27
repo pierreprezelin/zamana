@@ -1,6 +1,5 @@
 import { View } from "react-native";
 import Toast from "react-native-toast-message";
-import { twMerge } from "tailwind-merge";
 import Button from "@/components/Button";
 import { Ionicons } from "@/components/ionicons";
 import Text from "@/components/Text";
@@ -19,6 +18,7 @@ import { useCarePreferencesStore } from "@/features/care/useCarePreferencesStore
 import { useRemindersOff } from "@/features/notifications/useRemindersOff";
 import type { Plant } from "@/features/plants/plantSchema";
 import { lowerFirst, t } from "@/utils/i18n";
+import { twMerge } from "@/utils/twMerge";
 
 type UpcomingCareRowProps = {
 	care: Care;

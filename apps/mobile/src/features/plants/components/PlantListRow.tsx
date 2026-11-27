@@ -1,7 +1,6 @@
 import { Link } from "expo-router";
 import { memo } from "react";
 import { View } from "react-native";
-import { twMerge } from "tailwind-merge";
 import { Ionicons } from "@/components/ionicons";
 import Pressable from "@/components/Pressable";
 import Text from "@/components/Text";
@@ -13,6 +12,7 @@ import { displayName } from "@/features/plants/plantLabels";
 import { archiveReasonLabel } from "@/features/plants/plantOptions";
 import type { Plant } from "@/features/plants/plantSchema";
 import { lowerFirst, pluralForm, t } from "@/utils/i18n";
+import { twMerge } from "@/utils/twMerge";
 
 type PlantListRowProps = {
 	plant: Plant;
@@ -24,7 +24,7 @@ function NextCareLine({ next, today }: { next: NextCare; today: string }) {
 	const { icon, text } = careAppearance[next.care.type];
 	const late = careStatus(next.dueDate, today).kind === "late";
 	return (
-		<View className="mt-0.5 flex-row items-center gap-1">
+		<View className="flex-row items-center gap-1">
 			<Ionicons name={icon} size={14} className={text} />
 			<Text
 				numberOfLines={1}
@@ -66,7 +66,7 @@ export const PlantListRow = memo(function PlantListRow({
 				<View className="flex-1">
 					<Text
 						numberOfLines={1}
-						className="font-recoleta text-xl text-foreground"
+						className="font-recoleta text-card-title text-foreground"
 					>
 						{displayName(plant)}
 					</Text>

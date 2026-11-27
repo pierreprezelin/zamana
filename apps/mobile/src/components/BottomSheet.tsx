@@ -75,7 +75,7 @@ export default function BottomSheet({
 			>
 				<View className={`gap-4 p-4 ${closable ? "pt-0" : ""}`}>
 					<View className="flex-row items-center justify-between gap-4">
-						<Text className="flex-1 font-recoleta text-2xl leading-[1.25] text-foreground mt-1.5">
+						<Text className="flex-1 font-recoleta text-section-title text-foreground mt-1.5">
 							{title}
 						</Text>
 						{closable && (

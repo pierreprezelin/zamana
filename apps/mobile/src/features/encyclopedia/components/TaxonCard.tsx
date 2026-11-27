@@ -32,7 +32,7 @@ export const TaxonCard = memo(function TaxonCard({
 					<View className="flex-1">
 						<Text
 							numberOfLines={1}
-							className="font-recoleta text-xl text-foreground"
+							className="font-recoleta text-card-title text-foreground"
 						>
 							{taxon.name}
 						</Text>

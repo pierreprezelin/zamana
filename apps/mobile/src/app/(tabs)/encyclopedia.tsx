@@ -178,7 +178,7 @@ function Encyclopedia() {
 								</ScrollView>
 							)}
 							{searching && (
-								<Text className="font-recoleta text-xl text-foreground">
+								<Text className="font-recoleta text-card-title text-foreground">
 									{t("encyclopedia.results")}
 								</Text>
 							)}

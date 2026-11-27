@@ -20,7 +20,7 @@ export function EmptyGarden({
 			>
 				<Ionicons name="file-tray-outline" size={26} className="text-primary" />
 			</View>
-			<Text className="w-70 text-center font-recoleta text-xl text-foreground">
+			<Text className="w-70 text-center font-recoleta text-card-title text-foreground">
 				{t("garden.empty")}
 			</Text>
 			<Link href="/plant/new" asChild>

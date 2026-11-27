@@ -75,7 +75,7 @@ export default function WelcomeScreen() {
 							<View className="size-16 items-center justify-center rounded-full bg-primary/5">
 								<Ionicons name={step.icon} size={26} className="text-primary" />
 							</View>
-							<Text className="mt-5 text-center font-recoleta text-[28px] leading-[1.25] text-foreground">
+							<Text className="mt-5 text-center font-recoleta text-page-title text-foreground">
 								{t(`welcome.${step.key}.title`)}
 							</Text>
 							<Text className="mt-5 px-5 text-center text-base text-muted">

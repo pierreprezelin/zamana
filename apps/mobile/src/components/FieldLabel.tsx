@@ -1,6 +1,6 @@
 import type { TextProps } from "react-native";
-import { twMerge } from "tailwind-merge";
 import Text from "@/components/Text";
+import { twMerge } from "@/utils/twMerge";
 
 export default function FieldLabel({ className, ...props }: TextProps) {
 	return (

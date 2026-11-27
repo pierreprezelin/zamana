@@ -82,7 +82,7 @@ export default function TipsScreen() {
 							contentContainerClassName="gap-3 px-4"
 							contentContainerStyle={{ paddingBottom: tabBarOffset + 16 }}
 						>
-							<Text className="font-recoleta text-xl text-foreground">
+							<Text className="font-recoleta text-card-title text-foreground">
 								{t("articles.categoriesTitle")}
 							</Text>
 							<View className="gap-2">

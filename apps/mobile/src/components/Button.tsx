@@ -1,8 +1,8 @@
 import { ActivityIndicator } from "react-native";
-import { twMerge } from "tailwind-merge";
 import { Ionicons, type IoniconsIconName } from "@/components/ionicons";
 import Pressable, { type PressableProps } from "@/components/Pressable";
 import Text from "@/components/Text";
+import { twMerge } from "@/utils/twMerge";
 
 const variants = {
 	primary: {

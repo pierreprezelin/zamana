@@ -11,7 +11,7 @@ import { t } from "@/utils/i18n";
 export function NeedsSection({ plant }: { plant: PlantNeeds }) {
 	return (
 		<View className="gap-3">
-			<Text className="font-recoleta text-xl text-foreground">
+			<Text className="font-recoleta text-card-title text-foreground">
 				{t("plant.info.needs")}
 			</Text>
 			<View className="gap-2">

@@ -1,4 +1,4 @@
-import { nativeApplicationVersion, nativeBuildVersion } from "expo-application";
+import { nativeApplicationVersion } from "expo-application";
 import { Link, router } from "expo-router";
 import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -68,8 +68,7 @@ export default function SettingsScreen() {
 				/>
 			</View>
 			<Text className="mt-auto text-center text-xs text-foreground opacity-50">
-				v{nativeApplicationVersion}b (Preview Build {nativeBuildVersion}) ·{" "}
-				{t("settings.openSource")}
+				v{nativeApplicationVersion}-beta.2 · {t("settings.openSource")}
 			</Text>
 		</View>
 	);

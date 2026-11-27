@@ -27,7 +27,7 @@ export function TabScreen({
 		<>
 			<View className="flex-row items-start justify-between gap-4">
 				<View className="flex-1">
-					<Text className="font-recoleta text-[28px] text-foreground">
+					<Text className="font-recoleta text-page-title text-foreground">
 						{title}
 					</Text>
 					{subtitle && <Text className="text-base text-muted">{subtitle}</Text>}
