@@ -591,8 +591,8 @@
 			"wateringRemindersHelper": "Notification le jour prévu.",
 			"waterNeed": "Besoin en eau",
 			"currentInterval": {
-				"one": "En ce moment : tous les jours. Modifie aussi le besoin affiché dans Informations.",
-				"other": "En ce moment : tous les {{amount}} jours. Modifie aussi le besoin affiché dans Informations."
+				"one": "En ce moment : tous les jours, plus espacé en saison de repos selon votre climat (Paramètres › Localisation). Modifie aussi le besoin affiché dans Informations.",
+				"other": "En ce moment : tous les {{amount}} jours, plus espacé en saison de repos selon votre climat (Paramètres › Localisation). Modifie aussi le besoin affiché dans Informations."
 			},
 			"stop": "Ne plus suivre ce soin"
 		},
@@ -617,7 +617,7 @@
 		},
 		"preferences": {
 			"climate": "Climat",
-			"climateHelper": "Adapte l'arrosage aux saisons de croissance et de repos.",
+			"climateHelper": "Nord et Sud : l'arrosage s'espace automatiquement pendant la saison de repos (d'octobre à mars au Nord, d'avril à septembre au Sud). Tropiques : le même rythme toute l'année.",
 			"climates": {
 				"north": "Nord",
 				"south": "Sud",

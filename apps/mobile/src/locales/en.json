@@ -587,8 +587,8 @@
 			"wateringRemindersHelper": "A notification on the due day.",
 			"waterNeed": "Water need",
 			"currentInterval": {
-				"one": "Right now: every day. Also changes the need shown in Details.",
-				"other": "Right now: every {{amount}} days. Also changes the need shown in Details."
+				"one": "Right now: every day, spaced out in the rest season based on your climate (Settings › Location). Also changes the need shown in Details.",
+				"other": "Right now: every {{amount}} days, spaced out in the rest season based on your climate (Settings › Location). Also changes the need shown in Details."
 			},
 			"stop": "Stop tracking this care"
 		},
@@ -613,7 +613,7 @@
 		},
 		"preferences": {
 			"climate": "Climate",
-			"climateHelper": "Adapts watering to the growing and rest seasons.",
+			"climateHelper": "North and South: watering is automatically spaced out during the rest season (October to March in the North, April to September in the South). Tropics: the same pace all year round.",
 			"climates": {
 				"north": "North",
 				"south": "South",
