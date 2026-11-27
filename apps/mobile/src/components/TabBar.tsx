@@ -1,4 +1,3 @@
-import { Link } from "expo-router";
 import type { TabTriggerSlotProps } from "expo-router/ui";
 import { useCallback, useEffect, useState } from "react";
 import {
@@ -19,10 +18,8 @@ import Animated, {
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Ionicons, type IoniconsIconName } from "@/components/ionicons";
-import PressFeedback from "@/components/Pressable";
 import type { tabs } from "@/constants/tabs";
 import { selectionFeedback } from "@/utils/haptics";
-import { t } from "@/utils/i18n";
 
 const MIN_BOTTOM_OFFSET = 16;
 const TAB_BAR_HEIGHT = 56;
@@ -56,6 +53,7 @@ function TabBarItemContent({
 		<View className="items-center">
 			<Ionicons name={iconName} size={20} className={colorClassName} />
 			<Text
+				numberOfLines={1}
 				className={`font-outfit text-[10px] leading-[15px] ${colorClassName}`}
 			>
 				{label}
@@ -196,26 +194,4 @@ export function useTabBarBottom() {
 // Space covered by the floating tab bar at the bottom of a tab screen
 export function useTabBarOffset() {
 	return useTabBarBottom() + TAB_BAR_HEIGHT;
-}
-
-export function TabBarAddButton() {
-	const bottom = useTabBarBottom();
-
-	return (
-		<View
-			className="absolute right-5 size-14 rounded-full bg-surface p-1"
-			style={{ bottom, boxShadow: TAB_BAR_SHADOW }}
-		>
-			<Link href="/plant/new" asChild>
-				<PressFeedback
-					accessibilityRole="button"
-					accessibilityLabel={t("garden.addPlant")}
-					pressedClassName="bg-white/10"
-					className="flex-1 items-center justify-center rounded-full bg-primary"
-				>
-					<Ionicons name="add" size={28} className="text-on-primary" />
-				</PressFeedback>
-			</Link>
-		</View>
-	);
 }

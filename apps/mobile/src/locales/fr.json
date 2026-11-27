@@ -93,6 +93,7 @@
 		"seeMore": "En savoir plus"
 	},
 	"tabs": {
+		"care": "Entretien",
 		"add": "Ajouter",
 		"encyclopedia": "Encyclopédie",
 		"garden": "Jardin",
@@ -526,7 +527,11 @@
 				"other": "{{amount}} soins à faire"
 			},
 			"done": { "one": "{{amount}} fait", "other": "{{amount}} faits" },
-			"skipped": { "one": "{{amount}} reporté", "other": "{{amount}} reportés" }
+			"skipped": {
+				"one": "{{amount}} reporté",
+				"other": "{{amount}} reportés"
+			},
+			"upcoming": "{{amount}} à venir"
 		},
 		"todo": "À faire",
 		"upcoming": "Prochains soins",
@@ -627,6 +632,20 @@
 				"done": "La faire",
 				"skip": "La reporter"
 			}
+		}
+	},
+	"careOverview": {
+		"title": "Entretien",
+		"upToDate": {
+			"title": "{{care}} : rien à faire 🌿",
+			"allDone": "{{care}} : tout est fait 🎉"
+		},
+		"next": "Prochain : {{name}}, {{due}}.",
+		"handledToday": "Fait aujourd'hui",
+		"noCare": {
+			"title": "Aucun soin suivi",
+			"description": "Configurez l'arrosage, l'engrais… depuis la fiche de vos plantes pour les retrouver ici.",
+			"seeGarden": "Voir mon jardin"
 		}
 	},
 	"history": {

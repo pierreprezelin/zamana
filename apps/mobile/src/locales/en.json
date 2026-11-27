@@ -93,6 +93,7 @@
 		"seeMore": "Learn more"
 	},
 	"tabs": {
+		"care": "Care",
 		"add": "Add",
 		"encyclopedia": "Encyclopedia",
 		"garden": "Garden",
@@ -522,7 +523,8 @@
 				"other": "{{amount}} cares to do"
 			},
 			"done": { "one": "{{amount}} done", "other": "{{amount}} done" },
-			"skipped": { "one": "{{amount}} skipped", "other": "{{amount}} skipped" }
+			"skipped": { "one": "{{amount}} skipped", "other": "{{amount}} skipped" },
+			"upcoming": "{{amount}} upcoming"
 		},
 		"todo": "To do",
 		"upcoming": "Upcoming care",
@@ -623,6 +625,20 @@
 				"done": "Do it",
 				"skip": "Skip it"
 			}
+		}
+	},
+	"careOverview": {
+		"title": "Care",
+		"upToDate": {
+			"title": "{{care}}: nothing to do 🌿",
+			"allDone": "{{care}}: all done 🎉"
+		},
+		"next": "Next: {{name}}, {{due}}.",
+		"handledToday": "Done today",
+		"noCare": {
+			"title": "No care tracked",
+			"description": "Set up watering, fertilizing… from your plants' pages to find them here.",
+			"seeGarden": "See my garden"
 		}
 	},
 	"history": {

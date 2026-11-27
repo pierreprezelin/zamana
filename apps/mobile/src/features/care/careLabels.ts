@@ -100,6 +100,7 @@ export const plantTasksSummary = (
 	pending: number,
 	done: number,
 	skipped: number,
+	upcoming = 0,
 ) =>
 	[
 		pending &&
@@ -107,6 +108,7 @@ export const plantTasksSummary = (
 		done && t(`care.summary.done.${pluralForm(done)}`, { amount: done }),
 		skipped &&
 			t(`care.summary.skipped.${pluralForm(skipped)}`, { amount: skipped }),
+		upcoming && t("care.summary.upcoming", { amount: upcoming }),
 	]
 		.filter(Boolean)
 		.join(" · ");

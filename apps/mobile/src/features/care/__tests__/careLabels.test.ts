@@ -108,6 +108,16 @@ it.each([
 	},
 );
 
+it.each([
+	[1, 2, 0, 3, "1 soin à faire · 2 faits · 3 à venir"],
+	[0, 0, 0, 1, "1 à venir"],
+])(
+	"sums up %i pending, %i done, %i skipped and %i upcoming cares",
+	(pending, done, skipped, upcoming, label) => {
+		expect(plantTasksSummary(pending, done, skipped, upcoming)).toBe(label);
+	},
+);
+
 describe("handledLabel", () => {
 	const log = (outcome: CareLog["outcome"]): CareLog => ({
 		id: "log-1",

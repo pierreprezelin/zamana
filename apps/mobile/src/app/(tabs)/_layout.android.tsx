@@ -2,7 +2,6 @@ import { TabList, TabSlot, Tabs, TabTrigger } from "expo-router/ui";
 import { View } from "react-native";
 import {
 	TAB_BAR_SHADOW,
-	TabBarAddButton,
 	TabBarIndicator,
 	TabBarItem,
 	useTabBarBottom,
@@ -21,7 +20,7 @@ export default function TabsLayout() {
 			{/* asChild so Uniwind styles a View rendered here: className is ignored on expo-router's own View */}
 			<TabList asChild>
 				<View
-					className="absolute left-5 right-20 flex-row rounded-full bg-surface p-1"
+					className="absolute inset-x-5 flex-row rounded-full bg-surface p-1"
 					style={{ bottom, boxShadow: TAB_BAR_SHADOW }}
 				>
 					<TabBarIndicator style={indicatorStyle} />
@@ -37,7 +36,6 @@ export default function TabsLayout() {
 					))}
 				</View>
 			</TabList>
-			<TabBarAddButton />
 		</Tabs>
 	);
 }

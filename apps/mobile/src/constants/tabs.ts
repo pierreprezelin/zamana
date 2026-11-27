@@ -3,7 +3,7 @@ import { t } from "@/utils/i18n";
 
 type Tab = {
 	name: string;
-	href: "/" | "/garden" | "/encyclopedia" | "/tips";
+	href: "/" | "/garden" | "/care" | "/encyclopedia" | "/tips";
 	label: string;
 	icon: { default: IoniconsIconName; selected: IoniconsIconName };
 };
@@ -20,6 +20,12 @@ export const tabs: Tab[] = [
 		href: "/garden",
 		label: t("tabs.garden"),
 		icon: { default: "leaf-outline", selected: "leaf" },
+	},
+	{
+		name: "care",
+		href: "/care",
+		label: t("tabs.care"),
+		icon: { default: "heart-outline", selected: "heart" },
 	},
 	{
 		name: "encyclopedia",

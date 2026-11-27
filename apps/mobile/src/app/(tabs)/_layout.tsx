@@ -1,10 +1,8 @@
 import { Ionicons } from "@react-native-vector-icons/ionicons/static";
-import { router } from "expo-router";
 import { NativeTabs } from "expo-router/native-tabs";
 import { useCSSVariable } from "uniwind";
 import { tabs } from "@/constants/tabs";
 import { selectionFeedback } from "@/utils/haptics";
-import { t } from "@/utils/i18n";
 
 export default function TabsLayout() {
 	const tintColor = useCSSVariable("--color-primary") as string;
@@ -40,19 +38,6 @@ export default function TabsLayout() {
 					<NativeTabs.Trigger.Label>{label}</NativeTabs.Trigger.Label>
 				</NativeTabs.Trigger>
 			))}
-			{/* The search role is the only way to get the detached trailing button of iOS 26 */}
-			<NativeTabs.Trigger
-				name="add"
-				role="search"
-				disabled
-				listeners={{ tabPress: () => router.push("/plant/new") }}
-			>
-				<NativeTabs.Trigger.Icon
-					renderingMode="template"
-					src={<NativeTabs.Trigger.VectorIcon family={Ionicons} name="add" />}
-				/>
-				<NativeTabs.Trigger.Label>{t("tabs.add")}</NativeTabs.Trigger.Label>
-			</NativeTabs.Trigger>
 		</NativeTabs>
 	);
 }
